@@ -7,12 +7,12 @@
 <mapper namespace="ProductMapper">
  	
  	
-	<!-- <resultMap id="productSelectMap" type="product">
+	<resultMap id="productSelectMap" type="product">
 		<result property="prodNo" 		column="prod_no" 			jdbcType="VARCHAR" />
 		<result property="prodType" 	column="prod_type" 			jdbcType="VARCHAR" />
 		<result property="prodName"		column="prod_name" 			jdbcType="VARCHAR" />
-		<result property="prodDetail" 	column="prod_detail" 		jdbcType="TEXT" />
-		<result property="retailPrice" 	column="retail_price" 		jdbcType="INT" />
+		<result property="prodDetail" 	column="prod_detail" 		jdbcType="LONGVARCHAR" />
+		<result property="retailPrice" 	column="retail_price" 		jdbcType="INTEGER" />
 		<result property="blindCode" 	column="blind_code" 		jdbcType="CHAR" />
 		<result property="prodThumbnail" column="prod_thumbnail" 	jdbcType="VARCHAR" />
 		<result property="coverFile" 	column="cover_file" 		jdbcType="VARCHAR" />
@@ -20,9 +20,25 @@
 		<result property="manuFile"		column="manu_File"			jdbcType="CHAR" />
 		<result property="regDate"		column="reg_Date"			jdbcType="TIMESTAMP" />
 		<result property="discountCode"	 column="discount_code"		jdbcType="CHAR" />
-		<result property="bookPage"			column="manu_File"			jdbcType="CHAR" />
-		<result property="
-	</resultMap> -->
+		<result property="bookPage"			column="manu_File"		jdbcType="CHAR" />
+		<result property="printPrice"	 column="print_price"		jdbcType="INTEGER" />
+		<result property="creator"		 column="creator"			jdbcType="VARCHAR" />
+		<result property="purposeCode"	 column="purpose_code"		jdbcType="CHAR" />
+		<result property="colorType"	 column="color_type"		jdbcType="CHAR" />
+		<result property="sizeType"		 column="size_type"			jdbcType="CHAR" />
+		<result property="coverType"	 column="cover_type"		jdbcType="CHAR" />
+		<result property="innerType"	 column="inner_type"		jdbcType="CHAR" />
+		<result property="tempCode"		 column="temp_code"			jdbcType="SMALLINT" />
+	</resultMap>
+	
+	<!--  SQL : SELECT LIST -->
+	<select id="getBookList" resultMap="productSelectMap">
+			SELECT *
+			FROM product
+	
+	
+	</select>
+	
 	 
 </mapper>
 

@@ -9,7 +9,7 @@ public interface ProductDAO {
 
 	//public Product getProduct(int prodNo) throws Exception;
 	
-	public List<Product> getBookList(Search search) throws Exception;
+	public List<Product> getBookList() throws Exception;
 	
 	
 }
