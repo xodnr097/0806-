@@ -29,7 +29,7 @@ public class BuyController {
 	}
 	
 	//Method
-	@RequestMapping(value="/getUserBuy",method=RequestMethod.GET)
+	@RequestMapping(value="getUserBuy",method=RequestMethod.GET)
 	public ModelAndView getUserBuy() throws Exception{
 		System.out.println(" ---------------------------------------");
 		System.out.println("/buy/getUserBuy : GET");
@@ -40,33 +40,11 @@ public class BuyController {
 		ModelAndView modelAndView = new ModelAndView();
 		modelAndView.addObject("getBuy", buy);
 		
-		modelAndView.setViewName("redirect:/view/buy/getUserBuy.jsp");
+		modelAndView.setViewName("forward:/getUserBuy.jsp");
 		
 		return modelAndView;
 	}
 	
-//	@RequestMapping(value="getUserBuy/{userId}",method=RequestMethod.GET)
-//	public ModelAndView getUserBuy(@RequestParam("userId")String userId) throws Exception{
-//		System.out.println("/buy/getUserBuy : GET");
-//		
-//		Buy buy = buyService.getUserBuy(userId);
-//		
-//		System.out.println("[[["+buy);
-//		ModelAndView modelAndView = new ModelAndView();
-//		modelAndView.addObject("getBuy", buy);
-//		
-//		modelAndView.setViewName("forward:getUserBuy.jsp");
-//		
-//		return modelAndView;
-//	}
-	
-//	@RequestMapping(value="getUserBuy",method=RequestMethod.POST)
-//	public ModelAndView getUserBuy(Buy buy) throws Exception {
-//		System.out.println("/buy/getUserBuy : POST");
-//		
-//		
-//		
-//		return null;
-//	}
+
 	
 }
