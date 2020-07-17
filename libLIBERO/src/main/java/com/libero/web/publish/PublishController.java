@@ -54,6 +54,8 @@ public class PublishController {
 		
 		System.out.println("/publish/addManu : GET");
 		
+		
+		
 		ModelAndView modelAndView = new ModelAndView();
 		modelAndView.setViewName("forward:/view/publish/addManu.jsp");
 		
