@@ -34,6 +34,7 @@
                 </div>
                 <!-- header End -->
                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                	<!-- left Button Start -->
                     <ul class="nav navbar-nav">
                         <li class="active"><a href="#">Main <span class="sr-only">(current)</span></a></li>
                         <!-- 책만들기 Drop Down Start -->
@@ -63,6 +64,16 @@
                             </ul>
                         </li>
                     </ul>
+                    <!-- left Button End -->
+                    <!-- right Button Start -->
+                    <ul class="nav navbar-nav navbar-right">
+                    	<c:if test="${sessionScope.user.userId == null}">
+				        	<li><a href="#" data-toggle="modal" data-target="#myModal">로그인</a></li>
+				        </c:if>
+				        <c:if test="${sessionScope.user.userId != null}">
+	             			<li><a href="#">로그아웃</a></li>
+	             		</c:if>
+				    </ul>
                 </div><!-- /.navbar-collapse -->
           </div>
         </nav>

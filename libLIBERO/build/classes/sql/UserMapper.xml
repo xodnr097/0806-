@@ -7,17 +7,40 @@
 <mapper namespace="UserMapper">
  	
  	
-	<!-- <resultMap id="userSelectMap" type="user">
+	<resultMap id="userSelectMap" type="user">
 		<result property="userId" 		column="user_id" 			jdbcType="VARCHAR"/>
-		<result property="userName"		column="user_name" 			jdbcType="VARCHAR" />
 		<result property="password" 	column="password" 			jdbcType="VARCHAR" />
-		<result property="role" 		column="role" 				jdbcType="VARCHAR" />
-		<result property="ssn" 			column="ssn" 				jdbcType="VARCHAR" />
-		<result property="phone" 		column="cell_phone" 		jdbcType="VARCHAR" />
-		<result property="addr" 		column="addr" 				jdbcType="VARCHAR" />
-		<result property="email" 		column="email" 				jdbcType="VARCHAR"  />
+		<result property="nickname"		column="nickname"			jdbcType="VARCHAR"/>
+		<result property="profile"		column="profile"			jdbcType="VARCHAR"/>
+		<result property="genderCode"	column="gender_code"		jdbcType="CHAR"/>
+		<result property="name"			column="name"				jdbcType="VARCHAR"/>
+		<result property="address"		column="address"			jdbcType="VARCHAR"/>
+		<result property="phone"		column="phone"				jdbcType="VARCHAR"/>
+		<result property="phoneCode"	column="phone_code"			jdbcType="SMALLINT"/>
+		<result property="userCode"		column="user-_code"			jdbcType="SMALLINT"/>
+		<result property="role" 		column="role" 				jdbcType="CHAR" />
 		<result property="regDate" 		column="reg_date" 			jdbcType="DATE" />
-	</resultMap> -->
+		<result property="factoryNo"	column="factory_no"			jdbcType="VARCHAR"/>
+		<result	property="cashCode"		column="cash_code"			jdbcType="CHAR"/>
+		<result property="a5Price"		column="a5_price"			jdbcType="INTEGER"/>
+		<result property="a4Price"		column="a4_price"			jdbcType="INTEGER"/>
+		<result property="b5Price"		column="b5_price"			jdbcType="INTEGER"/>
+		<result property="colorPrice"	column="color_price"		jdbcType="INTEGER"/>
+		<result property="blackPrice"	column="black_price"		jdbcType="INTEGER"/>
+		<result property="snowPrice"	column="snow_price"			jdbcType="INTEGER"/>
+		<result property="montPrice"	column="mont_price"			jdbcType="INTEGER"/>
+		<result property="artePrice"	column="arte_price"			jdbcType="INTEGER"/>
+		<result property="whitePrice"	column="white_price"		jdbcType="INTEGER"/>
+		<result property="ivoryPrice"	column="ivory_price"		jdbcType="INTEGER"/>
+		<result property="roughPrice"	column="rough_price"		jdbcType="INTEGER"/>
+	</resultMap>
 	
+	<!-- SQL : SELECT ONE -->
+	 <select 	id="getUser"	parameterType="string"	resultMap="userSelectMap">
+		SELECT
+		*		
+		FROM user
+		WHERE user_id = #{value}
+	 </select>
 	 
 </mapper>

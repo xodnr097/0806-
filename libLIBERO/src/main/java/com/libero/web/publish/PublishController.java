@@ -50,12 +50,23 @@ public class PublishController {
 	}
 	
 	@RequestMapping(value = "addManu/{prodNo}", method = RequestMethod.GET)
-	public ModelAndView addPrintOption(HttpSession session, int prodNo) throws Exception {
+	public ModelAndView addManu(HttpSession session, int prodNo) throws Exception {
 		
 		System.out.println("/publish/addManu : GET");
 		
 		ModelAndView modelAndView = new ModelAndView();
 		modelAndView.setViewName("forward:/view/publish/addManu.jsp");
+		
+		return modelAndView;
+	}
+	
+	@RequestMapping(value = "addProduct/{prodType}", method = RequestMethod.GET)
+	public ModelAndView addProduct(HttpSession session, @RequestParam("prodType") String prodType) throws Exception {
+		
+		System.out.println("/publish/addProduct : GET");
+		
+		ModelAndView modelAndView = new ModelAndView();
+		modelAndView.setViewName("forward:/view/publish/addProduct.jsp");
 		
 		return modelAndView;
 	}

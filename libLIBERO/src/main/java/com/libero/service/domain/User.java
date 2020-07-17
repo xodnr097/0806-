@@ -10,12 +10,13 @@ public class User {
 	private String userId;
 	private String password;
 	private String nickname;
+	private String profile;
 	private String genderCode;
 	private String name;
 	private String address;
 	private String phone;
-	private int phoneCode;
-	private int userCode;
+	private short phoneCode;
+	private short userCode;
 	private String role;
 	private Date regDate;
 	private String factoryNo;

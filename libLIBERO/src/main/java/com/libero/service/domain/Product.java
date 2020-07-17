@@ -12,7 +12,6 @@ public class Product {
 	private String prodName;
 	private String prodDetail;
 	private int retailPrice;
-	//private User userId
 	private int printPrice;
 	private String blindCode;
 	private String prod_thumbnail;
@@ -22,7 +21,6 @@ public class Product {
 	private String creator;
 	private int salesCount;
 	private int likeCount;
-	private Publish printOption;
 	private String author;
 	private String purposeCode;
 	private String manuFile;
