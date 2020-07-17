@@ -41,5 +41,14 @@ public class ProductController{
 			
 			return modelAndView;
 	}
-
+	 /*
+	 @RequestMapping(value="getBookListByCategory", method = RequestMethod.GET)
+	 public ModelAndView getBookListByCategory(@RequestParam(") throws Exception {
+		 
+		 	System.out.println("/product/getBookListByCategory : GET");
+		 	
+		 	//BusinessLogic
+		 	
+	 }
+	*/
 }
