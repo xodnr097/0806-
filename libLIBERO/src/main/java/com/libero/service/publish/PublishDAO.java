@@ -1,18 +1,19 @@
 package com.libero.service.publish;
 
-import java.util.Map;
+import java.util.List;
 
 import com.libero.service.domain.Product;
+import com.libero.service.domain.User;
 
 public interface PublishDAO {
 	
-	public Map<String,Object> getPrintOptionList() throws Exception;
+	public List<User> getPrintOptionList() throws Exception;
 	
 	public void addPrintOption(Product product) throws Exception;
 	
-	public void getPulish(String prodNo) throws Exception;
+	public List<Product> getPulish(int prodNo) throws Exception;
 	
-	public void updateManu(String prodNo) throws Exception;
+	public void updateManu(int prodNo) throws Exception;
 	
 	public void updatePublishInfo() throws Exception;
 	
@@ -20,7 +21,7 @@ public interface PublishDAO {
 	
 	public void addProduct(Product product) throws Exception;
 	
-	public void updateProduct(String prodNo) throws Exception;
+	public void updateProduct(int prodNo) throws Exception;
 	
 	public void addOptionPrice() throws Exception;
 	

@@ -1,9 +1,10 @@
 package com.libero.service.user;
 
-public class UserDAO {
+import com.libero.service.domain.User;
 
-	public UserDAO() {
-		// TODO Auto-generated constructor stub
-	}
+public interface UserDAO {
+	
+	// SELECT ONE
+	public User getUser(String userId) throws Exception ;
 
 }

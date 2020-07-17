@@ -6,17 +6,44 @@
 
 <mapper namespace="PublishMapper">
 
-	<resultMap id="publishSelectMap" type="publish">
-		<result property="prodNo" 		column="prod_no" 			jdbcType="INTEGER"/>
-		<result property="prodType"		column="prod_type" 			jdbcType="VARCHAR" />
-		<result property="password" 	column="password" 			jdbcType="VARCHAR" />
-		<result property="role" 		column="role" 				jdbcType="VARCHAR" />
-		<result property="ssn" 			column="ssn" 				jdbcType="VARCHAR" />
-		<result property="phone" 		column="cell_phone" 		jdbcType="VARCHAR" />
-		<result property="addr" 		column="addr" 				jdbcType="VARCHAR" />
-		<result property="email" 		column="email" 				jdbcType="VARCHAR"  />
-		<result property="regDate" 		column="reg_date" 			jdbcType="DATE" />
+	<resultMap id="publishSelectMap" type="product">
+		<result property="prodNo" 			column="prod_no" 			jdbcType="INTEGER"/>
+		<result property="prodType"			column="prod_type" 			jdbcType="VARCHAR" />
+		<result property="prodName"	 		column="prod_name" 			jdbcType="VARCHAR" />
+		<result property="prodDetail"	 	column="prod_detail" 		jdbcType="LONGVARCHAR" />
+		<result property="retailPrice" 		column="retail_price" 		jdbcType="INTEGER" />
+		<result property="blindCode"		column="blind_code" 		jdbcType="VARCHAR" />
+		<result property="prodThumbnail" 	column="prod_thumbnail"		jdbcType="VARCHAR" />
+		<result property="coverFile" 		column="cover_file" 		jdbcType="VARCHAR"  />
+		<result property="regDate" 			column="reg_date" 			jdbcType="DATE" />
+		<result property="discountCode"		column="discount_code"		jdbcType="VARCHAR" />
+		<result property="creator"			column="creator"			jdbcType="VARCHAR"/>
+		<result property="author"			column="author"				jdbcType="VARCHAR"/>
+		<result property="purposeCode"		column="purpose_code"		jdbcType="VARCHAR"/>
+		<result property="manuFile"			column="manu_file"			jdbcType="VARCHAR"/>
+		<result property="bookPage"			column="book_page"			jdbcType="INTEGER"/>
+		<result property="colorType"		column="color_type"			jdbcType="VARCHAR"/>
+		<result property="sizeType"			column="size_type"			jdbcType="VARCHAR"/>
+		<result property="coverType"		column="cover_type"			jdbcType="VARCHAR"/>
+		<result property="innerType"		column="inner_type"			jdbcType="VARCHAR"/>
+		<result property="tempCode"			column="temp_code"			jdbcType="SMALLINT"/>
+		<result property="factoryId.userId" column="factory_id"			jdbcType="VARCHAR"/>
 	</resultMap>
+	
+	<!-- SQL : INSERT -->
+	<insert		id="insertPublish"	parameterType="product" >
+	 	INSERT 
+	 	INTO 
+	 	product(prod_type,creator,reg_date) 
+	 	VALUES (#{prodType},#{creator},CURRENT_TIMESTAMP())
+	</insert>
+	
+	<select		id="getPublish"	parameterType="String" 	resultMap="publishSelectMap">
+	 	SELECT * 
+	 	FROM product 
+	 	WHERE creator IN(#{value})
+	 	ORDER BY reg_date DESC LIMIT 1
+	</select>
 
 </mapper>
  	
