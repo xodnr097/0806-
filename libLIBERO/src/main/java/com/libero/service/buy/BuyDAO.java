@@ -1,9 +1,9 @@
 package com.libero.service.buy;
 
-public class BuyDAO {
+import com.libero.service.domain.Buy;
 
-	public BuyDAO() {
-		// TODO Auto-generated constructor stub
-	}
+public interface BuyDAO {
 
+	public Buy getUserBuy(String userId);
+	
 }
