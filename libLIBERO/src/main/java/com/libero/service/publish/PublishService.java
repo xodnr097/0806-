@@ -10,7 +10,7 @@ public interface PublishService {
 	
 	public void addPrintOption(Product product) throws Exception;
 	
-	public Map<String,Object> getPulish(int prodNo) throws Exception;
+	public Product getPublish(int prodNo) throws Exception;
 	
 	public void updateManu(int prodNo) throws Exception;
 	

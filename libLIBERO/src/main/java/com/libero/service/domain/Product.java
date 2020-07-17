@@ -2,7 +2,11 @@ package com.libero.service.domain;
 
 import java.sql.Date;
 
+import lombok.Builder;
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 
 @Data
 public class Product {
@@ -31,5 +35,9 @@ public class Product {
 	private String innerType;
 	private int tempCode;
 	private User factoryId;
-
+	
+	public Product() {
+		
+	}
+	
 }
