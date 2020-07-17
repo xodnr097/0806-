@@ -26,9 +26,17 @@
 		<result property="receiverAddr" column="receiver_addr" jdbcType="VARCHAR"/>
 		<result property="receiverPhone" column="receiver_phone" jdbcType="VARCHAR"/>
 		<result property="actualPrice" column="actual_price" jdbcType="INTEGER"/>
-		<result property="cancelReason" column="#" jdbcType="VARCHAR"/>
-		<result property="payDate" column="pay_date" jdbcType="VARCHAR"/>
+		<result property="cancelReason" column="cancel_type" jdbcType="VARCHAR"/>
+		<result property="payDate" column="pay_date" jdbcType="DATE"/>
+		<result property="user.buyerId" column="user_id" jdbcType="DATE"/>
 	</resultMap>
+	
+	<select id ="getUserBuy" parameterType="String" resultMap="paySelectMapper">
+	SELECT
+	pay_no , delivery_req, payment_type, delivery_code, receiver_name, receiver_addr, receiver_phone,actual_price,pay_date
+	from pay
+	where user_id=#{value}
+	</select>
 	
 	
 </mapper>
