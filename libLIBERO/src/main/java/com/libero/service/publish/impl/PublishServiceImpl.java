@@ -36,14 +36,11 @@ public class PublishServiceImpl implements PublishService{
 		
 	}
 	
-	public Map<String,Object> getPulish(int prodNo) throws Exception{
+	public Product getPublish(int prodNo) throws Exception{
 		
-		List<Product> list= publishDAO.getPulish(prodNo);
+		Product product = publishDAO.getPublish(prodNo);
 		
-		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("list", list );
-		
-		return map;
+		return product;
 	}
 	
 	public void updateManu(int prodNo) throws Exception{

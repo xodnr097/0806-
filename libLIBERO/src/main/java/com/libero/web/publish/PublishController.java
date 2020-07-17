@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.libero.service.domain.Product;
 import com.libero.service.publish.PublishService;
 
 @Controller
@@ -49,12 +50,15 @@ public class PublishController {
 		return modelAndView;
 	}
 	
-	@RequestMapping(value = "addManu/{prodNo}", method = RequestMethod.GET)
-	public ModelAndView addManu(HttpSession session, int prodNo) throws Exception {
+	@RequestMapping(value = "addManu", method = RequestMethod.GET)
+	public ModelAndView addManu(HttpSession session, @RequestParam("prodNo")int prodNo, Product product) throws Exception {
 		
 		System.out.println("/publish/addManu : GET");
 		
+		publishService.getPublish(prodNo);
+		
 		ModelAndView modelAndView = new ModelAndView();
+		modelAndView.addObject("prod",product);
 		modelAndView.setViewName("forward:/view/publish/addManu.jsp");
 		
 		return modelAndView;

@@ -35,8 +35,8 @@ public class PublishDAOImpl implements PublishDAO {
 		
 	}
 	
-	public List<Product> getPulish(int prodNo) throws Exception {
-		return sqlSession.selectList("PublishMapper.getPublish");
+	public Product getPublish(int prodNo) throws Exception {
+		return sqlSession.selectOne("PublishMapper.getPublish",prodNo);
 	}
 	
 	public void updateManu(int prodNo) throws Exception {

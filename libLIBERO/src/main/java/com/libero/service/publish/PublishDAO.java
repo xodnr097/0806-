@@ -11,7 +11,7 @@ public interface PublishDAO {
 	
 	public void addPrintOption(Product product) throws Exception;
 	
-	public List<Product> getPulish(int prodNo) throws Exception;
+	public Product getPublish(int prodNo) throws Exception;
 	
 	public void updateManu(int prodNo) throws Exception;
 	
