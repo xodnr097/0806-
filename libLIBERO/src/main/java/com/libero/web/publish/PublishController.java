@@ -50,12 +50,23 @@ public class PublishController {
 		return modelAndView;
 	}
 	
+	@RequestMapping(value = "addPrintOption", method = RequestMethod.POST)
+	public ModelAndView addPrintOption(HttpSession session, Product product) throws Exception {
+		
+		System.out.println("/publish/addPrintOption : POST");
+		
+		ModelAndView modelAndView = new ModelAndView();
+		modelAndView.setViewName("forward:/view/publish/addManu.jsp");
+		
+		return modelAndView;
+	}
+	
 	@RequestMapping(value = "addManu", method = RequestMethod.GET)
 	public ModelAndView addManu(HttpSession session, @RequestParam("prodNo")int prodNo, Product product) throws Exception {
 		
 		System.out.println("/publish/addManu : GET");
 		
-		publishService.getPublish(prodNo);
+		product = publishService.getPublish(prodNo);
 		
 		ModelAndView modelAndView = new ModelAndView();
 		modelAndView.addObject("prod",product);
@@ -64,13 +75,24 @@ public class PublishController {
 		return modelAndView;
 	}
 	
-	@RequestMapping(value = "addProduct/{prodType}", method = RequestMethod.GET)
-	public ModelAndView addProduct(HttpSession session, @RequestParam("prodType") String prodType) throws Exception {
+	@RequestMapping(value = "addProduct", method = RequestMethod.GET)
+	public ModelAndView addProduct(HttpSession session) throws Exception {
 		
 		System.out.println("/publish/addProduct : GET");
 		
 		ModelAndView modelAndView = new ModelAndView();
-		modelAndView.setViewName("forward:/view/publish/addProduct.jsp");
+		modelAndView.setViewName("forward:/view/publish/addProduct_new.jsp");
+		
+		return modelAndView;
+	}
+	
+	@RequestMapping(value = "addProduct", method = RequestMethod.POST)
+	public ModelAndView addProduct(HttpSession session, Product product) throws Exception {
+		
+		System.out.println("/publish/addProduct : POST");
+		
+		ModelAndView modelAndView = new ModelAndView();
+		modelAndView.setViewName("redirect:/libero/index.jsp");
 		
 		return modelAndView;
 	}
