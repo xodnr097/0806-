@@ -62,7 +62,7 @@
 				<div class="form-group col-md-12">
 				    <label class="formLabel" for="prodThumbnail">상품 썸네일</label>
 				    <div align="center">
-				        <input type="file" id="prodThumbnail" name="prodThumbnail">
+				        <input type="file" id="prodThumbnail" name="imgFile">
 				        <img id="imgPreview" src="#" width="150px" height="150px" />
 			    	</div>
 				</div>
@@ -72,7 +72,7 @@
 					<div class="form-group col-md-12 coverFile">
 					    <label class="formLabel" for="coverFile">표지 파일</label>
 					    <div align="center">
-					        <input type="file" id="coverFile" name="coverFile">
+					        <input type="file" id="coverFile" name="imgFile">
 				    	</div>
 					</div>
 				</c:if>
@@ -109,7 +109,7 @@
 				<!-- 상품 설명 입력폼(SummerNote) 끝 -->
 				<div class="form-group col-md-12">
 			    	<div class="col-md-12" align="right">
-			      		<button type="button" class="btn btn-primary">등&nbsp;록</button>
+			      		<button type="button" class="btn btn-primary" onclick="addProd()">등&nbsp;록</button>
 				  		<a class="btn btn-default btn" href="#" role="button">취&nbsp;소</a>
 			    	</div>
 			  	</div>
@@ -208,6 +208,11 @@
         	$(".coverFile").hide();
         });
     });
+    
+    function addProd() {
+    	$('textarea[name="prodDetail"]').val($('#summernote').summernote('code'));
+		$("form").attr("method" , "POST").attr("action" , "/libero/publish/addProduct").attr("enctype","multipart/form-data").submit();
+	}
     
 	</script>
 </html>

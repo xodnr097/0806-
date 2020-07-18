@@ -57,6 +57,8 @@ public class PublishServiceImpl implements PublishService{
 	
 	public void addProduct(Product product) throws Exception{
 		
+		publishDAO.addProduct(product);
+		
 	}
 	
 	public void updateProduct(int prodNo) throws Exception{

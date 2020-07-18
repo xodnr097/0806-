@@ -56,9 +56,11 @@
 	<insert		id="addProduct"		parameterType="product">
 		INSERT
 		INTO
-		product(prod_type, prod_name, prod_thumbnail, cover_file, prod_detail, retail_price, discount_code, creator )
-		VALUES (#{prodType), #{prodName}, #{prodThumbnail}, #{coverFile:VARCHAR}, #{prodDetail}, #{retailPrice}, #{discountCode}, #{creator})
+		product(prod_type, prod_name, prod_thumbnail, cover_file, prod_detail, retail_price, creator )
+		VALUES (#{prodType}, #{prodName}, #{prodThumbnail}, #{coverFile:VARCHAR}, #{prodDetail}, #{retailPrice}, #{creator})
 	</insert>
+	
+	
 
 </mapper>
  	

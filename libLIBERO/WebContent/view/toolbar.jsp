@@ -106,7 +106,7 @@
 	
 		      </div>
 		      <div class="modal-footer">
-		        <button type="button" class="btn btn-primary">로그인</button>
+		        <button type="button" class="btn btn-primary" id="login">로그인</button>
 		        <button type="button" class="btn btn-default" data-dismiss="modal">취소</button>
 		      </div>
 		    </div>
@@ -121,7 +121,7 @@
 	})
 	//============= modal 로그인 처리 =============
 	$( function() {
-		$(".btn-primary").on("click" , function() {
+		$("#login").on("click" , function() {
 			
 			var id=$("input:text").val();
 			var pw=$("input:password").val();

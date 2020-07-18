@@ -53,6 +53,8 @@ public class PublishDAOImpl implements PublishDAO {
 	
 	public void addProduct(Product product) throws Exception{
 		
+		sqlSession.insert("PublishMapper.addProduct",product);
+		
 	}
 	
 	public void updateProduct(int prodNo) throws Exception{
