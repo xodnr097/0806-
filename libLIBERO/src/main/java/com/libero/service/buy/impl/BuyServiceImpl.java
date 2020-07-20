@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.libero.service.buy.BuyDAO;
 import com.libero.service.buy.BuyService;
-import com.libero.service.domain.Buy;
+import com.libero.service.domain.Pay;
 
 @Service("buyServiceImpl")
 public class BuyServiceImpl implements BuyService{
@@ -63,8 +63,8 @@ public class BuyServiceImpl implements BuyService{
 	}
 
 	@Override
-	public void addBuy() {
-		// TODO Auto-generated method stub
+	public void addBuy(Pay pay) {
+		buyDao.addBuy(pay);
 		
 	}
 
@@ -89,9 +89,11 @@ public class BuyServiceImpl implements BuyService{
 	}
 
 	@Override
-	public Buy getUserBuy(String userId) {
-		
-		return buyDao.getUserBuy(userId);
+	public Pay getUserBuy(String userId, int payNo) {
+		Pay pay = new Pay();
+		pay.setBuyerId(userId);
+		pay.setPayNo(payNo);
+		return buyDao.getUserBuy(pay);
 	}
 
 }

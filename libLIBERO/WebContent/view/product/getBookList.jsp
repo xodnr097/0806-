@@ -18,7 +18,15 @@
 				<td align="center">${ i }</td>
 				<td align="left"  title="Click : 주문정보 확인">
 				
-					${book.prodName}
+					${book.prodNo} <br/>
+					${book.prodName} <br/>
+					${book.prodType} <br/>
+					${book.retailPrice} <br/>
+					${book.printPrice} <br/>
+					${book.author} <br/>
+					${book.purposeCode} <br/>
+					${book.regDate} <br/>
+					${book.discountCode} <br/>
 				</td>
           </c:forEach>
         

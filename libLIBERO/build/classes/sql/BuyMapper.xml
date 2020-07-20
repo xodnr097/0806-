@@ -17,7 +17,7 @@
 <!--   		<association property="PurchaseProd" column="prodNo" javaType="com.model2.mvc.service.domain.Product" select="getProdNo"/> -->
 	</resultMap>
 	
-	<resultMap id="paySelectMapper" type="buy">
+	<resultMap id="paySelectMapper" type="pay">
 		<result property="payNo" column="pay_no" jdbcType="INTEGER"/>
 		<result property="deliveryRequest" column="delivery_req" jdbcType="VARCHAR"/>
 		<result property="paymentOption" column="payment_type" jdbcType="CHAR"/>
@@ -27,16 +27,40 @@
 		<result property="receiverPhone" column="receiver_phone" jdbcType="VARCHAR"/>
 		<result property="actualPrice" column="actual_price" jdbcType="INTEGER"/>
 		<result property="cancelReason" column="cancel_type" jdbcType="VARCHAR"/>
+		<result property="payStatus" column="pay_code" jdbcType="INTEGER"/>
 		<result property="payDate" column="pay_date" jdbcType="DATE"/>
-		<result property="user.buyerId" column="user_id" jdbcType="DATE"/>
+		<result property="buyerId" column="user_id" jdbcType="VARCHAR"/>
 	</resultMap>
 	
 	<select id ="getUserBuy" parameterType="String" resultMap="paySelectMapper">
-	SELECT
-	pay_no , delivery_req, payment_type, delivery_code, receiver_name, receiver_addr, receiver_phone,actual_price,pay_date
-	from pay
-	where user_id=#{value}
+		SELECT
+		pay_no , delivery_req, payment_type, delivery_code, receiver_name, receiver_addr, receiver_phone,actual_price,pay_date,user_id
+		from pay
+		where user_id = #{buyerId}
+		AND pay_no = #{payNo}
+		<if test="prodNo != null">
+		
+		</if>
 	</select>
+	
+	<insert id="addBuy" parameterType="Pay">
+		INSERT 
+		INTO pay (user_id, payment_type, actual_price, receiver_name, receiver_addr, receiver_phone,
+				 delivery_req, pay_date, delivery_code,pay_code,cancel_type )
+		VALUES(
+			   #{buyerId},
+			   #{paymentOption},
+			   #{actualPrice},
+			   #{receiverName},
+			   #{receiverAddr},
+			   #{receiverPhone},
+			   #{deliveryRequest},
+			   CURRENT_TIMESTAMP,
+			   #{deliveryStatus},
+			   #{payStatus},
+			   #{cancelReason}
+				)
+	</insert>
 	
 	
 </mapper>

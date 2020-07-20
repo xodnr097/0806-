@@ -17,6 +17,7 @@
 		<typeAlias alias="page"		type="com.libero.common.Page" />
 		<typeAlias alias="product"	type="com.libero.service.domain.Product" />
 		<typeAlias alias="publish" 	type="com.libero.service.domain.Publish" />
+		<typeAlias alias="pay" 		type="com.libero.service.domain.Pay" />
 		<typeAlias alias="buy" 		type="com.libero.service.domain.Buy" />
 		<typeAlias alias="post" 	type="com.libero.service.domain.Post" />
 		<typeAlias alias="comment" 	type="com.libero.service.domain.Comment" />
