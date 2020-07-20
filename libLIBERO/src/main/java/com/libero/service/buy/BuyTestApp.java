@@ -16,18 +16,15 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 
-import com.libero.service.domain.Buy;
+import com.libero.service.domain.Pay;
+import com.libero.service.domain.User;
+import com.libero.service.product.ProductService;
+import com.libero.service.user.UserService;
+import com.libero.service.user.impl.UserServiceImpl;
 import com.libero.service.buy.BuyService;
 
 
-/*
- *	FileName :  BuyServiceTest.java
- * ¤· JUnit4 (Test Framework) °ú Spring Framework ÅëÇÕ Test( Unit Test)
- * ¤· Spring Àº JUnit 4¸¦ À§ÇÑ Áö¿ø Å¬·¡½º¸¦ ÅëÇØ ½ºÇÁ¸µ ±â¹Ý ÅëÇÕ Å×½ºÆ® ÄÚµå¸¦ ÀÛ¼º ÇÒ ¼ö ÀÖ´Ù.
- * ¤· @RunWith : Meta-data ¸¦ ÅëÇÑ wiring(»ý¼º,DI) ÇÒ °´Ã¼ ±¸ÇöÃ¼ ÁöÁ¤
- * ¤· @ContextConfiguration : Meta-data location ÁöÁ¤
- * ¤· @Test : Å×½ºÆ® ½ÇÇà ¼Ò½º ÁöÁ¤
- */
+
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = {"classpath:config/context-common.xml",
 									"classpath:config/context-aspect.xml",  
@@ -36,72 +33,90 @@ import com.libero.service.buy.BuyService;
 									 })
 public class BuyTestApp {
 
-	//==>@RunWith,@ContextConfiguration ÀÌ¿ë Wiring, Test ÇÒ instance DI
+	//==>@RunWith,@ContextConfiguration ï¿½Ì¿ï¿½ Wiring, Test ï¿½ï¿½ instance DI
 	@Autowired
 	@Qualifier("buyServiceImpl")
 	private BuyService buyService;
+	@Qualifier("userServiceImpl")
+	private UserServiceImpl userService;
 
 	//@Test
 	public void testAddBuy() throws Exception {
-//		
-//		Buy Buy = new Buy();
-//		Buy.setBuyId("testBuyId");
-//		Buy.setBuyName("testBuyName");
-//		Buy.setPassword("testPasswd");
-//		Buy.setSsn("1111112222222");
-//		Buy.setPhone("111-2222-3333");
-//		Buy.setAddr("°æ±âµµ");
-//		Buy.setEmail("test@test.com");
-//		Date date = new Date();
-//		
-//		Buy.setRegDate(date);
-//		
-//		BuyService.addBuy(Buy);
-//		
-//		Buy = BuyService.getBuy("testBuyId");
-//
-//		//==> console È®ÀÎ
-//		//System.out.println(Buy);
-//		
-//		//==> API È®ÀÎ
-//		Assert.assertEquals("testBuyId", Buy.getBuyId());
-//		Assert.assertEquals("testBuyName", Buy.getBuyName());
-//		Assert.assertEquals("testPasswd", Buy.getPassword());
-//		Assert.assertEquals("111-2222-3333", Buy.getPhone());
-//		Assert.assertEquals("°æ±âµµ", Buy.getAddr());
-//		Assert.assertEquals("test@test.com", Buy.getEmail());
+		System.out.println("\n\n\n-----------Add Buy-----------\n\n\n");
+		Pay pay = new Pay();
+		User user = new User();
+		
+		//ProductService productService;
+		//user = userService.getUser("wjddbstp95@gmail.com");
+		//userService.getUser("wjddbstp95@gmail.com");
+		
+		
+		System.out.println("\n\n\n-----------------------------");
+		//System.out.println(user.getUserId());
+		System.out.println("-----------------------------\n\n\n");
+		
+		
+		//product= productService.getProduct();
+		
+	
+//		pay.setBuyerId("choije9410@gmail.com");
+//		//Pay.setProdNo(product);
+//		pay.setPaymentOption("c");
+//		pay.setActualPrice(30000);
+//		pay.setReceiverName("ìµœì§€ì€");
+//		pay.setReceiverAddr("ê²½ê¸°ë„");
+//		pay.setReceiverPhone("010-7787-7979");
+//		pay.setDeliveryRequest("íˆ¬ëª…ë“œëž˜ê³¤ì€ ê°•í•´ë”°");
+//		pay.setDeliveryStatus(1);
+		
+		
+		//buyService.addBuy(pay);
+		
+		pay = buyService.getUserBuy("choije9410@gmail.com",10005);
+		
+		
+		System.out.println(pay);
+		
+		
+		Assert.assertEquals("choije9410@gmail.com", pay.getBuyerId());
+		//Assert.assertEquals("ìµœì§€ì€", userService.getUser("choije9410@gmail.com").getName());
+		Assert.assertEquals("ìµœì§€ì€", pay.getReceiverName());
+		Assert.assertEquals("ê²½ê¸°ë„", pay.getReceiverAddr());
+		Assert.assertEquals("010-7787-7979", pay.getReceiverPhone());
+		Assert.assertEquals("íˆ¬ëª…ë“œëž˜ê³¤ì€ ê°•í•´ë”°", pay.getDeliveryRequest());
+		
 	}
 	
 	@Test
 	public void testGetBuy() throws Exception {
 		System.out.println("-----------GetBuy-----------");
-		Buy buy = new Buy();
-		//==> ÇÊ¿äÇÏ´Ù¸é...
-//		Buy.setBuyId("testBuyId");
-//		Buy.setBuyName("testBuyName");
-//		Buy.setPassword("testPasswd");
-//		Buy.setSsn("1111112222222");
-//		Buy.setPhone("111-2222-3333");
-//		Buy.setAddr("°æ±âµµ");
-//		Buy.setEmail("test@test.com");
+		Pay pay = new Pay();
+		//==> ï¿½Ê¿ï¿½ï¿½Ï´Ù¸ï¿½...
+//		Pay.setBuyId("testBuyId");
+//		Pay.setBuyName("testBuyName");
+//		Pay.setPassword("testPasswd");
+//		Pay.setSsn("1111112222222");
+//		Pay.setPhone("111-2222-3333");
+//		Pay.setAddr("ï¿½ï¿½âµµ");
+//		Pay.setEmail("test@test.com");
 		
-		buy = buyService.getUserBuy("wjddbstp95@gmail.com");
+		pay = buyService.getUserBuy("wjddbstp95@gmail.com",10002);
 
-		//==> console È®ÀÎ
-		//System.out.println(Buy);
+		//==> console È®ï¿½ï¿½
+		//System.out.println(Pay);
 		
-		//==> API È®ÀÎ
+		//==> API È®ï¿½ï¿½
 //		Assert.assertEquals("wjddbstp95@gmail.com", buy.getBuyerId().getUserId());
 //		Assert.assertEquals("testBuyName", buy.getBuyName());
 //		Assert.assertEquals("testPasswd", buy.getPassword());
-		Assert.assertEquals("123-1234-1234", buy.getReceiverPhone());
-//		Assert.assertEquals("°æ±âµµ", Buy.getAddr());
-//		Assert.assertEquals("test@test.com", Buy.getEmail());
+		Assert.assertEquals("123-1234-1234", pay.getReceiverPhone());
+//		Assert.assertEquals("ï¿½ï¿½âµµ", Pay.getAddr());
+//		Assert.assertEquals("test@test.com", Pay.getEmail());
 //
 //		Assert.assertNotNull(BuyService.getBuy("Buy02"));
 //		Assert.assertNotNull(BuyService.getBuy("Buy05"));
 //		System.out.println("=-=-=-=-=-=-=-=-=-=");
-//		System.out.println("::"+Buy);
+//		System.out.println("::"+Pay);
 //		System.out.println("=-=-=-=-=-=-=-=-=-=");
 //		System.out.println("-----------GetBuy-----------\n\n");
 	}
@@ -109,61 +124,61 @@ public class BuyTestApp {
 	//@Test
 	 public void testUpdateBuy() throws Exception{
 //		 System.out.println("-----------UpdateBuy-----------");
-//		Buy Buy = BuyService.getBuy("testBuyId");
-//		Assert.assertNotNull(Buy);
+//		Pay Pay = BuyService.getBuy("testBuyId");
+//		Assert.assertNotNull(Pay);
 //		
-//		Assert.assertEquals("testBuyName", Buy.getBuyName());
-//		Assert.assertEquals("111-2222-3333", Buy.getPhone());
-//		Assert.assertEquals("°æ±âµµ", Buy.getAddr());
-//		Assert.assertEquals("test@test.com", Buy.getEmail());
+//		Assert.assertEquals("testBuyName", Pay.getBuyName());
+//		Assert.assertEquals("111-2222-3333", Pay.getPhone());
+//		Assert.assertEquals("ï¿½ï¿½âµµ", Pay.getAddr());
+//		Assert.assertEquals("test@test.com", Pay.getEmail());
 //
-//		Buy.setBuyName("change");
-//		Buy.setPhone("777-7777-7777");
-//		Buy.setAddr("change");
-//		Buy.setEmail("change@change.com");
+//		Pay.setBuyName("change");
+//		Pay.setPhone("777-7777-7777");
+//		Pay.setAddr("change");
+//		Pay.setEmail("change@change.com");
 //		
-//		BuyService.updateBuy(Buy);
+//		BuyService.updateBuy(Pay);
 //		
-//		Buy = BuyService.getBuy("testBuyId");
-//		Assert.assertNotNull(Buy);
+//		Pay = BuyService.getBuy("testBuyId");
+//		Assert.assertNotNull(Pay);
 //		
-//		//==> console È®ÀÎ
-//		//System.out.println(Buy);
+//		//==> console È®ï¿½ï¿½
+//		//System.out.println(Pay);
 //			
-//		//==> API È®ÀÎ
-//		Assert.assertEquals("change", Buy.getBuyName());
-//		Assert.assertEquals("777-7777-7777", Buy.getPhone());
-//		Assert.assertEquals("change", Buy.getAddr());
-//		Assert.assertEquals("change@change.com", Buy.getEmail());
+//		//==> API È®ï¿½ï¿½
+//		Assert.assertEquals("change", Pay.getBuyName());
+//		Assert.assertEquals("777-7777-7777", Pay.getPhone());
+//		Assert.assertEquals("change", Pay.getAddr());
+//		Assert.assertEquals("change@change.com", Pay.getEmail());
 //		System.out.println("-----------UpdateBuy-----------\n\n");
 	 }
 	 
 	//@Test
 	public void testCheckDuplication() throws Exception{
 
-		//==> ÇÊ¿äÇÏ´Ù¸é...
-//		Buy Buy = new Buy();
-//		Buy.setBuyId("testBuyId");
-//		Buy.setBuyName("testBuyName");
-//		Buy.setPassword("testPasswd");
-//		Buy.setSsn("1111112222222");
-//		Buy.setPhone("111-2222-3333");
-//		Buy.setAddr("°æ±âµµ");
-//		Buy.setEmail("test@test.com");
+		//==> ï¿½Ê¿ï¿½ï¿½Ï´Ù¸ï¿½...
+//		Pay Pay = new Pay();
+//		Pay.setBuyId("testBuyId");
+//		Pay.setBuyName("testBuyName");
+//		Pay.setPassword("testPasswd");
+//		Pay.setSsn("1111112222222");
+//		Pay.setPhone("111-2222-3333");
+//		Pay.setAddr("ï¿½ï¿½âµµ");
+//		Pay.setEmail("test@test.com");
 //		
-//		BuyService.addBuy(Buy);
+//		BuyService.addBuy(Pay);
 		
-		//==> console È®ÀÎ
+		//==> console È®ï¿½ï¿½
 		//System.out.println(BuyService.checkDuplication("testBuyId"));
 		//System.out.println(BuyService.checkDuplication("testBuyId"+System.currentTimeMillis()) );
 	 	
-		//==> API È®ÀÎ
+		//==> API È®ï¿½ï¿½
 //		Assert.assertFalse( BuyService.checkDuplication("testBuyId") );
 //	 	Assert.assertTrue( BuyService.checkDuplication("testBuyId"+System.currentTimeMillis()) );
 		 	
 	}
 	
-	 //==>  ÁÖ¼®À» Ç®°í ½ÇÇàÇÏ¸é....
+	 //==>  ï¿½Ö¼ï¿½ï¿½ï¿½ Ç®ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï¸ï¿½....
 	 //@Test
 	 public void testGetBuyListAll() throws Exception{
 //		System.out.println("-----------AllListBuy-----------");
@@ -176,7 +191,7 @@ public class BuyTestApp {
 //	 	List<Object> list = (List<Object>)map.get("list");
 //	 	Assert.assertEquals(3, list.size());
 //	 	
-//		//==> console È®ÀÎ
+//		//==> console È®ï¿½ï¿½
 //	 	//System.out.println(list);
 //	 	
 //	 	Integer totalCount = (Integer)map.get("totalCount");
@@ -193,7 +208,7 @@ public class BuyTestApp {
 //	 	list = (List<Object>)map.get("list");
 //	 	Assert.assertEquals(3, list.size());
 //	 	
-//	 	//==> console È®ÀÎ
+//	 	//==> console È®ï¿½ï¿½
 //	 	//System.out.println(list);
 //	 	
 //	 	totalCount = (Integer)map.get("totalCount");
@@ -214,7 +229,7 @@ public class BuyTestApp {
 //	 	List<Object> list = (List<Object>)map.get("list");
 //	 	Assert.assertEquals(1, list.size());
 //	 	
-//		//==> console È®ÀÎ
+//		//==> console È®ï¿½ï¿½
 //	 	//System.out.println(list);
 //	 	
 //	 	Integer totalCount = (Integer)map.get("totalCount");
@@ -229,7 +244,7 @@ public class BuyTestApp {
 //	 	list = (List<Object>)map.get("list");
 //	 	Assert.assertEquals(0, list.size());
 //	 	
-//		//==> console È®ÀÎ
+//		//==> console È®ï¿½ï¿½
 //	 	//System.out.println(list);
 //	 	
 //	 	totalCount = (Integer)map.get("totalCount");
@@ -250,7 +265,7 @@ public class BuyTestApp {
 //	 	List<Object> list = (List<Object>)map.get("list");
 //	 	Assert.assertEquals(3, list.size());
 //	 	
-//		//==> console È®ÀÎ
+//		//==> console È®ï¿½ï¿½
 //	 	System.out.println(list);
 //	 	
 //	 	Integer totalCount = (Integer)map.get("totalCount");
@@ -265,7 +280,7 @@ public class BuyTestApp {
 //	 	list = (List<Object>)map.get("list");
 //	 	Assert.assertEquals(0, list.size());
 //	 	
-//		//==> console È®ÀÎ
+//		//==> console È®ï¿½ï¿½
 //	 	System.out.println(list);
 //	 	
 //	 	totalCount = (Integer)map.get("totalCount");

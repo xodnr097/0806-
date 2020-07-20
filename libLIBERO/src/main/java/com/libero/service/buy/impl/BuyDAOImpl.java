@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
 
 import com.libero.service.buy.BuyDAO;
-import com.libero.service.domain.Buy;
+import com.libero.service.domain.Pay;
 
 @Repository("buyDAOImpl")
 public class BuyDAOImpl implements BuyDAO{
@@ -15,10 +15,18 @@ public class BuyDAOImpl implements BuyDAO{
 	@Autowired
 	@Qualifier("sqlSessionTemplate")
 	private SqlSession sqlSession;
+	
+	
 	@Override
-	public Buy getUserBuy(String userId) {
-		System.out.println("BuyDaoImpl µµ¬¯");
-		return sqlSession.selectOne("BuyMapper.getUserBuy",userId);
+	public Pay getUserBuy(Pay pay) {
+		System.out.println("BuyDaoImpl ÎèÑÏ∞©");
+		return sqlSession.selectOne("BuyMapper.getUserBuy",pay);
+	}
+	@Override
+	public void addBuy(Pay pay) {
+		// TODO Auto-generated method stub
+		System.out.println("BuyDaoImpl ÎèÑÏ∞©");
+		sqlSession.insert("BuyMapper.addBuy",pay);
 	}
 
 	

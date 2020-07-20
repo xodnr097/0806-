@@ -7,6 +7,11 @@
 <title>Insert title here</title>
 </head>
 <body>
-
+<input type="text" id="buyerId" name="buyerId"  >
+<input type="text" id="" name="userId"  >
+<input type="text" id="userId" name="userId"  >
+<input type="text" id="userId" name="userId"  >
+<input type="text" id="userId" name="userId"  >
+<input type="text" id="userId" name="userId"  >	      
 </body>
 </html>

@@ -1,9 +1,10 @@
 package com.libero.service.buy;
 
-import com.libero.service.domain.Buy;
+import com.libero.service.domain.Pay;
 
 public interface BuyDAO {
 
-	public Buy getUserBuy(String userId);
+	public Pay getUserBuy(Pay pay);
 	
+	public void addBuy(Pay pay);
 }

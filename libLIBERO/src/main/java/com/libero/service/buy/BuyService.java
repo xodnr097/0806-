@@ -1,7 +1,7 @@
 
 package com.libero.service.buy;
 
-import com.libero.service.domain.Buy;
+import com.libero.service.domain.Pay;
 
 public interface BuyService {
 	
@@ -17,9 +17,9 @@ public interface BuyService {
 	
 	public void addCancelation();
 	
-	public void addBuy();
+	public void addBuy(Pay pay);
 	
-	public Buy getUserBuy(String userId);
+	public Pay getUserBuy(String userId, int payNo);
 	
 	public void getUserBuyList();
 	

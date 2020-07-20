@@ -1,37 +1,17 @@
 package com.libero.service.domain;
 
 import java.io.Serializable;
-import java.sql.Date;
-import java.util.List;
 
-import lombok.Data;
-
-@Data
 public class Buy implements Serializable{
-
+	
+	//ì¥ë°”êµ¬ë‹ˆ ë„ë©”ì¸
 	
 	private int buyNo;
 	private int buyAmount;
-	private String deliveryRequest;
-	private String paymentOption;
-	private String deliveryStatus; //¹è¼Û »óÅÂ 
-	private String receiverName;
-	private String receiverAddr;
-	private String receiverPhone;
-	private int actualPrice;
-	private int buyStatus; //Àå¹Ù±¸´Ï¿¡ ÀÖ´Â °ÇÁö °áÁ¦ µÈ »óÇ°ÀÎÁö ¾Ë¸®´Â »óÅÂ
-	private String cancelReason;
-	private User buyerId; // È¸¿ø ÀÌ¸§ , ¾ÆÀÌµğ(ÀÌ¸ŞÀÏ) , ±¸¸ÅÀÚ ÁÖ¼Ò , ÈŞ´ëÆù ¹øÈ£
-	private List<Product> prodNo; //°¡Á®¿Ã »óÇ° Á¤º¸ ==> »óÇ° ¸í , »óÇ° °¡°İ , ÀúÀÚ / Ã¢ÀÛÀÚ ÀÌ¸§ , ÃÑ°áÁ¦°¡°İ?(¾Õ´Ü¿¡¼­ °¡Á®¿Â´Ù?), »óÇ° ÀÌ¹ÌÁö,
-								  //»óÇ° Å¸ÀÔ.( »óÇ° Å¸ÀÔ¿¡ µû¶ó ¹è¼ÛÁö ÀÔ·Â Ã¢ Ãâ·Â ¿©ºÎ È®ÀÎ) 
-								  //Ä«Å×°í¸® ?, ÇØ½ÃÅÂ±× ?.( Åë°è¸¦ ³¾ ¶§ ÇÊ¿ä?)
-								  // ¸®½ºÆ® -> ¿©·¯°¡Áö »óÇ°À» ¹ŞÀ» ¼ö ÀÖ¾î¼­ ÇÊ¿ä ÇÏ´Ù ½ÍÀ½.
-	private List<Publish> publish; //ÀÎ¼â¼Ò ÁÖ¹® Á¤º¸ ,product ¿¡ ÇØ´çÇÏ´Â »óÇ° ÇÏ³ªÇÏ³ªÀÇ Á¤º¸ ¹Ş±â ÇÊ¿ä·Î ÀÎÇÑ ¸®½ºÆ® »ç¿ë.¸Â³ª?
-	private Date payDate;
-	
-	/////////////////Ãß°¡/////////////////////
-	private int payNo;
-	
-	
-	
+	private User buyerId;// ì¥ë°”êµ¬ë‹ˆ ë“±ë¡í•œ ì‚¬ëŒ ì•„ì´ë””.
+	private Product prodNo;// ë“±ë¡í•œ ìƒí’ˆì˜ ë²ˆí˜¸
+	private int buyStatus; 
+	// ìƒí’ˆì˜ êµ¬ë§¤ ìƒíƒœ (ì¥ë°”êµ¬ë‹ˆ ì¸ì§€ ê²°ì œ ì™„ë£Œì¸ì§€.)
+
+
 }
