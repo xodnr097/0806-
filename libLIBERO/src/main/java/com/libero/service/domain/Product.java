@@ -1,12 +1,13 @@
 package com.libero.service.domain;
 
+import java.io.Serializable;
 import java.sql.Date;
 
 import lombok.Data;
 
 
 @Data
-public class Product {
+public class Product implements Serializable{
 	
 	private int prodNo;
 	private String prodType;
