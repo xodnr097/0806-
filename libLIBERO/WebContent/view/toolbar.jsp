@@ -12,15 +12,10 @@
 		<!-- Bootstrap CSS -->
     	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
 		<!--   jQuery , Bootstrap CDN  -->
-		<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+		<script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
     	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
     	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
   		
-  		<!-- Bootstrap Dropdown Hover CSS -->
-	   	<link href="/css/animate.min.css" rel="stylesheet">
-	   	<link href="/css/bootstrap-dropdownhover.min.css" rel="stylesheet">
-	    <!-- Bootstrap Dropdown Hover JS -->
-	   	<script src="/javascript/bootstrap-dropdownhover.min.js"></script>
 	   	<!-- Google Fonts CDN -->
 	   	<link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic:wght@700&display=swap" rel="stylesheet">
 	   	
@@ -118,21 +113,19 @@
 			    </ul>
 			    <!-- right nav Start -->
 			    <ul class="navbar-nav">
-			    	<c:if test="${sessionScope.user.userId == null}">
-			    		<!-- <div id="user"> -->
-					        <li class="nav-item">
+			    		<!-- <div id="login"> -->
+					        <li class="nav-item" id="login">
 		                    	<a class="nav-link" href="#" data-toggle="modal" data-target="#myModal">로그인</a>
 	              			</li>
 	              		<!-- </div> -->
-				   	</c:if>
-				    <c:if test="${sessionScope.user.userId != null}">
 				    
 				    	<!-- 회원 dropdown Start -->
-				      	<li class="nav-item dropdown">
+				    	
+				      	<li class="nav-item dropdown" id="userDropdown">
 					        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 					          	${sessionScope.user.nickname}님
 					        </a>
-					        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+					        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
 					          <a class="dropdown-item" href="#">마이페이지</a>
 					          <a class="dropdown-item" href="#">넣어야됨</a>
 					          <div class="dropdown-divider"></div>
@@ -140,7 +133,6 @@
 					        </div>
 				      	</li>
 				      	<!-- 회원 dropdown End -->
-	             	</c:if>
 	            </ul>
 			</div>
 		</nav>
@@ -167,7 +159,7 @@
 		        		</form>
 		      		</div>
 		      		<div class="modal-footer">
-		      			<button type="button" class="btn btn-primary" id="login">로그인</button>
+		      			<button type="button" class="btn btn-primary" id="loginButton">로그인</button>
 		        		<button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button>
 		      		</div>
 		    	</div>
@@ -182,7 +174,17 @@
 	})
 	//============= modal 로그인 처리 =============
 	$(function(){
-		$("#login").on("click", function(){
+		var session = "${sessionScope.user.userId}";
+		
+		if (session!="") {
+			$("#login").hide();
+			$("#userDropdown").show();
+		} else if (session==""){
+			$("#login").show();
+			$("#userDropdown").hide();
+		}
+		
+		$("#loginButton").on("click", function(){
 			
 			var id=$("input:text").val();
 			var pw=$("input:password").val();
@@ -198,25 +200,25 @@
 				$("#password").focus();
 				return;
 			}
-			
-			$("form[name='loginForm']").attr("method","POST").attr("action","/libero/user/login").attr("target","_parent").submit();
-			
-			/* var queryString = $("form[name='loginForm']").serialize() ;
-			alert(queryString);
-			
+			//============login ajax=====================
 			$.ajax({
 				url : "/libero/user/json/login",
-				type : "POST" ,
-				data : queryString ,
+				method : "POST" ,
+				data : JSON.stringify({"userId": id, "password": pw}) ,
 				dataType : "json",
-				error: function(xhr, status, error){
-	                alert("에러");
-            	},
-				success : function(JSONData , status) {
-					alert("ok");
-					$("#user").html("로그아웃");
+				headers : {
+					"Accept" : "application/json",
+					"Content-Type" : "application/json"
+				},
+				success : function(data , status) {
+					
+					$('#myModal').modal("hide");
+					$("#userDropdown").show();
+					$("#login").hide();
+					$("#userDropdown").children().first().prepend(data.nickname);
 				}
-			}); */
+			});
+			//===========login ajax end========================
 		});
 	});
 	</script>

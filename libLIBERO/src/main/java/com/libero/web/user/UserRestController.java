@@ -1,5 +1,7 @@
 package com.libero.web.user;
 
+import java.util.Map;
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,17 +31,17 @@ public class UserRestController {
 	
 	//method
 	@RequestMapping( value="json/login", method=RequestMethod.POST )
-	public User login(@RequestBody User user, HttpSession session ) throws Exception{
+	public User login(@RequestBody Map<String, Object> params, HttpSession session ) throws Exception{
 	
 		System.out.println("/user/json/login : POST");
 		//Business Logic
-		System.out.println("::"+user);
-		User dbUser=userService.getUser(user.getUserId());
+		System.out.println("::"+params.get("userId"));
+		User user = userService.getUser((String) params.get("userId"));
 		
-		if( user.getPassword().equals(dbUser.getPassword())){
-			session.setAttribute("user", dbUser);
+		if( ((String)params.get("password")).equals(user.getPassword())){
+			session.setAttribute("user", user);
 		}
 		
-		return dbUser;
+		return user;
 	}
 }
