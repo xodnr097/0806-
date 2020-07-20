@@ -24,7 +24,6 @@ public class ProductDAOImpl implements ProductDAO{
 
 	@Override
 	public List<Product> getBookList() throws Exception{
-		System.out.println("6");
 		// TODO Auto-generated method stub
 		
 		return sqlSession.selectList("ProductMapper.getBookList");
