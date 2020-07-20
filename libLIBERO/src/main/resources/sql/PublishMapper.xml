@@ -12,6 +12,7 @@
 		<result property="prodName"	 		column="prod_name" 			jdbcType="VARCHAR" />
 		<result property="prodDetail"	 	column="prod_detail" 		jdbcType="LONGVARCHAR" />
 		<result property="retailPrice" 		column="retail_price" 		jdbcType="INTEGER" />
+		<result property="printPrice"		column="print_price"		jdbcType="INTEGER"/>
 		<result property="blindCode"		column="blind_code" 		jdbcType="VARCHAR" />
 		<result property="prodThumbnail" 	column="prod_thumbnail"		jdbcType="VARCHAR" />
 		<result property="coverFile" 		column="cover_file" 		jdbcType="VARCHAR"  />
@@ -28,22 +29,38 @@
 		<result property="innerType"		column="inner_type"			jdbcType="VARCHAR"/>
 		<result property="tempCode"			column="temp_code"			jdbcType="SMALLINT"/>
 		<result property="factoryId.userId" column="factory_id"			jdbcType="VARCHAR"/>
+		<result property="likeCount" 		column="like_count"			jdbcType="INTEGER"/>
 	</resultMap>
 	
 	<!-- SQL : INSERT -->
 	<insert		id="insertPublish"	parameterType="product" >
 	 	INSERT 
 	 	INTO 
-	 	product(prod_type,creator,reg_date) 
-	 	VALUES (#{prodType},#{creator},CURRENT_TIMESTAMP())
+	 	product(prod_type,creator) 
+	 	VALUES (#{prodType},#{creator})
 	</insert>
 	
-	<select		id="getPublish"	parameterType="String" 	resultMap="publishSelectMap">
-	 	SELECT * 
+	<select		id="getPublishNo"	parameterType="String" 	resultType="int">
+	 	SELECT prod_no 
 	 	FROM product 
 	 	WHERE creator IN(#{value})
 	 	ORDER BY reg_date DESC LIMIT 1
 	</select>
+	
+	<select		id="getPublish"	parameterType="int" 	resultMap="publishSelectMap">
+	 	SELECT * 
+	 	FROM product 
+	 	WHERE prod_no IN(#{value})
+	</select>
+	
+	<insert		id="addProduct"		parameterType="product">
+		INSERT
+		INTO
+		product(prod_type, prod_name, prod_thumbnail, cover_file, prod_detail, retail_price, creator )
+		VALUES (#{prodType}, #{prodName}, #{prodThumbnail}, #{coverFile:VARCHAR}, #{prodDetail}, #{retailPrice}, #{creator})
+	</insert>
+	
+	
 
 </mapper>
  	

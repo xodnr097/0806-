@@ -71,7 +71,7 @@
 			:: Servlet 에서의 선언적 예외처리를 다시 생각하며....  -->
 	<bean id="exceptionResolver"
 				class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">
-		
+				
 		<property name="exceptionMappings">
 			<props>
 				<prop key="java.lang.NullPointerException">#</prop>
@@ -81,6 +81,12 @@
 		
 		<property name="defaultErrorView"	value="/common/error.jsp" />
 		
+	</bean>
+	
+	<!-- 파일업로드 -->
+	<!--  :: MultipartResolver 선언 -->		
+	<bean id="multipartResolver" 
+				class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
 	</bean>
 	
 </beans>
