@@ -8,5 +8,13 @@
 </head>
 <body>
 
+					책번호 ${product.prodNo} <br/>
+					상품 타입 ${product.prodType} <br/>
+					상품 상세 ${product.prodDetail} <br/>
+					상품명 ${product.prodName} <br/>
+					소비자가 ${product.retailPrice} <br/>
+					저자 ${product.author} <br/>
+				
+
 </body>
 </html>

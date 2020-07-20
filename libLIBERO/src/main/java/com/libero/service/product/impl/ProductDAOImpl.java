@@ -24,10 +24,29 @@ public class ProductDAOImpl implements ProductDAO{
 
 	@Override
 	public List<Product> getBookList() throws Exception{
-		System.out.println("6");
 		// TODO Auto-generated method stub
 		
 		return sqlSession.selectList("ProductMapper.getBookList");
 	}
 
+	@Override
+	public List<Product> getBookListByCategory(String bookCategory) {
+		System.out.println("DAOImpl.getBookListByCategory : "+bookCategory);
+		
+	   return sqlSession.selectList("ProductMapper.getBookListByCategory", bookCategory);
+	}
+	
+	@Override
+	public List<Product> getProductList(String prodType) {
+		System.out.println("DAOImpl.getBookListByCategory : "+prodType);
+		
+	   return sqlSession.selectList("ProductMapper.getProductList", prodType);
+	}
+	
+	@Override
+	public Product getProduct(int prodNo) {
+		System.out.println("DAOImpl.getBook : "+prodNo);
+		
+	   return sqlSession.selectOne("ProductMapper.getProduct", prodNo);
+	}
 }
