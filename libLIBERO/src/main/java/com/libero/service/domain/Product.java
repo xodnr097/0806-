@@ -32,6 +32,7 @@ public class Product {
 	private String innerType;
 	private short tempCode;
 	private User factoryId;
+	private String bookCategory;  //0719 추가
 	
 	public Product() {
 		

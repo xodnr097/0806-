@@ -29,6 +29,7 @@
 		<result property="coverType"	 column="cover_type"		jdbcType="CHAR" />
 		<result property="innerType"	 column="inner_type"		jdbcType="CHAR" />
 		<result property="tempCode"		 column="temp_code"			jdbcType="SMALLINT" />
+		<result property="bookCategory"	 column="book_category"		jdbcType="VARCHAR" />
 	</resultMap>
 	
 	<!--  SQL : SELECT LIST -->
@@ -36,6 +37,23 @@
 			SELECT *
 			FROM product
 	
+	</select>
+	
+	<select id="getBookListByCategory"	parameterType="string" resultMap="productSelectMap">
+			SELECT * FROM product
+			WHERE book_category = #{value}
+	
+	</select>
+	
+	<select id="getProductList"	parameterType="string" resultMap="productSelectMap">
+			SELECT * FROM product
+			WHERE prod_type = #{value}
+	
+	</select>
+	
+	<select id="getBook"	parameterType="int" resultMap="productSelectMap">
+			SELECT * FROM product
+			WHERE prod_no = #{value}
 	
 	</select>
 	

@@ -45,4 +45,33 @@ public class ProductServiceImpl implements ProductService{
 		return map;
 	}
 
+	@Override
+	public Map<String, Object> getBookListByCategory(String bookCategory) throws Exception {
+		List<Product> list = productDAO.getBookListByCategory(bookCategory);
+		System.out.println("=========================================");
+		System.out.println(list);
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("list", list);
+		
+		return map;
+	}
+	
+	@Override
+	public Map<String, Object> getProductList(String prodType) throws Exception {
+		List<Product> list = productDAO.getProductList(prodType);
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("list", list);
+		
+		return map;
+	}
+
+
+
+	@Override
+	public Product getBook(int prodNo) {
+		// TODO Auto-generated method stub
+		return productDAO.getBook(prodNo);
+	}
+
 }
