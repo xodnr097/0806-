@@ -51,7 +51,7 @@
 	
 	</select>
 	
-	<select id="getBook"	parameterType="int" resultMap="productSelectMap">
+	<select id="getProduct"	parameterType="int" resultMap="productSelectMap">
 			SELECT * FROM product
 			WHERE prod_no = #{value}
 	

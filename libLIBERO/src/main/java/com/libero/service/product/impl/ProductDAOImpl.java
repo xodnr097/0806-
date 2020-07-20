@@ -45,9 +45,9 @@ public class ProductDAOImpl implements ProductDAO{
 	}
 	
 	@Override
-	public Product getBook(int prodNo) {
+	public Product getProduct(int prodNo) {
 		System.out.println("DAOImpl.getBook : "+prodNo);
 		
-	   return sqlSession.selectOne("ProductMapper.getBook", prodNo);
+	   return sqlSession.selectOne("ProductMapper.getProduct", prodNo);
 	}
 }

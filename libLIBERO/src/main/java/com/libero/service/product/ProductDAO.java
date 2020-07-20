@@ -15,7 +15,7 @@ public interface ProductDAO {
 	
 	public List<Product> getProductList(String prodType) throws Exception;
 
-	public Product getBook(int prodNo);
+	public Product getProduct(int prodNo);
 	
 	
 }

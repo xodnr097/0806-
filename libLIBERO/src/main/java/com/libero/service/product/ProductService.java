@@ -15,7 +15,9 @@ public interface ProductService {
 
 	public Map<String, Object> getProductList(String prodType) throws Exception;
 
-	public Product getBook(int prodNo);
+	//public Product getBook(int prodNo);
+
+	public Product getProduct(int prodNo);
 
 	
 }

@@ -81,20 +81,33 @@ public class ProductController{
 		}
 		
 		//method 서비스상품화면 출력
-				@RequestMapping(value="getBook/{prodNo}", method = RequestMethod.GET)
+				@RequestMapping(value="getProduct/{prodNo}", method = RequestMethod.GET)
 				public ModelAndView getBook(@PathVariable int prodNo) throws Exception {
 					
-						System.out.println("/product/getBook : GET");
+						System.out.println("/product/getProduct : GET");
 						
 						//BusinessLogic
-						Product book=productService.getBook(prodNo);
+						Product product=productService.getProduct(prodNo);
 						ModelAndView modelAndView = new ModelAndView();
-						modelAndView.addObject("book", book);
-						modelAndView.setViewName("forward:/view/product/getBook.jsp");
+						modelAndView.addObject("product", product);
 						
+						System.out.println("상품타입은?"+product.getProdType());
+						if((product.getProdType()).equals("paper")  ||  product.getProdType() == "ebook") {
+							modelAndView.setViewName("forward:/view/product/getBook.jsp");
+						}else {
+							modelAndView.setViewName("forward:/view/product/getProduct.jsp");
+						}
+							
 						return modelAndView;
 				}
-		
-		
-		
+				
+			/*	
+				@RequestMapping(value="getReviewList/{prodNo}", method = RequestMethod.GET)
+				public ModelAndView getReviewList(@PathVariable int prodNo) throws Exception {
+					
+				}
+			*/	
+				
+				
+					
 }

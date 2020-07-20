@@ -20,14 +20,13 @@
 				
 					${book.prodNo} <br/>
 					${book.prodName} <br/>
-					${book.prodDetail} <br/>
-					${book.prod} <br/>
-					${book.prodName} <br/>
-					${book.prodName} <br/>
-					${book.prodName} <br/>
-					${book.prodName} <br/>
-					${book.prodName} <br/>
-					${book.prodName} <br/>
+					${book.prodType} <br/>
+					${book.retailPrice} <br/>
+					${book.printPrice} <br/>
+					${book.author} <br/>
+					${book.purposeCode} <br/>
+					${book.regDate} <br/>
+					${book.discountCode} <br/>
 				</td>
           </c:forEach>
         

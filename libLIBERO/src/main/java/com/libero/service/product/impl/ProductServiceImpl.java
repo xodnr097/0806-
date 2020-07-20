@@ -69,9 +69,10 @@ public class ProductServiceImpl implements ProductService{
 
 
 	@Override
-	public Product getBook(int prodNo) {
+	public Product getProduct(int prodNo) {
 		// TODO Auto-generated method stub
-		return productDAO.getBook(prodNo);
+		
+		return productDAO.getProduct(prodNo);
 	}
 
 }
