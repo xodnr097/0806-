@@ -12,8 +12,11 @@
 <body>
 
 
-<h1>${getBuy.payNo}</h1>
+<h1>${getBuy.receiverPhone}</h1><br>
 
+
+
+<a href="http://127.0.0.1:8080/liberi/buy/getUserBuy"><input type="button" name="ss" id ="dd"></a>
 <br>
 테스트용 화면
 </body>
