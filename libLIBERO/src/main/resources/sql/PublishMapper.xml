@@ -47,7 +47,7 @@
 	 	ORDER BY reg_date DESC LIMIT 1
 	</select>
 	
-	<select		id="getPublish"	parameterType="int" 	resultMap="publishSelectMap">
+	<select		id="getProduct"	parameterType="int" 	resultMap="publishSelectMap">
 	 	SELECT * 
 	 	FROM product 
 	 	WHERE prod_no IN(#{value})
@@ -59,6 +59,21 @@
 		product(prod_type, prod_name, prod_thumbnail, cover_file, prod_detail, retail_price, creator )
 		VALUES (#{prodType}, #{prodName}, #{prodThumbnail}, #{coverFile:VARCHAR}, #{prodDetail}, #{retailPrice}, #{creator})
 	</insert>
+	
+	<update	id="updateProduct"	parameterType="product">
+	   	UPDATE product
+	   	SET
+	   		prod_name 			= #{prodName},
+	   		<if test="prodThumbnail != null">
+	   			prod_thumbnail		= #{prodThumbnail:VARCHAR},
+	   		</if>
+	   		<if test="coverFile != null">
+	   			cover_file			= #{coverFile:VARCHAR},
+	   		</if>
+			prod_detail			= #{prodDetail:LONGVARCHAR},
+			retail_price		= #{retailPrice}
+	   	WHERE prod_no = #{prodNo}
+	</update>
 	
 	
 

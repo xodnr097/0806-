@@ -1,7 +1,5 @@
 package com.libero.service.publish.impl;
 
-import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,11 +34,8 @@ public class PublishServiceImpl implements PublishService{
 		
 	}
 	
-	public Product getPublish(int prodNo) throws Exception{
-		
-		Product product = publishDAO.getPublish(prodNo);
-		
-		return product;
+	public int getPublishNo(String creator) throws Exception {
+		return publishDAO.getPublishNo(creator);
 	}
 	
 	public void updateManu(int prodNo) throws Exception{
@@ -56,13 +51,15 @@ public class PublishServiceImpl implements PublishService{
 	}
 	
 	public void addProduct(Product product) throws Exception{
-		
 		publishDAO.addProduct(product);
-		
 	}
 	
-	public void updateProduct(int prodNo) throws Exception{
-		
+	public Product getProduct(int prodNo) throws Exception{
+		return publishDAO.getProduct(prodNo);
+	}
+	
+	public void updateProduct(Product product) throws Exception{
+		publishDAO.updateProduct(product);
 	}
 	
 	public void addOptionPrice() throws Exception{

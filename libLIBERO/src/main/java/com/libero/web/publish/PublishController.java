@@ -1,8 +1,6 @@
 package com.libero.web.publish;
 
 import java.io.File;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
@@ -67,8 +65,13 @@ public class PublishController {
 		
 		System.out.println("/publish/addPrintOption : POST");
 		
+		User user = (User)session.getAttribute("user");
+		product.setCreator(user.getUserId());
+		
+		int prodNo = publishService.getPublishNo(product.getCreator());
+		
 		ModelAndView modelAndView = new ModelAndView();
-		modelAndView.setViewName("forward:/view/publish/addManu.jsp");
+		modelAndView.setViewName("redirect:/libero/publish/addManu?prodNo="+prodNo);
 		
 		return modelAndView;
 	}
@@ -78,7 +81,9 @@ public class PublishController {
 		
 		System.out.println("/publish/addManu : GET");
 		
-		product = publishService.getPublish(prodNo);
+		product.setProdNo(prodNo);
+		
+		product = publishService.getProduct(prodNo);
 		
 		ModelAndView modelAndView = new ModelAndView();
 		modelAndView.addObject("prod",product);
@@ -113,27 +118,29 @@ public class PublishController {
 			int i = 0;
 			
 			for (MultipartFile multipartFile : files) {
-				
-				System.out.println("첫번째 파일 : "+ ++i);
+				System.out.println(++i+"번째 파일 : ");
 				System.out.println(multipartFile.getOriginalFilename());
 				
 				String originalFileName = multipartFile.getOriginalFilename();	//오리지날 파일명
 				String extension = originalFileName.substring(originalFileName.lastIndexOf("."));	//파일 확장자
-						
+				String fileRoot = path+"publish/fileUpload/"; // 파일 경로
 				String savedFileName = UUID.randomUUID() + extension;	//저장될 파일 명
 				
-				File f =new File(path+savedFileName);
+				File f =new File(fileRoot+savedFileName);
 				
 				multipartFile.transferTo(f);
-				
 				if (i==1) {
 					product.setProdThumbnail(f.getName());
+					
 				}
 				if(i==2) {
 					product.setCoverFile(f.getName());
 				}
-				
 				System.out.println("파일 업로드 성공 : "+f.getName());
+				//맞춤형표지, 교정교열은 2일시 for문 빠져나옴
+				if (product.getProdType().contentEquals("target")||product.getProdType().contentEquals("correct")) {
+					break;
+				}
 			}
 		}
 		//File Upload End
@@ -141,7 +148,7 @@ public class PublishController {
 		publishService.addProduct(product);
 		
 		ModelAndView modelAndView = new ModelAndView();
-		modelAndView.setViewName("forward:/view/publish/selectProductType.jsp");
+		modelAndView.setViewName("redirect:/view/product/getProductList.jsp");
 		
 		return modelAndView;
 	}
@@ -149,13 +156,27 @@ public class PublishController {
 	@RequestMapping(value = "updateProduct", method = RequestMethod.GET)
 	public ModelAndView updateProduct(HttpSession session, @RequestParam("prodNo") int prodNo) throws Exception {
 		
-		System.out.println("/publish/addProduct : GET");
+		System.out.println("/publish/updateProduct : GET");
 		
-		Product product = publishService.getPublish(prodNo);
+		Product product = publishService.getProduct(prodNo);
 		
 		ModelAndView modelAndView = new ModelAndView();
 		modelAndView.addObject("prod", product);
 		modelAndView.setViewName("forward:/view/publish/updateProduct.jsp");
+		
+		return modelAndView;
+	}
+	
+	@RequestMapping(value = "updateProduct", method = RequestMethod.POST)
+	public ModelAndView updateProduct(Product product) throws Exception {
+		
+		System.out.println("/publish/updateProduct : POST");
+		
+		publishService.updateProduct(product);
+		
+		ModelAndView modelAndView = new ModelAndView();
+		modelAndView.addObject("prod", product);
+		modelAndView.setViewName("forward:/view/product/getProduct.jsp");
 		
 		return modelAndView;
 	}

@@ -8,7 +8,7 @@
 	<head>
 		<meta charset="UTF-8">
 		
-		<c:if test="${prod.prodType=='cover'}">
+		<c:if test="${prod.prodType=='design'||'target'}">
 			<title>libLIBERO : 표지 디자인 수정</title>
 		</c:if>
 		<c:if test="${prod.prodType=='correct'}">
@@ -41,6 +41,7 @@
 	   		<!-- form Start /////////////////////////////////////-->
 			<form>
 				<!-- 상품 번호 입력폼  -->
+				<input type="hidden" id="prodNo" name="prodNo" value="${prod.prodNo}">
 				<div class="form-group col-md-12">
 				    <label class="formLabel" for="prodType">상품 종류</label>
 				    <div align="center">
@@ -61,7 +62,7 @@
 				    <label class="formLabel" for="prodThumbnail">상품 썸네일</label>
 				    <div align="center">
 				        <input type="file" id="prodThumbnail" name="imgFile" value="${prod.prodThumbnail}">
-				        <img id="imgPreview" src="#" width="150px" height="150px" />
+				        <img id="imgPreview" src="${prod.prodThumbnail}" width="150px" height="150px" />
 			    	</div>
 				</div>
 				<!-- 썸네일 입력폼 끝 -->
@@ -107,7 +108,7 @@
 				<!-- 상품 설명 입력폼(SummerNote) 끝 -->
 				<div class="form-group col-md-12">
 			    	<div class="col-md-12" align="right">
-			      		<button type="button" class="btn btn-primary" onclick="addProd()">등&nbsp;록</button>
+			      		<button type="button" class="btn btn-primary" onclick="updateProduct()">수&nbsp;정</button>
 				  		<a class="btn btn-default btn" href="#" role="button">취&nbsp;소</a>
 			    	</div>
 			  	</div>
@@ -115,12 +116,12 @@
 	   	</div>
 	</body>
 	
-	<!-- include summernote css/js -->
-	<link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
-	<script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
+	<!-- include summernote-lite css/js -->
+	<link href="/libero/resources/css/summernote/summernote-lite.css" rel="stylesheet">
+	<script src="/libero/resources/javascript/summernote/summernote-lite.js"></script>
 	
 	<!-- include summernote-ko-KR -->
-	<!-- <script src="/javascript/lang/summernote-ko-KR.js"></script> -->
+	<script src="/libero/resources/javascript/summernote/lang/summernote-ko-KR.min.js"></script>
 	<script>
 	
 	//==============이미지 미리보기=========================
@@ -149,11 +150,12 @@
 	
   	//summernote
     $(function() {
+    	$('#summernote').append("${prod.prodDetail}");
   	  	$('#summernote').summernote({
   		  placeholder: '내용을 입력하세요',
 	   	        tabsize: 1,
 	   	        height: 300,
-	   	     	//lang: 'ko-KR', // default: 'en-US'
+	   	     	lang: 'ko-KR', // default: 'en-US'
 	   	     	callbacks: {	//여기 부분이 이미지를 첨부하는 부분
 				onImageUpload : function(files, editor, welEditable) {
 					console.log(files);
@@ -170,7 +172,6 @@
       		e.preventDefault();
   		});
   	});
-    
     /**
 	* 이미지 파일 업로드
 	*/
@@ -181,13 +182,13 @@
 		$.ajax({
 			data : data,
 			type : "POST",
-			url : "/product/json/addProduct",
+			url : "/libero/publish/json/addProduct",
 			//cache: false,
 			contentType : false,
 			processData : false,
 			success : function(data) {
             	//항상 업로드된 파일의 url이 있어야 한다.
-           		$(editor).summernote('insertImage', data.url+data.fileName);
+           		$(editor).summernote('insertImage', data.url);
 			}
 		});
 	}
@@ -207,9 +208,9 @@
         });
     });
     
-    function addProd() {
+    function updateProduct() {
     	$('textarea[name="prodDetail"]').val($('#summernote').summernote('code'));
-		$("form").attr("method" , "POST").attr("action" , "/libero/publish/addProduct").attr("enctype","multipart/form-data").submit();
+		$("form").attr("method" , "POST").attr("action" , "/libero/publish/updateProduct").attr("enctype","multipart/form-data").submit();
 	}
     
 	</script>

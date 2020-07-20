@@ -13,7 +13,6 @@ import org.springframework.web.servlet.ModelAndView;
 import com.libero.service.domain.User;
 import com.libero.service.user.UserService;
 
-//==> 회원관리 Controller
 @Controller
 @RequestMapping("/user/*")
 public class UserController {

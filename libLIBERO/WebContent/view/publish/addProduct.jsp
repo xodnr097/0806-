@@ -42,7 +42,7 @@
 			<form>
 				<!-- 표지디자인 입력폼  -->
 				<c:if test="${param.prodType=='cover'}">
-					<div class="form-group col-md-12">
+					<div class="form-group">
 					    <label class="formLabel" for="prodType">표지종류</label>
 					    <div>
                             <input type="radio" name="prodType" value="design" checked> 레디메이드 표지 디자인
@@ -59,17 +59,17 @@
 				</c:if>
 				<!-- 교정교열 타입 입력폼 끝 -->
 				<!-- 썸네일 입력폼 -->
-				<div class="form-group col-md-12">
+				<div class="form-group">
 				    <label class="formLabel" for="prodThumbnail">상품 썸네일</label>
 				    <div align="center">
-				        <input type="file" id="prodThumbnail" name="imgFile">
-				        <img id="imgPreview" src="#" width="150px" height="150px" />
+				        <input type="file" id="prodThumbnail" name="imgFile"><br/>
+				        <img id="imgPreview" src="/libero/resources/images/publish/fileUpload/null.png" width="150px" height="150px" />
 			    	</div>
 				</div>
 				<!-- 썸네일 입력폼 끝 -->
 				<!-- 표지파일 입력폼 -->
 				<c:if test="${param.prodType=='cover'}">
-					<div class="form-group col-md-12 coverFile">
+					<div class="form-group coverFile">
 					    <label class="formLabel" for="coverFile">표지 파일</label>
 					    <div align="center">
 					        <input type="file" id="coverFile" name="imgFile">
@@ -77,8 +77,9 @@
 					</div>
 				</c:if>
 				<!-- 표지파일 입력폼 끝 -->
+				<div class="row">
 				<!-- 상품 제목 입력폼  -->
-				<div class="form-group col-md-6">
+				<div class="form-group col-6">
 					<label class="formLabel" for="prodName">상품 제목</label>
 					<div>
 						<input type="text" id="prodName" name="prodName" class="form-control" placeholder="상품의 제목을 입력해주세요">
@@ -86,7 +87,7 @@
 				</div>
 				<!-- 상품 제목 입력폼 끝  -->
 				<!-- 상품 가격 입력폼  -->
-				<div class="form-group col-md-6">
+				<div class="form-group col-6">
 					<c:if test="${param.prodType=='cover'}">
 						<label class="formLabel" for="retailPrice">표지 가격</label>
 					</c:if>
@@ -98,8 +99,9 @@
 					</div>
 				</div>
 				<!-- 상품 가격 입력폼 끝  -->
+				</div>
 				<!-- 상품 설명 입력폼(SummerNote) -->
-				<div class="form-group col-md-12">
+				<div class="form-group">
 				    <label class="formLabel" for="prodDetail">상품상세정보</label>
 				    <div>
 						<textarea id="prodDetail" name="prodDetail" class="summernote" style="display: none;"></textarea>
@@ -107,8 +109,8 @@
 				    </div>
 				</div>
 				<!-- 상품 설명 입력폼(SummerNote) 끝 -->
-				<div class="form-group col-md-12">
-			    	<div class="col-md-12" align="right">
+				<div class="form-group">
+			    	<div align="right">
 			      		<button type="button" class="btn btn-primary" onclick="addProd()">등&nbsp;록</button>
 				  		<a class="btn btn-default btn" href="#" role="button">취&nbsp;소</a>
 			    	</div>
@@ -117,12 +119,12 @@
 	   	</div>
 	</body>
 	
-	<!-- include summernote css/js -->
-	<link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
-	<script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
+	<!-- include summernote-lite css/js -->
+	<link href="/libero/resources/css/summernote/summernote-lite.css" rel="stylesheet">
+	<script src="/libero/resources/javascript/summernote/summernote-lite.js"></script>
 	
 	<!-- include summernote-ko-KR -->
-	<!-- <script src="/javascript/lang/summernote-ko-KR.js"></script> -->
+	<script src="/libero/resources/javascript/summernote/lang/summernote-ko-KR.min.js"></script>
 	<script>
 	
 	//==============이미지 미리보기=========================
@@ -155,7 +157,7 @@
   		  placeholder: '내용을 입력하세요',
 	   	        tabsize: 1,
 	   	        height: 300,
-	   	     	//lang: 'ko-KR', // default: 'en-US'
+	   	     	lang: 'ko-KR', // default: 'en-US'
 	   	     	callbacks: {	//여기 부분이 이미지를 첨부하는 부분
 				onImageUpload : function(files, editor, welEditable) {
 					console.log(files);
@@ -183,13 +185,13 @@
 		$.ajax({
 			data : data,
 			type : "POST",
-			url : "/product/json/addProduct",
+			url : "/libero/publish/json/addProduct",
 			//cache: false,
 			contentType : false,
 			processData : false,
 			success : function(data) {
             	//항상 업로드된 파일의 url이 있어야 한다.
-           		$(editor).summernote('insertImage', data.url+data.fileName);
+           		$(editor).summernote('insertImage', data.url);
 			}
 		});
 	}
