@@ -159,7 +159,7 @@
 		        		</form>
 		      		</div>
 		      		<div class="modal-footer">
-		      			<button type="button" class="btn btn-primary" id="loginButton">로그인</button>
+		      			<button type="button" class="btn btn-info" id="loginButton">로그인</button>
 		        		<button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button>
 		      		</div>
 		    	</div>

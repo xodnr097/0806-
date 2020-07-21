@@ -1,5 +1,7 @@
 package com.libero.service.publish.impl;
 
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,6 +9,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import com.libero.service.domain.Product;
+import com.libero.service.domain.User;
 import com.libero.service.publish.PublishDAO;
 import com.libero.service.publish.PublishService;
 
@@ -27,7 +30,13 @@ public class PublishServiceImpl implements PublishService{
 	}
 	
 	public Map<String,Object> getPrintOptionList() throws Exception{
-		return null;
+		
+		List<User> list= publishDAO.getPrintOptionList();
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("list", list );
+		
+		return map;
 	}
 	
 	public void addPrintOption(Product product) throws Exception{

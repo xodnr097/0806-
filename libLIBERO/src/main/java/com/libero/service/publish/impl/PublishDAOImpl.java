@@ -28,7 +28,7 @@ public class PublishDAOImpl implements PublishDAO {
 	
 	//method
 	public List<User> getPrintOptionList() throws Exception {
-		return sqlSession.selectList("PublishMapper.");
+		return sqlSession.selectList("PublishMapper.getPrintOptinList");
 	}
 	
 	public void addPrintOption(Product product) throws Exception {

@@ -2,6 +2,7 @@ package com.libero.web.publish;
 
 import java.io.File;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 import javax.servlet.http.HttpSession;
@@ -54,7 +55,10 @@ public class PublishController {
 		
 		System.out.println("/publish/addPrintOption : GET");
 		
+		Map<String , Object> map = publishService.getPrintOptionList();
+		
 		ModelAndView modelAndView = new ModelAndView();
+		modelAndView.addObject("list", map.get("list"));
 		modelAndView.setViewName("forward:/view/publish/addPrintOption.jsp");
 		
 		return modelAndView;
