@@ -17,7 +17,7 @@ import com.libero.service.domain.Product;
 import com.libero.service.product.ProductService;
 
 @Controller
-@RequestMapping("/buy/*")
+@RequestMapping("/view/buy/*")
 public class BuyController {
 	
 	//Field
@@ -62,7 +62,7 @@ public class BuyController {
 
 		Pay pay = buyService.getUserBuy(userId, payNo);
 										//session 에서 userId를 받아오도록 수정
-		
+										//payNo는 리스트에서 조회할때 가져오는 걸로.
 		System.out.println("[[["+pay+"]]]");
 		
 		model.addAttribute("getBuy",pay);
@@ -72,31 +72,40 @@ public class BuyController {
 	}
 	
 	
-	
-	
-	
-	@RequestMapping(value="addBuy",method=RequestMethod.GET)
-	public String addBuy() throws Exception{
+	@RequestMapping(value="beforePay1",method=RequestMethod.GET)
+	public String beforePay() throws Exception{
 		System.out.println(" ---------------------------------------");
-		System.out.println("/buy/addBuy : GET");
+		System.out.println("/buy/beforePay : GET");
+		System.out.println(" ---------------------------------------");		
+		//session으로 userId 받아오기.
+	
+		return "redirect:/view/buy/beforePay.jsp";//
+	}
+	
+	
+	@RequestMapping(value="beforePay",method=RequestMethod.POST)
+	public String beforePay(@ModelAttribute("pay") Pay pay,Model model) throws Exception{
+		System.out.println(" ---------------------------------------");
+		System.out.println("/buy/beforePay : POST");
+		System.out.println(" ---------------------------------------");		
+		//session으로 userId 받아오기.
+		System.out.println("[[][]"+pay);
+		model.addAttribute("addBuy", pay);
+		
+		return "redirect:/view/buy/addPay.jsp";//
+	}
+	
+	
+	@RequestMapping(value="addPay",method=RequestMethod.GET)
+	public String addPay() throws Exception{
+		System.out.println(" ---------------------------------------");
+		System.out.println("/buy/addPay : GET");
 		System.out.println(" ---------------------------------------");		
 		//session으로 userId 받아오기.
 		
 		
-		return "redirect:/view/buy/addBuy.jsp";
+		return "redirect:/buy/addBuyCheck.jsp";//
 	}
-	
-	@RequestMapping(value="addBuy", method=RequestMethod.POST)
-	public String addBuy(@ModelAttribute("buy") Pay pay) throws Exception{
-		System.out.println(" ---------------------------------------");
-		System.out.println("/buy/addBuy : POST");
-		System.out.println(" ---------------------------------------");		
-		
-		buyService.addBuy(pay);
-		
-		return "#";
-	}
-	
 	
 	
 }//end of the BuyController
