@@ -30,6 +30,7 @@
 		<result property="innerType"	 column="inner_type"		jdbcType="CHAR" />
 		<result property="tempCode"		 column="temp_code"			jdbcType="SMALLINT" />
 		<result property="bookCategory"	 column="book_category"		jdbcType="VARCHAR" />
+		<result property="likeCount"	 column="like_count"		jdbcType="INTEGER" />
 	</resultMap>
 	
 	<!--  SQL : SELECT LIST -->
@@ -57,6 +58,27 @@
 	
 	</select>
 	
+	<insert id="addWish" parameterType="hashMap">
+					INSERT
+					INTO
+					wish(prod_no, user_id)
+					VALUES (#{prodNo}, #{userId})
+	</insert>
+	
+	<delete id="removeWish" parameterType="hashMap">
+					DELETE
+					FROM wish
+					WHERE prod_no = #{prodNo} AND user_id = #{userId}
+	
+	</delete>
+	
+	<select id="getWishList" parameterType="string" resultMap="productSelectMap">
+	
+					SELECT prod_no
+					FROM wish
+					WHERE user_id = #{userId}
+	
+	</select>
 	 
 </mapper>
 

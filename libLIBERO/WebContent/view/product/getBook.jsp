@@ -14,31 +14,26 @@
 	
 	<script type="text/javascript">
 	
-// 	$(function() {
-// 			$( "button:contains('좋아요')").on("click" , function() {
-				
-// 				var prodNo = "${product.prodNo}"
-// 				var userId = "${product.creator}"
-				
-// 				$.ajax({
-// 					url : "/product/json/addWish",
-// 					type: "POST",
-// 					cache: false,
-// 					dataType: "json",
-// 					data: 'prodNo='+prodNo+'&userId='+userId,
-// 					success: function(data){
-// 						var wish_img = '';
-						
-// 						if(data.wish_check == 0){
-// 							wish_img = "./~~~";
-// 						}else{
-// 							wish_img = "./images/like.png";
-// 						}
-// 						$('#')
-// 					}
-// 				})
-// 			})
-// 	})
+	function wish_func(){
+			var prodNo = "${product.prodNo}"
+			var userId = "${product.creator}"
+			
+			$.ajax({
+				url : "/product/json/addWish",
+				type: "POST",
+				cache: false,
+				dataType: "json",
+				data: 'prodNo='+prodNo+'&userId='+userId,
+				success: function(data){
+					
+					var wish_img = data.wishImage
+		
+					$('#wish_img').attr('src', wish_img);
+					
+	
+					}
+				})
+	}
 	
 	</script>
 <title>Insert title here</title>
@@ -58,9 +53,8 @@
 					표지 ${product.coverType} <br/>
 					내지 ${product.innerType} <br/>
 					작성자 ${product.creator}
-					<div>
-						<button type="button" class="btn btn-primary">좋아요</button>
-					</div>
+	
+		<a href='javascript : wish_func();'><img src="/resources/product/wish/diswish.png" id='wish_img'></a>
 
 </body>
 </html>
