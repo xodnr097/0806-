@@ -1,9 +1,9 @@
 package com.libero.service.wish;
 
+import java.util.HashMap;
+
 public interface WishService {
 	
-	public boolean checkWish(int prodNo, String userId) throws Exception;
-	
-	public void addWish(int prodNo, String userId)throws Exception;
+	public boolean addWish(HashMap<String, Object> hashMap) throws Exception;
 
 }

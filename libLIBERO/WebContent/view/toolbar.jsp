@@ -159,7 +159,7 @@
 		        		</form>
 		      		</div>
 		      		<div class="modal-footer">
-		      			<button type="button" class="btn btn-primary" id="loginButton">로그인</button>
+		      			<button type="button" class="btn btn-info" id="loginButton">로그인</button>
 		        		<button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button>
 		      		</div>
 		    	</div>
@@ -212,10 +212,10 @@
 				},
 				success : function(data , status) {
 					
-					$('#myModal').modal("hide");
-					$("#userDropdown").show();
-					$("#login").hide();
-					$("#userDropdown").children().first().prepend(data.nickname);
+					$('#myModal').modal("hide"); // modal 닫기
+					$("#userDropdown").show(); // 회원 dropdown show
+					$("#login").hide(); // 로그인 버튼 hide
+					$("#userDropdown").children().first().prepend(data.nickname); //닉네임 출력
 				}
 			});
 			//===========login ajax end========================

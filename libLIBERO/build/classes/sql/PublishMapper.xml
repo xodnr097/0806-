@@ -32,6 +32,23 @@
 		<result property="likeCount" 		column="like_count"			jdbcType="INTEGER"/>
 	</resultMap>
 	
+	<resultMap id="optionSelectMap" type="user">
+		<result property="userId" 		column="user_id" 			jdbcType="VARCHAR"/>
+		<result property="nickname"		column="nickname"			jdbcType="VARCHAR"/>
+		<result property="role" 		column="role" 				jdbcType="CHAR" />
+		<result property="a5Price"		column="a5_price"			jdbcType="INTEGER"/>
+		<result property="a4Price"		column="a4_price"			jdbcType="INTEGER"/>
+		<result property="b5Price"		column="b5_price"			jdbcType="INTEGER"/>
+		<result property="colorPrice"	column="color_price"		jdbcType="INTEGER"/>
+		<result property="blackPrice"	column="black_price"		jdbcType="INTEGER"/>
+		<result property="snowPrice"	column="snow_price"			jdbcType="INTEGER"/>
+		<result property="montPrice"	column="mont_price"			jdbcType="INTEGER"/>
+		<result property="artePrice"	column="arte_price"			jdbcType="INTEGER"/>
+		<result property="whitePrice"	column="white_price"		jdbcType="INTEGER"/>
+		<result property="ivoryPrice"	column="ivory_price"		jdbcType="INTEGER"/>
+		<result property="roughPrice"	column="rough_price"		jdbcType="INTEGER"/>
+	</resultMap>
+	
 	<!-- SQL : INSERT -->
 	<insert		id="insertPublish"	parameterType="product" >
 	 	INSERT 
@@ -39,6 +56,15 @@
 	 	product(prod_type,creator) 
 	 	VALUES (#{prodType},#{creator})
 	</insert>
+	
+	<select 	id="getPrintOptinList" resultMap="optionSelectMap">
+		SELECT
+		user_id, nickname, b5_price, a4_price, color_price, black_price, snow_price, 
+		mont_price, arte_price, white_price, ivory_price, rough_price
+		FROM user
+		WHERE role IN('f')
+		AND user_code IN(1)
+	</select>
 	
 	<select		id="getPublishNo"	parameterType="String" 	resultType="int">
 	 	SELECT prod_no 
