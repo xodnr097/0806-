@@ -17,7 +17,7 @@
 <h1>${getBuy.deliveryRequest }</h1>
 
 
-<a href="http://127.0.0.1:8080/liberi/buy/getUserBuy?userId=choije9410@gmail.com&payNo=10005"><input type="button" name="ss" id ="dd"></a>
+<a href="http://127.0.0.1:8080/libero/buy/getUserBuy?userId=choije9410@gmail.com&payNo=10005"><input type="button" name="ss" id ="dd"></a>
 <br>
 테스트용 화면
 </body>

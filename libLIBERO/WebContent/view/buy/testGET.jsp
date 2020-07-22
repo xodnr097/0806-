@@ -19,7 +19,7 @@
 	<input type="text" id="payNo" value="10002">
 <br>
 
-<a href="/liberi/buy/getUserBuy?userId=wjddbstp95@gmail.com&payNo=10004"><input type="button" name="submit" value="submit"></a>
+<a href="/libero/buy/getUserBuy?userId=wjddbstp95@gmail.com&payNo=10004"><input type="button" name="submit" value="submit"></a>
 
 </div>
 </form>

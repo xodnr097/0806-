@@ -16,6 +16,9 @@ public class BuyDAOImpl implements BuyDAO{
 	@Qualifier("sqlSessionTemplate")
 	private SqlSession sqlSession;
 	
+	public void SqlSession(SqlSession sqlSession) {
+		this.sqlSession = sqlSession;
+	}
 	
 	@Override
 	public Pay getUserBuy(Pay pay) {

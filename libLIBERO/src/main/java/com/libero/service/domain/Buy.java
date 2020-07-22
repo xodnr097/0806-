@@ -2,6 +2,8 @@ package com.libero.service.domain;
 
 import java.io.Serializable;
 
+import lombok.Data;
+@Data
 public class Buy implements Serializable{
 	
 	//장바구니 도메인
