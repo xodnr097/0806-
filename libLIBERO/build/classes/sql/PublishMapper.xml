@@ -6,7 +6,7 @@
 
 <mapper namespace="PublishMapper">
 
-	<resultMap id="publishSelectMap" type="product">
+	<resultMap id="publishSelectMap" type="publish">
 		<result property="prodNo" 			column="prod_no" 			jdbcType="INTEGER"/>
 		<result property="prodType"			column="prod_type" 			jdbcType="VARCHAR" />
 		<result property="prodName"	 		column="prod_name" 			jdbcType="VARCHAR" />
@@ -16,7 +16,6 @@
 		<result property="blindCode"		column="blind_code" 		jdbcType="VARCHAR" />
 		<result property="prodThumbnail" 	column="prod_thumbnail"		jdbcType="VARCHAR" />
 		<result property="coverFile" 		column="cover_file" 		jdbcType="VARCHAR"  />
-		<result property="regDate" 			column="reg_date" 			jdbcType="DATE" />
 		<result property="discountCode"		column="discount_code"		jdbcType="VARCHAR" />
 		<result property="creator"			column="creator"			jdbcType="VARCHAR"/>
 		<result property="author"			column="author"				jdbcType="VARCHAR"/>
@@ -29,7 +28,6 @@
 		<result property="innerType"		column="inner_type"			jdbcType="VARCHAR"/>
 		<result property="tempCode"			column="temp_code"			jdbcType="SMALLINT"/>
 		<result property="factoryId" 		column="factory_id"			jdbcType="VARCHAR"/>
-		<result property="likeCount" 		column="like_count"			jdbcType="INTEGER"/>
 	</resultMap>
 	
 	<resultMap id="optionSelectMap" type="user">
@@ -59,14 +57,14 @@
 	</select>
 	
 	<!-- SQL : INSERT -->
-	<insert		id="addPaper"	parameterType="product" >
+	<insert		id="addPaper"	parameterType="publish" >
 	 	INSERT 
 	 	INTO 
 	 	product(prod_type,creator,color_type,size_type,cover_type,inner_type,factory_id,book_page) 
 	 	VALUES (#{prodType},#{creator},#{colorType},#{sizeType},#{coverType},#{innerType},#{factoryId},#{bookPage})
 	</insert>
 	
-	<insert		id="addEbook"	parameterType="product" >
+	<insert		id="addEbook"	parameterType="publish" >
 	 	INSERT 
 	 	INTO 
 	 	product(prod_type,creator) 
@@ -80,7 +78,7 @@
 	 	ORDER BY reg_date DESC LIMIT 1
 	</select>
 	
-	<update	id="updateManu"	parameterType="product">
+	<update	id="updateManu"	parameterType="publish">
 	   	UPDATE product
 	   	SET
 	   		manu_file = #{manuFile}
@@ -93,14 +91,14 @@
 	 	WHERE prod_no IN(#{value})
 	</select>
 	
-	<insert		id="addProduct"		parameterType="product">
+	<insert		id="addProduct"		parameterType="publish">
 		INSERT
 		INTO
 		product(prod_type, prod_name, prod_thumbnail, cover_file, prod_detail, retail_price, creator )
 		VALUES (#{prodType}, #{prodName}, #{prodThumbnail}, #{coverFile:VARCHAR}, #{prodDetail}, #{retailPrice}, #{creator})
 	</insert>
 	
-	<update	id="updateProduct"	parameterType="product">
+	<update	id="updateProduct"	parameterType="publish">
 	   	UPDATE product
 	   	SET
 	   		prod_name 			= #{prodName},

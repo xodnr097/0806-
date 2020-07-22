@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
-import com.libero.service.domain.Product;
+import com.libero.service.domain.Publish;
 import com.libero.service.domain.User;
 import com.libero.service.publish.PublishDAO;
 import com.libero.service.publish.PublishService;
@@ -39,16 +39,16 @@ public class PublishServiceImpl implements PublishService{
 		return map;
 	}
 	
-	public void addPrintOption(Product product) throws Exception{
-		publishDAO.addPrintOption(product);
+	public void addPrintOption(Publish publish) throws Exception{
+		publishDAO.addPrintOption(publish);
 	}
 	
 	public int getPublishNo(String creator) throws Exception {
 		return publishDAO.getPublishNo(creator);
 	}
 	
-	public void updateManu(Product product) throws Exception{
-		publishDAO.updateManu(product);
+	public void updateManu(Publish publish) throws Exception{
+		publishDAO.updateManu(publish);
 	}
 	
 	public void updatePublishInfo() throws Exception{
@@ -59,16 +59,16 @@ public class PublishServiceImpl implements PublishService{
 		
 	}
 	
-	public void addProduct(Product product) throws Exception{
-		publishDAO.addProduct(product);
+	public void addProduct(Publish publish) throws Exception{
+		publishDAO.addProduct(publish);
 	}
 	
-	public Product getProduct(int prodNo) throws Exception{
+	public Publish getProduct(int prodNo) throws Exception{
 		return publishDAO.getProduct(prodNo);
 	}
 	
-	public void updateProduct(Product product) throws Exception{
-		publishDAO.updateProduct(product);
+	public void updateProduct(Publish publish) throws Exception{
+		publishDAO.updateProduct(publish);
 	}
 	
 	public void addOptionPrice() throws Exception{

@@ -19,7 +19,7 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.libero.service.domain.Product;
+import com.libero.service.domain.Publish;
 import com.libero.service.domain.User;
 import com.libero.service.publish.PublishService;
 
@@ -67,17 +67,17 @@ public class PublishController {
 	}
 	
 	@RequestMapping(value = "addPrintOption", method = RequestMethod.POST)
-	public ModelAndView addPrintOption(HttpSession session, Product product, @RequestParam("prodType") String prodType) throws Exception {
+	public ModelAndView addPrintOption(HttpSession session, Publish publish, @RequestParam("prodType") String prodType) throws Exception {
 		
 		System.out.println("/publish/addPrintOption : POST");
 		
 		User user = (User)session.getAttribute("user");
-		product.setCreator(user.getUserId());
+		publish.setCreator(user.getUserId());
 		
-		product.setProdType(prodType);
-		publishService.addPrintOption(product);
+		publish.setProdType(prodType);
+		publishService.addPrintOption(publish);
 		
-		int prodNo = publishService.getPublishNo(product.getCreator());
+		int prodNo = publishService.getPublishNo(publish.getCreator());
 		
 		ModelAndView modelAndView = new ModelAndView();
 		modelAndView.setViewName("redirect:/publish/addManu?prodNo="+prodNo);
@@ -86,19 +86,19 @@ public class PublishController {
 	}
 	
 	@RequestMapping(value = "addManu", method = RequestMethod.GET)
-	public ModelAndView addManu(HttpSession session, @RequestParam("prodNo")int prodNo, Product product) throws Exception {
+	public ModelAndView addManu(HttpSession session, @RequestParam("prodNo")int prodNo, Publish publish) throws Exception {
 		
 		System.out.println("/publish/addManu : GET");
 		
-		product.setProdNo(prodNo);
+		publish.setProdNo(prodNo);
 		
-		product = publishService.getProduct(prodNo);
+		publish = publishService.getProduct(prodNo);
 		
 		User user = (User) session.getAttribute("user");
 		
 		ModelAndView modelAndView = new ModelAndView();
-		if (user!=null && user.getUserId().contentEquals(product.getCreator())) {
-			modelAndView.addObject("prod",product);
+		if (user!=null && user.getUserId().contentEquals(publish.getCreator())) {
+			modelAndView.addObject("prod",publish);
 			modelAndView.setViewName("forward:/view/publish/addManu.jsp");
 		}else {
 			modelAndView.setViewName("redirect:/index.jsp");
@@ -107,7 +107,7 @@ public class PublishController {
 	}
 	
 	@RequestMapping(value = "addManu", method = RequestMethod.POST)
-	public ModelAndView addManu(Product product, MultipartHttpServletRequest request) throws Exception {
+	public ModelAndView addManu(Publish publish, MultipartHttpServletRequest request) throws Exception {
 		
 		System.out.println("/publish/addManu : POST");
 		
@@ -119,31 +119,31 @@ public class PublishController {
 			String extension = originalFileName.substring(originalFileName.lastIndexOf("."));	//파일 확장자
 			String fileRoot = path+"publish/fileUpload/"; // 파일 경로
 			String savedFileName = UUID.randomUUID() + extension;	//저장될 파일 명
-			product.setManuFile(savedFileName);
+			publish.setManuFile(savedFileName);
 		    	
 	    	File f = new File(fileRoot+savedFileName);
 	    	cmf.transferTo(f);
 		}
-		publishService.updateManu(product);
+		publishService.updateManu(publish);
 		ModelAndView modelAndView = new ModelAndView();
-		modelAndView.addObject("prod",product);
-		modelAndView.setViewName("redirect:/publish/addProductInfo?prodNo="+product.getProdNo());
+		modelAndView.addObject("prod",publish);
+		modelAndView.setViewName("redirect:/publish/addProductInfo?prodNo="+publish.getProdNo());
 		
 		return modelAndView;
 	}
 	
 	@RequestMapping(value = "addProductInfo", method = RequestMethod.GET)
-	public ModelAndView addProductInfo(HttpSession session, @RequestParam("prodNo")int prodNo, Product product) throws Exception {
+	public ModelAndView addProductInfo(HttpSession session, @RequestParam("prodNo")int prodNo, Publish publish) throws Exception {
 		
-		product.setProdNo(prodNo);
+		publish.setProdNo(prodNo);
 		
-		product = publishService.getProduct(prodNo);
+		publish = publishService.getProduct(prodNo);
 		
 		User user = (User) session.getAttribute("user");
 		
 		ModelAndView modelAndView = new ModelAndView();
-		if (user!=null && user.getUserId().contentEquals(product.getCreator())) {
-			modelAndView.addObject("prod",product);
+		if (user!=null && user.getUserId().contentEquals(publish.getCreator())) {
+			modelAndView.addObject("prod",publish);
 			modelAndView.setViewName("forward:/view/publish/addProductInfo.jsp");
 		}else {
 			modelAndView.setViewName("redirect:/index.jsp");
@@ -152,11 +152,11 @@ public class PublishController {
 	}
 	
 	@RequestMapping(value = "addProductInfo", method = RequestMethod.POST)
-	public ModelAndView addProductInfo(HttpSession session, Product product) throws Exception {
+	public ModelAndView addProductInfo(HttpSession session, Publish publish) throws Exception {
 		
 		ModelAndView modelAndView = new ModelAndView();
-		modelAndView.addObject("prod",product);
-		modelAndView.setViewName("redirect:/publish/addProductInfo?prodNo="+product.getProdNo());
+		modelAndView.addObject("prod",publish);
+		modelAndView.setViewName("redirect:/publish/addProductInfo?prodNo="+publish.getProdNo());
 		
 		return modelAndView;
 	}
@@ -173,13 +173,13 @@ public class PublishController {
 	}
 	
 	@RequestMapping(value = "addProduct", method = RequestMethod.POST)
-	public ModelAndView addProduct(HttpSession session, Product product, @RequestParam("imgFile")List<MultipartFile> files) throws Exception {
+	public ModelAndView addProduct(HttpSession session, Publish publish, @RequestParam("imgFile")List<MultipartFile> files) throws Exception {
 		
 		System.out.println("/publish/addProduct : POST");
 		
 		User user = (User)session.getAttribute("user");
 		
-		product.setCreator(user.getUserId());
+		publish.setCreator(user.getUserId());
 		
 		//File Upload Start
 		if (files!=null) {
@@ -199,22 +199,22 @@ public class PublishController {
 				
 				multipartFile.transferTo(f);
 				if (i==1) {
-					product.setProdThumbnail(f.getName());
+					publish.setProdThumbnail(f.getName());
 					
 				}
 				if(i==2) {
-					product.setCoverFile(f.getName());
+					publish.setCoverFile(f.getName());
 				}
 				System.out.println("파일 업로드 성공 : "+f.getName());
 				//맞춤형표지, 교정교열은 2일시 for문 빠져나옴
-				if (product.getProdType().contentEquals("target")||product.getProdType().contentEquals("correct")) {
+				if (publish.getProdType().contentEquals("target")||publish.getProdType().contentEquals("correct")) {
 					break;
 				}
 			}
 		}
 		//File Upload End
-		System.out.println(product);
-		publishService.addProduct(product);
+		System.out.println(publish);
+		publishService.addProduct(publish);
 		
 		ModelAndView modelAndView = new ModelAndView();
 		modelAndView.setViewName("redirect:/view/product/getProductList.jsp");
@@ -227,24 +227,24 @@ public class PublishController {
 		
 		System.out.println("/publish/updateProduct : GET");
 		
-		Product product = publishService.getProduct(prodNo);
+		Publish publish = publishService.getProduct(prodNo);
 		
 		ModelAndView modelAndView = new ModelAndView();
-		modelAndView.addObject("prod", product);
+		modelAndView.addObject("prod", publish);
 		modelAndView.setViewName("forward:/view/publish/updateProduct.jsp");
 		
 		return modelAndView;
 	}
 	
 	@RequestMapping(value = "updateProduct", method = RequestMethod.POST)
-	public ModelAndView updateProduct(Product product) throws Exception {
+	public ModelAndView updateProduct(Publish publish) throws Exception {
 		
 		System.out.println("/publish/updateProduct : POST");
 		
-		publishService.updateProduct(product);
+		publishService.updateProduct(publish);
 		
 		ModelAndView modelAndView = new ModelAndView();
-		modelAndView.addObject("prod", product);
+		modelAndView.addObject("prod", publish);
 		modelAndView.setViewName("forward:/view/product/getProduct.jsp");
 		
 		return modelAndView;

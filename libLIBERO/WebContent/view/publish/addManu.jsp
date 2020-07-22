@@ -23,7 +23,7 @@
 				font-family: 'Nanum Gothic', sans-serif;
 			}
 			
-			#manuFile {
+			#file {
 				margin-top: 60px;
 				margin-bottom: 60px;
 			}

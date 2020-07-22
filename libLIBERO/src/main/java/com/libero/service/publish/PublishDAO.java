@@ -2,28 +2,28 @@ package com.libero.service.publish;
 
 import java.util.List;
 
-import com.libero.service.domain.Product;
+import com.libero.service.domain.Publish;
 import com.libero.service.domain.User;
 
 public interface PublishDAO {
 	
 	public List<User> getPrintOptionList() throws Exception;
 	
-	public void addPrintOption(Product product) throws Exception;
+	public void addPrintOption(Publish publish) throws Exception;
 	
 	public int getPublishNo(String creator) throws Exception;
 	
-	public void updateManu(Product product) throws Exception;
+	public void updateManu(Publish publish) throws Exception;
 	
 	public void updatePublishInfo() throws Exception;
 	
 	public void updateRetailPrice() throws Exception;
 	
-	public void addProduct(Product product) throws Exception;
+	public void addProduct(Publish publish) throws Exception;
 	
-	public Product getProduct(int prodNo) throws Exception;
+	public Publish getProduct(int prodNo) throws Exception;
 	
-	public void updateProduct(Product product) throws Exception;
+	public void updateProduct(Publish publish) throws Exception;
 	
 	public void addOptionPrice() throws Exception;
 	
