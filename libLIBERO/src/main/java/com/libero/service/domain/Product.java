@@ -32,7 +32,7 @@ public class Product implements Serializable{
 	private String coverType;
 	private String innerType;
 	private short tempCode;
-	private User factoryId;
+	private String factoryId;
 	private String bookCategory;  //0719 추가
 	
 	public Product() {

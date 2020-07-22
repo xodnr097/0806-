@@ -40,15 +40,15 @@ public class PublishServiceImpl implements PublishService{
 	}
 	
 	public void addPrintOption(Product product) throws Exception{
-		
+		publishDAO.addPrintOption(product);
 	}
 	
 	public int getPublishNo(String creator) throws Exception {
 		return publishDAO.getPublishNo(creator);
 	}
 	
-	public void updateManu(int prodNo) throws Exception{
-		
+	public void updateManu(Product product) throws Exception{
+		publishDAO.updateManu(product);
 	}
 	
 	public void updatePublishInfo() throws Exception{
