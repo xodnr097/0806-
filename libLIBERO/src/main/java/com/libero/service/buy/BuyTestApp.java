@@ -72,7 +72,7 @@ public class BuyTestApp {
 		
 		//buyService.addBuy(pay);
 		
-		pay = buyService.getUserBuy("choije9410@gmail.com",10005);
+		pay = buyService.getUserBuy("choije9410@gmail.com","10005");
 		
 		
 		System.out.println(pay);
@@ -100,7 +100,7 @@ public class BuyTestApp {
 //		Pay.setAddr("��⵵");
 //		Pay.setEmail("test@test.com");
 		
-		pay = buyService.getUserBuy("wjddbstp95@gmail.com",10002);
+		pay = buyService.getUserBuy("wjddbstp95@gmail.com","10002");
 
 		//==> console Ȯ��
 		//System.out.println(Pay);

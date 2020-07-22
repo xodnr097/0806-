@@ -26,10 +26,21 @@ public class BuyDAOImpl implements BuyDAO{
 		return sqlSession.selectOne("BuyMapper.getUserBuy",pay);
 	}
 	@Override
-	public void addBuy(Pay pay) {
+	public Pay addBuy(Pay pay) {
 		// TODO Auto-generated method stub
-		System.out.println("BuyDaoImpl 도착");
+		System.out.println("BuyDaoImpl 도착 : addBuy() ");
 		sqlSession.insert("BuyMapper.addBuy",pay);
+		
+	//	sqlSession.selectOne("BuyMapper.nextAdd");
+	//	System.out.println("\n\n1번 pay"+pay.getPayNo());
+		
+//		pay=sqlSession.selectOne("BuyMapper.getBuy")
+//		pay.setPayNo();
+		
+		
+		//pay = sqlSession.selectOne("BuyMapper.getBuy",pay);
+		System.out.println("\n\n [[pay보자]] : "+pay+"\n\n");
+		return pay;
 	}
 
 	

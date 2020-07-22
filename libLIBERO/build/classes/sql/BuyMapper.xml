@@ -17,37 +17,55 @@
 <!--   		<association property="PurchaseProd" column="prodNo" javaType="com.model2.mvc.service.domain.Product" select="getProdNo"/> -->
 	</resultMap>
 	
+	
 	<resultMap id="paySelectMapper" type="pay">
-		<result property="payNo" column="pay_no" jdbcType="INTEGER"/>
+		<result property="payNo" column="pay_no" jdbcType="VARCHAR"/>
 		<result property="deliveryRequest" column="delivery_req" jdbcType="VARCHAR"/>
-		<result property="paymentOption" column="payment_type" jdbcType="CHAR"/>
+		<result property="paymentOption" column="payment_type" jdbcType="VARCHAR"/>
 		<result property="deliveryStatus" column="delivery_code" jdbcType="SMALLINT"/>
 		<result property="receiverName" column="receiver_name" jdbcType="VARCHAR"/>
 		<result property="receiverAddr" column="receiver_addr" jdbcType="VARCHAR"/>
 		<result property="receiverPhone" column="receiver_phone" jdbcType="VARCHAR"/>
 		<result property="actualPrice" column="actual_price" jdbcType="INTEGER"/>
 		<result property="cancelReason" column="cancel_type" jdbcType="VARCHAR"/>
-		<result property="payStatus" column="pay_code" jdbcType="INTEGER"/>
+		<result property="payStatus" column="pay_code" jdbcType="VARCHAR"/>
 		<result property="payDate" column="pay_date" jdbcType="DATE"/>
 		<result property="buyerId" column="user_id" jdbcType="VARCHAR"/>
 	</resultMap>
 	
 	<select id ="getUserBuy" parameterType="String" resultMap="paySelectMapper">
 		SELECT
-		pay_no , delivery_req, payment_type, delivery_code, receiver_name, receiver_addr, receiver_phone,actual_price,pay_date,user_id
+		pay_no,
+		delivery_req,
+		payment_type,
+		delivery_code,
+		receiver_name,
+		receiver_addr,
+		receiver_phone,
+		actual_price,
+		pay_date,user_id
 		from pay
 		where user_id = #{buyerId}
 		AND pay_no = #{payNo}
-		<if test="prodNo != null">
 		
-		</if>
 	</select>
 	
-	<insert id="addBuy" parameterType="Pay">
+	<insert id="addBuy" parameterType="pay">
 		INSERT 
-		INTO pay (user_id, payment_type, actual_price, receiver_name, receiver_addr, receiver_phone,
-				 delivery_req, pay_date, delivery_code,pay_code,cancel_type )
+		INTO pay (pay_no,
+				  user_id,
+				  payment_type,
+				  actual_price,
+				  receiver_name,
+				  receiver_addr,
+				  receiver_phone,
+				  delivery_req,
+				  pay_date,
+				  delivery_code,
+				  pay_code,
+				  cancel_type )
 		VALUES(
+			   #{payNo},
 			   #{buyerId},
 			   #{paymentOption},
 			   #{actualPrice},
@@ -62,5 +80,12 @@
 				)
 	</insert>
 	
+	<select id="nextAdd">
+		SELECT AUTO_INCREMENT
+		FROM information_schema.tables
+		WHERE table_name = 'pay'
+		AND table_schema = DATABASE();
+	</select>
 	
+	 
 </mapper>

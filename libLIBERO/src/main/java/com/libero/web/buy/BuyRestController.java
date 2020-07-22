@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -14,7 +15,7 @@ import com.libero.service.buy.BuyService;
 import com.libero.service.domain.Pay;
 
 @RestController
-@RequestMapping("/view/buy/*")
+@RequestMapping("/buy/*")
 public class BuyRestController {
 
 	//field
@@ -22,21 +23,28 @@ public class BuyRestController {
 	@Qualifier("buyServiceImpl")
 	private BuyService buyService;
 	public BuyRestController() {
+		
 		System.out.println(" ---------------------------------------");
 		System.out.println("[ "+this.getClass()+" ]");
 		System.out.println(" ---------------------------------------");
 	}
 	
-	@RequestMapping(value="json/addPay",method=RequestMethod.POST)
-	public Map addPay(@RequestBody Pay pay) throws Exception{
-		
-		buyService.addBuy(pay);
-		
-		Map map = new HashMap();
-		map.put("pay",pay);
-		
-		return map;
-	}
-	
 
+	
+	@RequestMapping(value = "json/beforePay", method = RequestMethod.POST)
+	public Pay beforePay(@RequestBody Pay pay) throws Exception {
+		System.out.println("\n\n\n [RESTController :  beforePay]\n\n\n");
+		System.out.println("------------------------");
+		System.out.println(pay);
+		System.out.println("------------------------");
+		System.out.println("\n\n\n");
+		return	 buyService.addBuy(pay);
+	}	
+	
+	
+	
+	
+	
+	
+	
 }

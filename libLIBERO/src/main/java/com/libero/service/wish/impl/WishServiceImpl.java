@@ -29,12 +29,13 @@ public class WishServiceImpl implements WishService {
 		@Override
 		public boolean addWish(HashMap<String, Object> hashMap) throws Exception {
 			
-			String userId = (String) hashMap.get("userId");
-			System.out.println(hashMap.get("userId"));
-			if(wishDAO.getWishList(userId) == null ) {
+			System.out.println("여기는 in wishServiceImpl");
+			if(wishDAO.checkWishList(hashMap) == null ) {
+						System.out.println("좋아요에 상품이 없는것 확인, 등록진행");
 						wishDAO.addWish(hashMap);
 						return true;
 			}else {
+						System.out.println("좋아요에 상품이 있는것 확인, 삭제진행");
 						wishDAO.removeWish(hashMap);
 						return false;
 			}

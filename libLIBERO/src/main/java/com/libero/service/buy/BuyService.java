@@ -17,9 +17,9 @@ public interface BuyService {
 	
 	public void addCancelation();
 	
-	public void addBuy(Pay pay);
+	public Pay addBuy(Pay pay);
 	
-	public Pay getUserBuy(String userId, int payNo);
+	public Pay getUserBuy(String userId, String payNo);
 	
 	public void getUserBuyList();
 	

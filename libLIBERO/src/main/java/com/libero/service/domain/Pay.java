@@ -10,10 +10,10 @@ import lombok.Data;
 public class Pay implements Serializable{
 
 	// 실제 결제 정보를 가지고있는 domain
-	private int payNo;	
+	private String payNo;	
 	private String deliveryRequest;
 	private String paymentOption;	
-	private int payStatus;
+	private String payStatus;
 	private int deliveryStatus; 
 	private String receiverName;
 	private String receiverAddr;
@@ -21,16 +21,16 @@ public class Pay implements Serializable{
 	private int actualPrice;
 	private String cancelReason;
 	private String buyerId; //buy 
-	private List<Product> prodNo; //������ ��ǰ ���� ==> ��ǰ �� , ��ǰ ���� , ���� / â���� �̸� , �Ѱ�������?(�մܿ��� �����´�?), ��ǰ �̹���,
-	private List<Publish> publish;//��ǰ Ÿ��.( ��ǰ Ÿ�Կ� ���� ����� �Է� â ��� ���� Ȯ��) 
-								  //ī�װ� ?, �ؽ��±� ?.( ��踦 �� �� �ʿ�?)
-								  // ����Ʈ -> �������� ��ǰ�� ���� �� �־ �ʿ� �ϴ� ����.
-	 //�μ�� �ֹ� ���� ,product �� �ش��ϴ� ��ǰ �ϳ��ϳ��� ���� �ޱ� �ʿ�� ���� ����Ʈ ���.�³�?
-	private Date payDate;
-	
+	private List<Product> prodNo; //
+	private List<Publish> publish;// 
+								  //
+								  //
+	 //
+	private int payDate;
+	//payStatus , payNo , paymentOption  데이터 베이스에서 다 VARCHAR 로 바꿈,.
 	/////////////////추가/////////////////////
-	
-	
+	private String impUid;
+	private String merchantUid;
 	
 	
 }
