@@ -30,7 +30,7 @@ public class WishServiceImpl implements WishService {
 		public boolean addWish(HashMap<String, Object> hashMap) throws Exception {
 			
 			System.out.println("여기는 in wishServiceImpl");
-			if(wishDAO.checkWishList(hashMap) == null ) {
+			if(wishDAO.checkWish(hashMap) == null ) {
 						System.out.println("좋아요에 상품이 없는것 확인, 등록진행");
 						wishDAO.addWish(hashMap);
 						return true;
@@ -40,5 +40,12 @@ public class WishServiceImpl implements WishService {
 						return false;
 			}
 		}
-
+		
+		public boolean checkWish(HashMap<String, Object> hashMap) throws Exception {
+			if(wishDAO.checkWish(hashMap) == null) {
+				return true;
+			}else {
+				return false;
+			}
+		}
 }

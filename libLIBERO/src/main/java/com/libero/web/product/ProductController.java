@@ -1,5 +1,6 @@
 package com.libero.web.product;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +13,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.libero.service.domain.Product;
 import com.libero.service.product.ProductService;
+import com.libero.service.wish.WishService;
 
 @Controller
 @RequestMapping("/product/*")
@@ -21,6 +23,10 @@ public class ProductController{
 	@Autowired
 	@Qualifier("productServiceImpl")
 	private ProductService productService;
+	
+	@Autowired
+	@Qualifier("wishServiceImpl")
+	private WishService wishService;
 	
 	//Constructor
 	public ProductController() {
@@ -86,10 +92,20 @@ public class ProductController{
 					
 						System.out.println("/product/getProduct : GET");
 						
+						HashMap <String, Object> hashMap = new HashMap<String, Object>();
+						hashMap.put("prodNo", prodNo);
+						hashMap.put("userId", "admin2");
+						
 						//BusinessLogic
 						Product product=productService.getProduct(prodNo);
 						ModelAndView modelAndView = new ModelAndView();
 						modelAndView.addObject("product", product);
+						
+						if(wishService.checkWish(hashMap) == true) {
+							modelAndView.addObject("wish", "../../resources/images/product/wish/diswish.png");
+						}else {
+							modelAndView.addObject("wish", "../../resources/images/product/wish/wish.png");
+						}
 						
 						System.out.println("상품타입은?"+product.getProdType());
 						if((product.getProdType()).equals("paper")  ||  product.getProdType() == "ebook") {
