@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
+import org.springframework.web.multipart.commons.CommonsMultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.libero.service.domain.Product;
@@ -51,7 +53,7 @@ public class PublishController {
 	}
 	
 	@RequestMapping(value = "addPrintOption", method = RequestMethod.GET)
-	public ModelAndView addPrintOption(HttpSession session, @RequestParam("prodType") String prodType) throws Exception {
+	public ModelAndView addPrintOption() throws Exception {
 		
 		System.out.println("/publish/addPrintOption : GET");
 		
@@ -65,17 +67,20 @@ public class PublishController {
 	}
 	
 	@RequestMapping(value = "addPrintOption", method = RequestMethod.POST)
-	public ModelAndView addPrintOption(HttpSession session, Product product) throws Exception {
+	public ModelAndView addPrintOption(HttpSession session, Product product, @RequestParam("prodType") String prodType) throws Exception {
 		
 		System.out.println("/publish/addPrintOption : POST");
 		
 		User user = (User)session.getAttribute("user");
 		product.setCreator(user.getUserId());
 		
+		product.setProdType(prodType);
+		publishService.addPrintOption(product);
+		
 		int prodNo = publishService.getPublishNo(product.getCreator());
 		
 		ModelAndView modelAndView = new ModelAndView();
-		modelAndView.setViewName("redirect:/libero/publish/addManu?prodNo="+prodNo);
+		modelAndView.setViewName("redirect:/publish/addManu?prodNo="+prodNo);
 		
 		return modelAndView;
 	}
@@ -89,9 +94,69 @@ public class PublishController {
 		
 		product = publishService.getProduct(prodNo);
 		
+		User user = (User) session.getAttribute("user");
+		
+		ModelAndView modelAndView = new ModelAndView();
+		if (user!=null && user.getUserId().contentEquals(product.getCreator())) {
+			modelAndView.addObject("prod",product);
+			modelAndView.setViewName("forward:/view/publish/addManu.jsp");
+		}else {
+			modelAndView.setViewName("redirect:/index.jsp");
+		}
+		return modelAndView;
+	}
+	
+	@RequestMapping(value = "addManu", method = RequestMethod.POST)
+	public ModelAndView addManu(Product product, MultipartHttpServletRequest request) throws Exception {
+		
+		System.out.println("/publish/addManu : POST");
+		
+		Map<String, MultipartFile> files = request.getFileMap();
+		CommonsMultipartFile cmf = (CommonsMultipartFile) files.get("file");
+		
+		if (cmf.getSize()!=0) {
+			String originalFileName = cmf.getOriginalFilename();	//오리지날 파일명
+			String extension = originalFileName.substring(originalFileName.lastIndexOf("."));	//파일 확장자
+			String fileRoot = path+"publish/fileUpload/"; // 파일 경로
+			String savedFileName = UUID.randomUUID() + extension;	//저장될 파일 명
+			product.setManuFile(savedFileName);
+		    	
+	    	File f = new File(fileRoot+savedFileName);
+	    	cmf.transferTo(f);
+		}
+		publishService.updateManu(product);
 		ModelAndView modelAndView = new ModelAndView();
 		modelAndView.addObject("prod",product);
-		modelAndView.setViewName("forward:/view/publish/addManu.jsp");
+		modelAndView.setViewName("redirect:/publish/addProductInfo?prodNo="+product.getProdNo());
+		
+		return modelAndView;
+	}
+	
+	@RequestMapping(value = "addProductInfo", method = RequestMethod.GET)
+	public ModelAndView addProductInfo(HttpSession session, @RequestParam("prodNo")int prodNo, Product product) throws Exception {
+		
+		product.setProdNo(prodNo);
+		
+		product = publishService.getProduct(prodNo);
+		
+		User user = (User) session.getAttribute("user");
+		
+		ModelAndView modelAndView = new ModelAndView();
+		if (user!=null && user.getUserId().contentEquals(product.getCreator())) {
+			modelAndView.addObject("prod",product);
+			modelAndView.setViewName("forward:/view/publish/addProductInfo.jsp");
+		}else {
+			modelAndView.setViewName("redirect:/index.jsp");
+		}
+		return modelAndView;
+	}
+	
+	@RequestMapping(value = "addProductInfo", method = RequestMethod.POST)
+	public ModelAndView addProductInfo(HttpSession session, Product product) throws Exception {
+		
+		ModelAndView modelAndView = new ModelAndView();
+		modelAndView.addObject("prod",product);
+		modelAndView.setViewName("redirect:/publish/addProductInfo?prodNo="+product.getProdNo());
 		
 		return modelAndView;
 	}

@@ -28,7 +28,7 @@
 		<result property="coverType"		column="cover_type"			jdbcType="VARCHAR"/>
 		<result property="innerType"		column="inner_type"			jdbcType="VARCHAR"/>
 		<result property="tempCode"			column="temp_code"			jdbcType="SMALLINT"/>
-		<result property="factoryId.userId" column="factory_id"			jdbcType="VARCHAR"/>
+		<result property="factoryId" 		column="factory_id"			jdbcType="VARCHAR"/>
 		<result property="likeCount" 		column="like_count"			jdbcType="INTEGER"/>
 	</resultMap>
 	
@@ -49,14 +49,6 @@
 		<result property="roughPrice"	column="rough_price"		jdbcType="INTEGER"/>
 	</resultMap>
 	
-	<!-- SQL : INSERT -->
-	<insert		id="insertPublish"	parameterType="product" >
-	 	INSERT 
-	 	INTO 
-	 	product(prod_type,creator) 
-	 	VALUES (#{prodType},#{creator})
-	</insert>
-	
 	<select 	id="getPrintOptinList" resultMap="optionSelectMap">
 		SELECT
 		user_id, nickname, b5_price, a4_price, color_price, black_price, snow_price, 
@@ -66,12 +58,34 @@
 		AND user_code IN(1)
 	</select>
 	
+	<!-- SQL : INSERT -->
+	<insert		id="addPaper"	parameterType="product" >
+	 	INSERT 
+	 	INTO 
+	 	product(prod_type,creator,color_type,size_type,cover_type,inner_type,factory_id,book_page) 
+	 	VALUES (#{prodType},#{creator},#{colorType},#{sizeType},#{coverType},#{innerType},#{factoryId},#{bookPage})
+	</insert>
+	
+	<insert		id="addEbook"	parameterType="product" >
+	 	INSERT 
+	 	INTO 
+	 	product(prod_type,creator) 
+	 	VALUES (#{prodType},#{creator})
+	</insert>
+	
 	<select		id="getPublishNo"	parameterType="String" 	resultType="int">
 	 	SELECT prod_no 
 	 	FROM product 
 	 	WHERE creator IN(#{value})
 	 	ORDER BY reg_date DESC LIMIT 1
 	</select>
+	
+	<update	id="updateManu"	parameterType="product">
+	   	UPDATE product
+	   	SET
+	   		manu_file = #{manuFile}
+	   	WHERE prod_no = #{prodNo}
+	</update>
 	
 	<select		id="getProduct"	parameterType="int" 	resultMap="publishSelectMap">
 	 	SELECT * 
