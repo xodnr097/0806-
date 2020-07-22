@@ -22,8 +22,13 @@ public class WishDAOImpl implements WishDAO {
 	}
 	@Override
 	public List<Product> getWishList(String userId) {
-		
-			return sqlSession.selectList("ProductMapper.getWishProduct", userId);
+			System.out.println("여기는 wishDAOImpl.getWishList 가져온것은"+userId);
+			return sqlSession.selectList("ProductMapper.getWishList", userId);
+	}
+	
+	public Product checkWishList(HashMap<String, Object> hashMap) {
+		System.out.println("여기는 wishDAOImpl.checkWishList 가져온것은"+hashMap);
+		return sqlSession.selectOne("ProductMapper.checkWishList", hashMap);
 	}
 	
 	@Override

@@ -31,8 +31,10 @@
 		<result property="tempCode"		 column="temp_code"			jdbcType="SMALLINT" />
 		<result property="bookCategory"	 column="book_category"		jdbcType="VARCHAR" />
 		<result property="likeCount"	 column="like_count"		jdbcType="INTEGER" />
+		<result property="wishNo"		 column="wish_no"			jdbcType="INTEGER" />
+			
 	</resultMap>
-	
+		
 	<!--  SQL : SELECT LIST -->
 	<select id="getBookList" resultMap="productSelectMap">
 			SELECT *
@@ -58,6 +60,9 @@
 	
 	</select>
 	
+	
+	<!--좋아요 기능-->
+	
 	<insert id="addWish" parameterType="hashMap">
 					INSERT
 					INTO
@@ -77,6 +82,14 @@
 					SELECT prod_no
 					FROM wish
 					WHERE user_id = #{userId}
+	
+	</select>
+	
+	<select id="checkWishList" parameterType="hashMap" resultMap="productSelectMap">
+	
+					SELECT wish_no
+					FROM wish
+					WHERE prod_no = #{prodNo} AND user_id = #{userId}
 	
 	</select>
 	 
