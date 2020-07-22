@@ -13,7 +13,7 @@ public interface PublishDAO {
 	
 	public int getPublishNo(String creator) throws Exception;
 	
-	public void updateManu(int prodNo) throws Exception;
+	public void updateManu(Product product) throws Exception;
 	
 	public void updatePublishInfo() throws Exception;
 	

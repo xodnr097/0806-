@@ -113,6 +113,7 @@
 	   		<c:if test="${param.prodType=='paper'}">
 	   		<!-- ////////////////// paper form Start /////////////////////-->
 			<form>
+				<input type="hidden" name="prodType" value="paper">
 				<div class="form-group col-lg-4 rightform">
 					<div class="row justify-content-right">
 						<label class="formLabel col" for="publishDetail">상세정보</label>
@@ -142,7 +143,7 @@
 								</tr>
 								<tr>
 									<th>페이지 수</th>
-									<td>: <input type="number" name="bookPage" id="bookPage">pages</td>
+									<td>: <input type="number" name="bookPage" id="bookPage" onblur="pageCount()">pages</td>
 								</tr>
 								<tr>
 									<th>책 등 두께</th>
@@ -154,17 +155,17 @@
 					<div class="row justify-content-right">
 						<label class="formLabel col" for="getfactoryList">인쇄소 선택</label>
 					</div>
-					<div>
+					<div class="row detail text-left">
 						<table>
 							<tbody>
 								<c:set var="i" value="0" />
 								<c:forEach var="user" items="${list}">
-								<c:set var="i" value="${ i+1 }" />
 									<tr>
+										<td><input type="radio" name="factoryId" value="${user.userId}"></td>
 										<th>${user.nickname}</th>
-										<td id="price${i}"></td>
+										<td class="text-right" id="price${i}"></td>
 									</tr>
-									<input type="hidden" id="factoryId" value="${user.userId}">
+									<c:set var="i" value="${ i+1 }" />
 								</c:forEach>
 							</tbody>
 						</table>
@@ -254,6 +255,7 @@
 			<!-- /////////////////////eBook form Start/////////////////// -->
 			<c:if test="${param.prodType=='ebook'}">
 				<form>
+					<input type="hidden" name="prodType" value="ebook">
 					<div class="form-group" align="center">
 			      		<button type="button" class="btn btn-info btn-block" 
 			      			onclick="addPrintOption()">
@@ -266,44 +268,112 @@
 	   	<!-- ///////////// Bootstrap Container End ////////////////// -->
 	</body>
 	<script type="text/javascript">
-		//============= 옵션 선택 Event=====================
+		//============= Event Start =====================
 		$(function(){
-			$("input").on("click",function(){
-				var colorType = $("input[name='colorType']:checked").val();
-				var sizeType = $("input[name='sizeType']:checked").val();
-				var coverType = $("input[name='coverType']:checked").val();
-				var innerType = $("input[name='innerType']:checked").val();
-				
-				if (colorType=="color") {
-					$("#colorType").html(": 컬러 도서");
-				} else {
-					$("#colorType").html(": 흑백 도서");
-				}
-				
-				if (sizeType=="a5") {
-					$("#sizeType").html(": A5(148*210mm)");
-				}else if(sizeType=="b5") {
-					$("#sizeType").html(": B5(182*257mm)");
-				}else if(sizeType=="a4") {
-					$("#sizeType").html(": A4(210*297mm)");
-				}
-				
-				if (coverType=="snow") {
-					$("#coverType").html(": 스노우지(스노우 250g, 무광)");
-				}else if (coverType=="mont") {
-					$("#coverType").html(": 몽블랑지(몽블랑 210g, 무광)");
-				}else if (coverType=="arte") {
-					$("#coverType").html(": 아트지(아트 210g, 무광)");
-				}
-				
-				if (innerType=="white") {
-					$("#innerType").html(": 백상지 90g");
-				}else if (innerType=="ivory") {
-					$("#innerType").html(": 미색지 90g");
-				}else if (innerType=="rough") {
-					$("#innerType").html(": 갱지 54g");
-				}
-			});
+			$("input").attr("onclick","selectType(); pageCount()");
+			
 		});
+		//============= 옵션 선택 Event=====================
+		function selectType() {
+			
+			var colorType = $("input[name='colorType']:checked").val();
+			var sizeType = $("input[name='sizeType']:checked").val();
+			var coverType = $("input[name='coverType']:checked").val();
+			var innerType = $("input[name='innerType']:checked").val();
+			
+			if (colorType=="color") {
+				$("#colorType").html(": 컬러 도서");
+			} else {
+				$("#colorType").html(": 흑백 도서");
+			}
+			
+			if (sizeType=="a5") {
+				$("#sizeType").html(": A5(148*210mm)");
+			}else if(sizeType=="b5") {
+				$("#sizeType").html(": B5(182*257mm)");
+			}else if(sizeType=="a4") {
+				$("#sizeType").html(": A4(210*297mm)");
+			}
+			
+			if (coverType=="snow") {
+				$("#coverType").html(": 스노우지(스노우 250g, 무광)");
+			}else if (coverType=="mont") {
+				$("#coverType").html(": 몽블랑지(몽블랑 210g, 무광)");
+			}else if (coverType=="arte") {
+				$("#coverType").html(": 아트지(아트 210g, 무광)");
+			}
+			
+			if (innerType=="white") {
+				$("#innerType").html(": 백상지 90g");
+			}else if (innerType=="ivory") {
+				$("#innerType").html(": 미색지 90g");
+			}else if (innerType=="rough") {
+				$("#innerType").html(": 갱지 54g");
+			}
+		}
+		
+		//================ form submit ======================
+		function addPrintOption() {
+			var userId = "${sessionScope.user.userId}";
+			var phoneCode = "${sessionScope.user.phoneCode}";
+			var prodType = "${param.prodType}";
+			var pages = $("#bookPage").val();
+			
+			if (userId=="") {
+				alert("로그인 해주세요.");
+				return;
+			}
+			if (phoneCode!=1) {
+				alert("휴대폰 본인인증을 완료한 회원만 가능합니다.");
+				return;
+			}
+			if (prodType=="paper" && pages==null) {
+				alert("페이지수를 입력해주세요.");
+				return;
+			}
+			
+			$("form").attr("method" , "POST").attr("action" , "/libero/publish/addPrintOption").submit();
+		}
+		//======================== 인쇄비 계산 Event =================
+		function pageCount() {
+			var pages = $("#bookPage").val();
+			var colorPrice = new Array();
+			var blackPrice = new Array();
+			var a5Price = new Array();
+			var b5Price = new Array();
+			var a4Price = new Array();
+			var snowPrice = new Array();
+			var montPrice = new Array();
+			var artePrice = new Array();
+			var whitePrice = new Array();
+			var ivoryPrice = new Array();
+			var roughPrice = new Array();
+			var colorType = $("input[name='colorType']:checked").val();
+			var sizeType = $("input[name='sizeType']:checked").val();
+			var coverType = $("input[name='coverType']:checked").val();
+			var innerType = $("input[name='innerType']:checked").val();
+			
+			<c:forEach items="${list}" var="user">
+				colorPrice.push("${user.colorPrice}");
+				blackPrice.push("${user.blackPrice}");
+				a5Price.push("${user.a5Price}");
+				b5Price.push("${user.b5Price}");
+				a4Price.push("${user.a4Price}");
+				snowPrice.push("${user.snowPrice}");
+				montPrice.push("${user.montPrice}");
+				artePrice.push("${user.artePrice}");
+				whitePrice.push("${user.whitePrice}");
+				ivoryPrice.push("${user.ivoryPrice}");
+				roughPrice.push("${user.roughPrice}");
+			</c:forEach>
+			//한권당 인쇄비 계산 = 컬러+표지비+((규격+내지비용)x페이지수)
+			for (var i = 0; i <= colorPrice.length; i++) {
+				var color = colorType=="color" ? colorPrice[i] : blackPrice[i];
+				var size = sizeType=="a5" ? a5Price[i] : sizeType=="b5" ? b5Price[i] : a4Price[i];
+				var cover = coverType=="snow" ? snowPrice[i] : coverType=="mont" ? montPrice[i] : artePrice[i];
+				var inner = innerType=="white" ? whitePrice[i] : innerType=="ivory" ? ivoryPrice[i] : roughPrice[i];
+				$("#price"+i).html(parseInt(color)+parseInt(cover)+((parseInt(size)+parseInt(inner))*pages)+"원");
+			}
+		}
 	</script>
 </html>
