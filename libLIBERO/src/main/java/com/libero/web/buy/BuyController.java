@@ -17,7 +17,7 @@ import com.libero.service.domain.Product;
 import com.libero.service.product.ProductService;
 
 @Controller
-@RequestMapping("/view/buy/*")
+@RequestMapping("/buy/*")
 public class BuyController {
 	
 	//Field
@@ -54,7 +54,7 @@ public class BuyController {
 //	}
 	@RequestMapping(value="getUserBuy", method= RequestMethod.GET)
 	public String getUserBuy(@RequestParam("userId") String userId,
-							 @RequestParam("payNo") int payNo,
+							 @RequestParam("payNo") String payNo,
 							 Model model) throws Exception{
 		System.out.println(" ---------------------------------------");
 		System.out.println("/buy/getUserBuy : GET");

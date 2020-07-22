@@ -63,9 +63,8 @@ public class BuyServiceImpl implements BuyService{
 	}
 
 	@Override
-	public void addBuy(Pay pay) {
-		buyDao.addBuy(pay);
-		
+	public Pay addBuy(Pay pay) {
+		return	buyDao.addBuy(pay);
 	}
 
 	
@@ -89,7 +88,7 @@ public class BuyServiceImpl implements BuyService{
 	}
 
 	@Override
-	public Pay getUserBuy(String userId, int payNo) {
+	public Pay getUserBuy(String userId, String payNo) {
 		Pay pay = new Pay();
 		pay.setBuyerId(userId);
 		pay.setPayNo(payNo);

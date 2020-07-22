@@ -6,5 +6,5 @@ public interface BuyDAO {
 
 	public Pay getUserBuy(Pay pay);
 	
-	public void addBuy(Pay pay);
+	public Pay addBuy(Pay pay);
 }
