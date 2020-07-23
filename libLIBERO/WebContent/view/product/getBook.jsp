@@ -22,6 +22,10 @@
 
 <body>
 
+		<!-- ToolBar Start /////////////////////////////////////-->
+		<jsp:include page="../toolbar.jsp" />
+	   	<!-- ToolBar End /////////////////////////////////////-->
+
 					책번호 ${product.prodNo} <br/>
 					상품 타입 ${product.prodType} <br/>
 					상품 상세 ${product.prodDetail} <br/>
