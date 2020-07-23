@@ -135,6 +135,8 @@ public class PublishController {
 	@RequestMapping(value = "addProductInfo", method = RequestMethod.GET)
 	public ModelAndView addProductInfo(HttpSession session, @RequestParam("prodNo")int prodNo, Publish publish) throws Exception {
 		
+		System.out.println("/publish/addProductInfo : GET");
+		
 		publish.setProdNo(prodNo);
 		
 		publish = publishService.getProduct(prodNo);
@@ -152,11 +154,50 @@ public class PublishController {
 	}
 	
 	@RequestMapping(value = "addProductInfo", method = RequestMethod.POST)
-	public ModelAndView addProductInfo(HttpSession session, Publish publish) throws Exception {
+	public ModelAndView addProductInfo(Publish publish) throws Exception {
+		
+		System.out.println("/publish/addProductInfo : POST");
 		
 		ModelAndView modelAndView = new ModelAndView();
 		modelAndView.addObject("prod",publish);
-		modelAndView.setViewName("redirect:/publish/addProductInfo?prodNo="+publish.getProdNo());
+		modelAndView.setViewName("redirect:/publish/addRetailPrice?prodNo="+publish.getProdNo());
+		
+		return modelAndView;
+	}
+	
+	@RequestMapping(value = "addRetailPrice", method = RequestMethod.GET)
+	public ModelAndView addRetailPrice(HttpSession session, @RequestParam("prodNo")int prodNo, Publish publish) throws Exception {
+		
+		System.out.println("/publish/addRetailPrice : GET");
+		
+		publish.setProdNo(prodNo);
+		
+		publish = publishService.getProduct(prodNo);
+		if (publish.getRetailPrice()==0) {
+			publish.setRetailPrice(publish.getPrintPrice()*2);
+		}
+		User user = (User) session.getAttribute("user");
+		
+		ModelAndView modelAndView = new ModelAndView();
+		if (user!=null && user.getUserId().contentEquals(publish.getCreator())) {
+			modelAndView.addObject("prod",publish);
+			modelAndView.setViewName("forward:/view/publish/addRetailPrice.jsp");
+		}else {
+			modelAndView.setViewName("redirect:/index.jsp");
+		}
+		return modelAndView;
+	}
+	
+	@RequestMapping(value = "addRetailPrice", method = RequestMethod.POST)
+	public ModelAndView addRetailPrice(Publish publish) throws Exception {
+		
+		System.out.println("/publish/addRetailPrice : POST");
+		
+		publishService.updateRetailPrice(publish);
+		
+		ModelAndView modelAndView = new ModelAndView();
+		modelAndView.addObject("prod",publish);
+		modelAndView.setViewName("redirect:/view/product/getProductList.jsp");
 		
 		return modelAndView;
 	}

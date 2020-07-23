@@ -52,8 +52,8 @@ public class PublishDAOImpl implements PublishDAO {
 		
 	}
 	
-	public void updateRetailPrice() throws Exception {
-		
+	public void updateRetailPrice(Publish publish) throws Exception {
+		sqlSession.update("PublishMapper.updateRetailPrice", publish);	
 	}
 	
 	public void addProduct(Publish publish) throws Exception{
