@@ -51,15 +51,15 @@ public class ProductRestController {
 					boolean isWish = wishService.addWish(hashMap);
 					
 					if(isWish == true) {
-						obj.put("wishImage", "/resources/images/product/like/like.png");
+						obj.put("wishImage", "../../resources/images/product/wish/wish.png");
 					}else {
-						obj.put("wishImage", "/resources/images/product/like/dislike.png");
+						obj.put("wishImage", "../../resources/images/product/wish/diswish.png");
 					}
-					
-					
-					
+										
 					
 					return obj.toJSONString();
 			}//end addWish
+			
+			
 			
 }//end class
