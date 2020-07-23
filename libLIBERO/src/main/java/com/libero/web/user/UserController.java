@@ -6,8 +6,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.libero.service.domain.User;
@@ -54,4 +56,39 @@ public class UserController {
 		return "redirect:/index.jsp";
 	}
 
+	@RequestMapping(value="addUser",method=RequestMethod.GET)
+	public ModelAndView addUser() throws Exception{
+		System.out.println(" ---------------------------------------");
+		System.out.println("/user/addUser : GET");
+		System.out.println(" ---------------------------------------");
+		
+		ModelAndView mdv = new ModelAndView();
+		mdv.setViewName("forward:/view/user/addUser.jsp");
+		return mdv;
+	}
+	
+	@RequestMapping(value="addUser", method=RequestMethod.POST)
+	public ModelAndView addUser(@ModelAttribute("userId") String userId,
+								@ModelAttribute("password") String password,
+								@ModelAttribute("nickname") String nickname,
+								@ModelAttribute("address") String address,
+								@ModelAttribute("phone") String phone,
+								@ModelAttribute("profile") String profile) throws Exception{
+		User user= new User();
+		System.out.println(" ---------------------------------------");
+		System.out.println("/user/addUser : POST");
+		System.out.println(" ---------------------------------------");
+		
+		user.setUserId(userId);
+		user.setPassword(password);
+		user.setNickname(nickname);
+		user.setAddress(address);
+		user.setPhone(phone);
+		user.setProfile(profile);
+		ModelAndView mdv = new ModelAndView();
+		userService.addUser(user);
+		
+		mdv.setViewName("redirect:/index.jsp");
+		return mdv;
+	}
 }

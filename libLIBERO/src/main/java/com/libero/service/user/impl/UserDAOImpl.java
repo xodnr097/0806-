@@ -28,4 +28,13 @@ public class UserDAOImpl implements UserDAO {
 		return sqlSession.selectOne("UserMapper.getUser", userId);
 	}
 
+	@Override
+	public void addUser(User user) throws Exception {
+		sqlSession.insert("UserMapper.addNewUser",user);
+		
+	}
+	
+	
+	
+
 }

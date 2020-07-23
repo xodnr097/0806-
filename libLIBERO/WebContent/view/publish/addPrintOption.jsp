@@ -257,6 +257,7 @@
 				<form>
 					<input type="hidden" name="prodType" value="ebook">
 					<div class="form-group" align="center">
+						<input type="number" name="bookPage" id="bookPage">pages
 			      		<button type="button" class="btn btn-info btn-block" 
 			      			onclick="addPrintOption()">
 			      			원고 등록
@@ -327,7 +328,7 @@
 				alert("휴대폰 본인인증을 완료한 회원만 가능합니다.");
 				return;
 			}
-			if (prodType=="paper" && pages==null) {
+			if (pages==null) {
 				alert("페이지수를 입력해주세요.");
 				return;
 			}

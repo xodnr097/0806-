@@ -6,5 +6,7 @@ public interface UserDAO {
 	
 	// SELECT ONE
 	public User getUser(String userId) throws Exception ;
+	
+	public void addUser(User user) throws Exception;
 
 }
