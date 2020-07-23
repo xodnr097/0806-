@@ -34,7 +34,7 @@
 					내지 ${product.innerType} <br/>
 					작성자 ${product.creator}	<br/>
 	
-		<img src="../../resources/images/product/wish/diswish.png" id='wish_img' width="70px" height="70px"/>
+		<img src="${wish}" id='wish_img' width="70px" height="70px"/>
 
 
 

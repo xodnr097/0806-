@@ -6,4 +6,6 @@ public interface WishService {
 	
 	public boolean addWish(HashMap<String, Object> hashMap) throws Exception;
 
+	public boolean checkWish(HashMap<String, Object> hashMap) throws Exception;
+
 }

@@ -13,7 +13,7 @@ public interface WishDAO {
 
 	public void removeWish(HashMap<String, Object> hashMap);
 
-	public Object checkWishList(HashMap<String, Object> hashMap);
+	public Object checkWish(HashMap<String, Object> hashMap);
 
 
 
