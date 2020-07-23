@@ -197,6 +197,7 @@
 		      		<div class="modal-footer">
 		      			<button type="button" class="btn btn-info" id="loginButton">로그인</button>
 		        		<button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button>
+		        		<a href="#"><button type="button" class="btn btn-info" id="addUser">회원가입</button></a>
 		      		</div>
 		    	</div>
 		  	</div>
@@ -204,6 +205,11 @@
 		<!-- Modal End -->
 	</body>
 	<script>
+	//============= 회원가입============
+		$("#addUser").on("click",function(){
+			self.location="/libero/view/user/addUser.jsp"
+		//회원가입 온클릭 함수 
+		})
 	//============= modal 로그인 화면이동 =============
 	$('#myModal').on('shown.bs.modal', function () {
 		$('#userId').focus()
