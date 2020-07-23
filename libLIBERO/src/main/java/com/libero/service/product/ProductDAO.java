@@ -11,7 +11,7 @@ public interface ProductDAO {
 	
 	public List<Product> getBookList() throws Exception;
 
-	public List<Product> getBookListByCategory(String bookCategory);
+	public List<Product> getBookListByCategory(String category);
 	
 	public List<Product> getProductList(String prodType) throws Exception;
 

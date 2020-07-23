@@ -30,10 +30,10 @@ public class ProductDAOImpl implements ProductDAO{
 	}
 
 	@Override
-	public List<Product> getBookListByCategory(String bookCategory) {
-		System.out.println("DAOImpl.getBookListByCategory : "+bookCategory);
+	public List<Product> getBookListByCategory(String category) {
+		System.out.println("DAOImpl.getBookListByCategory : "+category);
 		
-	   return sqlSession.selectList("ProductMapper.getBookListByCategory", bookCategory);
+	   return sqlSession.selectList("ProductMapper.getBookListByCategory", category);
 	}
 	
 	@Override

@@ -9,12 +9,25 @@
 	<head>
 		<meta charset="UTF-8">
 		
-		<!-- Bootstrap CSS -->
-    	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+		<!-- MDBootstrap CSS -->
+    	<!-- Font Awesome -->
+		<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
+		<!-- Google Fonts -->
+		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap">
+		<!-- Bootstrap core CSS -->
+		<link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/css/bootstrap.min.css" rel="stylesheet">
+		<!-- Material Design Bootstrap -->
+		<link href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.19.1/css/mdb.min.css" rel="stylesheet">
+		
 		<!--   jQuery , Bootstrap CDN  -->
-		<script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
-    	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
-    	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
+		<!-- JQuery -->
+		<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+		<!-- Bootstrap tooltips -->
+		<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.4/umd/popper.min.js"></script>
+		<!-- Bootstrap core JavaScript -->
+		<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/js/bootstrap.min.js"></script>
+		<!-- MDB core JavaScript -->
+		<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.19.1/js/mdb.min.js"></script>
   		
 	   	<!-- Google Fonts CDN -->
 	   	<link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic:wght@700&display=swap" rel="stylesheet">
@@ -91,11 +104,34 @@
 				        </div>
 			      	</li>
 			      	<!-- 책만들기 End -->
-			      	<li class="nav-item">
-			        	<a class="nav-link" href="#">서비스상점</a>
+			      	<!-- 작가서비스 Start -->
+			      	<li class="nav-item dropdown">
+				        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+				          	작가서비스
+				        </a>
+				        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+				          <a class="dropdown-item" href="/libero/product/getProductList/design">표지디자인</a>
+				          <a class="dropdown-item" href="/libero/product/getProductList/target">맞춤형 표지디자인</a>
+				          <div class="dropdown-divider"></div>
+				          <a class="dropdown-item" href="/libero/product/getProductList/correct">교정 교열</a>
+				        </div>
 			      	</li>
-			      	<li class="nav-item">
-			        	<a class="nav-link" href="#">서점</a>
+			      	<!-- 서점 Start -->
+			      	<li class="nav-item dropdown">
+				        <a class="nav-link dropdown-toggle" href="/libero/product/getBookList" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+				          	서점
+				        </a>
+				        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+				        <a class="dropdown-item" href="/libero/product/getBookList">메인</a>
+				          <div class="dropdown-divider"></div>
+				          <a class="dropdown-item" href="/libero/product/getBookListByCategory/poetry">시</a>
+				          <a class="dropdown-item" href="/libero/product/getBookListByCategory/novel">소설</a>
+				          <a class="dropdown-item" href="/libero/product/getBookListByCategory/essay">수필</a>
+				          <div class="dropdown-divider"></div>
+				          <a class="dropdown-item" href="/libero/product/getBookListByCategory/non">비문학</a>
+				          <a class="dropdown-item" href="/libero/product/getBookListByCategory/edu">교육</a>
+				          
+				        </div>
 			      	</li>
 			      	<!-- 커뮤니티 Start -->
 			      	<li class="nav-item dropdown">

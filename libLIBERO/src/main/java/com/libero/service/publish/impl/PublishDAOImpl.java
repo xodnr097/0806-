@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
 
-import com.libero.service.domain.Product;
+import com.libero.service.domain.Publish;
 import com.libero.service.domain.User;
 import com.libero.service.publish.PublishDAO;
 
@@ -31,12 +31,12 @@ public class PublishDAOImpl implements PublishDAO {
 		return sqlSession.selectList("PublishMapper.getPrintOptinList");
 	}
 	
-	public void addPrintOption(Product product) throws Exception {
-		if (product.getProdType().contentEquals("paper")) {
-			sqlSession.insert("PublishMapper.addPaper", product);
+	public void addPrintOption(Publish publish) throws Exception {
+		if (publish.getProdType().contentEquals("paper")) {
+			sqlSession.insert("PublishMapper.addPaper", publish);
 		}
-		if (product.getProdType().contentEquals("ebook")) {
-			sqlSession.insert("PublishMapper.addEbook", product);
+		if (publish.getProdType().contentEquals("ebook")) {
+			sqlSession.insert("PublishMapper.addEbook", publish);
 		}
 	}
 	
@@ -44,28 +44,28 @@ public class PublishDAOImpl implements PublishDAO {
 		return sqlSession.selectOne("PublishMapper.getPublishNo", creator);
 	}
 	
-	public void updateManu(Product product) throws Exception {
-		sqlSession.update("PublishMapper.updateManu", product);
+	public void updateManu(Publish publish) throws Exception {
+		sqlSession.update("PublishMapper.updateManu", publish);
 	}
 	
 	public void updatePublishInfo() throws Exception {
 		
 	}
 	
-	public void updateRetailPrice() throws Exception {
-		
+	public void updateRetailPrice(Publish publish) throws Exception {
+		sqlSession.update("PublishMapper.updateRetailPrice", publish);	
 	}
 	
-	public void addProduct(Product product) throws Exception{
-		sqlSession.insert("PublishMapper.addProduct",product);
+	public void addProduct(Publish publish) throws Exception{
+		sqlSession.insert("PublishMapper.addProduct",publish);
 	}
 	
-	public Product getProduct(int prodNo) throws Exception {
+	public Publish getProduct(int prodNo) throws Exception {
 		return sqlSession.selectOne("PublishMapper.getProduct",prodNo);
 	}
 	
-	public void updateProduct(Product product) throws Exception{
-		sqlSession.update("PublishMapper.updateProduct", product);
+	public void updateProduct(Publish publish) throws Exception{
+		sqlSession.update("PublishMapper.updateProduct", publish);
 	}
 	
 	public void addOptionPrice() throws Exception{

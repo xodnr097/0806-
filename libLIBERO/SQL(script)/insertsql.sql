@@ -78,7 +78,7 @@ CREATE TABLE IF NOT EXISTS `product` (
   `purpose_code` char(4) DEFAULT NULL,
   `manu_file` varchar(50) DEFAULT NULL,
   `reg_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `discount_code` char(1) DEFAULT NULL,
+  `discount_code` char(1) DEFAULT 'o',
   `book_page` int(3) DEFAULT NULL,
   `size_type` char(2) DEFAULT NULL,
   `color_type` char(5) DEFAULT NULL,
@@ -86,14 +86,15 @@ CREATE TABLE IF NOT EXISTS `product` (
   `inner_type` char(5) DEFAULT NULL,
   `factory_id` varchar(30) DEFAULT NULL,
   `creator` varchar(30) NOT NULL,
-  `temp_code` smallint(6) DEFAULT '0',
+  `temp_code` smallint(6) DEFAULT '1',
   `like_count` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`prod_no`),
   KEY `FK_product_user` (`factory_id`),
   KEY `FK_product_user_2` (`creator`),
   CONSTRAINT `FK_product_user` FOREIGN KEY (`factory_id`) REFERENCES `user` (`user_id`),
   CONSTRAINT `FK_product_user_2` FOREIGN KEY (`creator`) REFERENCES `user` (`user_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=10026 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=10024 DEFAULT CHARSET=utf8;
+
 
 -- 테이블 데이터 liblibero.product:~24 rows (대략적) 내보내기
 DELETE FROM `product`;
