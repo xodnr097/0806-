@@ -43,4 +43,34 @@
 		WHERE user_id = #{value}
 	 </select>
 	 
+	 <insert id="addNewUser" parameterType="user">
+	 	INSERT INTO user (user_id,
+	 					  password,
+	 					  nickname,
+	 					  profile,
+	 					  gender_code,
+	 					  address,
+	 					  phone,
+	 					  user_code,
+	 					  role,
+	 					  reg_date
+							)
+	 	VALUES(	#{userId},
+	 			#{password},
+	 			#{nickname},
+	 			#{profile},
+	 			#{genderCode},
+	 			#{address},
+	 			#{phone},
+	 			1,
+	 			'u',
+	 			 CURRENT_TIMESTAMP
+	 			)
+	 
+	 </insert>
+	 
+	 <insert id="addHashTag" parameterType="string">
+	 
+	 
+	 </insert>
 </mapper>
