@@ -58,9 +58,8 @@
 			    background-size:contain;
 			    background-repeat:no-repeat;
 			    display:inline-block;
-			    width:150px; height:100px;
+			    width:145px; height:100px;
 			    margin-top: 10px;
-			    padding-top: 105px;
 			}
 			input[type="radio"]:checked + label {
     			border: black 1px solid;
@@ -132,6 +131,12 @@
 	   					</div>
 	   				</div>
 	   			</div>
+	   			<!-- 이미지 선택 End -->
+	   			<div class="form-group imgPreview">
+	   				<div class="row col-lg-12">
+	   					<canvas id="preview" width="300px" height="150px"></canvas>
+	   				</div>
+	   			</div>
 	   			<!-- 무료템플릿 선택 End -->
 	   		</form>
 	   		<!-- 도서정보 등록 폼 End -->
@@ -142,11 +147,13 @@
 		$(function(){
 			$("div .freeSelect").hide();
 			$("div .imgSelect").hide();
+			$("div .imgPreview").hide();
 			
 			$("input[name='imgType']").on("click", function(){
 				var type = $("input[name='imgType']:checked").val();
 				console.log(type);
 				$("div .imgSelect").show();
+				$("div .imgPreview").show();
 				$(".img1").css("background-image", "url(http://127.0.0.1:8080/libero/resources/images/publish/freeTemplate/"+type+"/t1_preview.png)");
 				$(".img2").css("background-image", "url(http://127.0.0.1:8080/libero/resources/images/publish/freeTemplate/"+type+"/t2_preview.png)");
 				$(".img3").css("background-image", "url(http://127.0.0.1:8080/libero/resources/images/publish/freeTemplate/"+type+"/t3_preview.png)");
