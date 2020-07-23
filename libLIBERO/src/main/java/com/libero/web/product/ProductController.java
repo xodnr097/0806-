@@ -4,6 +4,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
@@ -13,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.libero.service.domain.Product;
+import com.libero.service.domain.User;
 import com.libero.service.product.ProductService;
 import com.libero.service.wish.WishService;
 
@@ -110,13 +113,17 @@ public class ProductController{
 		
 				//method 서비스상품화면 출력
 				@RequestMapping(value="getProduct/{prodNo}", method = RequestMethod.GET)
-				public ModelAndView getBook(@PathVariable int prodNo) throws Exception {
-					
+				public ModelAndView getBook(HttpSession session, @PathVariable int prodNo) throws Exception {
+						String userId ="";
+					if(session != null) {
+						User user = (User)session.getAttribute("user");
+						userId = user.getUserId();
+					}
 						System.out.println("/product/getProduct : GET");
 						
 						HashMap <String, Object> hashMap = new HashMap<String, Object>();
 						hashMap.put("prodNo", prodNo);
-						hashMap.put("userId", "admin2");
+						hashMap.put("userId", userId);
 						
 						//BusinessLogic
 						Product product=productService.getProduct(prodNo);

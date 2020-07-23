@@ -19,6 +19,24 @@
   color: #0d47a1 !important;
 }
 
+    div.row{
+      width: 150px;
+      height: 150px;
+      margin: 35px;
+
+      /* list 앞에 점마크 지우기*/
+      list-style: none;
+
+      /* inline 배치로 바꾸기 */
+      display: inline-block;
+    }
+
+    div.row{
+
+      /* 일렬로 나열 */
+      white-space: nowrap;
+    }
+
 </style>
 
 
@@ -44,6 +62,9 @@
         </tbody>
 -->       
 
+<br/>
+<br/>
+<br/>
 
 <tbody>
 		
@@ -57,7 +78,7 @@
       <div class="row">
 
         <!--Grid column-->
-        <div class="col-lg-'${i}' col-md-'${i}' mb-4">
+        <div class="col-lg-4 col-md-8 mb-4">
         <!-- Card -->
 				<span class="card promoting-card" style="height: 200px; width:200px">
 				
@@ -71,7 +92,7 @@
 				    <div>
 				
 				      <!-- Title -->
-				      <h4 class="card-title font-weight-bold mb-2">${product.prodName}</h4>
+				      <h4 class="card-title font-weight-bold mb-2">#</h4>
 				      <!-- Subtitle -->
 				      <p class="card-text"><i class="far fa-clock pr-2"></i>07/24/2018</p>
 				
@@ -94,8 +115,9 @@
 				
 				      <!-- Text -->
 				      <p class="card-text collapse" id="collapseContent">
-									<h4 class="card-title font-weight-bold mb-2">${product.prodName}</h4>
-									<h4 class="card-title font-weight-bold mb-2">${product.prodType}</h4>
+									<h6 class="card-title font-weight-bold mb-2">상품명:${product.prodName}</h6>
+									<h6 class="card-title font-weight-bold mb-2">상품종류:${product.prodType}</h6>
+									<h6 class="card-title font-weight-bold mb-2">작가:${product.creator}</h6>
 				      </p>
 				      <!-- Button -->
 				      <a class="btn btn-flat red-text p-1 my-1 mr-0 mml-1 collapsed" data-toggle="collapse" href="#collapseContent" aria-expanded="false" aria-controls="collapseContent"></a>
@@ -115,6 +137,8 @@
           </c:forEach>
         
 </tbody>
+        
+        
         
 
 </body>
