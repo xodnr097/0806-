@@ -8,6 +8,9 @@
 <title>Insert title here</title>
 </head>
 <body>
+		<!-- ToolBar Start /////////////////////////////////////-->
+		<jsp:include page="../toolbar.jsp" />
+	   	<!-- ToolBar End /////////////////////////////////////-->
 
 <tbody>
 		

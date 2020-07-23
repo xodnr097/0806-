@@ -104,11 +104,34 @@
 				        </div>
 			      	</li>
 			      	<!-- 책만들기 End -->
-			      	<li class="nav-item">
-			        	<a class="nav-link" href="/libero/product/">서비스상점</a>
+			      	<!-- 작가서비스 Start -->
+			      	<li class="nav-item dropdown">
+				        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+				          	작가서비스
+				        </a>
+				        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+				          <a class="dropdown-item" href="/libero/product/getProductList/design">표지디자인</a>
+				          <a class="dropdown-item" href="/libero/product/getProductList/target">맞춤형 표지디자인</a>
+				          <div class="dropdown-divider"></div>
+				          <a class="dropdown-item" href="/libero/product/getProductList/correct">교정 교열</a>
+				        </div>
 			      	</li>
-			      	<li class="nav-item">
-			        	<a class="nav-link" href="/libero/product/">서점</a>
+			      	<!-- 서점 Start -->
+			      	<li class="nav-item dropdown">
+				        <a class="nav-link dropdown-toggle" href="/libero/product/getBookList" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+				          	서점
+				        </a>
+				        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+				        <a class="dropdown-item" href="/libero/product/getBookList">메인</a>
+				          <div class="dropdown-divider"></div>
+				          <a class="dropdown-item" href="/libero/product/getBookListByCategory/poetry">시</a>
+				          <a class="dropdown-item" href="/libero/product/getBookListByCategory/novel">소설</a>
+				          <a class="dropdown-item" href="/libero/product/getBookListByCategory/essay">수필</a>
+				          <div class="dropdown-divider"></div>
+				          <a class="dropdown-item" href="/libero/product/getBookListByCategory/non">비문학</a>
+				          <a class="dropdown-item" href="/libero/product/getBookListByCategory/edu">교육</a>
+				          
+				        </div>
 			      	</li>
 			      	<!-- 커뮤니티 Start -->
 			      	<li class="nav-item dropdown">

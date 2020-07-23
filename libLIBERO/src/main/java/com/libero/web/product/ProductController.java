@@ -28,6 +28,7 @@ public class ProductController{
 	@Autowired
 	@Qualifier("wishServiceImpl")
 	private WishService wishService;
+
 	
 	//Constructor
 	public ProductController() {
@@ -53,14 +54,34 @@ public class ProductController{
 	 ///* 카테고리별 서점화면 출력
 	 @RequestMapping(value="getBookListByCategory/{bookCategory}", method = RequestMethod.GET)
 	 public ModelAndView getBookListByCategory(@PathVariable String bookCategory) throws Exception {
+		 		
+		 System.out.println("카테고리 : "+bookCategory);
+		 		
+		 String category = null;
+			if(bookCategory.equals("edu")) {
+		 		category = "교육";
+		 	}else if(bookCategory.equals("novel")) {
+		 		category = "소설";
+		 	}else if(bookCategory.equals("non")) {
+		 		category = "비문학";	
+		 	}else if(bookCategory.equals("poetry")) {
+		 		category = "시";
+		 	}else if(bookCategory.equals("essay")) {
+		 		category = "수필";
+		 	}
 		 	
-		 
+		 	System.out.println("카테고리 :: "+category);
 		 	//BusinessLogic
-		 	System.out.println("/product/getBookListByCategory : GET, pathVariable : "+bookCategory);
+		 	System.out.println("/product/getBookListByCategory : GET, pathVariable : "+category);
 		 	
-		 	Map<String, Object> map=productService.getBookListByCategory(bookCategory);
-		 	
+		 	Map<String, Object> map=productService.getBookListByCategory(category);
+		 	System.out.println("컨트롤러 가져온것 :: "+map);
+		 	System.out.println("컨트롤러 가져온것 2:: "+map.get("list"));
 		 	ModelAndView modelAndView = new ModelAndView();
+		 	
+		 	//List<Product> product = (List<Product>) map.get("list");
+		 	//product[0].get()
+		 	//System.out.println(product.get(index).getBookCateogry);
 		 	modelAndView.addObject("book", map.get("list"));
 		 	modelAndView.setViewName("forward:/view/product/getBookListByCategory.jsp");
 		 	

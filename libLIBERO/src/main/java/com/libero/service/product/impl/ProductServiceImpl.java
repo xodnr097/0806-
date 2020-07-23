@@ -43,8 +43,8 @@ public class ProductServiceImpl implements ProductService{
 	}
 
 	@Override
-	public Map<String, Object> getBookListByCategory(String bookCategory) throws Exception {
-		List<Product> list = productDAO.getBookListByCategory(bookCategory);
+	public Map<String, Object> getBookListByCategory(String Category) throws Exception {
+		List<Product> list = productDAO.getBookListByCategory(Category);
 		System.out.println(list);
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("list", list);
@@ -70,5 +70,6 @@ public class ProductServiceImpl implements ProductService{
 		
 		return productDAO.getProduct(prodNo);
 	}
+	
 
 }

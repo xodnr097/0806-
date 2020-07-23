@@ -7,6 +7,9 @@
 <title>Insert title here</title>
 </head>
 <body>
+		<!-- ToolBar Start /////////////////////////////////////-->
+		<jsp:include page="../toolbar.jsp" />
+	   	<!-- ToolBar End /////////////////////////////////////-->
 
 					책번호 ${product.prodNo} <br/>
 					상품 타입 ${product.prodType} <br/>
