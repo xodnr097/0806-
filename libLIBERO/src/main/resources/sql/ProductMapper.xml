@@ -79,9 +79,10 @@
 	
 	<select id="getWishList" parameterType="string" resultMap="productSelectMap">
 	
-					SELECT prod_no
-					FROM wish
-					WHERE user_id = #{userId}
+					SELECT p.prod_name, p.prod_type, p.retail_price 
+					FROM product p 
+					INNER JOIN wish w 
+					ON p.prod_no = w.prod_no AND user_id='admin2'
 	
 	</select>
 	

@@ -1,6 +1,7 @@
 package com.libero.web.product;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -86,7 +87,7 @@ public class ProductController{
 				return modelAndView;
 		}
 		
-		//method 서비스상품화면 출력
+				//method 서비스상품화면 출력
 				@RequestMapping(value="getProduct/{prodNo}", method = RequestMethod.GET)
 				public ModelAndView getBook(@PathVariable int prodNo) throws Exception {
 					
@@ -108,12 +109,32 @@ public class ProductController{
 						}
 						
 						System.out.println("상품타입은?"+product.getProdType());
-						if((product.getProdType()).equals("paper")  ||  product.getProdType() == "ebook") {
+						if((product.getProdType()).equals("paper")  ||  (product.getProdType()).equals("ebook")) {
 							modelAndView.setViewName("forward:/view/product/getBook.jsp");
 						}else {
 							modelAndView.setViewName("forward:/view/product/getProduct.jsp");
 						}
 							
+						return modelAndView;
+				}
+				
+				//method 서비스상품화면 출력
+				@RequestMapping(value="getWishList/{userId}", method = RequestMethod.GET)
+				public ModelAndView getWishList(@PathVariable String userId) throws Exception {
+					
+						System.out.println("/product/getProduct : GET");
+						
+						HashMap <String, Object> hashMap = new HashMap<String, Object>();
+						hashMap.put("userId", userId);
+						
+						//BusinessLogic
+						List<Product> wishList =wishService.getWishList(userId);
+						ModelAndView modelAndView = new ModelAndView();
+						modelAndView.addObject("wishList", wishList);
+						modelAndView.addObject("userId", userId);
+						
+						modelAndView.setViewName("forward:/view/product/getWishList.jsp");
+						
 						return modelAndView;
 				}
 				

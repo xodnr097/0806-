@@ -1,11 +1,14 @@
 package com.libero.service.wish.impl;
 
 import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
+import com.libero.service.domain.Product;
 import com.libero.service.wish.WishDAO;
 import com.libero.service.wish.WishService;
 
@@ -47,5 +50,11 @@ public class WishServiceImpl implements WishService {
 			}else {
 				return false;
 			}
+		}
+		
+		public List<Product> getWishList(String userId) throws Exception{
+			
+			
+			 return wishDAO.getWishList(userId);
 		}
 }
