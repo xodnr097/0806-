@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.libero.service.cart.CartService;
 import com.libero.service.product.ProductService;
 import com.libero.service.wish.WishService;
 
@@ -25,6 +26,10 @@ public class ProductRestController {
 	@Autowired
 	@Qualifier("wishServiceImpl")
 	private WishService wishService;
+	
+	@Autowired
+	@Qualifier("cartServiceImpl")
+	private CartService cartService;
 
 			//Constructor
 			public ProductRestController() {
@@ -59,6 +64,31 @@ public class ProductRestController {
 					
 					return obj.toJSONString();
 			}//end addWish
+			
+			//장바구니 등록
+			@RequestMapping(value="json/addCart", method = RequestMethod.POST)
+			public String addCart(int prodNo, String userId, int buyCount) throws Exception {
+				
+					System.out.println("/product/addWish : POST");
+					System.out.println("전달된 prodNo : "+prodNo);
+					System.out.println("전달된 아이디 : "+userId );
+					System.out.println("전달된 구매수량"+buyCount);
+					JSONObject obj = new JSONObject();
+					//BusinessLogic
+					
+					HashMap <String, Object> hashMap = new HashMap<String, Object>();
+					hashMap.put("prodNo", prodNo);
+					hashMap.put("userId", userId);
+					hashMap.put("buyCount", buyCount);
+					
+					cartService.addCart(hashMap);
+			
+					String message = "장바구니에 등록되었습니다.";
+					
+					obj.put("result", message);
+					
+					return obj.toJSONString();
+			}//end addCart
 			
 			
 			

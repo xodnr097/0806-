@@ -34,7 +34,10 @@ public class Product implements Serializable{
 	private short tempCode;
 	private String factoryId;
 	private String bookCategory;  //0719 추가
+	
 	private int wishNo;
+	private int cartNo;
+	private int buyAmount;
 	
 	public Product() {
 		

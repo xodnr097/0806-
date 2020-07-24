@@ -32,6 +32,8 @@
 		<result property="bookCategory"	 column="book_category"		jdbcType="VARCHAR" />
 		<result property="likeCount"	 column="like_count"		jdbcType="INTEGER" />
 		<result property="wishNo"		 column="wish_no"			jdbcType="INTEGER" />
+		<result property="cartNo"		 column="cart_no"			jdbcType="INTEGER" />
+		<result property="buyAmount"	 column="buy_amount"		jdbcType="INTEGER" />
 			
 	</resultMap>
 		
@@ -94,6 +96,31 @@
 					WHERE prod_no = #{prodNo} AND user_id = #{userId}
 	
 	</select>
+
+	
+	
+	<!-- 장바구니 기능 -->
+	
+	<insert id="addCart"	parameterType="hashMap">
+	
+					INSERT
+					INTO
+					buy(prod_no, user_id, buy_amount)
+					VALUES (#{prodNo}, #{userId}, #{buyCount})
+	</insert>
+	
+	<select id="checkCart"	parameterType="hashMap"	resultMap="productSelectMap">
+					SELECT buy_amount
+					FROM buy
+					WHERE prod_no = #{prodNo} AND user_id = #{userId}
+	
+	</select>
+	
+	<update id="updateAmount" parameterType="hashMap">
+					UPDATE buy
+					SET buy_amount = #{updatedAmount}			
+					WHERE prod_no = #{prodNo} AND user_id = #{userId}
+	</update>
 	 
 </mapper>
 

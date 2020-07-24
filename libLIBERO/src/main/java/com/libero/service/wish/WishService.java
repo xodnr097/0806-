@@ -13,4 +13,5 @@ public interface WishService {
 
 	public List<Product> getWishList(String userId) throws Exception;
 
+	
 }
