@@ -49,8 +49,8 @@
 	
 	<select 	id="getPrintOptinList" resultMap="optionSelectMap">
 		SELECT
-		user_id, nickname, a5_price, b5_price, a4_price, color_price, black_price, snow_price, 
-		mont_price, arte_price, white_price, ivory_price, rough_price
+			user_id, nickname, a5_price, b5_price, a4_price, color_price, black_price, snow_price, 
+			mont_price, arte_price, white_price, ivory_price, rough_price
 		FROM user
 		WHERE role IN('f')
 		AND user_code IN(1)
@@ -128,7 +128,30 @@
 	   	WHERE prod_no = #{prodNo}
 	</update>
 	
+	<select id="getOptionPrice"		parameterType="String" resultMap="optionSelectMap">
+		SELECT 
+			user_id, nickname, a5_price, b5_price, a4_price, color_price, black_price, snow_price, 
+			mont_price, arte_price, white_price, ivory_price, rough_price
+		FROM user
+		WHERE user_id IN(#{value})
+	</select>
 	
+	<update id="updateOptionPrice"		parameterType="user">
+		UPDATE user
+		SET 
+			a5_price = #{a5Price} ,
+			b5_price = #{b5Price} ,
+			a4_price = #{a4Price} , 
+			color_price = #{colorPrice} , 
+			black_price = #{blackPrice} , 
+			snow_price = #{snowPrice} , 
+			mont_price = #{montPrice} , 
+			arte_price = #{artePrice} , 
+			white_price = #{whitePrice} , 
+			ivory_price = #{ivoryPrice} , 
+			rough_price = #{roughPrice}
+		WHERE user_id IN(#{userId})
+	</update>
 
 </mapper>
  	

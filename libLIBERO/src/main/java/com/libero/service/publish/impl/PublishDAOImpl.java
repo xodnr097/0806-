@@ -42,10 +42,6 @@ public class PublishDAOImpl implements PublishDAO {
 		return sqlSession.selectOne("PublishMapper.getPublishNo", publish);
 	}
 	
-	public int getPublishNo(String creator) throws Exception {
-		return sqlSession.selectOne("PublishMapper.getPublishNo", creator);
-	}
-	
 	public void updateManu(Publish publish) throws Exception {
 		sqlSession.update("PublishMapper.updateManu", publish);
 	}
@@ -75,12 +71,12 @@ public class PublishDAOImpl implements PublishDAO {
 		
 	}
 	
-	public void getOptionPrice() throws Exception{
-		
+	public User getOptionPrice(String userId) throws Exception{
+		return sqlSession.selectOne("PublishMapper.getOptionPrice", userId);
 	}
 	
-	public void updateOptionPrice() throws Exception{
-		
+	public void updateOptionPrice(User user) throws Exception{
+		sqlSession.update("PublishMapper.updateOptionPrice", user);
 	}
 
 }

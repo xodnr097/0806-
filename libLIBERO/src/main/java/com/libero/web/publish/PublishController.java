@@ -22,6 +22,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.libero.service.domain.Publish;
 import com.libero.service.domain.User;
 import com.libero.service.publish.PublishService;
+import com.libero.service.user.UserService;
 
 @Controller
 @RequestMapping("/publish/*")
@@ -31,6 +32,8 @@ public class PublishController {
 	@Autowired
 	@Qualifier("publishServiceImpl")
 	private PublishService publishService;
+	@Autowired
+	private UserService userService;
 	
 	//Constructor
 	public PublishController(){
@@ -123,7 +126,10 @@ public class PublishController {
 	    	File f = new File(fileRoot+savedFileName);
 	    	cmf.transferTo(f);
 		}
-		publishService.updateManu(publish);
+		
+		if (publish.getManuFile()!=null) {
+			publishService.updateManu(publish);
+		}
 		ModelAndView modelAndView = new ModelAndView();
 		modelAndView.addObject("prod",publish);
 		modelAndView.setViewName("redirect:/publish/addProductInfo?prodNo="+publish.getProdNo());
@@ -203,6 +209,7 @@ public class PublishController {
 		return modelAndView;
 	}
 	
+	//////////////////////// 상품 등록 ///////////////////////////////////////
 	@RequestMapping(value = "addProduct", method = RequestMethod.GET)
 	public ModelAndView addProduct(HttpSession session) throws Exception {
 		
@@ -259,11 +266,12 @@ public class PublishController {
 		publishService.addProduct(publish);
 		
 		ModelAndView modelAndView = new ModelAndView();
-		modelAndView.setViewName("redirect:/view/product/getProductList.jsp");
+		modelAndView.setViewName("redirect:/product/getProductList.jsp");
 		
 		return modelAndView;
 	}
 	
+	////////////////////////////////////// 상품 수정 ///////////////////////////////////
 	@RequestMapping(value = "updateProduct", method = RequestMethod.GET)
 	public ModelAndView updateProduct(HttpSession session, @RequestParam("prodNo") int prodNo) throws Exception {
 		
@@ -288,6 +296,56 @@ public class PublishController {
 		ModelAndView modelAndView = new ModelAndView();
 		modelAndView.addObject("prod", publish);
 		modelAndView.setViewName("forward:/view/product/getProduct.jsp");
+		
+		return modelAndView;
+	}
+	
+	///////////////////////////////// 옵션 가격 등록 조회 ////////////////////////////////////////
+	@RequestMapping(value = "addOptionPrice", method = RequestMethod.GET)
+	public ModelAndView addOptionPrice(HttpSession session) throws Exception {
+		
+		User user = (User) session.getAttribute("user");
+		
+		ModelAndView modelAndView = new ModelAndView();
+		if (user == null) {
+			modelAndView.setViewName("redirect:/index.jsp");
+		} else {
+			modelAndView.addObject("user", user);
+			modelAndView.setViewName("forward:/view/publish/addOptionPrice.jsp");
+		}
+		return modelAndView;
+	}
+	
+	@RequestMapping(value = "getOptionPrice", method = RequestMethod.GET)
+	public ModelAndView getOptionPrice(HttpSession session) throws Exception {
+		
+		User user = (User) session.getAttribute("user");
+		
+		if (user != null) {
+			user = publishService.getOptionPrice(user.getUserId());
+		}
+		
+		ModelAndView modelAndView = new ModelAndView();
+		if (user == null) {
+			modelAndView.setViewName("redirect:/index.jsp");
+		} else {
+			modelAndView.addObject("user", user);
+			modelAndView.setViewName("forward:/view/publish/getOptionPrice.jsp");
+		}
+		return modelAndView;
+	}
+	
+	@RequestMapping(value = "updateOptionPrice", method = RequestMethod.POST)
+	public ModelAndView updateOptionPrice(User user, HttpSession session) throws Exception {
+		
+		publishService.updateOptionPrice(user);
+		
+		user=userService.getUser(user.getUserId());
+		
+		session.setAttribute("user", user);
+		
+		ModelAndView modelAndView = new ModelAndView();
+		modelAndView.setViewName("redirect:/publish/getOptionPrice");
 		
 		return modelAndView;
 	}

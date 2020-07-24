@@ -43,10 +43,6 @@ public class PublishServiceImpl implements PublishService{
 		return publishDAO.addPrintOption(publish);
 	}
 	
-	public int getPublishNo(String creator) throws Exception {
-		return publishDAO.getPublishNo(creator);
-	}
-	
 	public void updateManu(Publish publish) throws Exception{
 		publishDAO.updateManu(publish);
 	}
@@ -75,12 +71,12 @@ public class PublishServiceImpl implements PublishService{
 		
 	}
 	
-	public void getOptionPrice() throws Exception{
-		
+	public User getOptionPrice(String userId) throws Exception{
+		return publishDAO.getOptionPrice(userId);
 	}
 	
-	public void updateOptionPrice() throws Exception{
-		
+	public void updateOptionPrice(User user) throws Exception{
+		publishDAO.updateOptionPrice(user);
 	}
 
 }
