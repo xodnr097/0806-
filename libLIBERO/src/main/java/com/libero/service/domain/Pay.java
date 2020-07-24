@@ -26,7 +26,7 @@ public class Pay implements Serializable{
 								  //
 								  //
 	 //
-	private int payDate;
+	private Date payDate;
 	//payStatus , payNo , paymentOption  데이터 베이스에서 다 VARCHAR 로 바꿈,.
 	/////////////////추가/////////////////////
 	private String impUid;

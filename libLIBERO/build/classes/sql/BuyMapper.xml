@@ -43,7 +43,8 @@
 		receiver_addr,
 		receiver_phone,
 		actual_price,
-		pay_date,user_id
+		pay_date,
+		user_id
 		from pay
 		where user_id = #{buyerId}
 		AND pay_no = #{payNo}

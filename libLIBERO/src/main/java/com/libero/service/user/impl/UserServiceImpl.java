@@ -8,7 +8,7 @@ import com.libero.service.domain.User;
 import com.libero.service.user.UserDAO;
 import com.libero.service.user.UserService;
 
-//==> È¸¿ø°ü¸® ¼­ºñ½º ±¸Çö
+//==> È¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 @Service("userServiceImpl")
 public class UserServiceImpl implements UserService{
 
@@ -28,6 +28,18 @@ public class UserServiceImpl implements UserService{
 	//method
 	public User getUser(String userId) throws Exception {
 		return userDAO.getUser(userId);
+	}
+
+	@Override
+	public User addUser(User user) throws Exception {
+		
+		System.out.println("\n\n==================================");
+		System.out.println("!!!USERSERVICEIMPL!!!");
+		System.out.println("==================================\n\n");
+		// TODO Auto-generated method stub
+		userDAO.addUser(user);
+		
+		return null;
 	}
 
 }
