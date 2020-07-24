@@ -11,8 +11,6 @@ public interface PublishDAO {
 	
 	public int addPrintOption(Publish publish) throws Exception;
 	
-	public int getPublishNo(String creator) throws Exception;
-	
 	public void updateManu(Publish publish) throws Exception;
 	
 	public void updatePublishInfo(Publish publish) throws Exception;
@@ -27,8 +25,8 @@ public interface PublishDAO {
 	
 	public void addOptionPrice() throws Exception;
 	
-	public void getOptionPrice() throws Exception;
+	public User getOptionPrice(String userId) throws Exception;
 	
-	public void updateOptionPrice() throws Exception;
+	public void updateOptionPrice(User user) throws Exception;
 
 }

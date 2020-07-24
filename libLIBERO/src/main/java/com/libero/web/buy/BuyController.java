@@ -1,5 +1,7 @@
 package com.libero.web.buy;
 
+import java.util.Map;
+
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -72,12 +74,12 @@ public class BuyController {
 	}
 	
 	
-	@RequestMapping(value="beforePay1",method=RequestMethod.GET)
+	@RequestMapping(value="beforePay",method=RequestMethod.GET)
 	public String beforePay() throws Exception{
 		System.out.println(" ---------------------------------------");
 		System.out.println("/buy/beforePay : GET");
 		System.out.println(" ---------------------------------------");		
-		//session으로 userId 받아오기.
+		
 	
 		return "redirect:/view/buy/beforePay.jsp";//
 	}
@@ -88,7 +90,7 @@ public class BuyController {
 		System.out.println(" ---------------------------------------");
 		System.out.println("/buy/beforePay : POST");
 		System.out.println(" ---------------------------------------");		
-		//session으로 userId 받아오기.
+
 		System.out.println("[[][]"+pay);
 		model.addAttribute("addBuy", pay);
 		
@@ -101,10 +103,38 @@ public class BuyController {
 		System.out.println(" ---------------------------------------");
 		System.out.println("/buy/addPay : GET");
 		System.out.println(" ---------------------------------------");		
-		//session으로 userId 받아오기.
+	
 		
 		
 		return "redirect:/buy/addBuyCheck.jsp";//
+	}
+	
+	
+	@RequestMapping(value="getUserBuyList",method=RequestMethod.GET)
+	public String getUserBuyList(@Param("userId") String userId,Model model ) throws Exception{
+		//userId session으로 받아오기.
+		System.out.println(" ---------------------------------------");
+		System.out.println("/buy/getUserBuyList : GET");
+		System.out.println(" ---------------------------------------");		
+		
+		
+		Map<String, Object> map = buyService.getUserBuyList(userId);
+		model.addAttribute("buyList",map.get("list"));
+		model.addAttribute("prodNo",map.get("prodNo"));
+		return "forward:/view/buy/getUserBuyList.jsp";
+	}
+	//인쇄소 메인
+	@RequestMapping(value="getFactoryBuyList",method=RequestMethod.GET)
+	public String getFactoryBuyList(@Param("factoryId") String factoryId, Model model) throws Exception{
+		//factoryId session 으로 받아오기
+		System.out.println(" ---------------------------------------");
+		System.out.println("/buy/getFactoryBuyList : GET");
+		System.out.println(" ---------------------------------------");	
+		
+		Map<String,Object> map = buyService.getFactoryBuyList();
+		
+		model.addAttribute("factorylist",map.get("factorylist"));
+		return "forward:/view/buy/getFactoryBuyList.jsp";
 	}
 	
 	

@@ -40,7 +40,51 @@
 	   	<div class="container">
 	   		<!-- 아이콘 들어갈자리 -->
 	   		<div class="col-lg-12 text-center">
-	   			원고등록 아이콘 자리
+	   			<!-- Horizontal Steppers -->
+				<div class="row">
+					<div class="col-md-12">
+				
+				    <!-- Stepers Wrapper -->
+				    <ul class="stepper stepper-horizontal">
+				
+				    	<!-- First Step -->
+				    	<li class="completed">
+				        	<a href="#!">
+				          		<span class="circle">1</span>
+				          		<span class="label">인쇄옵션 등록</span>
+				        	</a>
+				      	</li>
+				
+				      	<!-- Second Step -->
+				      	<li class="active">
+				        	<a href="#!">
+				          		<span class="circle">2</span>
+				          		<span class="label">원고 등록</span>
+				        	</a>
+				      	</li>
+				
+				      	<!-- Third Step -->
+				      	<li>
+					        <a href="#!">
+					          	<span class="circle">3</span>
+					          	<span class="label">도서 정보 등록</span>
+					        </a>
+				     	</li>
+				     	
+				     	<!-- Fourth Step -->
+				      	<li>
+					        <a href="#!">
+					          	<span class="circle">4</span>
+					          	<span class="label">가격 책정</span>
+					        </a>
+				     	</li>
+					
+				    </ul>
+				    <!-- /.Stepers Wrapper -->
+				
+				  	</div>
+				</div>
+				<!-- /.Horizontal Steppers -->
 	   		</div>
 	   		<!-- 원고파일 등록 폼 Start -->
 	   		<form>
@@ -48,6 +92,9 @@
 	   			<div class="form-group">
 	   				<label class="formLabel col-lg-12" for="manuFile">원고 파일 등록</label>
 	   				<div align="center">
+	   					<c:if test="${prod.manuFile!=null}">
+	   						등록된 파일 : ${prod.manuFile}<br/>
+	   					</c:if>
 				        <input type="file" id="file" name="file" onchange="checkFile(this)"><br/>
 			    	</div>
 	   			</div>
@@ -66,10 +113,15 @@
 	//================ form submit ======================
 	function addManu() {
 		var file = $("#file").val();
+		var manuFile = "${prod.manuFile}";
 		
 		if (file=="") {
+			if (manuFile!=null || manuFile !="") {
+				$("form").attr("method" , "POST").attr("action" , "/libero/publish/addManu").attr("enctype","multipart/form-data").submit();
+			}else{
 			alert("파일을 업로드 해주세요");
 			return;
+			}
 		}
 		$("form").attr("method" , "POST").attr("action" , "/libero/publish/addManu").attr("enctype","multipart/form-data").submit();
 	}

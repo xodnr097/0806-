@@ -18,7 +18,6 @@
 				width: 100%;
 				padding-top: 10px;
 				padding-bottom: 10px;
-				padding-left: 5px;
 				margin-bottom: 0;
 				font-family: 'Nanum Gothic', sans-serif;
 			}
@@ -107,7 +106,51 @@
 	   	<div class="container">
 	   		<!-- 아이콘 들어갈자리 -->
 	   		<div class="col-lg-12 text-center">
-	   			도서정보 아이콘 자리
+	   			<!-- Horizontal Steppers -->
+				<div class="row">
+					<div class="col-md-12">
+				
+				    <!-- Stepers Wrapper -->
+				    <ul class="stepper stepper-horizontal">
+				
+				    	<!-- First Step -->
+				    	<li class="completed">
+				        	<a href="#!">
+				          		<span class="circle">1</span>
+				          		<span class="label">인쇄옵션 등록</span>
+				        	</a>
+				      	</li>
+				
+				      	<!-- Second Step -->
+				      	<li class="completed">
+				        	<a href="#!">
+				          		<span class="circle">2</span>
+				          		<span class="label">원고 등록</span>
+				        	</a>
+				      	</li>
+				
+				      	<!-- Third Step -->
+				      	<li class="active">
+					        <a href="#!">
+					          	<span class="circle">3</span>
+					          	<span class="label">도서 정보 등록</span>
+					        </a>
+				     	</li>
+				     	
+				     	<!-- Fourth Step -->
+				      	<li>
+					        <a href="#!">
+					          	<span class="circle">4</span>
+					          	<span class="label">가격 책정</span>
+					        </a>
+				     	</li>
+					
+				    </ul>
+				    <!-- /.Stepers Wrapper -->
+				
+				  	</div>
+				</div>
+				<!-- /.Horizontal Steppers -->
 	   		</div>
 	   		<!-- 도서정보 등록 폼 Start -->
 	   		<form>
@@ -185,13 +228,13 @@
 					</div>
 	   			</div>
 	   			<!-- Grid row -->
-				  <div class="row">
+				<div class="row">
 				    <!-- Grid column -->
 				    <div class="col">
 				      <!-- Material input -->
 				      <div class="md-form mt-0">
 				      	<div class="formLabel">저자</div>
-				        <input type="text" class="form-control" placeholder="First name">
+				        <input type="text" name="author" class="form-control" placeholder="저자">
 				      </div>
 				    </div>
 				    <!-- Grid column -->
@@ -207,8 +250,13 @@
 				      </div>
 				    </div>
 				    <!-- Grid column -->
-				  </div>
-	   			
+				</div>
+	   			<div class="form-group md-form">
+	   				<div class="md-form">
+	   					<div class="formLabel">해시태그</div>
+						<input placeholder="#으로 구분" type="text" id="hashtag" class="form-control" name="hashtag">
+					</div>
+	   			</div>
 	   			
 	   		</form>
 	   		<!-- 도서정보 등록 폼 End -->

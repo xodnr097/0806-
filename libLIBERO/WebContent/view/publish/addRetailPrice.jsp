@@ -11,19 +11,19 @@
 		<!--  ///////////////////////// CSS ////////////////////////// -->
 		<link rel="stylesheet" href="../resources/css/common.css">
 		<style type="text/css">
-			.formLabel {
-				font-size: 20px;
-				background-color: #FFFFFF;
-				color: rgb(62, 121, 108);
-				width: 100%;
-				padding-top: 10px;
-				padding-bottom: 10px;
-				margin-bottom: 0;
-				font-family: 'Nanum Gothic', sans-serif;
-			}
-			.hrColor {
-				border-color: #8DCCBF;
-			}
+		.hrColor {
+			border-color: #8DCCBF;
+		}
+		.formLabel {
+			font-size: 20px;
+			background-color: #FFFFFF;
+			color: rgb(62, 121, 108);
+			width: 100%;
+			padding-top: 10px;
+			padding-bottom: 10px;
+			margin-bottom: 0;
+			font-family: 'Nanum Gothic', sans-serif;
+		}
 		</style>
 	</head>
 	
@@ -34,6 +34,51 @@
 		
 		<!-- //////////// Bootstrap Container Start////////////////// -->
 	   	<div class="container">
+	   		<!-- Horizontal Steppers -->
+				<div class="row">
+					<div class="col-md-12">
+				
+				    <!-- Stepers Wrapper -->
+				    <ul class="stepper stepper-horizontal">
+				
+				    	<!-- First Step -->
+				    	<li class="completed">
+				        	<a href="#!">
+				          		<span class="circle">1</span>
+				          		<span class="label">인쇄옵션 등록</span>
+				        	</a>
+				      	</li>
+				
+				      	<!-- Second Step -->
+				      	<li class="completed">
+				        	<a href="#!">
+				          		<span class="circle">2</span>
+				          		<span class="label">원고 등록</span>
+				        	</a>
+				      	</li>
+				
+				      	<!-- Third Step -->
+				      	<li class="completed">
+					        <a href="#!">
+					          	<span class="circle">3</span>
+					          	<span class="label">도서 정보 등록</span>
+					        </a>
+				     	</li>
+				     	
+				     	<!-- Fourth Step -->
+				      	<li class="active">
+					        <a href="#!">
+					          	<span class="circle">4</span>
+					          	<span class="label">가격 책정</span>
+					        </a>
+				     	</li>
+					
+				    </ul>
+				    <!-- /.Stepers Wrapper -->
+				
+				  	</div>
+				</div>
+				<!-- /.Horizontal Steppers -->
 	   		<!-- 가격 책정 폼 Start -->
 	   		<!-- Extended material form grid -->
 			<form>

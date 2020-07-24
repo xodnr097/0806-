@@ -1,6 +1,9 @@
 
 package com.libero.service.buy.impl;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
@@ -33,13 +36,13 @@ public class BuyServiceImpl implements BuyService{
 //	}
 
 	@Override
-	public void getBuyStatus() {
+	public void getPayStatus() {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public void updateBuyStatus() {
+	public void updatePayStatus() {
 		// TODO Auto-generated method stub
 		
 	}
@@ -70,9 +73,17 @@ public class BuyServiceImpl implements BuyService{
 	
 
 	@Override
-	public void getUserBuyList() {
+	public Map<String, Object> getUserBuyList(String userId) {
 		// TODO Auto-generated method stub
+		Map map = new HashMap();
 		
+		System.out.println("\n\n\n****"+buyDao.getProdNo(userId)+"***\n\n\n");
+		
+		
+		map.put("prodNo",buyDao.getProdNo(userId));//null -> getProdNo으로 교체 아마 prodNo 도 list로 받을듯
+		map.put("list",buyDao.getUserBuyList(userId));
+		
+		return map;
 	}
 
 	@Override
@@ -82,8 +93,13 @@ public class BuyServiceImpl implements BuyService{
 	}
 
 	@Override
-	public void getFactoryBuyList() {
+	public Map<String, Object> getFactoryBuyList() {
 		// TODO Auto-generated method stub
+		Map map = new HashMap();
+		
+		map.put("factorylist", buyDao.getFactoryBuyList());
+		
+		return map;
 		
 	}
 

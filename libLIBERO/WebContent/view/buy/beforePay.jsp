@@ -147,9 +147,13 @@
 <select id="paymentOption">
     <option value="">결제 방법 선택</option>
     <option value="card">신용카드</option>
+    <option value="trans">실시간 계좌이체</option>
     <option value="phone">휴대폰</option>
     <option value="기타"></option>
 </select><br/>
   <input type="button" id="payment" value="결제하기"/><br/>
 </body>
 </html>
+
+
+
