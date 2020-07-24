@@ -49,10 +49,10 @@ CREATE TABLE IF NOT EXISTS `user` (
 DELETE FROM `user`;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
 INSERT INTO `user` (`user_id`, `password`, `nickname`, `gender_code`, `name`, `address`, `phone`, `phone_code`, `user_code`, `role`, `reg_date`, `factory_no`, `cash_code`, `a5_price`, `profile`, `b5_price`, `a4_price`, `color_price`, `black_price`, `snow_price`, `mont_price`, `arte_price`, `white_price`, `ivory_price`, `rough_price`) VALUES
-	('admin1', '1234', '관리자1', 'm', '관리자', '서울시 강남구', '000-0000-1111', 0, 1, 'a', '2020-07-16 00:00:00', NULL, 'bf', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-	('admin2', '1234', '관리자2', 'm', '관리자', NULL, '000-1111-2222', 0, 1, 'a', '2020-07-16 00:00:00', NULL, 'bf', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-	('admin3', '1234', '관리자3', 'f', '관리자', NULL, '000-2222-3333', 0, 1, 'a', '2020-07-16 00:00:00', NULL, 'bf', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-	('admin4', '1234', '관리자4', 'f', '관리자', NULL, '000-3333-2222', 0, 1, 'a', '2020-07-16 00:00:00', NULL, 'bf', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+	('admin1', '1234', '관리자1', 'm', '관리자', '서울시 강남구', '000-0000-1111', 1, 1, 'a', '2020-07-16 00:00:00', NULL, 'bf', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+	('admin2', '1234', '관리자2', 'm', '관리자', NULL, '000-1111-2222', 1, 1, 'a', '2020-07-16 00:00:00', NULL, 'bf', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+	('admin3', '1234', '관리자3', 'f', '관리자', NULL, '000-2222-3333', 1, 1, 'a', '2020-07-16 00:00:00', NULL, 'bf', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+	('admin4', '1234', '관리자4', 'f', '관리자', NULL, '000-3333-2222', 1, 1, 'a', '2020-07-16 00:00:00', NULL, 'bf', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
 	('choije9410@gmail.com', '1111', '유저유저', 'f', '최지은', '경기도 수원시', '010-3593-9410', 0, 1, 'u', '2020-07-16 00:00:00', NULL, 'bf', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
 	('factory01@naver.com', '0101', '인쇄소01', 'f', '인쇄소', '경기도', '000-1234-2222', 0, 1, 'f', '2020-07-16 00:00:00', '1234', 'bf', 100, NULL, 200, 150, 100, 50, 3500, 4000, 4500, 100, 50, 20),
 	('factory02@hanmail.net', '0202', '인쇄소02', 'f', '인쇄소', '경기도', '000-1313-2222', 0, 1, 'f', '2020-07-16 00:00:00', '1424132', 'bf', 200, NULL, 300, 200, 100, 100, 2000, 3000, 3500, 10, 10, 10),
