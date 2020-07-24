@@ -24,6 +24,9 @@
 				margin-bottom: 0;
 				font-family: 'Nanum Gothic', sans-serif;
 			}
+			.hrColor {
+				border-color: #8DCCBF;
+			}
 			.typeSelector {
 				font-size: 12px;
 			}
@@ -34,28 +37,28 @@
 		        appearance:none;
 			}
 			.black {
-				background-image: url(http://127.0.0.1:8080/libero/resources/images/publish/book_black.png);
+				background-image: url(../resources/images/publish/book_black.png);
 			}
 			.color {
-				background-image: url(http://127.0.0.1:8080/libero/resources/images/publish/book_color.png);
+				background-image: url(../resources/images/publish/book_color.png);
 			}
 			.a5 {
-				background-image: url(http://127.0.0.1:8080/libero/resources/images/publish/size_a5.png);
+				background-image: url(../resources/images/publish/size_a5.png);
 			}
 			.b5 {
-				background-image: url(http://127.0.0.1:8080/libero/resources/images/publish/size_b5.png);
+				background-image: url(../resources/images/publish/size_b5.png);
 			}
 			.a4 {
-				background-image: url(http://127.0.0.1:8080/libero/resources/images/publish/size_a4.png);
+				background-image: url(../resources/images/publish/size_a4.png);
 			}
 			.cover {
-				background-image: url(http://127.0.0.1:8080/libero/resources/images/publish/cover.png);
+				background-image: url(../resources/images/publish/cover.png);
 			}
 			.white {
-				background-image: url(http://127.0.0.1:8080/libero/resources/images/publish/white.png);
+				background-image: url(../resources/images/publish/white.png);
 			}
 			.ivory {
-				background-image: url(http://127.0.0.1:8080/libero/resources/images/publish/ivory.png);
+				background-image: url(../resources/images/publish/ivory.png);
 			}
 			.colorType{
 			    cursor:pointer;
@@ -110,6 +113,51 @@
 	   	
 	   	<!-- //////////// Bootstrap Container Start////////////////// -->
 	   	<div class="container">
+	   		<!-- Horizontal Steppers -->
+			<div class="row">
+				<div class="col-md-12">
+			
+			    <!-- Stepers Wrapper -->
+			    <ul class="stepper stepper-horizontal">
+			
+			    	<!-- First Step -->
+			    	<li class="completed">
+			        	<a href="#!">
+			          		<span class="circle">1</span>
+			          		<span class="label">인쇄옵션 등록</span>
+			        	</a>
+			      	</li>
+			
+			      	<!-- Second Step -->
+			      	<li>
+			        	<a href="#!">
+			          		<span class="circle">2</span>
+			          		<span class="label">원고 등록</span>
+			        	</a>
+			      	</li>
+			
+			      	<!-- Third Step -->
+			      	<li>
+				        <a href="#!">
+				          	<span class="circle">3</span>
+				          	<span class="label">도서 정보 등록</span>
+				        </a>
+			     	</li>
+			     	
+			     	<!-- Fourth Step -->
+			      	<li>
+				        <a href="#!">
+				          	<span class="circle">4</span>
+				          	<span class="label">가격 책정</span>
+				        </a>
+			     	</li>
+				
+			    </ul>
+			    <!-- /.Stepers Wrapper -->
+			
+			  	</div>
+			</div>
+			<!-- /.Horizontal Steppers -->
 	   		<c:if test="${param.prodType=='paper'}">
 	   		<!-- ////////////////// paper form Start /////////////////////-->
 			<form>
@@ -243,8 +291,8 @@
 					</div>
 				</div>
 				<!-- 내지 재질 선택 End -->
-				<div class="form-group" align="center">
-		      		<button type="button" class="btn btn-info btn-block" 
+				<div class="form-group md-form" align="center">
+		      		<button type="button" class="btn btn-cyan btn-block" 
 		      			onclick="addPrintOption()">
 		      			원고 등록
 		      		</button>
@@ -256,13 +304,17 @@
 			<c:if test="${param.prodType=='ebook'}">
 				<form>
 					<input type="hidden" name="prodType" value="ebook">
-					<div class="form-group" align="center">
+					<div class="form-group md-form" align="center">
+						<p>전자책은 인쇄옵션을 선택하지 않습니다. 페이지수를 입력해주세요.</p>
 						<input type="number" name="bookPage" id="bookPage">pages
-			      		<button type="button" class="btn btn-info btn-block" 
+			  		</div>
+			  		<div class="form-group md-form" align="center">
+			  			<button type="button" class="btn btn-cyan btn-block" 
 			      			onclick="addPrintOption()">
 			      			원고 등록
 			      		</button>
 			  		</div>
+			  		
 				</form>
 			</c:if>
 	   	</div>

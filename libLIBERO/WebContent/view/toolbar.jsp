@@ -95,7 +95,6 @@
 				          	책만들기
 				        </a>
 				        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-				          <a class="dropdown-item" href="/libero/publish/selectProdType">책만들기</a>
 				          <a class="dropdown-item" href="/libero/publish/addPrintOption?prodType=paper">종이책 만들기</a>
 				          <a class="dropdown-item" href="/libero/publish/addPrintOption?prodType=ebook">전자책 만들기</a>
 				          <div class="dropdown-divider"></div>
@@ -164,6 +163,14 @@
 					        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
 					          <a class="dropdown-item" href="#">마이페이지</a>
 					          <a class="dropdown-item" href="#">넣어야됨</a>
+					          <c:if test="${sessionScope.user.role=='f'}">
+					          	<c:if test="${sessionScope.user.colorPrice==''}">
+					          		<a class="dropdown-item" href="/libero/publish/addOptionPrice">인쇄옵션 가격 등록</a>
+					          	</c:if>
+					          	<c:if test="${sessionScope.user.colorPrice!=''}">
+						          	<a class="dropdown-item" href="/libero/publish/getOptionPrice">인쇄옵션 가격 조회</a>
+					          	</c:if>
+					          </c:if>
 					          <div class="dropdown-divider"></div>
 					          <a class="dropdown-item" href="/libero/user/logout">로그아웃</a>
 					        </div>
@@ -258,6 +265,7 @@
 					$("#userDropdown").show(); // 회원 dropdown show
 					$("#login").hide(); // 로그인 버튼 hide
 					$("#userDropdown").children().first().prepend(data.nickname); //닉네임 출력
+					window.location.reload();
 				}
 			});
 			//===========login ajax end========================

@@ -112,7 +112,7 @@
 				<div class="form-group">
 			    	<div align="right">
 			      		<button type="button" class="btn btn-primary" onclick="addProd()">등&nbsp;록</button>
-				  		<a class="btn btn-default btn" href="#" role="button">취&nbsp;소</a>
+				  		<a class="btn btn-default btn" href="javascript:history.back();" role="button">취&nbsp;소</a>
 			    	</div>
 			  	</div>
 			</form>

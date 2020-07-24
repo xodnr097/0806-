@@ -39,20 +39,16 @@ public class PublishServiceImpl implements PublishService{
 		return map;
 	}
 	
-	public void addPrintOption(Publish publish) throws Exception{
-		publishDAO.addPrintOption(publish);
-	}
-	
-	public int getPublishNo(String creator) throws Exception {
-		return publishDAO.getPublishNo(creator);
+	public int addPrintOption(Publish publish) throws Exception{
+		return publishDAO.addPrintOption(publish);
 	}
 	
 	public void updateManu(Publish publish) throws Exception{
 		publishDAO.updateManu(publish);
 	}
 	
-	public void updatePublishInfo() throws Exception{
-		
+	public void updatePublishInfo(Publish publish) throws Exception{
+		publishDAO.updatePublishInfo(publish);
 	}
 	
 	public void updateRetailPrice(Publish publish) throws Exception{
@@ -75,12 +71,12 @@ public class PublishServiceImpl implements PublishService{
 		
 	}
 	
-	public void getOptionPrice() throws Exception{
-		
+	public User getOptionPrice(String userId) throws Exception{
+		return publishDAO.getOptionPrice(userId);
 	}
 	
-	public void updateOptionPrice() throws Exception{
-		
+	public void updateOptionPrice(User user) throws Exception{
+		publishDAO.updateOptionPrice(user);
 	}
 
 }

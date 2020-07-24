@@ -17,8 +17,9 @@ CREATE TABLE IF NOT EXISTS `user` (
   `user_id` varchar(30) NOT NULL,
   `password` varchar(20) NOT NULL,
   `nickname` varchar(20) NOT NULL,
-  `gender_code` char(1) NOT NULL,
-  `name` varchar(20) NOT NULL,
+  `gender_code` char(1) DEFAULT NULL,
+  `name` varchar(20) DEFAULT NULL,
+  `profile` varchar(50) DEFAULT NULL,
   `address` varchar(100) DEFAULT NULL,
   `phone` varchar(14) NOT NULL,
   `phone_code` smallint(6) NOT NULL DEFAULT '0',
@@ -28,7 +29,6 @@ CREATE TABLE IF NOT EXISTS `user` (
   `factory_no` varchar(20) DEFAULT NULL,
   `cash_code` char(2) NOT NULL DEFAULT 'bf',
   `a5_price` int(11) DEFAULT NULL,
-  `profile` varchar(50) DEFAULT NULL,
   `b5_price` int(11) DEFAULT NULL,
   `a4_price` int(11) DEFAULT NULL,
   `color_price` int(11) DEFAULT NULL,
@@ -49,10 +49,10 @@ CREATE TABLE IF NOT EXISTS `user` (
 DELETE FROM `user`;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
 INSERT INTO `user` (`user_id`, `password`, `nickname`, `gender_code`, `name`, `address`, `phone`, `phone_code`, `user_code`, `role`, `reg_date`, `factory_no`, `cash_code`, `a5_price`, `profile`, `b5_price`, `a4_price`, `color_price`, `black_price`, `snow_price`, `mont_price`, `arte_price`, `white_price`, `ivory_price`, `rough_price`) VALUES
-	('admin1', '1234', '관리자1', 'm', '관리자', '서울시 강남구', '000-0000-1111', 0, 1, 'a', '2020-07-16 00:00:00', NULL, 'bf', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-	('admin2', '1234', '관리자2', 'm', '관리자', NULL, '000-1111-2222', 0, 1, 'a', '2020-07-16 00:00:00', NULL, 'bf', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-	('admin3', '1234', '관리자3', 'f', '관리자', NULL, '000-2222-3333', 0, 1, 'a', '2020-07-16 00:00:00', NULL, 'bf', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-	('admin4', '1234', '관리자4', 'f', '관리자', NULL, '000-3333-2222', 0, 1, 'a', '2020-07-16 00:00:00', NULL, 'bf', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+	('admin1', '1234', '관리자1', 'm', '관리자', '서울시 강남구', '000-0000-1111', 1, 1, 'a', '2020-07-16 00:00:00', NULL, 'bf', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+	('admin2', '1234', '관리자2', 'm', '관리자', NULL, '000-1111-2222', 1, 1, 'a', '2020-07-16 00:00:00', NULL, 'bf', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+	('admin3', '1234', '관리자3', 'f', '관리자', NULL, '000-2222-3333', 1, 1, 'a', '2020-07-16 00:00:00', NULL, 'bf', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+	('admin4', '1234', '관리자4', 'f', '관리자', NULL, '000-3333-2222', 1, 1, 'a', '2020-07-16 00:00:00', NULL, 'bf', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
 	('choije9410@gmail.com', '1111', '유저유저', 'f', '최지은', '경기도 수원시', '010-3593-9410', 0, 1, 'u', '2020-07-16 00:00:00', NULL, 'bf', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
 	('factory01@naver.com', '0101', '인쇄소01', 'f', '인쇄소', '경기도', '000-1234-2222', 0, 1, 'f', '2020-07-16 00:00:00', '1234', 'bf', 100, NULL, 200, 150, 100, 50, 3500, 4000, 4500, 100, 50, 20),
 	('factory02@hanmail.net', '0202', '인쇄소02', 'f', '인쇄소', '경기도', '000-1313-2222', 0, 1, 'f', '2020-07-16 00:00:00', '1424132', 'bf', 200, NULL, 300, 200, 100, 100, 2000, 3000, 3500, 10, 10, 10),
@@ -69,9 +69,9 @@ CREATE TABLE IF NOT EXISTS `product` (
   `prod_type` varchar(10) NOT NULL,
   `prod_name` varchar(50) DEFAULT NULL,
   `prod_detail` text,
-  `author` varchar(20) DEFAULT NULL,
   `retail_price` int(11) DEFAULT NULL,
   `print_price` int(11) DEFAULT NULL,
+  `author` varchar(20) DEFAULT NULL,
   `blind_code` char(1) NOT NULL DEFAULT 'o',
   `prod_thumbnail` varchar(50) DEFAULT NULL,
   `cover_file` varchar(50) DEFAULT NULL,
@@ -79,6 +79,7 @@ CREATE TABLE IF NOT EXISTS `product` (
   `manu_file` varchar(50) DEFAULT NULL,
   `reg_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `discount_code` char(1) DEFAULT 'o',
+  `temp_code` smallint(6) DEFAULT '1',
   `book_page` int(3) DEFAULT NULL,
   `size_type` char(2) DEFAULT NULL,
   `color_type` char(5) DEFAULT NULL,
@@ -86,44 +87,56 @@ CREATE TABLE IF NOT EXISTS `product` (
   `inner_type` char(5) DEFAULT NULL,
   `factory_id` varchar(30) DEFAULT NULL,
   `creator` varchar(30) NOT NULL,
-  `temp_code` smallint(6) DEFAULT '1',
   `like_count` int(11) NOT NULL DEFAULT '0',
+  `book_category` varchar(50) DEFAULT NULL,
   PRIMARY KEY (`prod_no`),
   KEY `FK_product_user` (`factory_id`),
   KEY `FK_product_user_2` (`creator`),
   CONSTRAINT `FK_product_user` FOREIGN KEY (`factory_id`) REFERENCES `user` (`user_id`),
   CONSTRAINT `FK_product_user_2` FOREIGN KEY (`creator`) REFERENCES `user` (`user_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=10024 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=10037 DEFAULT CHARSET=utf8;
 
-
--- 테이블 데이터 liblibero.product:~24 rows (대략적) 내보내기
+-- 테이블 데이터 liblibero.product:~37 rows (대략적) 내보내기
 DELETE FROM `product`;
 /*!40000 ALTER TABLE `product` DISABLE KEYS */;
-INSERT INTO `product` (`prod_no`, `prod_type`, `prod_name`, `prod_detail`, `retail_price`, `print_price`, `author`, `blind_code`, `prod_thumbnail`, `cover_file`, `purpose_code`, `manu_file`, `reg_date`, `discount_code`, `book_page`, `size_type`, `color_type`, `cover_type`, `inner_type`, `factory_id`, `creator`, `like_count`) VALUES
-	(10000, 'paper', '정윤세 연대기', NULL, 10000, 5000, '김태욱', 'o', 't1.png', NULL, 'have', NULL, '2020-07-15 16:50:59', 'x', 100, 'a5', 'color', 'snow', 'rough', 'factory01@naver.com', 'admin2', 0),
-	(10001, 'paper', '이윤경간첩1', NULL, 13000, 3000, '이윤경', 'o', 'no', NULL, 'sale', NULL, '2020-07-15 00:00:00', 'o', 300, 'a4', 'color', 'snow', 'white', 'factory02@hanmail.net', 'admin2', 0),
-	(10002, 'paper', '이윤경간첩2', NULL, 13000, 3000, '이윤경', 'o', 'no', NULL, 'sale', NULL, '2020-07-15 00:00:00', 'o', 300, 'a4', 'black', 'snow', 'ivory', 'factory01@naver.com', 'admin2', 0),
-	(10003, 'paper', '이윤경간첩3', NULL, 13000, 3000, '이윤경', 'o', 'no', NULL, 'sale', NULL, '2020-07-15 00:00:00', 'o', 300, 'a4', 'color', 'arte', 'rough', 'factory02@hanmail.net', 'admin2', 0),
-	(10004, 'paper', '이윤경간첩4', NULL, 13000, 3000, '이윤경', 'o', 'no', NULL, 'sale', NULL, '2020-07-15 00:00:00', 'o', 300, 'a5', 'black', 'arte', 'white', 'factory01@naver.com', 'admin2', 0),
-	(10005, 'paper', '이윤경간첩5', NULL, 13000, 3000, '이윤경', 'o', 'no', NULL, 'sale', NULL, '2020-07-15 00:00:00', 'o', 400, 'a5', 'color', 'mont', 'ivory', 'factory02@hanmail.net', 'admin2', 0),
-	(10006, 'paper', '이윤경간첩6', NULL, 13000, 3000, '이윤경', 'o', 'no', NULL, 'sale', NULL, '2020-07-15 00:00:00', 'o', 400, 'b5', 'black', 'mont', 'rough', 'factory01@naver.com', 'admin2', 0),
-	(10007, 'paper', '이윤경간첩7', NULL, 13000, 3000, '이윤경', 'o', 'no', NULL, 'sale', NULL, '2020-07-15 00:00:00', 'o', 400, 'b5', 'color', 'arte', 'white', 'factory01@naver.com', 'admin2', 0),
-	(10008, 'paper', '이윤경간첩8', NULL, 13000, 3000, '이윤경', 'o', 'no', NULL, 'sale', NULL, '2020-07-15 00:00:00', 'o', 400, 'b5', 'black', 'snow', 'rough', 'factory02@hanmail.net', 'admin2', 0),
-	(10009, 'ebook', '전자책1', NULL, 7000, NULL, 'ktw', 'o', 'no', NULL, 'sale', NULL, '2020-07-15 00:00:00', 'o', 500, NULL, NULL, NULL, NULL, NULL, 'admin2', 0),
-	(10010, 'ebook', '전자책2', NULL, 7000, NULL, 'ktw', 'o', 'no', NULL, 'sale', NULL, '2020-07-15 00:00:00', 'o', 250, NULL, NULL, NULL, NULL, NULL, 'admin2', 0),
-	(10011, 'ebook', '전자책3', NULL, 7000, NULL, 'ktw', 'o', 'no', NULL, 'sale', NULL, '2020-07-15 00:00:00', 'o', 300, NULL, NULL, NULL, NULL, NULL, 'admin2', 0),
-	(10012, 'ebook', '전자책4', NULL, 7000, NULL, 'ktw', 'o', 'no', NULL, 'sale', NULL, '2020-07-15 00:00:00', 'o', 400, NULL, NULL, NULL, NULL, NULL, 'admin2', 0),
-	(10013, 'ebook', '전자책5', NULL, 7000, NULL, 'ktw', 'o', 'no', NULL, 'sale', NULL, '2020-07-15 00:00:00', 'o', 350, NULL, NULL, NULL, NULL, NULL, 'admin2', 0),
-	(10014, 'design', '표지디자인1', NULL, 40000, NULL, 'cje', 'o', 'no', NULL, 'sale', NULL, '2020-07-15 00:00:00', 'o', NULL, NULL, NULL, NULL, NULL, NULL, 'admin2', 0),
-	(10015, 'design', '표지디자인2', NULL, 40000, NULL, 'cje', 'o', 'no', NULL, 'sale', NULL, '2020-07-15 00:00:00', 'o', NULL, NULL, NULL, NULL, NULL, NULL, 'admin2', 0),
-	(10016, 'design', '표지디자인3', NULL, 40000, NULL, 'cje', 'o', 'no', NULL, 'sale', NULL, '2020-07-15 00:00:00', 'o', NULL, NULL, NULL, NULL, NULL, NULL, 'admin2', 0),
-	(10017, 'design', '표지디자인4', NULL, 40000, NULL, 'cje', 'o', 'no', NULL, 'sale', NULL, '2020-07-15 00:00:00', 'o', NULL, NULL, NULL, NULL, NULL, NULL, 'admin2', 0),
-	(10018, 'design', '표지디자인5', NULL, 40000, NULL, 'cje', 'o', 'no', NULL, 'sale', NULL, '2020-07-15 00:00:00', 'o', NULL, NULL, NULL, NULL, NULL, NULL, 'admin2', 0),
-	(10019, 'target', '맞춤형표지1', NULL, 80000, NULL, 'jys', 'o', 'no', NULL, 'sale', NULL, '2020-07-15 00:00:00', 'o', NULL, NULL, NULL, NULL, NULL, NULL, 'admin2', 0),
-	(10020, 'target', '맞춤형표지2', NULL, 80000, NULL, 'jys', 'o', 'no', NULL, 'sale', NULL, '2020-07-15 00:00:00', 'o', NULL, NULL, NULL, NULL, NULL, NULL, 'admin2', 0),
-	(10021, 'target', '맞춤형표지3', NULL, 80000, NULL, 'jys', 'o', 'no', NULL, 'sale', NULL, '2020-07-15 00:00:00', 'o', NULL, NULL, NULL, NULL, NULL, NULL, 'admin2', 0),
-	(10022, 'target', '맞춤형표지4', NULL, 80000, NULL, 'jys', 'o', 'no', NULL, 'sale', NULL, '2020-07-15 00:00:00', 'o', NULL, NULL, NULL, NULL, NULL, NULL, 'admin2', 0),
-	(10023, 'target', '맞춤형표지5', NULL, 80000, NULL, 'jys', 'o', 'no', NULL, 'sale', NULL, '2020-07-15 00:00:00', 'o', NULL, NULL, NULL, NULL, NULL, NULL, 'admin2', 0);
+INSERT INTO `product` (`prod_no`, `prod_type`, `prod_name`, `prod_detail`, `retail_price`, `print_price`, `author`, `blind_code`, `prod_thumbnail`, `cover_file`, `purpose_code`, `manu_file`, `reg_date`, `discount_code`, `temp_code`, `book_page`, `size_type`, `color_type`, `cover_type`, `inner_type`, `factory_id`, `creator`, `like_count`, `book_category`) VALUES
+	(10000, 'paper', '정윤세 연대기1', NULL, 10000, 5000, '김태욱', 'o', 't1.png', NULL, 'have', NULL, '2020-07-15 16:50:59', 'x', 1, 100, 'a5', 'color', 'snow', 'rough', 'factory01@naver.com', 'admin2', 0, '소설'),
+	(10001, 'paper', '이윤경간첩1', NULL, 13000, 3000, '이윤경', 'o', 'no', NULL, 'sale', NULL, '2020-07-15 00:00:00', 'o', 1, 300, 'a4', 'color', 'snow', 'white', 'factory02@hanmail.net', 'admin2', 0, '비문학'),
+	(10002, 'paper', '이윤경간첩2', NULL, 13000, 3000, '이윤경', 'o', 'no', NULL, 'sale', NULL, '2020-07-15 00:00:00', 'o', 1, 300, 'a4', 'black', 'snow', 'ivory', 'factory01@naver.com', 'admin2', 0, '비문학'),
+	(10003, 'paper', '이윤경간첩3', NULL, 13000, 3000, '이윤경', 'o', 'no', NULL, 'sale', NULL, '2020-07-15 00:00:00', 'o', 1, 300, 'a4', 'color', 'arte', 'rough', 'factory02@hanmail.net', 'admin2', 0, '비문학'),
+	(10004, 'paper', '이윤경간첩4', NULL, 13000, 3000, '이윤경', 'o', 'no', NULL, 'sale', NULL, '2020-07-15 00:00:00', 'o', 1, 300, 'a5', 'black', 'arte', 'white', 'factory01@naver.com', 'admin2', 0, '비문학'),
+	(10005, 'paper', '이윤경간첩5', NULL, 13000, 3000, '이윤경', 'o', 'no', NULL, 'sale', NULL, '2020-07-15 00:00:00', 'o', 1, 400, 'a5', 'color', 'mont', 'ivory', 'factory02@hanmail.net', 'admin2', 0, '비문학'),
+	(10006, 'paper', '이윤경간첩6', NULL, 13000, 3000, '이윤경', 'o', 'no', NULL, 'sale', NULL, '2020-07-15 00:00:00', 'o', 1, 400, 'b5', 'black', 'mont', 'rough', 'factory01@naver.com', 'admin2', 0, '비문학'),
+	(10007, 'paper', '이윤경간첩7', NULL, 13000, 3000, '이윤경', 'o', 'no', NULL, 'sale', NULL, '2020-07-15 00:00:00', 'o', 1, 400, 'b5', 'color', 'arte', 'white', 'factory01@naver.com', 'admin2', 0, '비문학'),
+	(10008, 'paper', '이윤경간첩8', NULL, 13000, 3000, '이윤경', 'o', 'no', NULL, 'sale', NULL, '2020-07-15 00:00:00', 'o', 1, 400, 'b5', 'black', 'snow', 'rough', 'factory02@hanmail.net', 'admin2', 0, '비문학'),
+	(10009, 'ebook', '전자책1', NULL, 7000, NULL, 'ktw', 'o', 'no', NULL, 'sale', NULL, '2020-07-15 00:00:00', 'o', 1, 500, NULL, NULL, NULL, NULL, NULL, 'admin1', 0, '교육'),
+	(10010, 'ebook', '전자책2', NULL, 7000, NULL, 'ktw', 'o', 'no', NULL, 'sale', NULL, '2020-07-15 00:00:00', 'o', 1, 250, NULL, NULL, NULL, NULL, NULL, 'admin1', 0, '교육'),
+	(10011, 'ebook', '전자책3', NULL, 7000, NULL, 'ktw', 'o', 'no', NULL, 'sale', NULL, '2020-07-15 00:00:00', 'o', 1, 300, NULL, NULL, NULL, NULL, NULL, 'admin1', 0, '교육'),
+	(10012, 'ebook', '전자책4', NULL, 7000, NULL, 'ktw', 'o', 'no', NULL, 'sale', NULL, '2020-07-15 00:00:00', 'o', 1, 400, NULL, NULL, NULL, NULL, NULL, 'admin1', 0, '교육'),
+	(10013, 'ebook', '전자책5', NULL, 7000, NULL, 'ktw', 'o', 'no', NULL, 'sale', NULL, '2020-07-15 00:00:00', 'o', 1, 350, NULL, NULL, NULL, NULL, NULL, 'admin1', 0, '소설'),
+	(10014, 'design', '표지디자인1', NULL, 40000, NULL, 'cje', 'o', 'no', NULL, 'sale', NULL, '2020-07-15 00:00:00', 'o', 1, NULL, NULL, NULL, NULL, NULL, NULL, 'admin1', 0, '3'),
+	(10015, 'design', '표지디자인2', NULL, 40000, NULL, 'cje', 'o', 'no', NULL, 'sale', NULL, '2020-07-15 00:00:00', 'o', 1, NULL, NULL, NULL, NULL, NULL, NULL, 'admin1', 0, '4'),
+	(10016, 'design', '표지디자인3', NULL, 40000, NULL, 'cje', 'o', 'no', NULL, 'sale', NULL, '2020-07-15 00:00:00', 'o', 1, NULL, NULL, NULL, NULL, NULL, NULL, 'admin2', 0, '4'),
+	(10017, 'design', '표지디자인4', NULL, 40000, NULL, 'cje', 'o', 'no', NULL, 'sale', NULL, '2020-07-15 00:00:00', 'o', 1, NULL, NULL, NULL, NULL, NULL, NULL, 'admin2', 0, '4'),
+	(10018, 'design', '표지디자인5', NULL, 40000, NULL, 'cje', 'o', 'no', NULL, 'sale', NULL, '2020-07-15 00:00:00', 'o', 1, NULL, NULL, NULL, NULL, NULL, NULL, 'admin2', 0, '5'),
+	(10019, 'target', '맞춤형표지1', NULL, 80000, NULL, 'jys', 'o', 'no', NULL, 'sale', NULL, '2020-07-15 00:00:00', 'o', 1, NULL, NULL, NULL, NULL, NULL, NULL, 'admin2', 0, '5'),
+	(10020, 'target', '맞춤형표지2', NULL, 80000, NULL, 'jys', 'o', 'no', NULL, 'sale', NULL, '2020-07-15 00:00:00', 'o', 1, NULL, NULL, NULL, NULL, NULL, NULL, 'admin2', 0, '5'),
+	(10021, 'target', '맞춤형표지3', NULL, 80000, NULL, 'jys', 'o', 'no', NULL, 'sale', NULL, '2020-07-15 00:00:00', 'o', 1, NULL, NULL, NULL, NULL, NULL, NULL, 'admin2', 0, '5'),
+	(10022, 'target', '맞춤형표지4', NULL, 80000, NULL, 'jys', 'o', 'no', NULL, 'sale', NULL, '2020-07-15 00:00:00', 'o', 1, NULL, NULL, NULL, NULL, NULL, NULL, 'admin2', 0, '5'),
+	(10023, 'target', '맞춤형표지5', NULL, 80000, NULL, 'jys', 'o', 'no', NULL, 'sale', NULL, '2020-07-15 00:00:00', 'o', 1, NULL, NULL, NULL, NULL, NULL, NULL, 'admin2', 0, '5'),
+	(10024, 'paper', '개발학개론1', NULL, 50000, 3000, '김태욱', 'o', 'no', NULL, 'sale', NULL, '2020-07-15 00:00:00', 'o', 1, 400, 'b5', 'black', 'snow', 'rough', 'factory02@hanmail.net', 'admin2', 0, '교육'),
+	(10025, 'paper', '개발학개론2', NULL, 50000, 3000, '김태욱', 'o', 'no', NULL, 'sale', NULL, '2020-07-15 00:00:00', 'o', 1, 400, 'b5', 'black', 'snow', 'rough', 'factory02@hanmail.net', 'admin2', 0, '교육'),
+	(10026, 'paper', '개발학개론3', NULL, 40000, 3000, '김태욱', 'o', 'no', NULL, 'sale', NULL, '2020-07-15 00:00:00', 'o', 1, 400, 'b5', 'black', 'snow', 'rough', 'factory02@hanmail.net', 'admin2', 0, '교육'),
+	(10027, 'paper', '개발학개론4', NULL, 30000, 3000, '김태욱', 'o', 'no', NULL, 'sale', NULL, '2020-07-15 00:00:00', 'o', 1, 400, 'b5', 'black', 'snow', 'rough', 'factory02@hanmail.net', 'admin2', 0, '교육'),
+	(10028, 'paper', '개발학개론5', NULL, 30000, 3000, '김태욱', 'o', 'no', NULL, 'sale', NULL, '2020-07-15 00:00:00', 'o', 1, 400, 'b5', 'black', 'snow', 'rough', 'factory02@hanmail.net', 'admin2', 0, '교육'),
+	(10029, 'paper', '정윤세 연대기2', NULL, 10000, 5000, '김태욱', 'o', 't1.png', NULL, 'have', NULL, '2020-07-15 16:50:59', 'x', 1, 100, 'a5', 'color', 'snow', 'rough', 'factory01@naver.com', 'admin2', 0, '소설'),
+	(10030, 'paper', '최지은 시집1', NULL, 30000, 3000, '김태욱', 'o', 'no', NULL, 'sale', NULL, '2020-07-15 00:00:00', 'o', 1, 400, 'b5', 'black', 'snow', 'rough', 'factory02@hanmail.net', 'admin2', 0, '시'),
+	(10031, 'paper', '최지은 시집2', NULL, 30000, 3000, '김태욱', 'o', 'no', NULL, 'sale', NULL, '2020-07-15 00:00:00', 'o', 1, 400, 'b5', 'black', 'snow', 'rough', 'factory02@hanmail.net', 'admin2', 0, '시'),
+	(10032, 'paper', '최지은 시집3', NULL, 30000, 3000, '김태욱', 'o', 'no', NULL, 'sale', NULL, '2020-07-15 00:00:00', 'o', 1, 400, 'b5', 'black', 'snow', 'rough', 'factory02@hanmail.net', 'admin2', 0, '시'),
+	(10033, 'paper', '수필', NULL, 30000, 3000, '김태욱', 'o', 'no', NULL, 'sale', NULL, '2020-07-15 00:00:00', 'o', 1, 400, 'b5', 'black', 'snow', 'rough', 'factory02@hanmail.net', 'admin2', 0, '수필'),
+	(10034, 'paper', '수필', NULL, 30000, 3000, '김태욱', 'o', 'no', NULL, 'sale', NULL, '2020-07-15 00:00:00', 'o', 1, 400, 'b5', 'black', 'snow', 'rough', 'factory02@hanmail.net', 'admin2', 0, '수필'),
+	(10035, 'paper', '수필', NULL, 30000, 3000, '김태욱', 'o', 'no', NULL, 'sale', NULL, '2020-07-15 00:00:00', 'o', 1, 400, 'b5', 'black', 'snow', 'rough', 'factory02@hanmail.net', 'admin2', 0, '수필'),
+	(10036, 'paper', NULL, NULL, NULL, 29050, NULL, 'x', NULL, NULL, NULL, NULL, '2020-07-24 09:24:30', 'o', 1, 100, 'b5', 'black', 'mont', 'ivory', 'factory01@naver.com', 'admin3', 0, NULL);
 /*!40000 ALTER TABLE `product` ENABLE KEYS */;
 
 -- 테이블 liblibero.buy 구조 내보내기
@@ -155,9 +168,9 @@ INSERT INTO `buy` (`buy_no`, `prod_no`, `user_id`, `buy_amount`, `buy_code`) VAL
 -- 테이블 liblibero.pay 구조 내보내기
 DROP TABLE IF EXISTS `pay`;
 CREATE TABLE IF NOT EXISTS `pay` (
-  `pay_no` int(11) NOT NULL AUTO_INCREMENT,
+  `pay_no` varchar(50) NOT NULL,
   `user_id` varchar(30) NOT NULL,
-  `payment_type` char(1) NOT NULL DEFAULT '',
+  `payment_type` varchar(10) NOT NULL,
   `actual_price` int(11) NOT NULL,
   `receiver_name` varchar(20) NOT NULL,
   `receiver_addr` varchar(100) NOT NULL,
@@ -165,20 +178,22 @@ CREATE TABLE IF NOT EXISTS `pay` (
   `delivery_req` varchar(50) DEFAULT NULL,
   `pay_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `delivery_code` smallint(6) NOT NULL DEFAULT '1',
+  `pay_code` varchar(50) DEFAULT NULL,
+  `cancel_type` int(1) DEFAULT NULL,
   PRIMARY KEY (`pay_no`),
   KEY `FK_pay_user` (`user_id`),
   CONSTRAINT `FK_pay_user` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=10004 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- 테이블 데이터 liblibero.pay:~4 rows (대략적) 내보내기
-DELETE FROM `pay`;
 /*!40000 ALTER TABLE `pay` DISABLE KEYS */;
-INSERT INTO `pay` (`pay_no`, `user_id`, `payment_type`, `actual_price`, `receiver_name`, `receiver_addr`, `receiver_phone`, `delivery_req`, `pay_date`, `delivery_code`) VALUES
-	(10000, 'user01', 'c', 10000, '정윤세', '경기도 용인시 수지구 풍덕 고등 학교', '010-0000-1100', '으', '2020-07-16 17:12:47', 2),
-	(10001, 'user02', 'c', 100000, '유저01', '집', '123-1234-1234', '힘들다', '2020-07-16 17:12:47', 1),
-	(10002, 'wjddbstp95@gmail.com', 'c', 13000000, '수령자이름', '문앞', '123-1234-1234', 'ㅇㅇ', '2020-07-16 17:12:47', 1),
-	(10003, 'user01', 'c', 56000, '정윤세', '경기도 용인시', '010-0000-0011', '빠른 배송', '2020-07-16 17:16:24', 1);
+INSERT INTO `pay` (`pay_no`, `user_id`, `payment_type`, `actual_price`, `receiver_name`, `receiver_addr`, `receiver_phone`, `delivery_req`, `pay_date`, `delivery_code`, `pay_code`, `cancel_type`) VALUES
+	('10000', 'user01', 'c', 10000, '정윤세', '경기도 용인시 수지구 풍덕 고등 학교', '010-0000-1100', '으', '2020-07-16 17:12:47', 2, '1', NULL),
+	('10001', 'user02', 'c', 100000, '유저01', '집', '123-1234-1234', '힘들다', '2020-07-16 17:12:47', 1, '1', NULL),
+	('10002', 'wjddbstp95@gmail.com', 'c', 13000000, '수령자이름', '문앞', '123-1234-1234', 'ㅇㅇ', '2020-07-16 17:12:47', 1, '1', NULL),
+	('10003', 'user01', 'c', 56000, '정윤세', '경기도 용인시', '010-0000-0011', '빠른 배송', '2020-07-16 17:16:24', 1, '1', NULL);
 /*!40000 ALTER TABLE `pay` ENABLE KEYS */;
+
 
 -- 테이블 liblibero.cash 구조 내보내기
 DROP TABLE IF EXISTS `cash`;
@@ -315,10 +330,9 @@ CREATE TABLE IF NOT EXISTS `post` (
   `reg_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `blind_code` char(1) NOT NULL DEFAULT 'o',
   `view_count` int(11) NOT NULL DEFAULT '0',
-  `comment_count` int(11) NOT NULL DEFAULT '0',
+  `comment_count` int(11) DEFAULT '0',
   `qna_reg_type` char(1) DEFAULT NULL,
   `qna_code` char(1) DEFAULT NULL,
-  `post_image` varchar(50) DEFAULT NULL,
   `report_count` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`post_no`),
   KEY `FK_post_user` (`user_id`),
@@ -426,11 +440,34 @@ CREATE TABLE IF NOT EXISTS `wish` (
   CONSTRAINT `FK_like_user` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=10001 DEFAULT CHARSET=utf8;
 
--- 테이블 데이터 liblibero.wish:~1 rows (대략적) 내보내기
+-- 테이블 liblibero.wish 구조 내보내기
+DROP TABLE IF EXISTS `wish`;
+CREATE TABLE IF NOT EXISTS `wish` (
+  `wish_no` int(11) NOT NULL AUTO_INCREMENT,
+  `prod_no` int(11) NOT NULL,
+  `user_id` varchar(30) NOT NULL,
+  PRIMARY KEY (`wish_no`) USING BTREE,
+  KEY `FK_like_product` (`prod_no`),
+  KEY `FK_like_user` (`user_id`),
+  CONSTRAINT `FK_like_product` FOREIGN KEY (`prod_no`) REFERENCES `product` (`prod_no`),
+  CONSTRAINT `FK_like_user` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=10143 DEFAULT CHARSET=utf8;
+
+-- 테이블 데이터 liblibero.wish:~11 rows (대략적) 내보내기
 DELETE FROM `wish`;
 /*!40000 ALTER TABLE `wish` DISABLE KEYS */;
 INSERT INTO `wish` (`wish_no`, `prod_no`, `user_id`) VALUES
-	(10000, 10001, 'choije9410@gmail.com');
+	(10000, 10001, 'choije9410@gmail.com'),
+	(10002, 10002, 'admin2'),
+	(10004, 10004, 'admin2'),
+	(10006, 10006, 'admin2'),
+	(10101, 10005, 'admin2'),
+	(10121, 10007, 'admin2'),
+	(10122, 10008, 'admin2'),
+	(10123, 10009, 'admin2'),
+	(10124, 10010, 'admin2'),
+	(10136, 10001, 'admin2'),
+	(10142, 10002, 'admin3');
 /*!40000 ALTER TABLE `wish` ENABLE KEYS */;
 
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
