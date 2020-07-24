@@ -1,4 +1,3 @@
-/libLIBERO/
 *.class
 */*.properties
 src/main/resources/config/jdbc.properties
