@@ -39,6 +39,7 @@
 	<select id="getBookList" resultMap="productSelectMap">
 			SELECT *
 			FROM product
+			WHERE prod_type = 'paper' OR prod_type = 'ebook'
 	
 	</select>
 	
@@ -82,7 +83,7 @@
 					SELECT p.prod_name, p.prod_type, p.retail_price 
 					FROM product p 
 					INNER JOIN wish w 
-					ON p.prod_no = w.prod_no AND user_id='admin2'
+					ON p.prod_no = w.prod_no AND user_id= #{userId}
 	
 	</select>
 	

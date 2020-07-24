@@ -25,6 +25,12 @@
 		<!-- ToolBar Start /////////////////////////////////////-->
 		<jsp:include page="../toolbar.jsp" />
 	   	<!-- ToolBar End /////////////////////////////////////-->
+	   	<br/>
+	   	<br/>
+	   	<br/>
+	   	<br/>
+	   	<br/>
+	   	<br/>
 
 					책번호 ${product.prodNo} <br/>
 					상품 타입 ${product.prodType} <br/>
@@ -48,8 +54,8 @@
 <script type="text/javascript">
 	
 	$(document).ready(function(){
-	    alert(${product.prodNo});
-	    alert("${product.creator}");
+	    //alert(${product.prodNo});
+	    alert("${sessionScope.user.userId}");
 	});
 	
 	
@@ -64,7 +70,7 @@
 							"Accept" : "application/json",
 							"Content-Type" : "application/json"
 					},
-					data: {"prodNo": ${product.prodNo}, "userId": "${product.creator}" },
+					data: {"prodNo": ${product.prodNo}, "userId": "${sessionScope.user.userId}" },
 					success : function(data){
 						
 						var wish_img = data.wishImage
