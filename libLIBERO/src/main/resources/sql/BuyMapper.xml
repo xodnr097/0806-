@@ -10,8 +10,8 @@
 	<resultMap id="buySelectMapper" type="buy">
 		<result property="buyNo" column="buy_no" jdbcType="INTEGER"/>
 		<result property="buyAmount" column="buy_amount" jdbcType="INTEGER"/>
-		<result property="user.buyerId" column="user_id" jdbcType="VARCHAR"/>
-		<result property="product.prodNo" column="prod_no" jdbcType="INTEGER"/>
+		<result property="buyerId" column="user_id" jdbcType="VARCHAR"/>
+		<result property="prodNo" column="prod_no" jdbcType="INTEGER"/>
 		<result property="buyStatus" column="buy_code" jdbcType="SMALLINT"/>
 <!--   		<association property="buyer" column="userId" javaType="com.model2.mvc.service.domain.User" select="getUserId"/> -->
 <!--   		<association property="PurchaseProd" column="prodNo" javaType="com.model2.mvc.service.domain.Product" select="getProdNo"/> -->
@@ -80,13 +80,55 @@
 			   #{cancelReason}
 				)
 	</insert>
+
 	
-	<select id="nextAdd">
-		SELECT AUTO_INCREMENT
-		FROM information_schema.tables
-		WHERE table_name = 'pay'
-		AND table_schema = DATABASE();
+	<select id="getUserBuyList" parameterType="String" resultMap="paySelectMapper">
+		SELECT pay_no,
+			   payment_type,
+			   pay_code,
+			   receiver_name,
+			   receiver_addr,
+			   receiver_phone,
+			   actual_price,
+			   pay_date
+			  
+			   FROM pay
+		WHERE user_id = #{value}
+		AND pay_code = 1
+				
 	</select>
 	
+	<select id="getUserProdNo" parameterType="String" resultType="String">
+		SELECT DISTINCT prod_no
+			 FROM pay INNER JOIN buy 
+			 ON buy.user_id = #{value}
+			 GROUP BY pay_no
+	</select>
+	
+	<select id="getFactoryProdNo" parameterType="String" resultMap="buySelectMapper">
+		SELECT 
+			prod_no,
+			buy_amount
+			
+		FROM pay INNER JOIN buy
+		ON pay.pay_no = #{value}
+		WHERE pay_code ='1' 
+		 AND buy.user_id = pay.user_id
+	</select>
+	
+	<select id="getFactoryBuyList" parameterType="String" resultMap="paySelectMapper">
+		SELECT 
+			pay_no ,
+			receiver_addr,
+			receiver_phone,
+			pay_date
+			
+		FROM pay
+		WHERE pay_code = 1
+		 AND delivery_code = 1
+	</select>
+	
+	 
+	 
 	 
 </mapper>

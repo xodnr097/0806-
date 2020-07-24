@@ -1,15 +1,17 @@
 
 package com.libero.service.buy;
 
+import java.util.Map;
+
 import com.libero.service.domain.Pay;
 
 public interface BuyService {
 	
 	//public void removeBuy(); -> addCancelation
 	
-	public void getBuyStatus();
+	public void getPayStatus();
 	
-	public void updateBuyStatus();
+	public void updatePayStatus();
 	
 	public void getDeliveryStatus();
 	
@@ -21,11 +23,11 @@ public interface BuyService {
 	
 	public Pay getUserBuy(String userId, String payNo);
 	
-	public void getUserBuyList();
+	public Map<String,Object> getUserBuyList(String userId);
 	
 	public void getFactoryBuy();
 	
-	public void getFactoryBuyList();
+	public Map<String,Object> getFactoryBuyList();
 	
 	//public void getPayStatus();
 	

@@ -1,6 +1,10 @@
 
 package com.libero.service.buy.impl;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -41,6 +45,27 @@ public class BuyDAOImpl implements BuyDAO{
 		//pay = sqlSession.selectOne("BuyMapper.getBuy",pay);
 		System.out.println("\n\n [[pay보자]] : "+pay+"\n\n");
 		return pay;
+	}
+
+	@Override
+	public List getUserBuyList(String userId) {
+		// TODO Auto-generated method stub
+		System.out.println("\n\n[[ "+userId+" ]] \n\n");
+		return sqlSession.selectList("BuyMapper.getUserBuyList",userId);
+		
+	}
+
+	@Override
+	public List getProdNo(String userId) {
+		// TODO Auto-generated method stub
+		
+		return sqlSession.selectList("BuyMapper.getUserProdNo",userId);
+	}
+
+	@Override
+	public List getFactoryBuyList() {
+		// TODO Auto-generated method stub
+		return sqlSession.selectList("BuyMapper.getFactoryBuyList");
 	}
 
 	
