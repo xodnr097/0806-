@@ -8,13 +8,13 @@ public interface PublishService {
 	
 	public Map<String,Object> getPrintOptionList() throws Exception;
 	
-	public void addPrintOption(Publish publish) throws Exception;
+	public int addPrintOption(Publish publish) throws Exception;
 	
 	public int getPublishNo(String creator) throws Exception;
 	
 	public void updateManu(Publish publish) throws Exception;
 	
-	public void updatePublishInfo() throws Exception;
+	public void updatePublishInfo(Publish publish) throws Exception;
 	
 	public void updateRetailPrice(Publish publish) throws Exception;
 	

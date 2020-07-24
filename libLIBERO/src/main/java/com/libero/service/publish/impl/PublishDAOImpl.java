@@ -31,13 +31,15 @@ public class PublishDAOImpl implements PublishDAO {
 		return sqlSession.selectList("PublishMapper.getPrintOptinList");
 	}
 	
-	public void addPrintOption(Publish publish) throws Exception {
+	public int addPrintOption(Publish publish) throws Exception {
 		if (publish.getProdType().contentEquals("paper")) {
 			sqlSession.insert("PublishMapper.addPaper", publish);
 		}
 		if (publish.getProdType().contentEquals("ebook")) {
 			sqlSession.insert("PublishMapper.addEbook", publish);
 		}
+		
+		return sqlSession.selectOne("PublishMapper.getPublishNo", publish);
 	}
 	
 	public int getPublishNo(String creator) throws Exception {
@@ -48,8 +50,9 @@ public class PublishDAOImpl implements PublishDAO {
 		sqlSession.update("PublishMapper.updateManu", publish);
 	}
 	
-	public void updatePublishInfo() throws Exception {
-		
+	public void updatePublishInfo(Publish publish) throws Exception {
+		sqlSession.update("PublishMapper.updatePublishInfo", publish);
+		sqlSession.insert("PublishMapper.addHashtag", publish);
 	}
 	
 	public void updateRetailPrice(Publish publish) throws Exception {

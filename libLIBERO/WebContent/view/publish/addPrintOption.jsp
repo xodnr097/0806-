@@ -34,28 +34,28 @@
 		        appearance:none;
 			}
 			.black {
-				background-image: url(http://127.0.0.1:8080/libero/resources/images/publish/book_black.png);
+				background-image: url(../resources/images/publish/book_black.png);
 			}
 			.color {
-				background-image: url(http://127.0.0.1:8080/libero/resources/images/publish/book_color.png);
+				background-image: url(../resources/images/publish/book_color.png);
 			}
 			.a5 {
-				background-image: url(http://127.0.0.1:8080/libero/resources/images/publish/size_a5.png);
+				background-image: url(../resources/images/publish/size_a5.png);
 			}
 			.b5 {
-				background-image: url(http://127.0.0.1:8080/libero/resources/images/publish/size_b5.png);
+				background-image: url(../resources/images/publish/size_b5.png);
 			}
 			.a4 {
-				background-image: url(http://127.0.0.1:8080/libero/resources/images/publish/size_a4.png);
+				background-image: url(../resources/images/publish/size_a4.png);
 			}
 			.cover {
-				background-image: url(http://127.0.0.1:8080/libero/resources/images/publish/cover.png);
+				background-image: url(../resources/images/publish/cover.png);
 			}
 			.white {
-				background-image: url(http://127.0.0.1:8080/libero/resources/images/publish/white.png);
+				background-image: url(../resources/images/publish/white.png);
 			}
 			.ivory {
-				background-image: url(http://127.0.0.1:8080/libero/resources/images/publish/ivory.png);
+				background-image: url(../resources/images/publish/ivory.png);
 			}
 			.colorType{
 			    cursor:pointer;

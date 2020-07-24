@@ -49,7 +49,7 @@
 	
 	<select 	id="getPrintOptinList" resultMap="optionSelectMap">
 		SELECT
-		user_id, nickname, b5_price, a4_price, color_price, black_price, snow_price, 
+		user_id, nickname, a5_price, b5_price, a4_price, color_price, black_price, snow_price, 
 		mont_price, arte_price, white_price, ivory_price, rough_price
 		FROM user
 		WHERE role IN('f')
@@ -74,10 +74,10 @@
 	 	VALUES (#{prodType},#{creator},#{bookPage})
 	</insert>
 	
-	<select		id="getPublishNo"	parameterType="String" 	resultType="int">
+	<select		id="getPublishNo"	parameterType="publish" 	resultType="int">
 	 	SELECT prod_no 
 	 	FROM product 
-	 	WHERE creator IN(#{value})
+	 	WHERE creator IN(#{creator})
 	 	ORDER BY reg_date DESC LIMIT 1
 	</select>
 	
