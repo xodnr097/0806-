@@ -37,7 +37,7 @@ public class PublishController {
 		System.out.println(this.getClass());
 	}
 	
-	@Value("#{commonProperties['path']}")
+	@Value("#{commonProperties['path2']}")
 	String path;
 	
 	//method
@@ -157,6 +157,8 @@ public class PublishController {
 	public ModelAndView addProductInfo(Publish publish) throws Exception {
 		
 		System.out.println("/publish/addProductInfo : POST");
+		
+		/* publishService.updatePublishInfo(publish); */
 		
 		ModelAndView modelAndView = new ModelAndView();
 		modelAndView.addObject("prod",publish);
