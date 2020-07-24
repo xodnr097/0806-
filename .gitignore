@@ -1,4 +1,5 @@
 /libLIBERO/
 *.class
+*/*.properties
 src/main/resources/config/jdbc.properties
 src/main/resources/log4j.properties

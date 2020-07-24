@@ -75,9 +75,8 @@ public class PublishController {
 		publish.setCreator(user.getUserId());
 		
 		publish.setProdType(prodType);
-		publishService.addPrintOption(publish);
 		
-		int prodNo = publishService.getPublishNo(publish.getCreator());
+		int prodNo = publishService.addPrintOption(publish);
 		
 		ModelAndView modelAndView = new ModelAndView();
 		modelAndView.setViewName("redirect:/publish/addManu?prodNo="+prodNo);
