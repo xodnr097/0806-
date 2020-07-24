@@ -114,35 +114,38 @@ public class ProductController{
 				//method 서비스상품화면 출력
 				@RequestMapping(value="getProduct/{prodNo}", method = RequestMethod.GET)
 				public ModelAndView getBook(HttpSession session, @PathVariable int prodNo) throws Exception {
-						String userId ="";
-					if(session != null) {
-						User user = (User)session.getAttribute("user");
-						userId = user.getUserId();
-					}
-						System.out.println("/product/getProduct : GET");
-						
-						HashMap <String, Object> hashMap = new HashMap<String, Object>();
-						hashMap.put("prodNo", prodNo);
-						hashMap.put("userId", userId);
-						
-						//BusinessLogic
+					System.out.println("/product/getProduct : GET");	
+					
+					String userId ="";
+						//prodNo에 해당하는 도서정보 model에
 						Product product=productService.getProduct(prodNo);
 						ModelAndView modelAndView = new ModelAndView();
 						modelAndView.addObject("product", product);
-						
+						System.out.println("회원/비회연 여부 확인");
+					if(session.getAttribute("user") != null) {
+						System.out.println("널 확인");
+						User user = (User)session.getAttribute("user");
+						System.out.println("널 확인2");
+						userId = user.getUserId();
+						HashMap <String, Object> hashMap = new HashMap<String, Object>();
+						hashMap.put("prodNo", prodNo);
+						hashMap.put("userId", userId);
 						if(wishService.checkWish(hashMap) == true) {
 							modelAndView.addObject("wish", "../../resources/images/product/wish/diswish.png");
 						}else {
 							modelAndView.addObject("wish", "../../resources/images/product/wish/wish.png");
 						}
+					}else{
+						   modelAndView.addObject("wish", "../../resources/images/product/wish/diswish.png");
+					}
 						
+						//상품타입에 따른 출력페이지
 						System.out.println("상품타입은?"+product.getProdType());
 						if((product.getProdType()).equals("paper")  ||  (product.getProdType()).equals("ebook")) {
 							modelAndView.setViewName("forward:/view/product/getBook.jsp");
 						}else {
 							modelAndView.setViewName("forward:/view/product/getProduct.jsp");
 						}
-							
 						return modelAndView;
 				}
 				
