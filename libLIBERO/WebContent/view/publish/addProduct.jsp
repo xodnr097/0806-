@@ -14,7 +14,7 @@
 		<c:if test="${param.prodType=='correct'}">
 			<title>libLIBERO : 교정교열 등록</title>
 		</c:if>
-		
+		<jsp:include page="/common/cdn.jsp"></jsp:include>
 		<!--  ///////////////////////// CSS ////////////////////////// -->
 		<link rel="stylesheet" href="../resources/css/common.css">
 		<style>
@@ -63,7 +63,7 @@
 				    <label class="formLabel" for="prodThumbnail">상품 썸네일</label>
 				    <div align="center">
 				        <input type="file" id="prodThumbnail" name="imgFile"><br/>
-				        <img id="imgPreview" src="/libero/resources/images/publish/fileUpload/null.png" width="150px" height="150px" />
+				        <img id="imgPreview" src="../resources/images/publish/fileUpload/null.png" width="150px" height="150px" />
 			    	</div>
 				</div>
 				<!-- 썸네일 입력폼 끝 -->
@@ -125,8 +125,8 @@
 	
 	<!-- include summernote-ko-KR -->
 	<script src="/libero/resources/javascript/summernote/lang/summernote-ko-KR.min.js"></script>
-	<script>
 	
+	<script type="text/javascript">
 	//==============이미지 미리보기=========================
     $(function(){
     	function readURL(input) {

@@ -1,6 +1,7 @@
 package com.libero.service.publish.impl;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,8 +48,10 @@ public class PublishDAOImpl implements PublishDAO {
 	}
 	
 	public void updatePublishInfo(Publish publish) throws Exception {
-		sqlSession.update("PublishMapper.updatePublishInfo", publish);
-		sqlSession.insert("PublishMapper.addHashtag", publish);
+		sqlSession.update("PublishMapper.updateProductInfo", publish);
+		if (publish.getHashtagName()!="") {
+			sqlSession.insert("PublishMapper.addHashtag", publish);
+		}
 	}
 	
 	public void updateRetailPrice(Publish publish) throws Exception {

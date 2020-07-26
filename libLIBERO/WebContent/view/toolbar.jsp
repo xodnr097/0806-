@@ -1,39 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-    
-<!--  ///////////////////////// JSTL  ////////////////////////// -->
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
-<!DOCTYPE html>
-<html>
-	<head>
-		<meta charset="UTF-8">
-		
-		<!-- MDBootstrap CSS -->
-    	<!-- Font Awesome -->
-		<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
-		<!-- Google Fonts -->
-		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap">
-		<!-- Bootstrap core CSS -->
-		<link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/css/bootstrap.min.css" rel="stylesheet">
-		<!-- Material Design Bootstrap -->
-		<link href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.19.1/css/mdb.min.css" rel="stylesheet">
-		
-		<!--   jQuery , Bootstrap CDN  -->
-		<!-- JQuery -->
-		<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-		<!-- Bootstrap tooltips -->
-		<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.4/umd/popper.min.js"></script>
-		<!-- Bootstrap core JavaScript -->
-		<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/js/bootstrap.min.js"></script>
-		<!-- MDB core JavaScript -->
-		<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.19.1/js/mdb.min.js"></script>
-  		
-	   	<!-- Google Fonts CDN -->
-	   	<link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic:wght@700&display=swap" rel="stylesheet">
-	   	
-  		<style>
-  		.navbar-light {
+<head>
+<!--  ///////////////////////// CSS ////////////////////////// -->
+<style type="text/css">
+		.navbar-light {
 		    border-bottom: 2px solid #8DCCBF;
 		    font-family: 'Nanum Gothic', sans-serif;
 		}
@@ -72,10 +44,9 @@
 			color: #3E796C;
 			background-color: #EAEAEA;
 		}
-  		</style>
-	</head>
+</style>
+</head>
 
-	<body>
 	<!-- Custom nvbar color -->
 		<nav class="navbar navbar-expand-lg navbar-light bg-white fixed-top">
 		    <a href="/libero/index.jsp" class="navbar-brand">
@@ -84,7 +55,7 @@
 		    <!-- 모바일 navbar -->
 			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
 			    <span class="navbar-toggler-icon"></span>
-			  </button>
+			</button>
 			<!-- 모바일 navbar 끝 -->
 		    <!-- left Button Start -->
 		    <div class="collapse navbar-collapse" id="navbarNavDropdown">
@@ -202,8 +173,8 @@
 		        		</form>
 		      		</div>
 		      		<div class="modal-footer">
-		      			<button type="button" class="btn btn-info" id="loginButton">로그인</button>
-		        		<button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button>
+		      			<button type="button" class="btn btn-cyan" id="loginButton">로그인</button>
+		        		<button type="button" class="btn btn-outline-info waves-effect" data-dismiss="modal">취소</button>
 		        		<a href="#"><button type="button" class="btn btn-info" id="addUser">회원가입</button></a>
 		      		</div>
 		    	</div>
@@ -272,4 +243,3 @@
 		});
 	});
 	</script>
-</html>

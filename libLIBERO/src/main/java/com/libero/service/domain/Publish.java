@@ -16,10 +16,12 @@ public class Publish implements Serializable {
 	private String blindCode;
 	private String prodThumbnail;
 	private String coverFile;
+	private String hashtagName;
 	private String discountCode;
 	private String creator;
 	private String author;
 	private String purposeCode;
+	private String bookCategory;
 	private String manuFile;
 	private int bookPage;
 	private String colorType;

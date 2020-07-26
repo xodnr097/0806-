@@ -8,11 +8,14 @@
 	<head>
 		<meta charset="UTF-8">
 		<title>libLIBERO : 종이책 인쇄 옵션 조회</title>
-		
+		<jsp:include page="/common/cdn.jsp"></jsp:include>
 		<!--  ///////////////////////// CSS ////////////////////////// -->
 		<link rel="stylesheet" href="../resources/css/common.css">
 		
 		<style type="text/css">
+			html, body {
+				background-color: #F6F6F6;
+			}
 			.formLabel {
 				font-size: 15px;
 				background-color: rgb(141, 204, 191);

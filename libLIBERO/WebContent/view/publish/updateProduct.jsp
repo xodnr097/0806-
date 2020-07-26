@@ -14,7 +14,7 @@
 		<c:if test="${prod.prodType=='correct'}">
 			<title>libLIBERO : 교정교열 수정</title>
 		</c:if>
-		
+		<jsp:include page="/common/cdn.jsp"></jsp:include>
 		<!--  ///////////////////////// CSS ////////////////////////// -->
 		<link rel="stylesheet" href="../resources/css/common.css">
 		<style>

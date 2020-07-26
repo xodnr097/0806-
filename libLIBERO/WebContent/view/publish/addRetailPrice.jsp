@@ -7,7 +7,7 @@
 	<head>
 		<meta charset="UTF-8">
 		<title>libLIBERO : 가격 책정</title>
-		
+		<jsp:include page="/common/cdn.jsp"></jsp:include>
 		<!--  ///////////////////////// CSS ////////////////////////// -->
 		<link rel="stylesheet" href="../resources/css/common.css">
 		<style type="text/css">
@@ -23,6 +23,10 @@
 			padding-bottom: 10px;
 			margin-bottom: 0;
 			font-family: 'Nanum Gothic', sans-serif;
+		}
+		
+		.modalTable {
+			margin-bottom: 20px;
 		}
 		</style>
 	</head>
@@ -98,8 +102,8 @@
     							<span class="input-group-text md-addon">원</span>
   							</div>
 						</div>
-			    	</div>
-			    	<!-- Grid column -->
+				   	</div>
+				    <!-- Grid column -->
 			
 			    	<!-- Grid column -->
 			    	<div class="col-lg-4">
@@ -107,14 +111,6 @@
 			    		<div class="md-form form-group">
 			      			<div class="formLabel">최종 소비자 가격</div>
 			      			<hr class="hrColor">
-			      			<!-- <table style="width: 100%">
-			      				<tbody>
-			      					<tr>
-			      						<td class="text-right font-weight-bold">fdsaf</td>
-			      						<th class="text-right font-weight-bold" style="width: 20px">원</th>
-			      					</tr>
-			      				</tbody>
-			      			</table> -->
 			      			<div class="text-right font-weight-bold retailView">${prod.retailPrice}원</div>
 			      		</div>
 				    </div>
@@ -165,20 +161,151 @@
 			      		</div>
 				    </div>
 				    <!-- Grid column -->
-			  </div>
-			  <!-- Grid row -->
+			  	</div>
+			  	<!-- Grid row -->
 			
-			  
-			  <!-- Grid row -->
-			  <div class="md-form form-group" align="center">
-			      		<button type="button" class="btn btn-cyan btn-block" 
-			      			onclick="addRetailPrice()">
-			      			최종 확인 및 등록
-			      		</button>
-			  		</div>
+			  	<!-- Button trigger modal -->
+				<button type="button"  align="center" class="btn btn-cyan btn-block" data-toggle="modal" data-target="#centralModal" onclick="addModalContent()">
+				  	최종 확인 및 등록
+				</button>
+				
 			</form>
 			<!-- Extended material form grid -->
 	   		<!-- 가격 책정 폼 End -->
+	   		
+			<!-- Central Modal Large -->
+			<div class="modal fade" id="centralModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+			
+				<!-- Change class .modal-lg to change the size of the modal -->
+			  	<div class="modal-dialog modal-lg" role="document">
+			
+			    	<div class="modal-content">
+			      		<div class="modal-header">
+			        		<h4 class="modal-title w-100" id="myModalLabel">최종 확인</h4>
+				        	<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+				          		<span aria-hidden="true">&times;</span>
+				        	</button>
+			     		</div>
+			      	
+				      	<div class="modal-body">
+				      		<div class="row">
+				      			<div class="col-lg-6 text-center justify-content-center align-self-center">
+				      				<img src="../resources/images/publish/freeTemplate/icon/t1.png" width="230px" height="280px">
+				      			</div>
+				      			<div class="col-lg-6 justify-content-right">
+				      				<table class="modalTable">
+				      					<tbody>
+					      					<tr>
+					      						<th><h5><b>책 정보 확인</b></h5></th>
+					      					</tr>
+				      					</tbody>
+				      				</table>
+				      				<table class="modalTable">
+					      				<tbody>
+					      					<tr>
+					      						<th><b>도서제목</b></th>
+					      						<td>: ${prod.prodName}</td>
+					      					</tr>
+					      					<tr>
+					      						<th><b>저자</b></th>
+					      						<td>: ${prod.author}</td>
+					      					</tr>
+					      					<tr>
+					      						<th><b>책 형태</b></th>
+					      						<td>: 
+					      							<c:if test="${prod.prodType=='paper'}">
+					      								종이책
+					      							</c:if>
+					      							<c:if test="${prod.prodType=='ebook'}">
+					      								전자책
+					      							</c:if>
+					      						</td>
+					      					</tr>
+					      					<tr>
+					      						<th><b>제작목적</b></th>
+					      						<td>: ${prod.purposeCode}</td>
+					      					</tr>
+					      					<tr>
+					      						<th><b>카테고리</b></th>
+					      						<td>: ${prod.bookCategory}</td>
+					      					</tr>
+					      					<tr>
+					      						<th><b>해시태그</b></th>
+					      						<td>: ${prod.hashtagName}</td>
+					      					</tr>
+					      					<tr>
+					      						<th><b>페이지수</b></th>
+					      						<td>: ${prod.bookPage} pages</td>
+					      					</tr>
+					      					<tr>
+					      						<th><b>소비자가격</b></th>
+					      						<td id="modalPrice">: </td>
+					      					</tr>
+					      					<tr>
+					      						<th><b>할인여부</b></th>
+					      						<td id="modalDiscount">: </td>
+					      					</tr>
+					      				</tbody>
+				      				</table>
+				      				<table class="modalTable">
+				      					<tbody>
+				      						<tr>
+				      							<th><h5><b>인쇄 옵션</b></h5></th>
+				      						</tr>
+				      					</tbody>
+				      				</table>
+				      				<table>
+				      					<tbody>
+				      						<tr>
+				      							<th><b>규격</b></th>
+				      							<td>: ${prod.sizeType}</td>
+				      						</tr>
+				      						<tr>
+				      							<th><b>표지 재질</b></th>
+				      							<td>: 
+				      								<c:if test="${prod.coverType=='snow'}">
+				      									스노우
+				      								</c:if>
+				      								<c:if test="${prod.coverType=='mont'}">
+				      									몽블랑
+				      								</c:if>
+				      								<c:if test="${prod.coverType=='arte'}">
+				      									아트
+				      								</c:if>
+				      							</td>
+				      						</tr>
+				      						<tr>
+				      							<th><b>내지 재질</b></th>
+				      							<td>: 
+				      								<c:if test="${prod.innerType=='white'}">
+				      									백상지
+				      								</c:if>
+				      								<c:if test="${prod.innerType=='ivory'}">
+				      									미색지
+				      								</c:if>
+				      								<c:if test="${prod.innerType=='rough'}">
+				      									갱지
+				      								</c:if>
+				      							</td>
+				      						</tr>
+				      					</tbody>
+				      				</table>
+				      			</div>
+				      			
+				      		</div> 
+				      		
+				      	</div>
+			      	
+				      	<div class="modal-footer">
+				      		<div class="col-lg-12">
+			      			<button type="button" class="btn btn-cyan btn-md btn-block col-lg-5" style="position: relative; float: left;" onclick="addRetailPrice()">등록</button>
+			        		<button type="button" class="btn btn-outline-info waves-effect btn-md btn-block col-lg-5" style="position: relative; float: right;" data-dismiss="modal">취소</button>
+				      		</div>
+				      	</div>
+			    	</div>
+				</div>
+			</div>
+			<!-- Central Modal Large -->
 	   	</div>
 	</body>
 	<script type="text/javascript">
@@ -202,9 +329,19 @@
 			// 올림값 반환
 			$("input[name='retailPrice']").val(price);
 			$(".retailView").html(price+"원");
+			$("#modalPrice").html(": "+price+"원");
 			$("#fee").html("- "+fee+"원");
 			
 			$("#finalPrice").html(price-printPrice-fee+"원");
+		}
+		
+		function addModalContent() {
+			var discount = $("input[name='discountCode']:checked").val();
+			if (discount=="x") {
+				$("#modalDiscount").html("할인제외");
+			}else {
+				$("#modalDiscount").html("할인포함");
+			}
 		}
 		
 		function addRetailPrice() {
