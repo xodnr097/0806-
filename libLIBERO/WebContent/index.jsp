@@ -21,6 +21,7 @@
         	.box { 
         		width:100%; height:100%; 
         		position:relative; 
+        		background-size: cover;
         	}
         	.title {
         		position: absolute;
@@ -41,7 +42,7 @@
 			<div class="title" align="right">자가 출판 플랫폼<br/>리브리베로</div>
 		</div>
 	    <div class="box" style="background-image: url(resources/images/common/index2.png);"></div>
-	    <div class="box" style="background-color:yellow;">3</div>
+	    <div class="box" style="background-image: url(resources/images/common/index3.jpg);"></div>
 	</body>
 	<script type="text/javascript">
         window.onload = function () {
