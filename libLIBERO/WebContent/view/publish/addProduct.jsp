@@ -20,12 +20,13 @@
 		<style>
 			 .formLabel {
 				font-size: 15px;
-				background-color: rgb(141, 204, 191);
+				background-color: #FFFFFF;
 				color: rgb(62, 121, 108);
 				width: 100%;
 				padding-top: 10px;
 				padding-bottom: 10px;
-				padding-left: 5px;
+				margin-bottom: 0;
+				font-family: 'Nanum Gothic', sans-serif;
 			}
 		</style>
 	</head>

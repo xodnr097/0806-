@@ -430,6 +430,22 @@ public class PublishController {
 		return modelAndView;
 	}
 	
+	@RequestMapping(value = "getUserPublishList", method = RequestMethod.GET)
+	public ModelAndView getUserPublishList(HttpSession session, @RequestParam("prodType") String prodType, Publish publish) throws Exception {
+		
+		publish.setProdType(prodType);
+		publish.setCreator(((User)session.getAttribute("user")).getUserId());
+		
+		Map<String , Object> map=publishService.getUserPublishList(publish);
+		
+		ModelAndView modelAndView = new ModelAndView();
+		modelAndView.addObject("list", map.get("list"));
+		modelAndView.addObject("totalCount", map.get("totalCount"));
+		modelAndView.setViewName("forward:/view/publish/getUserPublishList.jsp");
+		
+		return modelAndView;
+	}
+	
 	public String fileUpload(MultipartHttpServletRequest request) throws Exception {
 		
 		Map<String, MultipartFile> files = request.getFileMap();

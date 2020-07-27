@@ -10,6 +10,7 @@
 		<jsp:include page="/common/cdn.jsp"></jsp:include>
 		<!--  ///////////////////////// CSS ////////////////////////// -->
 		<link rel="stylesheet" href="../resources/css/common.css">
+		
 		<style type="text/css">
 			.formLabel {
 				font-size: 15px;
@@ -272,10 +273,12 @@
 				    </div>
 				    <!-- Grid column -->
 				</div>
-	   			<div class="form-group md-form">
-	   				<div class="md-form">
+	   			<div class="form-group">
+	   				<div>
 	   					<div class="formLabel">해시태그</div>
-						<input placeholder="#으로 구분" type="text" value="${prod.hashtagName}" id="hashtagName" class="form-control" name="hashtagName">
+	   					<div class="bs-example">
+							<input type="text" value="${prod.hashtagName}" id="hashtagName" class="tags" name="hashtagName" placeholder="">
+						</div>
 					</div>
 	   			</div>
 	   			<div class="form-group md-form">
@@ -317,6 +320,10 @@
 	
 	<!-- include summernote-ko-KR -->
 	<script src="/libero/resources/javascript/summernote/lang/summernote-ko-KR.min.js"></script>
+	
+	<!-- taginput js -->
+	<link href="../resources/css/taginput/jquery.tagsinput.min.css" rel="stylesheet">
+	<script src="../resources/javascript/taginput/jquery.tagsinput.min.js"></script>
 	
 	<script type="text/javascript">
 		$(function(){
@@ -373,6 +380,7 @@
 				$("div .freeSelect").show();
 				$("div .imgSelect").show();
 				$("div .imgPreview").show();
+				$("#fileUpload").hide();
 			}
 			if (cover=="fileUpload") {
 				$("div .freeSelect").hide();
@@ -502,6 +510,17 @@
 	            readURL(this);
 	        });
 	    });
+		
+		//addTag
+		
+		$(function() {
+
+			$('#hashtagName').tagsInput({
+				width:'auto',
+				defaultText:''
+			});
+			
+		});
 		
 	    function addInfo() {
 	    	$('textarea[name="prodDetail"]').val($('#summernote').summernote('code'));
