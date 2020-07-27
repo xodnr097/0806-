@@ -109,7 +109,7 @@
 				          	커뮤니티
 				        </a>
 				        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-				          <a class="dropdown-item" href="#">공지사항</a>
+				          <a class="dropdown-item" href="/libero/community/getPostList">공지사항</a>
 				          <a class="dropdown-item" href="#">자유게시판</a>
 				          <div class="dropdown-divider"></div>
 				          <a class="dropdown-item" href="#">1:1문의</a>
