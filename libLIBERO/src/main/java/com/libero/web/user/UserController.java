@@ -72,17 +72,20 @@ public class UserController {
 								@ModelAttribute("password") String password,
 								@ModelAttribute("nickname") String nickname,
 								@ModelAttribute("address") String address,
-								@ModelAttribute("phone") String phone,
+								@ModelAttribute("phone1") String phone1,
+								@ModelAttribute("phone2") String phone2,
+								@ModelAttribute("phone3") String phone3,
 								@ModelAttribute("profile") String profile) throws Exception{
 		User user= new User();
 		System.out.println(" ---------------------------------------");
 		System.out.println("/user/addUser : POST");
 		System.out.println(" ---------------------------------------");
-		
+		String phone ="";
 		user.setUserId(userId);
 		user.setPassword(password);
 		user.setNickname(nickname);
 		user.setAddress(address);
+		phone= phone1+"-"+phone2+"-"+phone3;
 		user.setPhone(phone);
 		user.setProfile(profile);
 		ModelAndView mdv = new ModelAndView();
