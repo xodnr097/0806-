@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.libero.service.domain.Publish;
+import com.libero.service.domain.Statistics;
 import com.libero.service.domain.User;
 
 public interface PublishDAO {
@@ -33,5 +34,7 @@ public interface PublishDAO {
 	public List<Publish> getUserPublishList(Publish publish) throws Exception;
 	
 	public int getTotalCount(Publish publish) throws Exception;
+	
+	public List<Statistics> getStatistics(Statistics statistics) throws Exception;
 
 }
