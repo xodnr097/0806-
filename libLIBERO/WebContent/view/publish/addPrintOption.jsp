@@ -13,10 +13,16 @@
 		<link rel="stylesheet" href="../resources/css/common.css">
 		
 		<style type="text/css">
-			html, body {
-				background-color: #F6F6F6;
-			}
 			.formLabel {
+				font-size: 15px;
+				color: rgb(62, 121, 108);
+				width: 100%;
+				padding-top: 10px;
+				padding-bottom: 10px;
+				margin-bottom: 0;
+				font-family: 'Nanum Gothic', sans-serif;
+			}
+			.tableLabel {
 				font-size: 15px;
 				background-color: rgb(141, 204, 191);
 				color: rgb(62, 121, 108);
@@ -167,7 +173,7 @@
 				<input type="hidden" name="prodType" value="paper">
 				<div class="form-group col-lg-4 rightform">
 					<div class="row justify-content-right">
-						<label class="formLabel col" for="publishDetail">상세정보</label>
+						<label class="tableLabel col" for="publishDetail">상세정보</label>
 					</div>
 					<div class="row detail text-left">
 						<table>
@@ -204,7 +210,7 @@
 						</table>
 					</div>	
 					<div class="row justify-content-right">
-						<label class="formLabel col" for="getfactoryList">인쇄소 선택</label>
+						<label class="tableLabel col" for="getfactoryList">인쇄소 선택</label>
 					</div>
 					<div class="row detail text-left">
 						<table>

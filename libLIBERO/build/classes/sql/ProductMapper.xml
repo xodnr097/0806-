@@ -121,6 +121,15 @@
 					SET buy_amount = #{updatedAmount}			
 					WHERE prod_no = #{prodNo} AND user_id = #{userId}
 	</update>
+	
+	<select id="getCartList"  parameterType="string" resultMap="productSelectMap">
+					SELECT *
+					FROM buy, product
+					WHERE buy.user_id = #{value}
+					AND buy.buy_code = 0
+					AND buy.prod_no = product.prod_no
+	
+	</select>
 	 
 </mapper>
 

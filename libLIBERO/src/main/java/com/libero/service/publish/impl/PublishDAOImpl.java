@@ -1,7 +1,6 @@
 package com.libero.service.publish.impl;
 
 import java.util.List;
-import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -80,6 +79,14 @@ public class PublishDAOImpl implements PublishDAO {
 	
 	public void updateOptionPrice(User user) throws Exception{
 		sqlSession.update("PublishMapper.updateOptionPrice", user);
+	}
+	
+	public List<Publish> getUserPublishList(Publish publish) throws Exception {
+		return sqlSession.selectList("PublishMapper.getUserPublishList", publish);
+	}
+	
+	public int getTotalCount(Publish publish) throws Exception {
+		return sqlSession.selectOne("PublishMapper.getTotalCount", publish);
 	}
 
 }

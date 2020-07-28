@@ -28,5 +28,7 @@ public interface PublishService {
 	public User getOptionPrice(String userId) throws Exception;
 	
 	public void updateOptionPrice(User user) throws Exception;
+	
+	public Map<String, Object> getUserPublishList(Publish publish) throws Exception;
 
 }

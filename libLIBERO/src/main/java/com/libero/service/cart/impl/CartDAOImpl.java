@@ -1,6 +1,7 @@
 package com.libero.service.cart.impl;
 
 import java.util.HashMap;
+import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,6 +36,13 @@ import com.libero.service.domain.Product;
 			}
 			
 		}//end addCart
+		
+		
+		public List<Product> getCartList(String userId){
+			
+			return sqlSession.selectList("ProductMapper.getCartList", userId);
+			
+		}
 
 	}//end class
 
