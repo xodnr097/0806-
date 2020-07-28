@@ -64,9 +64,9 @@
 	    alert("${sessionScope.user.userId}");
 	});
 	
-	$(function(){
-		$("input").attr("onclick","buyCount()");
-	})
+// 	$(function(){
+// 		$("input").attr("onclick","buyCount()");
+// 	})
 	
 	function buyCount(){
 		var buyCount = $("#buyCount").val();
