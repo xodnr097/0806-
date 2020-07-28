@@ -2,23 +2,38 @@
     pageEncoding="UTF-8"%>
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-
+<jsp:include page="/common/cdn.jsp"></jsp:include>
+<jsp:include page="../toolbar.jsp"></jsp:include>
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="EUC-KR">
+<meta charset="UTF-8">
+
 <title>Insert title here</title>
 <script type="text/javascript"></script>
+	
 </head>
 <body>
+<br><br><br><br>
 
 
-<h1>${getBuy.receiverPhone}</h1><br>
-<h1>${getBuy.deliveryRequest }</h1>
+<c:set var="i" value="0" />
+		  <c:forEach var="getProduct" items="${getProduct}">
+			<c:set var="i" value="${ i+1 }" />
+			<tr>
+					<br/>------------------------------------<br/>
+				<td align="center"><b>${ i }</b></td>
+				<td align="left"  title="Click : 주문정보 확인">
+					<br>------------------------------------<br>
+					상품 번호	:${getProduct.prodNo}  <br/>
+					상품 이름	:${getProduct.prodName }<br/>
+					상품 가격	:${getProduct.retailPrice }<br/>
+					상품 표지 	:${getProduct.prodThumbnail}
+				</td>
+          </c:forEach>
+</body>
 
 
-<a href="http://127.0.0.1:8080/libero/buy/getUserBuy?userId=choije9410@gmail.com&payNo=10005"><input type="button" name="ss" id ="dd"></a>
-<br>
-테스트용 화면
+
 </body>
 </html>

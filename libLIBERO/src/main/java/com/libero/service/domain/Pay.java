@@ -21,8 +21,8 @@ public class Pay implements Serializable{
 	private int actualPrice;
 	private String cancelReason;
 	private String buyerId; //buy 
-	private List<Product> prodNo; //
-	private List<Publish> publish;// 
+	private String prodNo; //
+	// 
 								  //
 								  //
 	 //
