@@ -130,6 +130,16 @@
 					AND buy.prod_no = product.prod_no
 	
 	</select>
+	
+	<delete id="removeCart" parameterType="hashMap">
+	
+					DELETE
+					FROM buy
+					WHERE prod_no = #{prodNo} AND user_id = #{userId} AND buy_code = 0
+	
+	
+	
+	</delete>
 	 
 </mapper>
 

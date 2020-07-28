@@ -11,4 +11,6 @@ public interface CartService {
 
 	List<Product> getCartList(String userId);
 
+	public void removeCart(HashMap<String, Object> hashMap);
+
 }

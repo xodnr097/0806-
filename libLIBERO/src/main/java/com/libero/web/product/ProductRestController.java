@@ -67,23 +67,53 @@ public class ProductRestController {
 			
 			//장바구니 등록
 			@RequestMapping(value="json/addCart", method = RequestMethod.POST)
-			public String addCart(int prodNo, String userId, int buyCount) throws Exception {
+			public String addCart(int prodNo, String userId, int buyAmount, String from) throws Exception {
 				
 					System.out.println("/product/addWish : POST");
 					System.out.println("전달된 prodNo : "+prodNo);
 					System.out.println("전달된 아이디 : "+userId );
-					System.out.println("전달된 구매수량"+buyCount);
+					System.out.println("전달된 구매수량"+buyAmount);
+					System.out.println("어디서 왔는가"+from);
+					JSONObject obj = new JSONObject();
+					//BusinessLogic
+					
+					
+					
+					HashMap <String, Object> hashMap = new HashMap<String, Object>();
+					hashMap.put("prodNo", prodNo);
+					hashMap.put("userId", userId);
+					hashMap.put("buyAmount", buyAmount);
+					
+					if(from.equals("cart")) {
+						hashMap.put("from", from);
+					}	
+					cartService.addCart(hashMap);
+			
+					String message = "장바구니에 등록되었습니다.";
+					
+					obj.put("result", message);
+					
+					return obj.toJSONString();
+			}//end addCart
+			
+			
+			//장바구니 삭제
+			@RequestMapping(value="json/removeCart", method = RequestMethod.POST)
+			public String addCart(int prodNo, String userId) throws Exception {
+				
+					System.out.println("/product/addWish : POST");
+					System.out.println("전달된 prodNo : "+prodNo);
+					System.out.println("전달된 아이디 : "+userId );
 					JSONObject obj = new JSONObject();
 					//BusinessLogic
 					
 					HashMap <String, Object> hashMap = new HashMap<String, Object>();
 					hashMap.put("prodNo", prodNo);
 					hashMap.put("userId", userId);
-					hashMap.put("buyCount", buyCount);
 					
-					cartService.addCart(hashMap);
+					cartService.removeCart(hashMap);
 			
-					String message = "장바구니에 등록되었습니다.";
+					String message = "장바구니에서 삭제되었습니다.";
 					
 					obj.put("result", message);
 					

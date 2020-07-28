@@ -16,7 +16,9 @@
 	
 	
 	
+	
 <title>Insert title here</title>
+		<jsp:include page="/common/cdn.jsp"></jsp:include>
 </head>
 
 
@@ -46,7 +48,7 @@
 					
 	
 		<img src="${wish}" id='wish_img' width="70px" height="70px"/>
-		<input type="number" name="buyCount" id="buyCount" onblur="buyCount()">개</td>
+		<input type="number" name="buyAmount" id="buyAmount" onblur="buyAmount()" value="0">개</td>
 		<div class="form-group" align="center">
 			<button type="button" id="button" class="btn btn-info btn-block" 
 				onclick="addCart()">
@@ -65,11 +67,11 @@
 	});
 	
 // 	$(function(){
-// 		$("input").attr("onclick","buyCount()");
+// 		$("input").attr("onclick","buyAmount()");
 // 	})
 	
-	function buyCount(){
-		var buyCount = $("#buyCount").val();
+	function buyAmount(){
+		var buyAmount = $("#buyAmount").val();
 	}
 	
 	$(document).ready(function(){
@@ -97,8 +99,8 @@
 	function addCart() {
 		var userId = "${sessionScope.user.userId}";
 		var phoneCode = "${sessionScope.user.phoneCode}";
-		var buyCount = $("#buyCount").val();
-		alert(buyCount);
+		var buyAmount = $("#buyAmount").val();
+		//alert(buyAmount);
 		
 		if (userId=="") {
 			alert("로그인 해주세요.");
@@ -108,7 +110,7 @@
 			alert("휴대폰 본인인증을 완료한 회원만 가능합니다.");
 			return;
 		}
-		if (buyCount==null) {
+		if (buyAmount==0) {
 			alert("수량을 선택해주세요.");
 			return;
 		}
@@ -121,7 +123,7 @@
 					"Accept" : "application/json",
 					"Content-Type" : "application/json"
 			},
-			data: {"prodNo": ${product.prodNo}, "userId": "${sessionScope.user.userId}", "buyCount": buyCount},
+			data: {"prodNo": ${product.prodNo}, "userId": "${sessionScope.user.userId}", "buyAmount": buyAmount, "from": "product"},
 			success : function(data){
 						var message = data.result
 						alert(message);
