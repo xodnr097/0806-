@@ -119,7 +119,7 @@
 		
 		$(function(){
 			$("#button").on("click", function(){
-				$("form").attr("method", "POST").attr("action", "/libero/product/cartTest").submit();
+				$("form").attr("method", "POST").attr("action", "/libero/buy/beforePay").submit();
 			})
 		});
 		//$(function() {
