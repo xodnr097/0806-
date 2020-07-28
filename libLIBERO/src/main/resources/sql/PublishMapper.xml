@@ -30,6 +30,7 @@
 		<result property="innerType"		column="inner_type"			jdbcType="VARCHAR"/>
 		<result property="tempCode"			column="temp_code"			jdbcType="SMALLINT"/>
 		<result property="factoryId" 		column="factory_id"			jdbcType="VARCHAR"/>
+		<result property="regDate"			column="reg_date"			jdbcType="TIMESTAMP"/>
 	</resultMap>
 	
 	<resultMap id="optionSelectMap" type="user">
@@ -176,6 +177,35 @@
 			rough_price = #{roughPrice}
 		WHERE user_id IN(#{userId})
 	</update>
+	
+	<select id="getUserPublishList" parameterType="publish" resultMap="publishSelectMap">
+		SELECT * 
+		FROM product p
+		LEFT JOIN hashtag h 
+		on p.prod_no = h.prod_no 
+		where creator IN(#{creator})
+		<if test='prodType=="book"'>
+			AND prod_type = "paper" || prod_type = "ebook"
+		</if> 
+		<if test='prodType=="prod"'>
+			AND prod_type = "design" || prod_type = "target" || prod_type = "correct"
+		</if>
+		ORDER BY reg_date DESC
+	</select>
+	
+	<select id="getTotalCount" parameterType="publish" resultType="int">
+		SELECT COUNT(*) 
+		FROM product p
+		LEFT JOIN hashtag h 
+		on p.prod_no = h.prod_no 
+		where creator IN(#{creator})
+		<if test='prodType=="book"'>
+			AND prod_type = "paper" || prod_type = "ebook"
+		</if> 
+		<if test='prodType=="prod"'>
+			AND prod_type = "design" || prod_type = "target" || prod_type = "correct"
+		</if>
+	</select>
 
 </mapper>
  	

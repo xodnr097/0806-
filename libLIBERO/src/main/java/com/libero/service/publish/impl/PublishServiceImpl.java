@@ -78,5 +78,17 @@ public class PublishServiceImpl implements PublishService{
 	public void updateOptionPrice(User user) throws Exception{
 		publishDAO.updateOptionPrice(user);
 	}
+	
+	public Map<String, Object> getUserPublishList(Publish publish) throws Exception {
+		
+		int totalCount = publishDAO.getTotalCount(publish);
+		List<Publish> list = publishDAO.getUserPublishList(publish);
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("list", list );
+		map.put("totalCount", new Integer(totalCount));
+		
+		return map;
+	}
 
 }

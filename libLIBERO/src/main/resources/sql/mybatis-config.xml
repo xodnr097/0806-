@@ -31,5 +31,7 @@
 		<mapper resource="sql/ProductMapper.xml"/>
 		<mapper resource="sql/BuyMapper.xml"/>
 		<mapper resource="sql/PublishMapper.xml"/>
+		<mapper resource="sql/CommunityMapper.xml"/>
+		<mapper resource="sql/ReportMapper.xml"/>
 	</mappers>
 </configuration>
