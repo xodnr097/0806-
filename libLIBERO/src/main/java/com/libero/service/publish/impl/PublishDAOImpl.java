@@ -47,8 +47,10 @@ public class PublishDAOImpl implements PublishDAO {
 	}
 	
 	public void updatePublishInfo(Publish publish) throws Exception {
-		sqlSession.update("PublishMapper.updatePublishInfo", publish);
-		sqlSession.insert("PublishMapper.addHashtag", publish);
+		sqlSession.update("PublishMapper.updateProductInfo", publish);
+		if (publish.getHashtagName()!="") {
+			sqlSession.insert("PublishMapper.addHashtag", publish);
+		}
 	}
 	
 	public void updateRetailPrice(Publish publish) throws Exception {
@@ -77,6 +79,14 @@ public class PublishDAOImpl implements PublishDAO {
 	
 	public void updateOptionPrice(User user) throws Exception{
 		sqlSession.update("PublishMapper.updateOptionPrice", user);
+	}
+	
+	public List<Publish> getUserPublishList(Publish publish) throws Exception {
+		return sqlSession.selectList("PublishMapper.getUserPublishList", publish);
+	}
+	
+	public int getTotalCount(Publish publish) throws Exception {
+		return sqlSession.selectOne("PublishMapper.getTotalCount", publish);
 	}
 
 }

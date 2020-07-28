@@ -20,6 +20,8 @@
 		<result property="creator"			column="creator"			jdbcType="VARCHAR"/>
 		<result property="author"			column="author"				jdbcType="VARCHAR"/>
 		<result property="purposeCode"		column="purpose_code"		jdbcType="VARCHAR"/>
+		<result property="bookCategory"		column="book_category"		jdbcType="VARCHAR"/>
+		<result property="hashtagName"		column="hashtag_name"		jdbcType="VARCHAR"/>
 		<result property="manuFile"			column="manu_file"			jdbcType="VARCHAR"/>
 		<result property="bookPage"			column="book_page"			jdbcType="INTEGER"/>
 		<result property="colorType"		column="color_type"			jdbcType="VARCHAR"/>
@@ -28,6 +30,7 @@
 		<result property="innerType"		column="inner_type"			jdbcType="VARCHAR"/>
 		<result property="tempCode"			column="temp_code"			jdbcType="SMALLINT"/>
 		<result property="factoryId" 		column="factory_id"			jdbcType="VARCHAR"/>
+		<result property="regDate"			column="reg_date"			jdbcType="TIMESTAMP"/>
 	</resultMap>
 	
 	<resultMap id="optionSelectMap" type="user">
@@ -88,6 +91,26 @@
 	   	WHERE prod_no = #{prodNo}
 	</update>
 	
+	<update id="updateProductInfo" parameterType="publish">
+		UPDATE product
+		SET
+			prod_name 		= #{prodName},
+			prod_detail 	= #{prodDetail:LONGVARCHAR},
+			prod_thumbnail 	= #{prodThumbnail},
+			cover_file 		= #{coverFile:VARCHAR},
+			author 			= #{author},
+			purpose_code 	= #{purposeCode},
+			book_category 	= #{bookCategory}
+		WHERE prod_no = #{prodNo}
+	</update>
+	
+	<insert id="addHashtag" parameterType="publish">
+		INSERT 
+	 	INTO 
+	 	hashtag (prod_no, hashtag_name)
+	 	VALUES (#{prodNo},#{hashtagName:VARCHAR} )
+	</insert>
+	
 	<update	id="updateRetailPrice"	parameterType="publish">
 	   	UPDATE product
 	   	SET
@@ -102,8 +125,10 @@
 	
 	<select		id="getProduct"	parameterType="int" 	resultMap="publishSelectMap">
 	 	SELECT * 
-	 	FROM product 
-	 	WHERE prod_no IN(#{value})
+		FROM product p
+		LEFT JOIN hashtag h 
+		ON p.prod_no = h.prod_no 
+		where p.prod_no IN(#{value}) 
 	</select>
 	
 	<insert		id="addProduct"		parameterType="publish">
@@ -152,6 +177,35 @@
 			rough_price = #{roughPrice}
 		WHERE user_id IN(#{userId})
 	</update>
+	
+	<select id="getUserPublishList" parameterType="publish" resultMap="publishSelectMap">
+		SELECT * 
+		FROM product p
+		LEFT JOIN hashtag h 
+		on p.prod_no = h.prod_no 
+		where creator IN(#{creator})
+		<if test='prodType=="book"'>
+			AND prod_type = "paper" || prod_type = "ebook"
+		</if> 
+		<if test='prodType=="prod"'>
+			AND prod_type = "design" || prod_type = "target" || prod_type = "correct"
+		</if>
+		ORDER BY reg_date DESC
+	</select>
+	
+	<select id="getTotalCount" parameterType="publish" resultType="int">
+		SELECT COUNT(*) 
+		FROM product p
+		LEFT JOIN hashtag h 
+		on p.prod_no = h.prod_no 
+		where creator IN(#{creator})
+		<if test='prodType=="book"'>
+			AND prod_type = "paper" || prod_type = "ebook"
+		</if> 
+		<if test='prodType=="prod"'>
+			AND prod_type = "design" || prod_type = "target" || prod_type = "correct"
+		</if>
+	</select>
 
 </mapper>
  	

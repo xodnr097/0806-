@@ -7,9 +7,10 @@
 	<head>
 		<meta charset="UTF-8">
 		<title>libLIBERO : 도서정보 등록</title>
-		
+		<jsp:include page="/common/cdn.jsp"></jsp:include>
 		<!--  ///////////////////////// CSS ////////////////////////// -->
 		<link rel="stylesheet" href="../resources/css/common.css">
+		
 		<style type="text/css">
 			.formLabel {
 				font-size: 15px;
@@ -87,6 +88,15 @@
 				left: 345px; /*계산해서 스크립트로 추가*/
 				float: right;
 			}
+			
+			#authorPreview {
+				position: absolute;
+				top: 90px;
+				left: 430px; /*계산해서 스크립트로 추가*/
+				float: right;
+				font-size: 12px;
+			}
+			
 			#preview #liberoImg {
 				position: absolute;
 				bottom:5px;
@@ -157,7 +167,7 @@
 	   			<input type="hidden" name="prodNo" value="${prod.prodNo}">
 	   			<!-- 표지타입 선택 Start -->
 	   			<div class="form-group">
-	   				<label class="formLabel col-lg-12" for="coverSelect">표지 등록</label>
+	   				<label class="formLabel" for="coverSelect">표지 등록</label>
 	   				<div class="col-lg-12">
 	   					<input type="radio" name="coverSelect" value="freeTemplate" onclick="checkCover()" checked>무료 템플릿
 	   				</div>
@@ -207,24 +217,32 @@
 	   				</div>
 	   			</div>
 	   			<!-- 이미지 선택 End -->
+	   			
+	   			<!-- 직접 올리기 Start -->
+	   			<div class="form-group md-form" align="center" id="fileUpload">
+	   				<input type="file" id="file" name="file" onchange="checkFile(this)"><br/>
+	   			</div>
+	   			<!-- 직접 올리기 End -->
+	   			
 	   			<!-- 이미지 미리보기 Start -->
 	   			<div class="form-group imgPreview">
 	   				<div class="row col-lg-12 justify-content-center">
 	   					<div id="preview">
-		   					<div id="titlePreview">도서제목 div</div>
+		   					<div id="titlePreview"></div>
+		   					<div id="authorPreview"></div>
 		   					<div id="liberoImg"></div>
+		   					<img src="" id="uploadPreview" width="100%" height="100%">
 	   					</div>
 	   				</div>
 	   			</div>
 	   			<!-- 이미지 미리보기 End -->
 	   			<!-- 무료템플릿 선택 End -->
-	   			<!-- 직접 올리기 Start -->
-	   			<!-- 직접 올리기 End -->
+	   			
 	   			<!-- 도서제목 입력 Start -->
 	   			<div class="form-group md-form">
 	   				<div class="md-form">
 	   					<div class="formLabel">도서제목</div>
-						<input placeholder="도서 제목" type="text" id="bookTitle" class="form-control" name="bookTitle" onblur="addTitle()">
+						<input placeholder="도서 제목" type="text" id="prodName" value="${prod.prodName}" class="form-control" name="prodName" onkeyup="addTitle()">
 					</div>
 	   			</div>
 	   			<!-- Grid row -->
@@ -234,7 +252,7 @@
 				      <!-- Material input -->
 				      <div class="md-form mt-0">
 				      	<div class="formLabel">저자</div>
-				        <input type="text" name="author" class="form-control" placeholder="저자">
+				        <input type="text" name="author" value="${prod.author}" class="form-control" placeholder="저자" onkeyup="addAuthor()">
 				      </div>
 				    </div>
 				    <!-- Grid column -->
@@ -245,39 +263,104 @@
 				      <div class="md-form mt-0">
 				      	<div class="formLabel">카테고리</div>
 				      	<select name="bookCategory" class="browser-default custom-select">
-				      		<option>소설</option>
+				      		<option value="시">시</option>
+				      		<option value="소설">소설</option>
+				      		<option value="수필">수필</option>
+				      		<option value="비문학">비문학</option>
+				      		<option value="교육">교육</option>
 				      	</select>
 				      </div>
 				    </div>
 				    <!-- Grid column -->
 				</div>
-	   			<div class="form-group md-form">
-	   				<div class="md-form">
+	   			<div class="form-group">
+	   				<div>
 	   					<div class="formLabel">해시태그</div>
-						<input placeholder="#으로 구분" type="text" id="hashtag" class="form-control" name="hashtag">
+	   					<div class="bs-example">
+							<input type="text" value="${prod.hashtagName}" id="hashtagName" class="tags" name="hashtagName" placeholder="">
+						</div>
 					</div>
 	   			</div>
+	   			<div class="form-group md-form">
+	   				<div class="formLabel">표지 등록</div>
+	   				<div class="row">
+		   				<div class="col-lg-2">
+		   					<input type="radio" name="purpose" value="sale">일반 판매용
+		   				</div>
+		   				<div class="col-lg-2">
+		   					<input type="radio" name="purpose" value="have">소장용
+		   				</div>
+	   				</div>
+	   			</div>
 	   			
+	   			<!-- 도서 설명 입력폼(SummerNote) -->
+				<div class="form-group">
+				    <label class="formLabel" for="prodDetail">상품상세정보</label>
+				    <div>
+						<textarea id="prodDetail" name="prodDetail" value="${prod.prodDetail}" class="summernote" style="display: none;"></textarea>
+						<div id="summernote"></div>
+				    </div>
+				</div>
+				<!-- 도서 설명 입력폼(SummerNote) 끝 -->
+				<div class="form-group" align="center">
+		      		<button type="button" class="btn btn-info btn-block" 
+		      			onclick="addInfo()">
+		      			가격 책정
+		      		</button>
+			  	</div>
 	   		</form>
 	   		<!-- 도서정보 등록 폼 End -->
 	   	</div>
 	   	<!-- //////////// Bootstrap Container End////////////////// -->
 	</body>
+	
+	<!-- include summernote-lite css/js -->
+	<link href="/libero/resources/css/summernote/summernote-lite.css" rel="stylesheet">
+	<script src="/libero/resources/javascript/summernote/summernote-lite.js"></script>
+	
+	<!-- include summernote-ko-KR -->
+	<script src="/libero/resources/javascript/summernote/lang/summernote-ko-KR.min.js"></script>
+	
+	<!-- taginput js -->
+	<link href="../resources/css/taginput/jquery.tagsinput.min.css" rel="stylesheet">
+	<script src="../resources/javascript/taginput/jquery.tagsinput.min.js"></script>
+	
 	<script type="text/javascript">
 		$(function(){
 			
 			$("#liberoImg").hide();
 			$("#titlePreview").hide();
+			$("#fileUpload").hide();
+			$("#uploadPreview").hide();
 			
 			$("input[name='imgType']").on("click", function(){
 				var type = $("input[name='imgType']:checked").val();
-				console.log(type);
+				var img = $("input[name='imgSelect']:checked").val();
+				
 				$("div .imgSelect").show();
 				$("div .imgPreview").show();
+				
 				$(".img1").css("background-image", "url(../resources/images/publish/freeTemplate/"+type+"/t1_preview.png)");
 				$(".img2").css("background-image", "url(../resources/images/publish/freeTemplate/"+type+"/t2_preview.png)");
 				$(".img3").css("background-image", "url(../resources/images/publish/freeTemplate/"+type+"/t3_preview.png)");
 				$(".img4").css("background-image", "url(../resources/images/publish/freeTemplate/"+type+"/t4_preview.png)");
+				
+				$("#preview").css("background-image", "url(../resources/images/publish/freeTemplate/"+type+"/"+img+"_preview.png)");
+				$("#liberoImg").show();
+				$("#titlePreview").show();
+				
+				//logo div 위치 변경
+				if (type=="picture") {
+					$("#titlePreview").css("top","55px");
+					$("#authorPreview").css("top","90px");
+				}else if (type=="icon") {
+					$("#titlePreview").css("top","200px");
+					$("#authorPreview").css("top","220px");
+				}else if (type=="img") {
+					$("#titlePreview").css("top","265px");
+					$("#authorPreview").css("top","280px");
+				}
+				
 			});
 			
 			$("input[name='imgSelect']").on("click", function(){
@@ -297,19 +380,151 @@
 				$("div .freeSelect").show();
 				$("div .imgSelect").show();
 				$("div .imgPreview").show();
+				$("#fileUpload").hide();
 			}
 			if (cover=="fileUpload") {
 				$("div .freeSelect").hide();
 				$("div .imgSelect").hide();
-				$("div .imgPreview").hide();
+				$("#fileUpload").show();
+				$("div .imgPreview").show();
 			}
 		}
 		
 		function addTitle() {
-			var title = $("input[name='bookTitle']").val();
-			
+			//제목 추가
+			var title = $("input[name='prodName']").val();
 			$("#titlePreview").html(title);
+			//위치변경
+			var divWidth = $("#preview").width();
+			var titleWidth = $("#titlePreview").width();
+			var type = $("input[name='imgType']:checked").val();
 			
+			if (type!="img") {
+				var leftWidth = Math.ceil((divWidth/4)*3-(titleWidth/2)+5);
+			} else {
+				var leftWidth = Math.ceil((divWidth/2)+20);
+			}
+			
+			$("#titlePreview").css("left",leftWidth);
+			
+		}
+		
+		function addAuthor() {
+			//저자 추가
+			var author = $("input[name='author']").val();
+			$("#authorPreview").html(author);
+			
+			//위치변경
+			var divWidth = $("#preview").width();
+			var authorWidth = $("#authorPreview").width();
+			var type = $("input[name='imgType']:checked").val();
+			
+			if (type=="icon") {
+				var leftWidth = Math.ceil((divWidth/4)*3-(authorWidth/2)+5);
+			} else if (type=="img" || type=="picture") {
+				var leftWidth = Math.ceil((divWidth)-(authorWidth)-30);
+			}
+			
+			$("#authorPreview").css("left",leftWidth);
+		}
+		
+		//summernote
+	    $(function() {
+	  	  	$('#summernote').summernote({
+	  		  placeholder: '내용을 입력하세요',
+		   	        tabsize: 1,
+		   	        height: 300,
+		   	     	lang: 'ko-KR', // default: 'en-US'
+		   	     	callbacks: {	//여기 부분이 이미지를 첨부하는 부분
+					onImageUpload : function(files, editor, welEditable) {
+						console.log(files);
+						for (var i = files.length - 1; i >= 0; i--) {
+			            	sendFile(files[i], this);
+			            }
+					}
+				}
+	  	  	});
+	  		$("div.note-editable").on('drop',function(e){
+	            for(i=0; i< e.originalEvent.dataTransfer.files.length; i++){
+	            	sendFile(e.originalEvent.dataTransfer.files[i],$("#summernote")[0]);
+	            }
+	      		e.preventDefault();
+	  		});
+	  	});
+	    
+	    /**
+		* 이미지 파일 업로드
+		*/
+		function sendFile(file, editor) {
+			data = new FormData();
+			data.append("file", file);
+			
+			$.ajax({
+				data : data,
+				type : "POST",
+				url : "/libero/publish/json/addProduct",
+				//cache: false,
+				contentType : false,
+				enctype: 'multipart/form-data',
+				processData : false,
+				success : function(data) {
+	            	//항상 업로드된 파일의 url이 있어야 한다.
+	           		$(editor).summernote('insertImage', data.url);
+				}
+			});
+		}
+	    
+		//============== check file exc =====================
+		function checkFile(f) {
+			
+			var file = f.files;
+			
+			if(!/\.(jpg|png)$/i.test(file[0].name)) 
+				alert("jpg, png 파일만 업로드 가능합니다.");
+			
+			else return;
+			
+			f.outerHTML = f.outerHTML;
+		}
+		
+		//==============이미지 미리보기=========================
+	    $(function(){
+	    	function readURL(input) {
+	            if (input.files && input.files[0]) {
+	                var reader = new FileReader(); //파일을 읽기 위한 FileReader객체 생성
+	                reader.onload = function (e) { 
+	                    //파일 읽어들이기를 성공했을때 호출되는 이벤트 핸들러
+	                    $("#uploadPreview").show();
+	                    $('#uploadPreview').attr('src', e.target.result);
+	                    //이미지 Tag의 SRC속성에 읽어들인 File내용을 지정
+	                    //(아래 코드에서 읽어들인 dataURL형식)
+	                }                    
+	                reader.readAsDataURL(input.files[0]);
+	                //File내용을 읽어 dataURL형식의 문자열로 저장
+	            }
+	    	}//readURL()--
+
+	    	//file 양식으로 이미지를 선택(값이 변경) 되었을때 처리하는 코드
+	   		$("#file").change(function(){
+	            //alert(this.value); //선택한 이미지 경로 표시
+	            readURL(this);
+	        });
+	    });
+		
+		//addTag
+		
+		$(function() {
+
+			$('#hashtagName').tagsInput({
+				width:'auto',
+				defaultText:''
+			});
+			
+		});
+		
+	    function addInfo() {
+	    	$('textarea[name="prodDetail"]').val($('#summernote').summernote('code'));
+			$("form").attr("method" , "POST").attr("action" , "/libero/publish/addProductInfo").attr("enctype","multipart/form-data").submit();
 		}
 	</script>
 </html>

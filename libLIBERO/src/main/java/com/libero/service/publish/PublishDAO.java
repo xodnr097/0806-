@@ -1,6 +1,7 @@
 package com.libero.service.publish;
 
 import java.util.List;
+import java.util.Map;
 
 import com.libero.service.domain.Publish;
 import com.libero.service.domain.User;
@@ -28,5 +29,9 @@ public interface PublishDAO {
 	public User getOptionPrice(String userId) throws Exception;
 	
 	public void updateOptionPrice(User user) throws Exception;
+	
+	public List<Publish> getUserPublishList(Publish publish) throws Exception;
+	
+	public int getTotalCount(Publish publish) throws Exception;
 
 }

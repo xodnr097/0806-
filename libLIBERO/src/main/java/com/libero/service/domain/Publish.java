@@ -1,6 +1,7 @@
 package com.libero.service.domain;
 
 import java.io.Serializable;
+import java.sql.Date;
 
 import lombok.Data;
 
@@ -16,10 +17,12 @@ public class Publish implements Serializable {
 	private String blindCode;
 	private String prodThumbnail;
 	private String coverFile;
+	private String hashtagName;
 	private String discountCode;
 	private String creator;
 	private String author;
 	private String purposeCode;
+	private String bookCategory;
 	private String manuFile;
 	private int bookPage;
 	private String colorType;
@@ -28,6 +31,7 @@ public class Publish implements Serializable {
 	private String innerType;
 	private short tempCode;
 	private String factoryId;
+	private Date regDate;
 	
 	private String coverSelect;
 	private String imgType;

@@ -1,10 +1,18 @@
 package com.libero.web.publish;
 
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.Graphics;
+import java.awt.font.FontRenderContext;
+import java.awt.geom.Rectangle2D;
+import java.awt.image.BufferedImage;
 import java.io.File;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
+import javax.imageio.ImageIO;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,7 +48,7 @@ public class PublishController {
 		System.out.println(this.getClass());
 	}
 	
-	@Value("#{commonProperties['path2']}")
+	@Value("#{commonProperties['path']}")
 	String path;
 	
 	//method
@@ -97,7 +105,6 @@ public class PublishController {
 		publish = publishService.getProduct(prodNo);
 		
 		User user = (User) session.getAttribute("user");
-		
 		ModelAndView modelAndView = new ModelAndView();
 		if (user!=null && user.getUserId().contentEquals(publish.getCreator())) {
 			modelAndView.addObject("prod",publish);
@@ -113,23 +120,14 @@ public class PublishController {
 		
 		System.out.println("/publish/addManu : POST");
 		
-		Map<String, MultipartFile> files = request.getFileMap();
-		CommonsMultipartFile cmf = (CommonsMultipartFile) files.get("file");
+		MultipartFile uploadedFile = request.getFile("file");
 		
-		if (cmf.getSize()!=0) {
-			String originalFileName = cmf.getOriginalFilename();	//오리지날 파일명
-			String extension = originalFileName.substring(originalFileName.lastIndexOf("."));	//파일 확장자
-			String fileRoot = path+"publish/fileUpload/"; // 파일 경로
-			String savedFileName = UUID.randomUUID() + extension;	//저장될 파일 명
-			publish.setManuFile(savedFileName);
-		    	
-	    	File f = new File(fileRoot+savedFileName);
-	    	cmf.transferTo(f);
-		}
-		
-		if (publish.getManuFile()!=null) {
+		if (!uploadedFile.isEmpty()) {
+			String fileName = fileUpload(request);
+			publish.setManuFile(fileName);
 			publishService.updateManu(publish);
 		}
+		
 		ModelAndView modelAndView = new ModelAndView();
 		modelAndView.addObject("prod",publish);
 		modelAndView.setViewName("redirect:/publish/addProductInfo?prodNo="+publish.getProdNo());
@@ -159,14 +157,63 @@ public class PublishController {
 	}
 	
 	@RequestMapping(value = "addProductInfo", method = RequestMethod.POST)
-	public ModelAndView addProductInfo(Publish publish) throws Exception {
+	public ModelAndView addProductInfo(Publish publish, MultipartHttpServletRequest request) throws Exception {
 		
 		System.out.println("/publish/addProductInfo : POST");
 		
-		/* publishService.updatePublishInfo(publish); */
+		if (publish.getCoverSelect().contentEquals("fileUpload")) {
+			
+			MultipartFile uploadedFile = request.getFile("file");
+			
+			if (!uploadedFile.isEmpty()) {
+				String fileName = fileUpload(request);
+				publish.setProdThumbnail(fileName);
+			}
+			
+		}else if (publish.getCoverSelect().contentEquals("freeTemplate")) {
+			
+			BufferedImage thumbnail = ImageIO.read(new File(path+"publish/freeTemplate/"+publish.getImgType()+"/"+publish.getImgSelect()+".png"));
+			BufferedImage logo = ImageIO.read(new File(path+"common/logo.png"));
+			Graphics g = thumbnail.getGraphics();
+			int width = thumbnail.getWidth();
+			Font titleFont = new Font("Serif", Font.PLAIN, 30);
+			Font nameFont = new Font("Serif", Font.PLAIN, 15);
+			FontRenderContext frc = new FontRenderContext(null,true,true);
+			Rectangle2D r = titleFont.getStringBounds(publish.getProdName(), frc); 
+			Rectangle2D r2 = titleFont.getStringBounds(publish.getAuthor(), frc); 
+			
+			//썸네일 합성
+			g.setColor(Color.black);
+			if (publish.getImgType().contentEquals("picture")) {
+				g.setFont(titleFont); 
+				g.drawString(publish.getProdName(), (width/2)-(int)((r.getWidth())/2), 130);
+				g.setFont(nameFont); 
+				g.drawString(publish.getAuthor(), (width/2)-(int)((r2.getWidth())/2)+160, 170); 
+				g.drawImage(logo, (width/2)-(int)(r2.getWidth())+150, 555, 130, 40, null);
+			}else if (publish.getImgType().contentEquals("icon")) {
+				g.setFont(titleFont); 
+				g.drawString(publish.getProdName(), (width/2)-(int)((r.getWidth())/2), 330);
+				g.setFont(nameFont); 
+				g.drawString(publish.getAuthor(), (width/2)-(int)((r2.getWidth())/2)+20, 350); 
+				g.drawImage(logo, (width/2)-(int)(r2.getWidth())+155, 590, 130, 40, null);
+			}else if (publish.getImgType().contentEquals("img")) {
+				g.setFont(titleFont); 
+				g.drawString(publish.getProdName(), (width/2)-180, 530);
+				g.setFont(nameFont); 
+				g.drawString(publish.getAuthor(), (width/2)-(int)(r2.getWidth())+210, 550); 
+				g.drawImage(logo, (width/2)-(int)(r2.getWidth())+135, 565, 130, 40, null);
+			}
+			g.dispose(); 
+			
+			UUID savedFileName = UUID.randomUUID();	
+			
+			ImageIO.write(thumbnail, "png", new File(path+"publish/fileUpload/"+savedFileName+".png")); 
+			
+			publish.setProdThumbnail(savedFileName+".png");
+		}
 		
+		publishService.updatePublishInfo(publish);
 		ModelAndView modelAndView = new ModelAndView();
-		modelAndView.addObject("prod",publish);
 		modelAndView.setViewName("redirect:/publish/addRetailPrice?prodNo="+publish.getProdNo());
 		
 		return modelAndView;
@@ -287,9 +334,42 @@ public class PublishController {
 	}
 	
 	@RequestMapping(value = "updateProduct", method = RequestMethod.POST)
-	public ModelAndView updateProduct(Publish publish) throws Exception {
+	public ModelAndView updateProduct(Publish publish, @RequestParam("imgFile")List<MultipartFile> files) throws Exception {
 		
 		System.out.println("/publish/updateProduct : POST");
+		
+		//File Upload Start
+		if (files!=null) {
+			
+			int i = 0;
+			
+			for (MultipartFile multipartFile : files) {
+				System.out.println(++i+"번째 파일 : ");
+				System.out.println(multipartFile.getOriginalFilename());
+				
+				String originalFileName = multipartFile.getOriginalFilename();	//오리지날 파일명
+				String extension = originalFileName.substring(originalFileName.lastIndexOf("."));	//파일 확장자
+				String fileRoot = path+"publish/fileUpload/"; // 파일 경로
+				String savedFileName = UUID.randomUUID() + extension;	//저장될 파일 명
+				
+				File f =new File(fileRoot+savedFileName);
+				
+				multipartFile.transferTo(f);
+				if (i==1) {
+					publish.setProdThumbnail(f.getName());
+					
+				}
+				if(i==2) {
+					publish.setCoverFile(f.getName());
+				}
+				System.out.println("파일 업로드 성공 : "+f.getName());
+				//맞춤형표지, 교정교열은 2일시 for문 빠져나옴
+				if (publish.getProdType().contentEquals("target")||publish.getProdType().contentEquals("correct")) {
+					break;
+				}
+			}
+		}
+		//File Upload End
 		
 		publishService.updateProduct(publish);
 		
@@ -348,5 +428,37 @@ public class PublishController {
 		modelAndView.setViewName("redirect:/publish/getOptionPrice");
 		
 		return modelAndView;
+	}
+	
+	@RequestMapping(value = "getUserPublishList", method = RequestMethod.GET)
+	public ModelAndView getUserPublishList(HttpSession session, @RequestParam("prodType") String prodType, Publish publish) throws Exception {
+		
+		publish.setProdType(prodType);
+		publish.setCreator(((User)session.getAttribute("user")).getUserId());
+		
+		Map<String , Object> map=publishService.getUserPublishList(publish);
+		
+		ModelAndView modelAndView = new ModelAndView();
+		modelAndView.addObject("list", map.get("list"));
+		modelAndView.addObject("totalCount", map.get("totalCount"));
+		modelAndView.setViewName("forward:/view/publish/getUserPublishList.jsp");
+		
+		return modelAndView;
+	}
+	
+	public String fileUpload(MultipartHttpServletRequest request) throws Exception {
+		
+		Map<String, MultipartFile> files = request.getFileMap();
+		CommonsMultipartFile cmf = (CommonsMultipartFile) files.get("file");
+		
+		String originalFileName = cmf.getOriginalFilename();	//오리지날 파일명
+		String extension = originalFileName.substring(originalFileName.lastIndexOf("."));	//파일 확장자
+		String fileRoot = path+"publish/fileUpload/"; // 파일 경로
+		String savedFileName = UUID.randomUUID() + extension;	//저장될 파일 명
+	    	
+    	File f = new File(fileRoot+savedFileName);
+    	cmf.transferTo(f);
+		
+		return savedFileName;
 	}
 }
