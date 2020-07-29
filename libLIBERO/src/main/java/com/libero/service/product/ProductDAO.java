@@ -1,5 +1,6 @@
 package com.libero.service.product;
 
+import java.util.HashMap;
 import java.util.List;
 
 import com.libero.common.Search;
@@ -16,6 +17,8 @@ public interface ProductDAO {
 	public List<Product> getProductList(String prodType) throws Exception;
 
 	public Product getProduct(int prodNo);
+
+	public void addReview(HashMap<String, Object> hashMap);
 	
 	
 }

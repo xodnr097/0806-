@@ -5,11 +5,13 @@ import java.util.HashMap;
 import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.libero.service.cart.CartService;
+import com.libero.service.domain.Review;
 import com.libero.service.product.ProductService;
 import com.libero.service.wish.WishService;
 
@@ -119,6 +121,37 @@ public class ProductRestController {
 					
 					return obj.toJSONString();
 			}//end addCart
+					//리뷰 등록
+					@RequestMapping(value="json/addReview", method = RequestMethod.POST)
+					public void addReview() throws Exception {
+						
+							
+							/*
+							System.out.println("/product/addWish : POST");
+							System.out.println("전달된 prodNo : "+prodNo);
+							System.out.println("전달된 아이디 : "+userId );
+							System.out.println("전달된 구매번호"+buyNo);
+							JSONObject obj = new JSONObject();
+							//BusinessLogic
+							 * 
+							 */
+							/*
+							
+							hashMap.put("prodNo", prodNo);
+							hashMap.put("userId", userId);
+							hashMap.put("buyNo", 13);
+							hashMap.put
+							*/
+							HashMap <String, Object> hashMap = new HashMap<String, Object>();
+							//ProductService.addReview(hashMap);
+							
+							
+					
+							
+
+							
+							//return obj.toJSONString();
+			}//end addReview
 			
 			
 			

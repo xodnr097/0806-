@@ -1,5 +1,6 @@
 package com.libero.service.product.impl;
 
+import java.util.HashMap;
 import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
@@ -49,4 +50,9 @@ public class ProductDAOImpl implements ProductDAO{
 		
 	   return sqlSession.selectOne("ProductMapper.getProduct", prodNo);
 	}
-}
+
+	@Override
+	public void addReview(HashMap<String, Object> hashMap) {
+		sqlSession.insert("ProductMapper.addReview", hashMap);
+	}
+}//end class
