@@ -24,14 +24,7 @@
 	   	
 	   	<!-- //////////// Bootstrap Container Start////////////////// -->
 	   	<div class="container">
-	   		<div class="row justify-content-center" style="margin-bottom: 100px">
-	   			<button class="btn btn-default">내정보</button>
-	   			<button class="btn btn-default">임시 저장 도서 조회</button>
-	   			<button class="btn btn-default">주문내역 조회</button>
-	   			<a href="/libero/publish/getUserPublishList?prodType=book" 
-		   				class="btn btn-default" role="button" 
-		   				aria-pressed="true" style="margin-bottom: 10px">판매 도서 및 상품 조회</a>
-	   		</div>
+	   		<jsp:include page="topButton.jsp"></jsp:include>
 	   		<div class="row">
 		   		<div class="col-lg-2">
 		   			<a href="/libero/publish/getUserPublishList?prodType=book" 
@@ -78,14 +71,16 @@
 							  					</tr>
 							  					<tr>
 							  						<th>판매량</th>
-							  						<td>: ㅇㅇ</td>
+							  						<td>: ${prod.salesCount}</td>
 							  					</tr>
 							  				</tbody>
 							  			</table>
 							  		</div>
 							  		
 							  		<div class="col-lg-3">
-							  			<button class="btn btn-default btn-block" style="margin-bottom: 10px">판매 통계 조회</button>
+							  			<a href="javascript:popup(${prod.prodNo})" 
+							   				class="btn btn-default btn-block" role="button" 
+							   				aria-pressed="true" style="margin-bottom: 10px">판매 통계 조회</a>
 							  			<button class="btn btn-default btn-block">판매 중지</button>
 							  		</div>
 						  		</div>
@@ -99,4 +94,15 @@
 	   	</div>
 	   	<!-- //////////// Bootstrap Container End////////////////// -->
 	</body>
+	
+	<script type="text/javascript">
+	
+	//==============판매 통계 팝업 ====================
+		function popup(prodNo){
+	        var url = "/libero/publish/getStatistics?prodNo="+prodNo;
+	        var name = "판매 통계 조회";
+	        var option = "width = 700, height = 400, top = 100, left = 200, location = no"
+	        window.open(url, name, option);
+	    }
+	</script>
 </html>

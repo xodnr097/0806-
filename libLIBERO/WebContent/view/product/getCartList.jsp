@@ -7,6 +7,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+	<jsp:include page="/common/cdn.jsp"></jsp:include>
 </head>
 <body>
 		<!-- ToolBar Start /////////////////////////////////////-->
@@ -26,16 +27,17 @@
 			<c:set var="totalPrice" value="${totalPrice + cartList.buyAmount * cartList.retailPrice }"/>
 			<tr>
 				<td align="center">${ i }</td>
-				<form>
+				<form id="form${i}" value="${i}">
 		<!--  	 <input type="checkbox" id="checkbox${i}" name="price" value="#"> -->
-				 <input type="hidden" class="eachPrice" id="eachPrice${i}" name="eachPrice${i}"  value="${cartList.buyAmount * cartList.retailPrice}">
-					상품번호 : ${cartList.prodNo }	 <br/>	
+				 	<input type="hidden" class="eachPrice" id="eachPrice${i}" name="eachPrice${i}"  value="${cartList.buyAmount * cartList.retailPrice}">
+					상품번호 : ${cartList.prodNo }	 <br/>	<input type="hidden" class="prodNo" id="prodNo${i}" name="prodNo${i}"  value="${cartList.prodNo}">
 					상품타입 : ${cartList.prodType} <br/>
 					상품명 : ${cartList.prodName} <br/>
 					가격 : ${cartList.retailPrice} <br/><input type="hidden" class="retailPrice" name="retailPrice${i}" id="retailPrice${i}" value="${cartList.retailPrice}">
 					수량 : ${cartList.buyAmount}<br/><input type="number" class="buyAmount" name="buyAmount${i}" id="${i}" value="${cartList.buyAmount}">개
 					<p id="each${i}">가격 : ${cartList.buyAmount * cartList.retailPrice}</p> 
 					<input type="hidden" class="eachPrice" id="eachPrice${i}" name="eachPrice${i}"  value="${cartList.buyAmount * cartList.retailPrice}">
+					<button type="button" class="removeButton" id="button${i}" class="btn btn-info btn-block" value="${cartList.prodNo}">삭제</button>
 					
 				</form></tr>
           </c:forEach>
@@ -80,10 +82,11 @@
 			$('.buyAmount').click(function(){
 					
 				var buyAmount = $(this).val();
-				//alert(buyAmount);
+				alert(buyAmount);
 				//i는 포문의 몇번째인지 뽑기 위해 일부로 buyAmount의 id를 i로 설정해놓고 뽑아온것
 				var i = $(this).attr("id"); //상품이 리스트중 몇번째 상품인지 추출
 				//alert(i);
+				var prodNo = $("#prodNo"+i).val();
 				var retailPrice = $("#retailPrice"+i).val();
 				//alert(retailPrice);
 				var eachPrice = parseInt(retailPrice)*parseInt(buyAmount);
@@ -114,12 +117,54 @@
 				$("#actualPrice").val(totalPrice);
 				var actualPrice = $("#actualPrice").val();
 				alert(actualPrice);
+				
+				//var prodNo = $("#prodNo"+i).val();//for 문 때문에 i 변한듯 위에서 선언해야됨
+				alert(prodNo);
+				$.ajax({
+					url : "/libero/product/json/addCart",
+					type: "POST",
+					dataType: "json",
+					header : {
+							"Accept" : "application/json",
+							"Content-Type" : "application/json"
+					},
+					data: {"prodNo": prodNo, "userId": "${sessionScope.user.userId}", "buyAmount": buyAmount, "from": "cart"},
+					success : function(data){
+								var message = data.result
+								alert(message);
+					}
+				});//end ajax
 			})
 		})
 		
 		$(function(){
 			$("#button").on("click", function(){
 				$("form").attr("method", "POST").attr("action", "/libero/buy/beforePay").submit();
+			})
+		});
+		
+		
+		$(function(){
+			$(".removeButton").on("click", function(){
+				
+				var prodNo = $(this).val();
+				
+				
+				$.ajax({
+					url : "/libero/product/json/removeCart",
+					type: "POST",
+					dataType: "json",
+					header : {
+							"Accept" : "application/json",
+							"Content-Type" : "application/json"
+					},
+					data: {"prodNo": prodNo, "userId": "${sessionScope.user.userId}" },
+					success : function(data){
+						var message = data.result
+						alert(message);
+						window.location.reload();
+					}//end success
+				});//end ajax
 			})
 		});
 		//$(function() {

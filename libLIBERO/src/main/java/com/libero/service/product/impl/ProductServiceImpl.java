@@ -70,6 +70,14 @@ public class ProductServiceImpl implements ProductService{
 		
 		return productDAO.getProduct(prodNo);
 	}
+
+
+
+	@Override
+	public void addReview(HashMap<String, Object> hashMap) {
+		productDAO.addReview(hashMap);
+		
+	}
 	
 
 }

@@ -13,17 +13,18 @@
 	
 	<!-- FQCN(Full Qualified Class Name) Alias(별칭관리) -->
 	<typeAliases>
-		<typeAlias alias="user" 	type="com.libero.service.domain.User" />
-		<typeAlias alias="page"		type="com.libero.common.Page" />
-		<typeAlias alias="product"	type="com.libero.service.domain.Product" />
-		<typeAlias alias="publish" 	type="com.libero.service.domain.Publish" />
-		<typeAlias alias="pay" 		type="com.libero.service.domain.Pay" />
-		<typeAlias alias="buy" 		type="com.libero.service.domain.Buy" />
-		<typeAlias alias="post" 	type="com.libero.service.domain.Post" />
-		<typeAlias alias="comment" 	type="com.libero.service.domain.Comment" />
-		<typeAlias alias="report" 	type="com.libero.service.domain.Report" />
-		<typeAlias alias="review" 	type="com.libero.service.domain.Review" />
-		<typeAlias alias="search" 	type="com.libero.common.Search" />
+		<typeAlias alias="user" 		type="com.libero.service.domain.User" />
+		<typeAlias alias="page"			type="com.libero.common.Page" />
+		<typeAlias alias="product"		type="com.libero.service.domain.Product" />
+		<typeAlias alias="publish" 		type="com.libero.service.domain.Publish" />
+		<typeAlias alias="pay" 			type="com.libero.service.domain.Pay" />
+		<typeAlias alias="buy" 			type="com.libero.service.domain.Buy" />
+		<typeAlias alias="post"		 	type="com.libero.service.domain.Post" />
+		<typeAlias alias="comment" 		type="com.libero.service.domain.Comment" />
+		<typeAlias alias="report" 		type="com.libero.service.domain.Report" />
+		<typeAlias alias="review"	 	type="com.libero.service.domain.Review" />
+		<typeAlias alias="search"	 	type="com.libero.common.Search" />
+		<typeAlias alias="statistics" 	type="com.libero.service.domain.Statistics" />
 	</typeAliases>
 	 <!-- SQL Definition :: file include -->
 	<mappers>
@@ -33,5 +34,6 @@
 		<mapper resource="sql/PublishMapper.xml"/>
 		<mapper resource="sql/CommunityMapper.xml"/>
 		<mapper resource="sql/ReportMapper.xml"/>
+		<mapper resource="sql/StatisticsMapper.xml"/>
 	</mappers>
 </configuration>

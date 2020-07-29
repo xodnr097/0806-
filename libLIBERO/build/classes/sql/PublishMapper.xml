@@ -31,6 +31,7 @@
 		<result property="tempCode"			column="temp_code"			jdbcType="SMALLINT"/>
 		<result property="factoryId" 		column="factory_id"			jdbcType="VARCHAR"/>
 		<result property="regDate"			column="reg_date"			jdbcType="TIMESTAMP"/>
+		<result property="salesCount"		column="sales_count"		jdbcType="INTEGER"/>
 	</resultMap>
 	
 	<resultMap id="optionSelectMap" type="user">
@@ -57,6 +58,7 @@
 		FROM user
 		WHERE role IN('f')
 		AND user_code IN(1)
+		AND color_price  IS NOT NULL
 	</select>
 	
 	<!-- SQL : INSERT -->
@@ -179,19 +181,33 @@
 	</update>
 	
 	<select id="getUserPublishList" parameterType="publish" resultMap="publishSelectMap">
-		SELECT * 
+		SELECT *, IFNULL(SUM(buy_amount),0) sales_count
 		FROM product p
-		LEFT JOIN hashtag h 
+		LEFT JOIN hashtag h
 		on p.prod_no = h.prod_no 
-		where creator IN(#{creator})
+		LEFT JOIN buy b
+		on p.prod_no = b.prod_no 
+		WHERE creator IN(#{creator})
+		AND temp_code IN(#{tempCode})
 		<if test='prodType=="book"'>
-			AND prod_type = "paper" || prod_type = "ebook"
+			AND p.prod_type IN("paper","ebook")
 		</if> 
 		<if test='prodType=="prod"'>
-			AND prod_type = "design" || prod_type = "target" || prod_type = "correct"
+			AND p.prod_type IN("design","target","correct")
 		</if>
+		GROUP BY p.prod_no
 		ORDER BY reg_date DESC
 	</select>
+	
+	<delete id="removeTempPublish" parameterType="publish">
+		DELETE FROM product
+		WHERE prod_no IN(#{prodNo})
+	</delete>
+	
+	<delete id="removeHashtag" parameterType="publish">
+		DELETE FROM hashtag
+		WHERE prod_no IN(#{prodNo})
+	</delete>
 	
 	<select id="getTotalCount" parameterType="publish" resultType="int">
 		SELECT COUNT(*) 
@@ -200,10 +216,10 @@
 		on p.prod_no = h.prod_no 
 		where creator IN(#{creator})
 		<if test='prodType=="book"'>
-			AND prod_type = "paper" || prod_type = "ebook"
+			AND p.prod_type IN("paper","ebook")
 		</if> 
 		<if test='prodType=="prod"'>
-			AND prod_type = "design" || prod_type = "target" || prod_type = "correct"
+			AND p.prod_type IN("design","target","correct")
 		</if>
 	</select>
 

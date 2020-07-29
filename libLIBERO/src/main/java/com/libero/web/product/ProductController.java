@@ -156,10 +156,13 @@ public class ProductController{
 				}
 				
 				//method 서비스상품화면 출력
-				@RequestMapping(value="getWishList/{userId}", method = RequestMethod.GET)
-				public ModelAndView getWishList(@PathVariable String userId) throws Exception {
+				@RequestMapping(value="getWishList", method = RequestMethod.GET)
+				public ModelAndView getWishList(HttpSession session) throws Exception {
 					
 						System.out.println("/product/getWishList : GET");
+						
+						User user = (User)session.getAttribute("user");
+						String userId = user.getUserId();
 						
 						HashMap <String, Object> hashMap = new HashMap<String, Object>();
 						hashMap.put("userId", userId);
