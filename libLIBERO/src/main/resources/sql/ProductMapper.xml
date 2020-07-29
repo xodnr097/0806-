@@ -165,7 +165,7 @@
 	<update id="addReviewImage" parameterType="hashMap">
 					UPDATE review
 					SET review_image = #{url}			
-					WHERE buy_no = #{buy_no}
+					WHERE buy_no = #{buyNo}
 	</update>
 	 
 </mapper>
