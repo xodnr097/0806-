@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
+import com.libero.service.domain.Cash;
 import com.libero.service.domain.Publish;
 import com.libero.service.domain.Statistics;
 import com.libero.service.domain.User;
@@ -103,6 +104,10 @@ public class PublishServiceImpl implements PublishService{
 		map.put("day", day);
 		
 		return map;
+	}
+	
+	public Cash getUserCash(String userId) throws Exception {
+		return publishDAO.getUserCash(userId);
 	}
 
 }

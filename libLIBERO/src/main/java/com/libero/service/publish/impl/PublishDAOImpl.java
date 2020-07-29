@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
 
+import com.libero.service.domain.Cash;
 import com.libero.service.domain.Publish;
 import com.libero.service.domain.Statistics;
 import com.libero.service.domain.User;
@@ -101,6 +102,10 @@ public class PublishDAOImpl implements PublishDAO {
 	
 	public List<Statistics> getStatistics(Statistics statistics) throws Exception {
 		return sqlSession.selectList("StatisticsMapper.getDateStatistics", statistics);
+	}
+	
+	public Cash getUserCash(String userId) throws Exception {
+		return sqlSession.selectOne("UserMapper.getUserCash", userId);
 	}
 
 }

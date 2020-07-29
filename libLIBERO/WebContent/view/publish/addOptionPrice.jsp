@@ -224,7 +224,10 @@
 			
 			for (var i = 0; i < tableArray.length; i++) {
 				if (tableArray[i]=="") {
-					alert("모든 가격을 등록해주세요.");
+					Swal.fire({
+						  icon: 'error',
+						  text: '모든 가격을 등록 해주세요.'
+					});
 				}
 			}
 

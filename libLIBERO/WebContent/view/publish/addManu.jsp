@@ -119,7 +119,11 @@
 			if (manuFile!=null || manuFile !="") {
 				$("form").attr("method" , "POST").attr("action" , "/libero/publish/addManu").attr("enctype","multipart/form-data").submit();
 			}else{
-			alert("파일을 업로드 해주세요");
+			/* alert("파일을 업로드 해주세요"); */
+			Swal.fire({
+				  icon: 'error',
+				  text: '파일을 업로드 해주세요.'
+				});
 			return;
 			}
 		}
@@ -130,10 +134,14 @@
 		
 		var file = f.files;
 		
-		if(!/\.(docx|pdf)$/i.test(file[0].name)) 
-			alert("docx, pdf 파일만 업로드 가능합니다.");
-		
-		else return;
+		if(!/\.(docx|pdf)$/i.test(file[0].name)) {
+			Swal.fire({
+				  icon: 'error',
+				  text: 'docx, pdf 파일만 업로드 가능합니다.'
+				});
+		} else {
+			return;
+		}
 		
 		f.outerHTML = f.outerHTML;
 	}
