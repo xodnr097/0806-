@@ -33,6 +33,8 @@ public interface PublishDAO {
 	
 	public List<Publish> getUserPublishList(Publish publish) throws Exception;
 	
+	public void removeTempPublish(Publish publish) throws Exception;
+	
 	public int getTotalCount(Publish publish) throws Exception;
 	
 	public List<Statistics> getStatistics(Statistics statistics) throws Exception;

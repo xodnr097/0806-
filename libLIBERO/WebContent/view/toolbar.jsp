@@ -134,7 +134,7 @@
 					        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
 					          <a class="dropdown-item" href="#">마이페이지</a>
 					          <a class="dropdown-item" href="/libero/product/getCartList">장바구니</a>
-					          <a class="dropdown-item" href="/libero/publish/getUserPublishList?prodType=book">판매 도서 및 상품 조회</a>
+					          <a class="dropdown-item" href="/libero/user/getUserPublishList?prodType=book">판매 도서 및 상품 조회</a>
 					          <c:if test="${sessionScope.user.role=='f'}">
 					          	<c:if test="${sessionScope.user.colorPrice==''}">
 					          		<a class="dropdown-item" href="/libero/publish/addOptionPrice">인쇄옵션 가격 등록</a>

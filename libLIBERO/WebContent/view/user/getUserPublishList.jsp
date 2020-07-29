@@ -24,16 +24,7 @@
 	   	
 	   	<!-- //////////// Bootstrap Container Start////////////////// -->
 	   	<div class="container">
-	   		<div class="row justify-content-center" style="margin-bottom: 100px">
-	   			<button class="btn btn-default">내정보</button>
-	   			<a href="/libero/publish/getTempPublishList" 
-		   				class="btn btn-default" role="button" 
-		   				aria-pressed="true">임시 저장 도서 조회</a>
-	   			<button class="btn btn-default">주문내역 조회</button>
-	   			<a href="/libero/publish/getUserPublishList?prodType=book" 
-		   				class="btn btn-default" role="button" 
-		   				aria-pressed="true">판매중인 도서 및 상품 조회</a>
-	   		</div>
+	   		<jsp:include page="topButton.jsp"></jsp:include>
 	   		<div class="row">
 		   		<div class="col-lg-2">
 		   			<a href="/libero/publish/getUserPublishList?prodType=book" 

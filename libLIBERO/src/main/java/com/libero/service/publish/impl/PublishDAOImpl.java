@@ -87,6 +87,14 @@ public class PublishDAOImpl implements PublishDAO {
 		return sqlSession.selectList("PublishMapper.getUserPublishList", publish);
 	}
 	
+	public void removeTempPublish(Publish publish) throws Exception {
+		if (publish.getHashtagName()!=null || !publish.getHashtagName().contentEquals("")) {
+			System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
+			sqlSession.delete("PublishMapper.removeHashtag", publish);
+		}
+		sqlSession.delete("PublishMapper.removeTempPublish", publish);
+	}
+	
 	public int getTotalCount(Publish publish) throws Exception {
 		return sqlSession.selectOne("PublishMapper.getTotalCount", publish);
 	}

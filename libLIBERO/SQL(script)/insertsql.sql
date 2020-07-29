@@ -11,6 +11,24 @@
 /*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 
+--테이블 삭제 
+DROP TABLE IF EXISTS `buy`;
+DROP TABLE IF EXISTS `cash`;
+DROP TABLE IF EXISTS `chat_message`;
+DROP TABLE IF EXISTS `chat_room`;
+DROP TABLE IF EXISTS `comment`;
+DROP TABLE IF EXISTS `hashtag`;
+DROP TABLE IF EXISTS `upload_file`;
+DROP TABLE IF EXISTS `pay`;
+DROP TABLE IF EXISTS `post`;
+DROP TABLE IF EXISTS `report`;
+DROP TABLE IF EXISTS `review`;
+DROP TABLE IF EXISTS `wish`;
+DROP TABLE IF EXISTS `product`;
+DROP TABLE IF EXISTS `user`;
+-- 삭제 끝
+
+
 -- 테이블 liblibero.user 구조 내보내기
 DROP TABLE IF EXISTS `user`;
 CREATE TABLE IF NOT EXISTS `user` (
@@ -25,6 +43,7 @@ CREATE TABLE IF NOT EXISTS `user` (
   `phone_code` smallint(6) NOT NULL DEFAULT '0',
   `user_code` smallint(6) NOT NULL DEFAULT '1',
   `role` char(1) NOT NULL,
+  `birth_date` date NOT NULL,
   `reg_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `factory_no` varchar(20) DEFAULT NULL,
   `cash_code` char(2) NOT NULL DEFAULT 'bf',
@@ -48,18 +67,22 @@ CREATE TABLE IF NOT EXISTS `user` (
 -- 테이블 데이터 liblibero.user:~11 rows (대략적) 내보내기
 DELETE FROM `user`;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
-INSERT INTO `user` (`user_id`, `password`, `nickname`, `gender_code`, `name`, `address`, `phone`, `phone_code`, `user_code`, `role`, `reg_date`, `factory_no`, `cash_code`, `a5_price`, `profile`, `b5_price`, `a4_price`, `color_price`, `black_price`, `snow_price`, `mont_price`, `arte_price`, `white_price`, `ivory_price`, `rough_price`) VALUES
-	('admin1', '1234', '관리자1', 'm', '관리자', '서울시 강남구', '000-0000-1111', 1, 1, 'a', '2020-07-16 00:00:00', NULL, 'bf', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-	('admin2', '1234', '관리자2', 'm', '관리자', NULL, '000-1111-2222', 1, 1, 'a', '2020-07-16 00:00:00', NULL, 'bf', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-	('admin3', '1234', '관리자3', 'f', '관리자', NULL, '000-2222-3333', 1, 1, 'a', '2020-07-16 00:00:00', NULL, 'bf', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-	('admin4', '1234', '관리자4', 'f', '관리자', NULL, '000-3333-2222', 1, 1, 'a', '2020-07-16 00:00:00', NULL, 'bf', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-	('choije9410@gmail.com', '1111', '유저유저', 'f', '최지은', '경기도 수원시', '010-3593-9410', 0, 1, 'u', '2020-07-16 00:00:00', NULL, 'bf', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-	('factory01@naver.com', '0101', '인쇄소01', 'f', '인쇄소', '경기도', '000-1234-2222', 0, 1, 'f', '2020-07-16 00:00:00', '1234', 'bf', 100, NULL, 200, 150, 100, 50, 3500, 4000, 4500, 100, 50, 20),
-	('factory02@hanmail.net', '0202', '인쇄소02', 'f', '인쇄소', '경기도', '000-1313-2222', 0, 1, 'f', '2020-07-16 00:00:00', '1424132', 'bf', 200, NULL, 300, 200, 100, 100, 2000, 3000, 3500, 10, 10, 10),
-	('user01', '0101', '유저01', 'f', '유저01', NULL, '010-0101-0101', 0, 1, 'u', '2020-07-16 00:00:00', NULL, 'bf', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-	('user02', '0202', '유저02', 'f', '유저02', NULL, '010-0202-0202', 0, 1, 'u', '2020-07-16 00:00:00', NULL, 'bf', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-	('wjddbstp95@gmail.com', '1111', '윤세', 'm', '정윤세', NULL, '010-0011-1100', 0, 1, 'u', '2020-07-16 17:10:50', NULL, 'bf', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-	('xodnr097@naver.com', '1111', '유저유저1', 'f', '김태욱', '충정도', '010-9430-3757', 0, 1, 'u', '2020-07-16 00:00:00', NULL, 'bf', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+-- 테이블 데이터 liblibero.user:~11 rows (대략적) 내보내기
+/*!40000 ALTER TABLE `user` DISABLE KEYS */;
+INSERT INTO `user` (`user_id`, `password`, `nickname`, `profile`, `gender_code`, `name`, `address`, `phone`, `phone_code`, `user_code`, `role`, `birth_date`, `reg_date`, `factory_no`, `cash_code`, `a5_price`, `b5_price`, `a4_price`, `color_price`, `black_price`, `snow_price`, `mont_price`, `arte_price`, `white_price`, `ivory_price`, `rough_price`) VALUES
+	('admin1', '1234', '관리자1', NULL, 'm', '관리자', '서울시 강남구', '000-0000-1111', 1, 1, 'a', '2020-07-28', '2020-07-15 12:28:59', NULL, 'bf', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+	('admin2', '1234', '관리자2', NULL, 'm', '관리자', NULL, '000-1111-2222', 1, 1, 'a', '2020-07-28', '2020-07-15 12:41:54', NULL, 'bf', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+	('admin3', '1234', '관리자3', NULL, 'f', '관리자', NULL, '000-2222-3333', 1, 1, 'a', '2020-07-28', '2020-07-15 12:43:09', NULL, 'bf', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+	('admin4', '1234', '관리자4', NULL, 'f', '관리자', NULL, '000-3333-2222', 1, 1, 'a', '1994-10-31', '2020-07-15 12:43:09', NULL, 'bf', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+	('choije9410@gmail.com', '1111', '유저유저', NULL, 'f', '최지은', '경기도 수원시', '010-0000-3555', 0, 1, 'u', '1994-10-31', '2020-07-15 16:58:30', NULL, 'bf', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+	('factory01@naver.com', '0101', '인쇄소01', NULL, 'f', '인쇄소', '경기도', '000-1234-2222', 0, 1, 'f', '2000-07-28', '2020-07-15 12:45:24', '1234', 'bf', 10, 20, 40, 100, 40, 3000, 4000, 4300, 10, 20, 10),
+	('factory02@hanmail.net', '0202', '인쇄소02', NULL, 'f', '인쇄소', '경기도', '000-1313-2222', 0, 1, 'f', '1970-07-28', '2020-07-15 12:45:24', '1424132', 'bf', 20, 30, 40, 100, 100, 2000, 3000, 3500, 10, 5, 5),
+	('factory03', '3333', '인쇄03', NULL, 'f', '인쇄소', '서울', '010-1313-3333', 0, 1, 'f', '2020-07-28', '2020-07-24 16:08:31', '12312311', 'bf', 0, 10, 40, 100, 40, 3000, 5000, 4000, 10, 10, 5),
+	('factory04', '4444', '인쇄0404', NULL, 'm', '인쇄04', NULL, '010-1414-1414', 0, 1, 'f', '2020-07-28', '2020-07-28 09:41:35', '1231232', 'bf', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+	('user01', '0101', '유저01', NULL, 'f', '유저01', NULL, '010-0101-0101', 0, 1, 'u', '2020-07-28', '2020-07-15 16:55:56', NULL, 'bf', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+	('user02', '0202', '유저02', NULL, 'f', '유저02', NULL, '010-0202-0202', 0, 1, 'u', '2020-07-28', '2020-07-15 16:55:56', NULL, 'bf', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+	('wjddbstp95@gmail.com', '1111', '윤세', NULL, 'm', '정윤세', NULL, '010-0011-1100', 0, 1, 'u', '2020-07-16', '2020-07-29 10:27:24', NULL, 'bf', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+	('xodnr097@naver.com', '1111', '유저유저1', NULL, 'f', '김태욱', '충정도', '010-9430-3757', 0, 1, 'u', '2020-07-16', '2020-07-29 10:27:28', NULL, 'bf', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 
 -- 테이블 liblibero.product 구조 내보내기
@@ -69,9 +92,9 @@ CREATE TABLE IF NOT EXISTS `product` (
   `prod_type` varchar(10) NOT NULL,
   `prod_name` varchar(50) DEFAULT NULL,
   `prod_detail` text,
+  `author` varchar(20) DEFAULT NULL,
   `retail_price` int(11) DEFAULT NULL,
   `print_price` int(11) DEFAULT NULL,
-  `author` varchar(20) DEFAULT NULL,
   `blind_code` char(1) NOT NULL DEFAULT 'o',
   `prod_thumbnail` varchar(50) DEFAULT NULL,
   `cover_file` varchar(50) DEFAULT NULL,
@@ -79,7 +102,6 @@ CREATE TABLE IF NOT EXISTS `product` (
   `manu_file` varchar(50) DEFAULT NULL,
   `reg_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `discount_code` char(1) DEFAULT 'o',
-  `temp_code` smallint(6) DEFAULT '1',
   `book_page` int(3) DEFAULT NULL,
   `size_type` char(2) DEFAULT NULL,
   `color_type` char(5) DEFAULT NULL,
@@ -87,14 +109,17 @@ CREATE TABLE IF NOT EXISTS `product` (
   `inner_type` char(5) DEFAULT NULL,
   `factory_id` varchar(30) DEFAULT NULL,
   `creator` varchar(30) NOT NULL,
+  `temp_code` smallint(6) DEFAULT '1',
   `like_count` int(11) NOT NULL DEFAULT '0',
   `book_category` varchar(50) DEFAULT NULL,
   PRIMARY KEY (`prod_no`),
   KEY `FK_product_user` (`factory_id`),
   KEY `FK_product_user_2` (`creator`),
+  KEY `prod_type` (`prod_type`),
   CONSTRAINT `FK_product_user` FOREIGN KEY (`factory_id`) REFERENCES `user` (`user_id`),
   CONSTRAINT `FK_product_user_2` FOREIGN KEY (`creator`) REFERENCES `user` (`user_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=10037 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=10069 DEFAULT CHARSET=utf8;
+
 
 -- 테이블 데이터 liblibero.product:~37 rows (대략적) 내보내기
 DELETE FROM `product`;
@@ -140,61 +165,74 @@ INSERT INTO `product` (`prod_no`, `prod_type`, `prod_name`, `prod_detail`, `reta
 /*!40000 ALTER TABLE `product` ENABLE KEYS */;
 
 -- 테이블 liblibero.buy 구조 내보내기
-CREATE TABLE IF NOT EXISTS `buy` (
-  `buy_no` int(11) NOT NULL AUTO_INCREMENT,
-  `prod_no` int(11) NOT NULL,
-  `user_id` varchar(30) NOT NULL,
-  `buy_amount` int(11) NOT NULL DEFAULT '1',
-  `buy_code` smallint(6) NOT NULL DEFAULT '0',
-  `pay_no` int(11) NOT NULL,
-  PRIMARY KEY (`buy_no`),
-  KEY `FK_buy_product` (`prod_no`),
-  KEY `FK_buy_user` (`user_id`),
-  KEY `FK_buy_pay` (`pay_no`),
-  CONSTRAINT `FK_buy_pay` FOREIGN KEY (`pay_no`) REFERENCES `pay` (`pay_no`),
-  CONSTRAINT `FK_buy_product` FOREIGN KEY (`prod_no`) REFERENCES `product` (`prod_no`),
-  CONSTRAINT `FK_buy_user` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+DROP TABLE IF EXISTS `buy`;
+CREATE TABLE `buy` (
+	`buy_no` INT(11) NOT NULL AUTO_INCREMENT,
+	`prod_no` INT(11) NOT NULL,
+	`user_id` VARCHAR(30) NOT NULL COLLATE 'utf8_general_ci',
+	`buy_amount` INT(11) NOT NULL DEFAULT '1',
+	`buy_code` VARCHAR(50) NOT NULL DEFAULT 'ready' COLLATE 'utf8_general_ci',
+	`pay_no` VARCHAR(50) NULL DEFAULT NULL COLLATE 'utf8_general_ci',
+	`prod_type` VARCHAR(10) NOT NULL COLLATE 'utf8_general_ci',
+	PRIMARY KEY (`buy_no`) USING BTREE,
+	INDEX `FK_buy_product` (`prod_no`) USING BTREE,
+	INDEX `FK_buy_user` (`user_id`) USING BTREE,
+	INDEX `FK_buy_pay` (`pay_no`) USING BTREE,
+	INDEX `FK_buy_product2` (`prod_type`) USING BTREE,
+	CONSTRAINT `FK_buy_pay` FOREIGN KEY (`pay_no`) REFERENCES `liblibero`.`pay` (`pay_no`) ON UPDATE RESTRICT ON DELETE RESTRICT,
+	CONSTRAINT `FK_buy_product` FOREIGN KEY (`prod_no`) REFERENCES `liblibero`.`product` (`prod_no`) ON UPDATE RESTRICT ON DELETE RESTRICT,
+	CONSTRAINT `FK_buy_product2` FOREIGN KEY (`prod_type`) REFERENCES `liblibero`.`product` (`prod_type`) ON UPDATE RESTRICT ON DELETE RESTRICT,
+	CONSTRAINT `FK_buy_user` FOREIGN KEY (`user_id`) REFERENCES `liblibero`.`user` (`user_id`) ON UPDATE RESTRICT ON DELETE RESTRICT
+	)
+	COLLATE='utf8_general_ci'
+	ENGINE=InnoDB
+	AUTO_INCREMENT=10005
 
 -- 테이블 데이터 liblibero.buy:~5 rows (대략적) 내보내기
 DELETE FROM `buy`;
 /*!40000 ALTER TABLE `buy` DISABLE KEYS */;
-INSERT INTO `buy` (`buy_no`, `prod_no`, `user_id`, `buy_amount`, `buy_code`) VALUES
-	(10000, 10000, 'user01', 1, 0),
-	(10001, 10001, 'user01', 2, 0),
-	(10002, 10000, 'user01', 3, 0),
-	(10003, 10000, 'user02', 10, 0),
-	(10004, 10005, 'wjddbstp95@gmail.com', 1000, 0);
+INSERT INTO `buy` (`buy_no`, `prod_no`, `user_id`, `buy_amount`, `buy_code`, `pay_no`, `prod_type`) VALUES 
+(10000, 10000, 'user01', 1, 'paid', '10000', 'paper'),
+(10001, 10001, 'user01', 2, 'paid', '10003', 'paper'),
+(10002, 10000, 'user01', 3, 'paid', '10003', 'paper'),
+(10003, 10000, 'user02', 10, 'ready', '10001', 'paper'),
+(10004, 10005, 'wjddbstp95@gmail.com', 1000, 'ready', '10002', 'paper');
 /*!40000 ALTER TABLE `buy` ENABLE KEYS */;
+
 
 -- 테이블 liblibero.pay 구조 내보내기
 DROP TABLE IF EXISTS `pay`;
-CREATE TABLE IF NOT EXISTS `pay` (
-  `pay_no` varchar(50) NOT NULL,
-  `user_id` varchar(30) NOT NULL,
-  `payment_type` varchar(10) NOT NULL,
-  `actual_price` int(11) NOT NULL,
-  `receiver_name` varchar(20) NOT NULL,
-  `receiver_addr` varchar(100) NOT NULL,
-  `receiver_phone` varchar(14) NOT NULL,
-  `delivery_req` varchar(50) DEFAULT NULL,
-  `pay_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `delivery_code` smallint(6) NOT NULL DEFAULT '1',
-  `pay_code` varchar(50) DEFAULT NULL,
-  `cancel_type` int(1) DEFAULT NULL,
-  PRIMARY KEY (`pay_no`),
-  KEY `FK_pay_user` (`user_id`),
-  CONSTRAINT `FK_pay_user` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+CREATE TABLE `pay` (
+	`pay_no` VARCHAR(50) NOT NULL COLLATE 'utf8_general_ci',
+	`user_id` VARCHAR(30) NOT NULL COLLATE 'utf8_general_ci',
+	`payment_type` VARCHAR(10) NOT NULL COLLATE 'utf8_general_ci',
+	`actual_price` INT(11) NOT NULL,
+	`receiver_name` VARCHAR(20) NOT NULL COLLATE 'utf8_general_ci',
+	`receiver_addr` VARCHAR(100) NOT NULL COLLATE 'utf8_general_ci',
+	`receiver_phone` VARCHAR(14) NOT NULL COLLATE 'utf8_general_ci',
+	`delivery_req` VARCHAR(50) NULL DEFAULT NULL COLLATE 'utf8_general_ci',
+	`pay_date` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+	`delivery_code` SMALLINT(6) NOT NULL DEFAULT '1',
+	`pay_code` VARCHAR(50) NULL DEFAULT NULL COLLATE 'utf8_general_ci',
+	`cancel_type` INT(1) NULL DEFAULT NULL,
+	PRIMARY KEY (`pay_no`) USING BTREE,
+	INDEX `FK_pay_user` (`user_id`) USING BTREE,
+	CONSTRAINT `FK_pay_user` FOREIGN KEY (`user_id`) REFERENCES `liblibero`.`user` (`user_id`) ON UPDATE RESTRICT ON DELETE RESTRICT
+)
+COLLATE='utf8_general_ci'
+ENGINE=InnoDB
+;
+
 
 -- 테이블 데이터 liblibero.pay:~4 rows (대략적) 내보내기
 /*!40000 ALTER TABLE `pay` DISABLE KEYS */;
-INSERT INTO `pay` (`pay_no`, `user_id`, `payment_type`, `actual_price`, `receiver_name`, `receiver_addr`, `receiver_phone`, `delivery_req`, `pay_date`, `delivery_code`, `pay_code`, `cancel_type`) VALUES
-	('10000', 'user01', 'c', 10000, '정윤세', '경기도 용인시 수지구 풍덕 고등 학교', '010-0000-1100', '으', '2020-07-16 17:12:47', 2, '1', NULL),
-	('10001', 'user02', 'c', 100000, '유저01', '집', '123-1234-1234', '힘들다', '2020-07-16 17:12:47', 1, '1', NULL),
-	('10002', 'wjddbstp95@gmail.com', 'c', 13000000, '수령자이름', '문앞', '123-1234-1234', 'ㅇㅇ', '2020-07-16 17:12:47', 1, '1', NULL),
-	('10003', 'user01', 'c', 56000, '정윤세', '경기도 용인시', '010-0000-0011', '빠른 배송', '2020-07-16 17:16:24', 1, '1', NULL);
+INSERT INTO `pay` (`pay_no`, `user_id`, `payment_type`, `actual_price`, `receiver_name`, `receiver_addr`, `receiver_phone`, `delivery_req`, `pay_date`, `delivery_code`, `pay_code`, `cancel_type`) VALUES 
+('10000', 'user01', 'c', 10000, '정윤세', '경기도 용인시 수지구 풍덕 고등 학교', '010-0000-1100', '으', '2020-07-16 17:12:47', 2, 'paid', NULL),
+('10001', 'user02', 'c', 100000, '유저01', '집', '123-1234-1234', '힘들다', '2020-07-16 17:12:47', 1, 'paid', NULL),
+('10002', 'wjddbstp95@gmail.com', 'c', 13000000, '수령자이름', '문앞', '123-1234-1234', 'ㅇㅇ', '2020-07-16 17:12:47', 1, 'paid', NULL),
+('10003', 'user01', 'c', 56000, '정윤세', '경기도 용인시', '010-0000-0011', '빠른 배송', '2020-07-16 17:16:24', 1, 'paid', NULL);
 /*!40000 ALTER TABLE `pay` ENABLE KEYS */;
+
 
 
 -- 테이블 liblibero.cash 구조 내보내기

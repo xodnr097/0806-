@@ -526,6 +526,7 @@
 	    	var hash = $("input[name=hashtagName]").val();
 			var title = $("input[name='prodName']").val();
 			var author = $("input[name='author']").val();
+			var imgSelect = $("input[name='imgSelect']:checked").val();
 			
 			if (title==null) {
 				alert("제목 입력");
@@ -534,6 +535,11 @@
 			
 			if (author==null) {
 				alert("저자 입력");
+				return;
+			}
+			
+			if (imgSelect==null) {
+				alert("표지 선택");
 				return;
 			}
 			

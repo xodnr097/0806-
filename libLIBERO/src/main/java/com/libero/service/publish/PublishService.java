@@ -32,6 +32,8 @@ public interface PublishService {
 	
 	public Map<String, Object> getUserPublishList(Publish publish) throws Exception;
 	
+	public void removeTempPublish(Publish publish) throws Exception;
+	
 	public Map<String, Object> getStatistics(Statistics Statistics) throws Exception;
 
 }

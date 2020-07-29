@@ -438,24 +438,6 @@ public class PublishController {
 		return modelAndView;
 	}
 	
-	@RequestMapping(value = "getUserPublishList", method = RequestMethod.GET)
-	public ModelAndView getUserPublishList(HttpSession session, @RequestParam("prodType") String prodType, Publish publish) throws Exception {
-		
-		System.out.println("/publish/getUserPublishList : GET");
-		
-		publish.setProdType(prodType);
-		publish.setCreator(((User)session.getAttribute("user")).getUserId());
-		
-		Map<String , Object> map=publishService.getUserPublishList(publish);
-		
-		ModelAndView modelAndView = new ModelAndView();
-		modelAndView.addObject("list", map.get("list"));
-		modelAndView.addObject("totalCount", map.get("totalCount"));
-		modelAndView.setViewName("forward:/view/publish/getUserPublishList.jsp");
-		
-		return modelAndView;
-	}
-	
 	@RequestMapping(value = "getStatistics", method = RequestMethod.GET)
 	public ModelAndView getStatistics(@RequestParam("prodNo") int prodNo, Statistics statistics) throws Exception {
 		
@@ -467,24 +449,6 @@ public class PublishController {
 		ModelAndView modelAndView = new ModelAndView();
 		modelAndView.addObject("day", map.get("day"));
 		modelAndView.setViewName("forward:/view/publish/getStatistics.jsp");
-		
-		return modelAndView;
-	}
-	
-	@RequestMapping(value = "getTempPublishList", method = RequestMethod.GET)
-	public ModelAndView getStatistics(HttpSession session, Publish publish) throws Exception {
-		
-		System.out.println("/publish/getTempPublishList : GET");
-		
-		publish.setCreator(((User)session.getAttribute("user")).getUserId());
-		publish.setTempCode((short) 1);
-		
-		Map<String , Object> map=publishService.getUserPublishList(publish);
-		
-		ModelAndView modelAndView = new ModelAndView();
-		modelAndView.addObject("list", map.get("list"));
-		modelAndView.addObject("totalCount", map.get("totalCount"));
-		modelAndView.setViewName("forward:/view/publish/getTempPublishList.jsp");
 		
 		return modelAndView;
 	}

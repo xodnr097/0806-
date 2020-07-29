@@ -190,14 +190,24 @@
 		WHERE creator IN(#{creator})
 		AND temp_code IN(#{tempCode})
 		<if test='prodType=="book"'>
-			AND prod_type IN("paper","ebook")
+			AND p.prod_type IN("paper","ebook")
 		</if> 
 		<if test='prodType=="prod"'>
-			AND prod_type IN("design","target","correct")
+			AND p.prod_type IN("design","target","correct")
 		</if>
 		GROUP BY p.prod_no
 		ORDER BY reg_date DESC
 	</select>
+	
+	<delete id="removeTempPublish" parameterType="publish">
+		DELETE FROM product
+		WHERE prod_no IN(#{prodNo})
+	</delete>
+	
+	<delete id="removeHashtag" parameterType="publish">
+		DELETE FROM hashtag
+		WHERE prod_no IN(#{prodNo})
+	</delete>
 	
 	<select id="getTotalCount" parameterType="publish" resultType="int">
 		SELECT COUNT(*) 
@@ -206,10 +216,10 @@
 		on p.prod_no = h.prod_no 
 		where creator IN(#{creator})
 		<if test='prodType=="book"'>
-			AND prod_type = "paper" || prod_type = "ebook"
+			AND p.prod_type IN("paper","ebook")
 		</if> 
 		<if test='prodType=="prod"'>
-			AND prod_type = "design" || prod_type = "target" || prod_type = "correct"
+			AND p.prod_type IN("design","target","correct")
 		</if>
 	</select>
 

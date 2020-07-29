@@ -92,6 +92,10 @@ public class PublishServiceImpl implements PublishService{
 		return map;
 	}
 	
+	public void removeTempPublish(Publish publish) throws Exception {
+		publishDAO.removeTempPublish(publish);
+	}
+	
 	public Map<String, Object> getStatistics(Statistics statistics) throws Exception {
 		
 		Map<String, Object> map = new HashMap<String, Object>();
