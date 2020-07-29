@@ -27,11 +27,11 @@
 	   		<jsp:include page="topButton.jsp"></jsp:include>
 	   		<div class="row">
 		   		<div class="col-lg-2">
-		   			<a href="/libero/publish/getUserPublishList?prodType=book" 
+		   			<a href="/libero/user/getUserPublishList?prodType=book" 
 		   				class="btn btn-outline-default waves-effect btn-block" role="button" 
 		   				aria-pressed="true" style="margin-bottom: 10px">도서</a>
 		   				
-		   			<a href="/libero/publish/getUserPublishList?prodType=prod" 
+		   			<a href="/libero/user/getUserPublishList?prodType=prod" 
 		   				class="btn btn-outline-default waves-effect btn-block" role="button" 
 		   				aria-pressed="true">서비스상품</a>
 		   		</div>
@@ -56,7 +56,8 @@
 							  			<table>
 							  				<tbody>
 							  					<tr>
-							  						<th>도서 제목</th>
+							  						<th>
+							  							${param.prodType=='book' ? '도서' : '상품' } 제목</th>
 							  						<td>: ${prod.prodName}</td>
 							  					</tr>
 							  					<c:if test="${param.prodType=='book'}">
@@ -81,7 +82,12 @@
 							  			<a href="javascript:popup(${prod.prodNo})" 
 							   				class="btn btn-default btn-block" role="button" 
 							   				aria-pressed="true" style="margin-bottom: 10px">판매 통계 조회</a>
-							  			<button class="btn btn-default btn-block">판매 중지</button>
+							   			<c:if test="${prod.blindCode=='o'}">
+							  				<button class="btn btn-outline-default waves-effect btn-block">판매 중지</button>
+							  			</c:if>
+							  			<c:if test="${prod.blindCode=='x'}">
+							  				<button class="btn btn-default btn-block">판매 재개</button>
+							  			</c:if>
 							  		</div>
 						  		</div>
 						  		<!-- row End -->

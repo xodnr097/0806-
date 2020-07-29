@@ -35,6 +35,13 @@
 		<result property="roughPrice"	column="rough_price"		jdbcType="INTEGER"/>
 	</resultMap>
 	
+	<resultMap id="cashSelectMap" type="cash">
+		<result property="user.userId" 		column="user_id" 			jdbcType="VARCHAR"/>
+		<result property="currentCash"		column="current_cash"		jdbcType="INTEGER"/>
+		<result property="totalCash"		column="total_cash"			jdbcType="INTEGER"/>
+		<result property="withdrawCash"		column="withdraw_cash"		jdbcType="INTEGER"/>
+	</resultMap>
+	
 	<!-- SQL : SELECT ONE -->
 	 <select 	id="getUser"	parameterType="string"	resultMap="userSelectMap">
 		SELECT
@@ -74,10 +81,12 @@
 	 
 	 </insert>
 	 
-	 
-	 
-	 
-	 
-	 
-	 
+	 <select id="getUserCash" parameterType="String"	resultMap="cashSelectMap">
+	 	SELECT 
+			SUM(cash_amount) current_cash, 
+			SUM(if(cash_amount&gt;0,cash_amount,0)) total_cash, 
+			SUM(if(cash_amount&lt;0,cash_amount,0)) withdraw_cash
+		FROM cash
+		WHERE user_id IN(#{value})
+	 </select>
 </mapper>

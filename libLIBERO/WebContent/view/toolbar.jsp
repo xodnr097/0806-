@@ -50,7 +50,7 @@
 	<!-- Custom nvbar color -->
 		<nav class="navbar navbar-expand-lg navbar-light bg-white fixed-top">
 		    <a href="/libero/index.jsp" class="navbar-brand">
-		    	<img src="http://127.0.0.1:8080/libero/resources/images/common/logo.png" width="80" height="25" alt="" loading="lazy">
+		    	<img src="http://192.168.0.64:8080/libero/resources/images/common/logo.png" width="80" height="25" alt="" loading="lazy">
 		    </a>
 		    <!-- 모바일 navbar -->
 			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
