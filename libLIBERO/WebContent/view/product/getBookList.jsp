@@ -6,6 +6,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+	<jsp:include page="/common/cdn.jsp"></jsp:include>
 
 <style>
 

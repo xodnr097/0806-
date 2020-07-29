@@ -36,6 +36,19 @@
 		<result property="buyAmount"	 column="buy_amount"		jdbcType="INTEGER" />
 			
 	</resultMap>
+	
+	<resultMap id="reviewSelectMap" type="review">
+		<result property="reviewNo"		 column="review_no" 		jdbcType="INTEGER"/>
+		<result property="userId"	   	 column="user_id" 			jdbcType="VARCHAR"/>
+		<result property="buyNo"		 column="buy_no" 			jdbcType="INTEGER"/>
+		<result property="reviewName"	 column="review_name" 		jdbcType="VARCHAR"/>
+		<result property="reviewContent" column="review_content" 	jdbcType="LONGVARCHAR"/>
+		<result property="reviewImage"	 column="review_image" 		jdbcType="VARCHAR"/>
+		<result property="starRate"		 column="star_rate" 		jdbcType="INTEGER"/>
+		<result property="regDate"		 column="reg_date" 			jdbcType="TIMESTAMP"/>
+	
+	
+	</resultMap>
 		
 	<!--  SQL : SELECT LIST -->
 	<select id="getBookList" resultMap="productSelectMap">
@@ -130,6 +143,24 @@
 					AND buy.prod_no = product.prod_no
 	
 	</select>
+	
+	<delete id="removeCart" parameterType="hashMap">
+	
+					DELETE
+					FROM buy
+					WHERE prod_no = #{prodNo} AND user_id = #{userId} AND buy_code = 0
+	
+	
+	
+	</delete>
+	
+	<!-- 리뷰 기능 -->
+	<insert id="addReview"	parameterType="hashMap">
+					INSERT
+					INTO
+					buy(user_id, buy_no, review_name, review_content, review_image, star_rate)
+					VALUES (#{userId}, #{buyNo}, #{reviewName}, #{reviewContent}, #{reviewImage}, #{starRate})
+	</insert>
 	 
 </mapper>
 

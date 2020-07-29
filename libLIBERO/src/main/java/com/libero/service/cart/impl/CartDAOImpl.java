@@ -23,24 +23,36 @@ import com.libero.service.domain.Product;
 		
 		@Override
 		public void addCart(HashMap<String, Object> hashMap){
-			if(sqlSession.selectOne("ProductMapper.checkCart", hashMap) == null) {
-				sqlSession.insert("ProductMapper.addCart", hashMap);
-			}else {
-				Product checkCart = sqlSession.selectOne("ProductMapper.checkCart", hashMap);
-				int buyAmount = checkCart.getBuyAmount();
-				int buyCount = (int) hashMap.get("buyCount");
-				int updatedAmount = buyCount + buyAmount;
-				hashMap.put("updatedAmount", updatedAmount);
+			if(hashMap.get("from").equals("cart")) {
 				
-				sqlSession.update("ProductMapper.updateAmount", hashMap); 
-			}
-			
+				int updatedAmount = (int) hashMap.get("buyAmount");
+				hashMap.put("updatedAmount", updatedAmount);
+				sqlSession.update("ProductMapper.updateAmount", hashMap);
+			}else {
+						if(sqlSession.selectOne("ProductMapper.checkCart", hashMap) == null) {
+							sqlSession.insert("ProductMapper.addCart", hashMap);
+						}else {
+							Product checkCart = sqlSession.selectOne("ProductMapper.checkCart", hashMap);
+							int buyAmount = checkCart.getBuyAmount();
+							int addBuyAmount = (int) hashMap.get("buyAmount");
+							int updatedAmount = addBuyAmount + buyAmount;
+							hashMap.put("updatedAmount", updatedAmount);
+							
+							sqlSession.update("ProductMapper.updateAmount", hashMap); 
+						}//end else
+			}//end else
 		}//end addCart
 		
 		
 		public List<Product> getCartList(String userId){
 			
 			return sqlSession.selectList("ProductMapper.getCartList", userId);
+			
+		}
+
+		@Override
+		public void removeCart(HashMap<String, Object> hashMap) {
+				sqlSession.delete("ProductMapper.removeCart", hashMap);
 			
 		}
 

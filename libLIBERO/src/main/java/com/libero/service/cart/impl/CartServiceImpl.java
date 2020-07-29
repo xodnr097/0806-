@@ -33,6 +33,11 @@ public class CartServiceImpl implements CartService {
 		return	cartDAO.getCartList(userId);
 		
 	}
+	
+	public void removeCart(HashMap<String, Object> hashMap) {
+			
+			cartDAO.removeCart(hashMap);
+	}
 
 	
 }

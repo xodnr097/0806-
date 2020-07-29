@@ -11,4 +11,8 @@ public interface CartDAO {
 
 	public List<Product> getCartList(String userId);
 
+	public void removeCart(HashMap<String, Object> hashMap);
+
+	
+
 }
