@@ -6,6 +6,7 @@
 <head>
 <meta charset="EUC-KR">
 				<title>상품리뷰</title>
+				<jsp:include page="/common/cdn.jsp"></jsp:include>
 				<style>
 				     		.starR1{
 							    background: url('../../resources/images/product/star_review.png') no-repeat -52px 0;
@@ -27,25 +28,28 @@
 							}
 							.starR1.on{background-position:0 0;}
 							.starR2.on{background-position:-15px 0;}
+							
+								.file-field.medium .file-path-wrapper {
+								height: 3rem; }
+								.file-field.medium .file-path-wrapper .file-path {
+								height: 2.8rem; }
+								
+								.file-field.big-2 .file-path-wrapper {
+								height: 3.7rem; }
+								.file-field.big-2 .file-path-wrapper .file-path {
+								height: 3.5rem; }
+																	
 				</style>
 </head>
 <body>
-<jsp:include page="/common/cdn.jsp"></jsp:include>
+
 
 <ul class="navbar-nav">
 				<li class="nav-item" id="review">
 					<a class="nav-link" href="#" data-toggle="modal" data-target="#addReviewModal">리뷰 등록</a>
 				</li>
 </ul>
-
-
-<ul class="navbar-nav">
-				<li class="nav-item" id="review">
-					<a class="nav-link" href="#" data-toggle="modal" data-target="#updateReviewModal">리뷰 등록</a>
-				</li>
-</ul>
-
-				
+<!-- 리뷰등록 모달창 -->				
 <div class="modal fade" id="addReviewModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 		<div class="modal-dialog">
 		<div class="modal-content">
@@ -81,12 +85,23 @@
 										  <label for="textarea-char-counter" id="review">Type your text</label>
 										  <input type="hidden" id="reviewContent" name="reviewContent">
 									</div>
-								
 								</div>
-						
+								
+								<div class="md-form" action="#">
+								  <div class="file-field">
+								    <div class="btn blue-gradient btn-sm float-left">
+								      <span><i class="fas fa-cloud-upload-alt mr-2" aria-hidden="true"></i>Choose files</span>
+								      <input type="file" name='uploadFile' multiple>
+								    </div>
+								    <div class="file-path-wrapper">
+								      <input class="file-path validate" type="text" placeholder="Upload one or more files">
+								    </div>
+								  </div>
+								</div>
 						</form>
-				
 				</div>
+				
+				
 				
 				<div class="modal-footer">
 						<button type="button" class="btn btn-cyan" id="addButton">등록</button>
@@ -94,34 +109,86 @@
 				</div>
 			</div>
 			</div>
-		</div>
-		</div>			
-		</ul>
+		</div>		
 	</body>
 	<script type="text/javascript">
+	
+				//별점 설정 이벤트
 				$('.starRev span').click(function(){
 					  $(this).parent().children('span').removeClass('on');
 					  $(this).addClass('on').prevAll('span').addClass('on');
-					  var content = $("#textarea-char-counter").text();
+					  //var content = $("#textarea-char-counter").text();   실험
 					  var starRate = $(this).attr("id");
 					  
 					  $("#starRate").val(starRate);
-					  var star = $("#starRate").val();
-					  alert(star);
-					 
-					  alert(content);
-					  alert(starRate);
-					  
-					  
-					  
-					  
+					  //var star = $("#starRate").val(); 실험
+					  //alert(star); 실험
+					  //alert(starRate); 실험
 					  
 					  return false;
-					});
+				});//end starRev click function
 				
+				//등록 버튼 클릭 이벤트
 				$('#addButton').click(function(){
-					$("form").attr("method" , "POST").attr("action" , "/libero/product/json/addReview").submit();	
-				})
+					
+					var starRate = $('span[class*=on]:last').attr("id"); //별점이 찍힌 가장 마지막 span의 아이디값
+					alert(starRate);
+					var content = $("#textarea-char-counter").val(); // 입력한 리뷰내용
+					alert(content);
+					
+					
+					
+						
+						//리뷰 내용, 별점
+						$.ajax({
+							url : "/libero/product/json/addReview",
+							type: "POST",
+							dataType: "json",
+							header : {
+										"Accept" : "application/json",
+										"Content-Type" : "application/json"
+									 },
+							data: {"userId": "${sessionScope.user.userId}", "starRate" : starRate, "reviewContent" : content},
+							success : function(data, success){
+								
+								
+								var message = data.message;
+								alert(message);
+								$('#addReviewModal').modal("hide");
+								window.location.reload();
+								alert("성공");
+								
+							}//end success
+						});//end ajax
+						
+					var formData = new FormData();
+					var inputFile = $("input[name='uploadFile']");
+					var files = inputFile[0].files;
+						formData.append('files', files[0]);
+						formData.append('buyNo', 13);
+						
+						alert(files);
+						alert(formData.get('buyNo'));
+						
+						
+						$.ajax({
+							url : "/libero/product/json/addReviewImage",
+							processData : false,
+							contentType : false,
+							data : formData,
+							type: "POST",
+							success : function(data, success){
+								
+								
+								var message = data.message;
+								alert(message);
+								window.location.reload();
+								alert("성공2");
+								
+							}//end success
+						});//end ajax	
+					
+				})//end addbutton click
 				
 	</script>
 </html>

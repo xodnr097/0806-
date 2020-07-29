@@ -22,5 +22,7 @@ public interface ProductService {
 
 	public void addReview(HashMap<String, Object> hashMap) ;
 
+	public void addReviewImage(HashMap<String, Object> hashMap);
+
 	
 }
