@@ -79,17 +79,24 @@ public class BuyDAOImpl implements BuyDAO{
 	}
 
 	@Override
-	public boolean updateDeliveryStatus(Pay pay) {
+	public boolean updateDeliveryStatus(String payNo, int deliveryStatus) {
 		// TODO Auto-generated method stub
-		int result = sqlSession.update("BuyMapper.updateDeliveryService",pay);
-		if(result > 0) {
-			return true;
-		}else {
+		Map map = new HashMap();
+		map.put("payNo", payNo);
+		map.put("deliveryStatus", deliveryStatus);
+		
+		int result =sqlSession.update("BuyMapper.updateDeliveryStatus", map);
+		if(result == -1 ){
 			return false;
-			
+		}else {
+			return true;
 		}
+		 
 	}
 
+	public Pay getAllBuy(String payNo) {
+		return sqlSession.selectOne("BuyMapper.getAllBuy",payNo);
+	}
 	
 //	@Override
 //	public List getFactoryProdNo(String payNo) {

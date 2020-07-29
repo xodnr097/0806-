@@ -22,6 +22,8 @@ public interface BuyDAO {
 	
 	public List getFactoryBuy(String payNo);
 	
-	public boolean updateDeliveryStatus(Pay pay);
+	public boolean updateDeliveryStatus(String payNo, int deliveryStatus);
+	
+	public Pay getAllBuy(String payNo);
 	
 }

@@ -5,6 +5,7 @@
 <html>
 	<jsp:include page="/common/cdn.jsp"></jsp:include>
 	<jsp:include page="/view/toolbar.jsp"></jsp:include>
+	
 <head>
 	<script type="text/javascript">
 	
@@ -12,11 +13,8 @@
 		self.location="/libero/buy/getUserBuy?userId="+userId+"&payNo="+payNo;
 	}
 	
+
 	
-	
-	$("#updateDeli").on("click",function(deliverStatus,payNo){
-		$("form").attr("method","POST").attr("action","").submit();
-	})
 	</script>
 		
 	
@@ -26,29 +24,117 @@
 <body>
 <br><br>
 
-	
-		
+<div class="container">	
+
+<div class="col">
   <c:set var="i" value="0" />
 		  <c:forEach var="buyList" items="${buyList}">
 			<c:set var="i" value="${ i+1 }" />
+			
+			<script>
+			$(function(){
+				
+				var payNo =	$("#forajaxPayNo"+${i}).val();
+				var deliveryStatus = $("#forajaxDeliverystat"+${i}).val();
+					alert("결제 번호 , 배송상태 번호 : "+payNo+","+deliveryStatus)
+				$("#forajaxDeliverystat"+${i}).on("click",function(){
+				alert("you are in the function now");
+			$.ajax({
+				url:"/libero/buy/json/updateDeliveryStatus/"+payNo+'/'+deliveryStatus,
+				method:"GET",
+				dataType:"json",
+				headers:{
+					"Accept" : "application/json",
+					"Content-Type" : "application/json"
+				},
+				success:function(result){
+					
+					alert(result.result);
+					$("#forajaxDeliverystat${i}").attr("value",result.result);
+					$("#listSelect${i}").attr("value",result.result);
+					$(".col-md-8").remove();
+// 					$(".row").html('<div class="col-md-8">'+'<ul class="stepper stepper-horizontal">'
+// 									+'<li id="listSelect${i}" class="${buyList.deliveryStatus == '+ result +' ? '+"active"+' : "" }">'
+// 									+'<a href="#!">'+'<span class="circle">'+'<i class="fas fa-cubes">'+'</i>'+'</span>'
+// 									+'<span class="label">상품 준비 중</span>'+'</a>'+'</li>'+'<li id="listSelect{i}" class="${buyList.deliveryStatus == '+ result +' ? '+"active"+' : "" }">'+
+// 										'<a href="#!">'+'<span class="circle"><i class="fas fa-clipboard"></i></span>'+'<span class="label"><font color="gray">제작 중</font></span>'+'</a>'+'</li>'
+// 										+'<li id="listSelect${i}" class="${buyList.deliveryStatus == '+ result +' ? '+"active"+' : "" }">'+'<a href="#!">'+'<span class="circle"><i class="fas fa-rocket"></i></span>'+
+// 										'<span class="label"><font color="gray">배송 중</font></span>'+'</a>'+'</li>'+'<li id="listSelect${i}" class="${buyList.deliveryStatus == '+ result +' ? '+"active"+' : "" }">'
+// 										+'<a href="#!">'+'<span class="circle" ><i class="fas fa-exclamation"></i></span>'+'<span class="label"><font color="gray">배송 완료</font></span>'+'</a>'+'</ul>'+'</div>');
+				
+				}
+				
+					})
+				})
+			})
+			
+			</script>
+			
 			<tr>
-					<br/>------------------------------------<br/>
+					<br>					<br>
 				<td align="center"><b>${ i }</b></td>
 				<td align="left"  title="Click : 주문정보 확인">
-				<form>
-					<br>------------------------------------<br>
-					결제 번호 	:<input type="button" value="${buyList.payNo}" onClick="relocate(${buyList.payNo},${session.userId1 });"> <br/>
-					결제 방식 	: ${buyList.paymentOption} <br/>
-					결제 상태 	: ${buyList.payStatus} <br/>
-					수령자	: ${buyList.receiverName} <br/>
-					수령자주소	: ${buyList.receiverAddr} <br/>
-					연락처	: ${buyList.receiverPhone} <br/>
-					가격		: ${buyList.actualPrice} <br/>
-					결제 일자	: ${buyList.payDate} <br>
-					배송 상태 	: <c:if test="${buyList.deliveryStatus eq 1}"><input id="updateDeli"type ="hidden" value="${buyList.payNo}"></c:if>
-							  <c:if test="${buyList.deliveryStatus == 2}">제작 중</c:if>
-				</form>
-				</td>
+				
+					<br>					<br>
+					<td align="center" >결제 번호 	:<input type="button" id="forajaxPayNo${i}" value="${buyList.payNo}" onClick="relocate(${buyList.payNo},${session.userId });" > <br/></td>
+					<td align="center">결제 방식 	: ${buyList.paymentOption} <br/></td>
+					<td align="center" >결제 상태 	: ${buyList.payStatus} <br/></td>
+					<td align="center">수령자	: ${buyList.receiverName} <br/></tr>
+					<td align="center">수령자주소	: ${buyList.receiverAddr} <br/><td>
+					<td align="center">연락처	: ${buyList.receiverPhone} <br/></td>
+					<td align="center">가격		: ${buyList.actualPrice} <br/></td>
+					<td align="center">결제 일자	: ${buyList.payDate} <br></td>
+					<td align="center">배송 상태 	: <input type="button" value="${buyList.deliveryStatus }" id="forajaxDeliverystat${i}"></td>
+					
+					
+					
+					<!-- 결제 완료 후, 제작 준비 중 -->
+<div class="row">
+  <div class="col-md-8">
+
+    <!-- Stepers Wrapper -->
+    <ul class="stepper stepper-horizontal">
+
+      <!-- First Step -->
+      <li id="listSelect${i}" class="${buyList.deliveryStatus == 1 ? 'active' : '' }">
+        <a href="#!">
+          <span class="circle"><i class="fas fa-cubes"></i></span>
+          <span class="label">상품 준비 중</span>
+        </a>
+      </li>
+
+      <!-- Second Step -->
+      <li id="listSelect${i}" class="${buyList.deliveryStatus == 2 ? 'active' : '' }">
+        <a href="#!">
+          <span class="circle"><i class="fas fa-clipboard"></i></span>
+          <span class="label"><font color="gray">제작 중</font></span>
+        </a>
+      </li>
+
+      <!-- Third Step -->
+      <li id="listSelect${i}" class="${buyList.deliveryStatus == 3 ? 'active' : '' }">
+        <a href="#!">
+          <span class="circle"><i class="fas fa-rocket"></i></span>
+          <span class="label"><font color="gray">배송 중</font></span>
+        </a>
+      </li>
+	<!-- Forth Step -->
+	  <li id="listSelect${i}" class="${buyList.deliveryStatus == 4 ? 'active' : '' }">
+	  	<a href="#!">
+	  		<span class="circle" ><i class="fas fa-exclamation"></i></span>
+	  		<span class="label"><font color="gray">배송 완료</font></span>
+	  	</a>
+    </ul>
+    <!-- /.Stepers Wrapper -->
+
+  </div>
+</div>
+
+		 
+				
+			
           </c:forEach>
+          </div>
+          </div>		
 </body>
 </html>
