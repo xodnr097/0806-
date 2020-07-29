@@ -10,7 +10,12 @@
 <meta charset="UTF-8">
 
 <title>Insert title here</title>
-<script type="text/javascript"></script>
+<script type="text/javascript">
+function relocate(prodNo){
+	self.location="/libero/product/getProduct/"+prodNo;	
+}
+
+</script>
 	
 </head>
 <body>
@@ -25,7 +30,7 @@
 				<td align="center"><b>${ i }</b></td>
 				<td align="left"  title="Click : 주문정보 확인">
 					<br>------------------------------------<br>
-					상품 번호	:${getProduct.prodNo}  <br/>
+					상품 번호	:<input type="button" value="${getProduct.prodNo}" onClick="relocate(${getProduct.prodNo});">  <br/>
 					상품 이름	:${getProduct.prodName }<br/>
 					상품 가격	:${getProduct.retailPrice }<br/>
 					상품 표지 	:${getProduct.prodThumbnail}
