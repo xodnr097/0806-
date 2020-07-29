@@ -117,16 +117,15 @@ public class BuyController {
 	
 	
 	@RequestMapping(value="getUserBuyList",method=RequestMethod.GET)
-	public String getUserBuyList(@Param("userId") String userId,
-								 @Param("payNo") String payNo,Model model,HttpSession session ) throws Exception{
+	public String getUserBuyList(Model model,HttpSession session ) throws Exception{
 		//userId session으로 받아오기.
 		System.out.println(" ---------------------------------------");
 		System.out.println("/buy/getUserBuyList : GET");
 		System.out.println(" ---------------------------------------");	
 		//화면 연결후 밑 코드로 변경, param 삭제
 		User user =(User)session.getAttribute("user");
-		String userId1= user.getUserId();
-		Map<String, Object> map = buyService.getUserBuyList(userId1,payNo);
+		String userId= user.getUserId();
+		Map<String, Object> map = buyService.getUserBuyList(userId);
 		model.addAttribute("buyList",map.get("list"));
 //		model.addAttribute("prodNo",map.get("prodNo"));
 		return "forward:/view/buy/getUserBuyList.jsp";
@@ -163,6 +162,8 @@ public class BuyController {
 		model.addAttribute("product",map.get("product"));
 		return "forward:/view/buy/getFactoryBuy.jsp";
 	}
+	
+	
 	
 	
 }//end of the BuyController

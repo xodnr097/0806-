@@ -7,9 +7,16 @@
 	<jsp:include page="/view/toolbar.jsp"></jsp:include>
 <head>
 	<script type="text/javascript">
+	
 	function relocate(payNo,userId){
 		self.location="/libero/buy/getUserBuy?userId="+userId+"&payNo="+payNo;
 	}
+	
+	
+	
+	$("#updateDeli").on("click",function(deliverStatus,payNo){
+		$("form").attr("method","POST").attr("action","").submit();
+	})
 	</script>
 		
 	
@@ -28,6 +35,7 @@
 					<br/>------------------------------------<br/>
 				<td align="center"><b>${ i }</b></td>
 				<td align="left"  title="Click : 주문정보 확인">
+				<form>
 					<br>------------------------------------<br>
 					결제 번호 	:<input type="button" value="${buyList.payNo}" onClick="relocate(${buyList.payNo},${session.userId1 });"> <br/>
 					결제 방식 	: ${buyList.paymentOption} <br/>
@@ -35,8 +43,11 @@
 					수령자	: ${buyList.receiverName} <br/>
 					수령자주소	: ${buyList.receiverAddr} <br/>
 					연락처	: ${buyList.receiverPhone} <br/>
-					가격		:${buyList.actualPrice} <br/>
-					결제 일자	:${buyList.payDate} <br>
+					가격		: ${buyList.actualPrice} <br/>
+					결제 일자	: ${buyList.payDate} <br>
+					배송 상태 	: <c:if test="${buyList.deliveryStatus eq 1}"><input id="updateDeli"type ="hidden" value="${buyList.payNo}"></c:if>
+							  <c:if test="${buyList.deliveryStatus == 2}">제작 중</c:if>
+				</form>
 				</td>
           </c:forEach>
 </body>
