@@ -181,23 +181,38 @@
 	</update>
 	
 	<select id="getUserPublishList" parameterType="publish" resultMap="publishSelectMap">
-		SELECT *, IFNULL(SUM(buy_amount),0) sales_count
-		FROM product p
+		SELECT 
+			s.sales_count, p.*, h.hashtag_no, h.hashtag_name
+		FROM (SELECT 
+					prod_no, sum(buy_amount) sales_count
+				FROM buy 
+				WHERE buy_code = 'paid'
+				GROUP BY prod_no) s
+		RIGHT OUTER JOIN product p
+		ON p.prod_no = s.prod_no
 		LEFT JOIN hashtag h
-		on p.prod_no = h.prod_no 
-		LEFT JOIN buy b
-		on p.prod_no = b.prod_no 
+		ON p.prod_no = h.prod_no
 		WHERE creator IN(#{creator})
 		AND temp_code IN(#{tempCode})
 		<if test='prodType=="book"'>
-			AND prod_type IN("paper","ebook")
+			AND p.prod_type IN("paper","ebook")
 		</if> 
 		<if test='prodType=="prod"'>
-			AND prod_type IN("design","target","correct")
+			AND p.prod_type IN("design","target","correct")
 		</if>
 		GROUP BY p.prod_no
 		ORDER BY reg_date DESC
 	</select>
+	
+	<delete id="removeTempPublish" parameterType="publish">
+		DELETE FROM product
+		WHERE prod_no IN(#{prodNo})
+	</delete>
+	
+	<delete id="removeHashtag" parameterType="publish">
+		DELETE FROM hashtag
+		WHERE prod_no IN(#{prodNo})
+	</delete>
 	
 	<select id="getTotalCount" parameterType="publish" resultType="int">
 		SELECT COUNT(*) 
@@ -206,10 +221,10 @@
 		on p.prod_no = h.prod_no 
 		where creator IN(#{creator})
 		<if test='prodType=="book"'>
-			AND prod_type = "paper" || prod_type = "ebook"
+			AND p.prod_type IN("paper","ebook")
 		</if> 
 		<if test='prodType=="prod"'>
-			AND prod_type = "design" || prod_type = "target" || prod_type = "correct"
+			AND p.prod_type IN("design","target","correct")
 		</if>
 	</select>
 

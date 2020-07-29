@@ -25,6 +25,7 @@
 		<typeAlias alias="review"	 	type="com.libero.service.domain.Review" />
 		<typeAlias alias="search"	 	type="com.libero.common.Search" />
 		<typeAlias alias="statistics" 	type="com.libero.service.domain.Statistics" />
+		<typeAlias alias="cash" 		type="com.libero.service.domain.Cash" />
 	</typeAliases>
 	 <!-- SQL Definition :: file include -->
 	<mappers>

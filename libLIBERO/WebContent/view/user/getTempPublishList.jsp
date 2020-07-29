@@ -6,7 +6,7 @@
 <html>
 	<head>
 		<meta charset="UTF-8">
-		<title>Insert title here</title>
+		<title>libLIBERO : 임시 저장 도서 조회</title>
 		<jsp:include page="/common/cdn.jsp"></jsp:include>
 		<!--  ///////////////////////// CSS ////////////////////////// -->
 		<link rel="stylesheet" href="../resources/css/common.css">
@@ -18,16 +18,7 @@
 		
 		<!-- //////////// Bootstrap Container Start////////////////// -->
 	   	<div class="container">
-	   		<div class="row justify-content-center" style="margin-bottom: 100px">
-	   			<button class="btn btn-default">내정보</button>
-	   			<a href="/libero/publish/getTempPublishList" 
-		   				class="btn btn-default" role="button" 
-		   				aria-pressed="true">임시 저장 도서 조회</a>
-	   			<button class="btn btn-default">주문내역 조회</button>
-	   			<a href="/libero/publish/getUserPublishList?prodType=book" 
-		   				class="btn btn-default" role="button" 
-		   				aria-pressed="true">판매중인 도서 및 상품 조회</a>
-	   		</div>
+	   		<jsp:include page="topButton.jsp"></jsp:include>
 	   		<div class="row col-lg-12">
 		   		<c:set var="i" value="0" />
 			  	<c:forEach var="prod" items="${list}">
@@ -39,8 +30,14 @@
 						        <h5 class="card-title">
 						        		${prod.prodType eq 'paper' ? '종이책' : '전자책' }${prod.prodNo}
 						        </h5>
-						        <p>${prod.prodName}</p>
+						        <c:if test="${prod.prodName!=null}">
+						        	<p>${prod.prodName}</p>
+						        </c:if>
+						        <c:if test="${prod.prodName==null}">
+						        	<p>제목 없음</p>
+						        </c:if>
 						        <a href="/libero/publish/addManu?prodNo=${prod.prodNo}" class="">수정</a>
+						        <a href="/libero/publish/removeTempPublish?prodNo=${prod.prodNo}" class="">삭제</a>
 					      </div>
 					    </div>
 				  	</div>

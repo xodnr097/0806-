@@ -26,7 +26,7 @@ public class BuyDAOImpl implements BuyDAO{
 	}
 	
 	@Override
-	public List getUserBuy(Map userPayMap) {
+	public List<Pay> getUserBuy(Map userPayMap) {
 		System.out.println("BuyDaoImpl 도착");		
 		return sqlSession.selectList("BuyMapper.getUserBuy",userPayMap);
 	}
@@ -78,6 +78,26 @@ public class BuyDAOImpl implements BuyDAO{
 		return sqlSession.selectList("BuyMapper.getFactoryBuy", payNo);
 	}
 
+	@Override
+	public boolean updateDeliveryStatus(String payNo, int deliveryStatus) {
+		// TODO Auto-generated method stub
+		Map map = new HashMap();
+		map.put("payNo", payNo);
+		map.put("deliveryStatus", deliveryStatus);
+		
+		int result =sqlSession.update("BuyMapper.updateDeliveryStatus", map);
+		if(result == -1 ){
+			return false;
+		}else {
+			return true;
+		}
+		 
+	}
+
+	public Pay getAllBuy(String payNo) {
+		return sqlSession.selectOne("BuyMapper.getAllBuy",payNo);
+	}
+	
 //	@Override
 //	public List getFactoryProdNo(String payNo) {
 //		// TODO Auto-generated method stub

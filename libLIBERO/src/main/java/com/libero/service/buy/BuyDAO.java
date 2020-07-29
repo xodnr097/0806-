@@ -12,7 +12,7 @@ public interface BuyDAO {
 	
 	public Pay addBuy(Pay pay);
 	
-	public List getUserBuyList(String userId);
+	public List<Pay> getUserBuyList(String userId);
 	
 //	public List getUserProdNo(Map forProdNo);
 	
@@ -21,5 +21,9 @@ public interface BuyDAO {
 //	public List getFactoryProdNo(String payNo);
 	
 	public List getFactoryBuy(String payNo);
+	
+	public boolean updateDeliveryStatus(String payNo, int deliveryStatus);
+	
+	public Pay getAllBuy(String payNo);
 	
 }

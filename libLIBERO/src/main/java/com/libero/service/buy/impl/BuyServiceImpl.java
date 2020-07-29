@@ -67,9 +67,12 @@ public class BuyServiceImpl implements BuyService{
 	}
 
 	@Override
-	public void updateDeliveryStatus() {
+	public int updateDeliveryStatus(String payNo, int deliveryStatus) {
 		// TODO Auto-generated method stub
+		buyDao.updateDeliveryStatus(payNo,deliveryStatus);
+		Pay afterPayNo = buyDao.getAllBuy(payNo);
 		
+	return afterPayNo.getDeliveryStatus();
 	}
 
 	@Override
@@ -109,13 +112,13 @@ public class BuyServiceImpl implements BuyService{
 
 
 	@Override
-	public Map<String, Object> getUserBuyList(String userId,String payNo) {
+	public Map<String, Object> getUserBuyList(String userId) {
 		// TODO Auto-generated method stub
 		Map map = new HashMap();
 //		Map forProdNo = new HashMap();
 //		buyDao.getUserProdNo(userId,payNo)
 		System.out.println("\n\n\n****"+userId+"***\n\n\n");
-		System.out.println("\n\n\n****"+payNo+"***\n\n\n");
+		
 //		forProdNo.put("userId", userId);
 //		forProdNo.put("payNo",payNo);
 		

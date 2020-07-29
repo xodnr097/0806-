@@ -50,7 +50,7 @@
 	<!-- Custom nvbar color -->
 		<nav class="navbar navbar-expand-lg navbar-light bg-white fixed-top">
 		    <a href="/libero/index.jsp" class="navbar-brand">
-		    	<img src="http://127.0.0.1:8080/libero/resources/images/common/logo.png" width="80" height="25" alt="" loading="lazy">
+		    	<img src="http://192.168.0.64:8080/libero/resources/images/common/logo.png" width="80" height="25" alt="" loading="lazy">
 		    </a>
 		    <!-- 모바일 navbar -->
 			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
@@ -134,7 +134,7 @@
 					        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
 					          <a class="dropdown-item" href="#">마이페이지</a>
 					          <a class="dropdown-item" href="/libero/product/getCartList">장바구니</a>
-					          <a class="dropdown-item" href="/libero/publish/getUserPublishList?prodType=book">판매 도서 및 상품 조회</a>
+					          <a class="dropdown-item" href="/libero/user/getUserPublishList?prodType=book">판매 도서 및 상품 조회</a>
 					          <c:if test="${sessionScope.user.role=='f'}">
 					          	<c:if test="${sessionScope.user.colorPrice==''}">
 					          		<a class="dropdown-item" href="/libero/publish/addOptionPrice">인쇄옵션 가격 등록</a>

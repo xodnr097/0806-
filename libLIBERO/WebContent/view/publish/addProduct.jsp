@@ -213,6 +213,24 @@
     });
     
     function addProd() {
+    	
+    	if ($("input[id='prodThumbnail']:checked").val()==null) {
+    		Swal.fire({
+				  icon: 'error',
+				  text: '상품 썸네일을 등록해주세요.'
+				});
+    		return;
+		}
+    	
+    	if ($("input[name='prodName']:checked").val()==null) {
+    		Swal.fire({
+				  icon: 'error',
+				  text: '상품명을 입력해주세요.'
+				});
+    		return;
+		}
+    	
+    	
     	$('textarea[name="prodDetail"]').val($('#summernote').summernote('code'));
 		$("form").attr("method" , "POST").attr("action" , "/libero/publish/addProduct").attr("enctype","multipart/form-data").submit();
 	}
