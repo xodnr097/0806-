@@ -19,6 +19,8 @@ public interface ProductDAO {
 	public Product getProduct(int prodNo);
 
 	public void addReview(HashMap<String, Object> hashMap);
+
+	public void addReviewImage(HashMap<String, Object> hashMap);
 	
 	
 }

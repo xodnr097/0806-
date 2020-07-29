@@ -1,17 +1,27 @@
 package com.libero.web.product;
 
+import java.io.File;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.UUID;
+
+import javax.servlet.http.HttpSession;
 
 import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
+import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 import com.libero.service.cart.CartService;
-import com.libero.service.domain.Review;
+import com.libero.service.domain.User;
 import com.libero.service.product.ProductService;
 import com.libero.service.wish.WishService;
 
@@ -38,6 +48,8 @@ public class ProductRestController {
 				System.out.println(this.getClass());
 			}
 			
+			@Value("#{commonProperties['path2']}")
+			String path;
 			
 			//method 좋아요 등록
 			@RequestMapping(value="json/addWish", method = RequestMethod.POST)
@@ -58,9 +70,9 @@ public class ProductRestController {
 					boolean isWish = wishService.addWish(hashMap);
 					
 					if(isWish == true) {
-						obj.put("wishImage", "../../resources/images/product/wish/wish.png");
+						obj.put("wishImage", "../../resources/images/product/wish/smile.png");
 					}else {
-						obj.put("wishImage", "../../resources/images/product/wish/diswish.png");
+						obj.put("wishImage", "../../resources/images/product/wish/notsmile.png");
 					}
 										
 					
@@ -121,38 +133,99 @@ public class ProductRestController {
 					
 					return obj.toJSONString();
 			}//end addCart
+			
 					//리뷰 등록
 					@RequestMapping(value="json/addReview", method = RequestMethod.POST)
-					public void addReview() throws Exception {
+					public String addReview(HttpSession session, String reviewContent, String userId, int starRate) throws Exception {
+							
+						System.out.println("/product/addReview : POST");
+						//User user = (User)session.getAttribute("user");
+						//String userId = user.getUserId();
+						System.out.println("아이디 : "+userId);
+						System.out.println("별점 : "+starRate);
+						System.out.println("내용 : "+reviewContent);
 						
 							
-							/*
-							System.out.println("/product/addWish : POST");
-							System.out.println("전달된 prodNo : "+prodNo);
-							System.out.println("전달된 아이디 : "+userId );
-							System.out.println("전달된 구매번호"+buyNo);
-							JSONObject obj = new JSONObject();
-							//BusinessLogic
-							 * 
-							 */
-							/*
+							HashMap <String, Object> hashMap = new HashMap<String, Object>();
 							
-							hashMap.put("prodNo", prodNo);
 							hashMap.put("userId", userId);
 							hashMap.put("buyNo", 13);
-							hashMap.put
-							*/
-							HashMap <String, Object> hashMap = new HashMap<String, Object>();
-							//ProductService.addReview(hashMap);
+							hashMap.put("starRate", starRate);
+							hashMap.put("reviewContent", reviewContent);
+							productService.addReview(hashMap);
 							
-							
-					
-							
-
 							
 							//return obj.toJSONString();
+							JSONObject obj = new JSONObject();
+							String message = "리뷰가 등록";
+							obj.put("message", message);
+							
+							return obj.toJSONString();
+			}//end addReview
+					
+					
+					//리뷰 이미지 등록
+					@RequestMapping(value="json/addReviewImage", method = RequestMethod.POST)
+					public String addReviewImage(@RequestParam("files") MultipartFile multipartFile, @RequestParam("buyNo") int buyNo) throws Exception {
+							
+					
+						System.out.println("/product/addReviewImage : POST");
+						System.out.println("리뷰 이미지"+multipartFile);
+						System.out.println(buyNo);
+						System.out.println(multipartFile.getOriginalFilename());
+						
+						
+						
+						if(!multipartFile.isEmpty()) {
+									//String fileName = fileUpload(request);
+									//System.out.println(fileName);
+							HashMap <String, Object> hashMap = new HashMap<String, Object>();
+							
+							MultipartFile uploadedFile = multipartFile;
+									
+									String originalFileName = uploadedFile.getOriginalFilename(); //오리지날 파일명
+									String extension = originalFileName.substring(originalFileName.lastIndexOf(".")); //파일 확장자
+									String fileRoot = path+"product/fileUpload/review/"; //파일 경로
+									String savedFileName = UUID.randomUUID() + extension; //저장될 파일 명
+									
+									hashMap.put("url", "/libero/resources/images/publish/fileUpload/"+savedFileName);
+									hashMap.put("buyNo", buyNo);
+											
+									File f = new File(fileRoot+savedFileName);
+									
+								    uploadedFile.transferTo(f);
+								    
+								    productService.addReviewImage(hashMap);
+						}//end if
+						
+
+				
+						
+							//ProductService.addReview(hashMap);
+							
+							//return obj.toJSONString();
+							JSONObject obj = new JSONObject();
+							String message = "리뷰가 등록";
+							obj.put("message", message);
+							
+							return obj.toJSONString();
 			}//end addReview
 			
+			public String fileUpload(MultipartHttpServletRequest request) throws Exception{
+				
+				Map<String, MultipartFile> files = request.getFileMap();
+				CommonsMultipartFile cmf = (CommonsMultipartFile) files.get("file");
+				
+				String originalFileName = cmf.getOriginalFilename(); //오리지날 파일명
+				String extension = originalFileName.substring(originalFileName.lastIndexOf(".")); //파일 확장자
+				String fileRoot = path+"product/fileUpload/review/"; //파일 경로
+				String savedFileName = UUID.randomUUID() + extension; //저장될 파일 명
+				
+			File f = new File(fileRoot+savedFileName);
+			cmf.transferTo(f);
+			
+					return savedFileName;
+			}
 			
 			
 }//end class

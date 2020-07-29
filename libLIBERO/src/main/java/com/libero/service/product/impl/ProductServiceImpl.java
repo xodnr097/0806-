@@ -22,8 +22,6 @@ public class ProductServiceImpl implements ProductService{
 					this.productDAO = productDAO;
 	}
 	
-	
-	
 	///Constructor
 	public ProductServiceImpl() {
 		// TODO Auto-generated constructor stub
@@ -77,6 +75,10 @@ public class ProductServiceImpl implements ProductService{
 	public void addReview(HashMap<String, Object> hashMap) {
 		productDAO.addReview(hashMap);
 		
+	}
+	
+	public void addReviewImage(HashMap<String, Object> hashMap) {
+		productDAO.addReviewImage(hashMap);
 	}
 	
 

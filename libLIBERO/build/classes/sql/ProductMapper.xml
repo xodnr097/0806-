@@ -158,9 +158,15 @@
 	<insert id="addReview"	parameterType="hashMap">
 					INSERT
 					INTO
-					buy(user_id, buy_no, review_name, review_content, review_image, star_rate)
-					VALUES (#{userId}, #{buyNo}, #{reviewName}, #{reviewContent}, #{reviewImage}, #{starRate})
+					review(user_id, buy_no,  review_content, star_rate)
+					VALUES (#{userId}, #{buyNo}, #{reviewContent}, #{starRate})
 	</insert>
+	
+	<update id="addReviewImage" parameterType="hashMap">
+					UPDATE review
+					SET review_image = #{url}			
+					WHERE buy_no = #{buy_no}
+	</update>
 	 
 </mapper>
 
