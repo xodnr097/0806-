@@ -181,12 +181,17 @@
 	</update>
 	
 	<select id="getUserPublishList" parameterType="publish" resultMap="publishSelectMap">
-		SELECT *, IFNULL(SUM(buy_amount),0) sales_count
-		FROM product p
+		SELECT 
+			s.sales_count, p.*, h.hashtag_no, h.hashtag_name
+		FROM (SELECT 
+					prod_no, sum(buy_amount) sales_count
+				FROM buy 
+				WHERE buy_code = 'paid'
+				GROUP BY prod_no) s
+		RIGHT OUTER JOIN product p
+		ON p.prod_no = s.prod_no
 		LEFT JOIN hashtag h
-		on p.prod_no = h.prod_no 
-		LEFT JOIN buy b
-		on p.prod_no = b.prod_no 
+		ON p.prod_no = h.prod_no
 		WHERE creator IN(#{creator})
 		AND temp_code IN(#{tempCode})
 		<if test='prodType=="book"'>

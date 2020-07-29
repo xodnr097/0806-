@@ -12,7 +12,7 @@
 	<a href="/libero/user/getUserPublishList?prodType=book" 
 			class="btn btn-default" role="button" 
 			aria-pressed="true">판매중인 도서 및 상품 조회</a>
-	<a href="#" 
+	<a href="/libero/user/getUserCash" 
 			class="btn btn-default" role="button" 
 			aria-pressed="true">리베로캐쉬 조회</a>
 </div>

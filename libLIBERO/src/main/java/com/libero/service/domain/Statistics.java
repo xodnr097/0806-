@@ -8,8 +8,20 @@ import lombok.Data;
 public class Statistics implements Serializable{
 	
 	private int prodNo;
-	private String day;
-	private int dayCount;
+	
+	private int jan;
+	private int feb;
+	private int mar;
+	private int apr;
+	private int may;
+	private int jun;
+	private int jul;
+	private int aug;
+	private int sep;
+	private int oct;
+	private int nov;
+	private int dec;
+	private int totalCount;
 	
 	private int male;
 	private int female;
@@ -17,9 +29,6 @@ public class Statistics implements Serializable{
 	private int twenty;
 	private int thirty;
 	private int forty;
-	
-	private int startDate;
-	private int endDate;
 	
 	public Statistics() {
 		

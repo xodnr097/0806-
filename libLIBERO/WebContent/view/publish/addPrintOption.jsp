@@ -387,15 +387,24 @@
 			var pages = $("#bookPage").val();
 			
 			if (userId=="") {
-				alert("로그인 해주세요.");
+				Swal.fire({
+					  icon: 'error',
+					  text: '로그인 해주세요.'
+					});
 				return;
 			}
 			if (phoneCode!=1) {
-				alert("휴대폰 본인인증을 완료한 회원만 가능합니다.");
+				Swal.fire({
+					  icon: 'error',
+					  text: '휴대폰 본인인증을 완료한 회원만 가능합니다.'
+					});
 				return;
 			}
 			if (pages==null) {
-				alert("페이지수를 입력해주세요.");
+				Swal.fire({
+					  icon: 'error',
+					  text: '페이지 수를 입력해주세요.'
+					});
 				return;
 			}
 			
