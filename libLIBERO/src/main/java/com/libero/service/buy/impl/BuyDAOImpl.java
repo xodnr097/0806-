@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
 
 import com.libero.service.buy.BuyDAO;
+import com.libero.service.domain.Buy;
 import com.libero.service.domain.Pay;
 
 @Repository("buyDAOImpl")
@@ -25,9 +26,9 @@ public class BuyDAOImpl implements BuyDAO{
 	}
 	
 	@Override
-	public Pay getUserBuy(Pay pay) {
-		System.out.println("BuyDaoImpl 도착");
-		return sqlSession.selectOne("BuyMapper.getUserBuy",pay);
+	public List getUserBuy(Map userPayMap) {
+		System.out.println("BuyDaoImpl 도착");		
+		return sqlSession.selectList("BuyMapper.getUserBuy",userPayMap);
 	}
 	@Override
 	public Pay addBuy(Pay pay) {
@@ -55,12 +56,14 @@ public class BuyDAOImpl implements BuyDAO{
 		
 	}
 
-	@Override
-	public List getProdNo(String userId) {
-		// TODO Auto-generated method stub
-		
-		return sqlSession.selectList("BuyMapper.getUserProdNo",userId);
-	}
+//	@Override
+//	public List getUserProdNo(Map forProdNo) {
+//		// TODO Auto-generated method stub
+//		
+//		forProdNo.get("userId");
+//		forProdNo.get("payNo");
+//		return sqlSession.selectList("BuyMapper.getUserProdNo",forProdNo);
+//	}
 
 	@Override
 	public List getFactoryBuyList() {
@@ -68,6 +71,18 @@ public class BuyDAOImpl implements BuyDAO{
 		return sqlSession.selectList("BuyMapper.getFactoryBuyList");
 	}
 
-	
+	@Override
+	public List getFactoryBuy(String payNo) {
+		
+		
+		return sqlSession.selectList("BuyMapper.getFactoryBuy", payNo);
+	}
+
+//	@Override
+//	public List getFactoryProdNo(String payNo) {
+//		// TODO Auto-generated method stub
+//		return sqlSession.selectList("BuyMapper.getFactoryProdNo",payNo);
+//	}
+//	
 
 }

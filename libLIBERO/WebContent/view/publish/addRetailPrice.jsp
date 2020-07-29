@@ -190,7 +190,7 @@
 				      	<div class="modal-body">
 				      		<div class="row">
 				      			<div class="col-lg-6 text-center justify-content-center align-self-center">
-				      				<img src="../resources/images/publish/freeTemplate/icon/t1.png" width="230px" height="280px">
+				      				<img src="../resources/images/publish/fileUpload/${prod.prodThumbnail}" width="230px" height="280px">
 				      			</div>
 				      			<div class="col-lg-6 justify-content-right">
 				      				<table class="modalTable">
@@ -247,49 +247,62 @@
 					      					</tr>
 					      				</tbody>
 				      				</table>
-				      				<table class="modalTable">
-				      					<tbody>
-				      						<tr>
-				      							<th><h5><b>인쇄 옵션</b></h5></th>
-				      						</tr>
-				      					</tbody>
-				      				</table>
-				      				<table>
-				      					<tbody>
-				      						<tr>
-				      							<th><b>규격</b></th>
-				      							<td>: ${prod.sizeType}</td>
-				      						</tr>
-				      						<tr>
-				      							<th><b>표지 재질</b></th>
-				      							<td>: 
-				      								<c:if test="${prod.coverType=='snow'}">
-				      									스노우
-				      								</c:if>
-				      								<c:if test="${prod.coverType=='mont'}">
-				      									몽블랑
-				      								</c:if>
-				      								<c:if test="${prod.coverType=='arte'}">
-				      									아트
-				      								</c:if>
-				      							</td>
-				      						</tr>
-				      						<tr>
-				      							<th><b>내지 재질</b></th>
-				      							<td>: 
-				      								<c:if test="${prod.innerType=='white'}">
-				      									백상지
-				      								</c:if>
-				      								<c:if test="${prod.innerType=='ivory'}">
-				      									미색지
-				      								</c:if>
-				      								<c:if test="${prod.innerType=='rough'}">
-				      									갱지
-				      								</c:if>
-				      							</td>
-				      						</tr>
-				      					</tbody>
-				      				</table>
+				      				<c:if test="${prod.prodType!='ebook'}">
+				      					<table class="modalTable">
+					      					<tbody>
+					      						<tr>
+					      							<th><h5><b>인쇄 옵션</b></h5></th>
+					      						</tr>
+					      					</tbody>
+					      				</table>
+					      				<table>
+					      					<tbody>
+					      						<tr>
+					      							<th><b>컬러</b></th>
+					      							<td>: 
+														<c:if test="${prod.colorType=='color'}">
+					      									컬러
+					      								</c:if>
+					      								<c:if test="${prod.colorType=='black'}">
+					      									흑백
+					      								</c:if>
+													</td>
+					      						</tr>
+					      						<tr>
+					      							<th><b>규격</b></th>
+					      							<td>: ${prod.sizeType}</td>
+					      						</tr>
+					      						<tr>
+					      							<th><b>표지 재질</b></th>
+					      							<td>: 
+					      								<c:if test="${prod.coverType=='snow'}">
+					      									스노우
+					      								</c:if>
+					      								<c:if test="${prod.coverType=='mont'}">
+					      									몽블랑
+					      								</c:if>
+					      								<c:if test="${prod.coverType=='arte'}">
+					      									아트
+					      								</c:if>
+					      							</td>
+					      						</tr>
+					      						<tr>
+					      							<th><b>내지 재질</b></th>
+					      							<td>: 
+					      								<c:if test="${prod.innerType=='white'}">
+					      									백상지
+					      								</c:if>
+					      								<c:if test="${prod.innerType=='ivory'}">
+					      									미색지
+					      								</c:if>
+					      								<c:if test="${prod.innerType=='rough'}">
+					      									갱지
+					      								</c:if>
+					      							</td>
+					      						</tr>
+					      					</tbody>
+					      				</table>
+				      				</c:if>
 				      			</div>
 				      			
 				      		</div> 
@@ -338,9 +351,9 @@
 		function addModalContent() {
 			var discount = $("input[name='discountCode']:checked").val();
 			if (discount=="x") {
-				$("#modalDiscount").html("할인제외");
+				$("#modalDiscount").html(": 할인제외");
 			}else {
-				$("#modalDiscount").html("할인포함");
+				$("#modalDiscount").html(": 할인포함");
 			}
 		}
 		

@@ -43,6 +43,7 @@
 		</div>
 	    <div class="box" style="background-image: url(resources/images/common/index2.png);"></div>
 	    <div class="box" style="background-image: url(resources/images/common/index3.jpg);"></div>
+	    <div class="box" style="background-image: url(resources/images/common/index4.jpg);"></div>
 	</body>
 	<script type="text/javascript">
         window.onload = function () {

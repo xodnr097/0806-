@@ -285,10 +285,10 @@
 	   				<div class="formLabel">표지 등록</div>
 	   				<div class="row">
 		   				<div class="col-lg-2">
-		   					<input type="radio" name="purpose" value="sale">일반 판매용
+		   					<input type="radio" name="purposeCode" value="sale" checked>일반 판매용
 		   				</div>
 		   				<div class="col-lg-2">
-		   					<input type="radio" name="purpose" value="have">소장용
+		   					<input type="radio" name="purposeCode" value="have">소장용
 		   				</div>
 	   				</div>
 	   			</div>
@@ -523,6 +523,20 @@
 		});
 		
 	    function addInfo() {
+	    	var hash = $("input[name=hashtagName]").val();
+			var title = $("input[name='prodName']").val();
+			var author = $("input[name='author']").val();
+			
+			if (title==null) {
+				alert("제목 입력");
+				return;
+			}
+			
+			if (author==null) {
+				alert("저자 입력");
+				return;
+			}
+			
 	    	$('textarea[name="prodDetail"]').val($('#summernote').summernote('code'));
 			$("form").attr("method" , "POST").attr("action" , "/libero/publish/addProductInfo").attr("enctype","multipart/form-data").submit();
 		}

@@ -68,7 +68,7 @@
 
                 // 우편번호와 주소 정보를 해당 필드에 넣는다.
                 document.getElementById("postCode").value = data.zonecode;
-                document.getElementById("address").value = addr;
+                document.getElementById("address").value = data.zonecode+addr+extraAddr;
                 // 커서를 상세주소 필드로 이동한다.
                 document.getElementById("phone1").focus();
             }
@@ -160,7 +160,8 @@
 						$("#password2").val('')
 						//return;
 				}
-		
+				
+			
 			$("form").attr("method" , "POST").attr("action" , "/libero/user/addUser").submit();
 		
 	})		
@@ -232,7 +233,7 @@
 		  </div>
 		  
 		  <div class="form-group">
-		    <label for="userName" class="col-sm-offset-1 col-sm-3 control-label">닉네임</label>
+		    <label for="nickname" class="col-sm-offset-1 col-sm-3 control-label">닉네임</label>
 		    <div class="col-sm-4">
 		      	<input type="text" class="form-control" 
 		      		id="nickname" name="nickname" placeholder="닉네임" >
@@ -241,7 +242,7 @@
 		  
 		  
 		  <div class="form-group">
-		    <label for="ssn" class="col-sm-offset-1 col-sm-3 control-label">주소</label>
+		    <label for="address" class="col-sm-offset-1 col-sm-3 control-label">주소</label>
 		    <div class="col-sm-2">
 				<input type="text" class="form-control" id="postCode" name="postCode" placeholder="우편번호">
 		    </div>
@@ -249,11 +250,11 @@
 	      		<button type="button" onClick="daumjuso()" class="btn btn-info">우편번호 찾기</button>
 	    	</div>
 		   
-		    <label for="ssn" class="col-sm-offset-1 col-sm-3 control-label"></label>
+		    <label for="address" class="col-sm-offset-1 col-sm-3 control-label"></label>
 		    <div class="col-sm-5">
 				<input type="text" id="address" name="address" placeholder="주소" size="50" class="form-control">
 		    </div>
-		    <label for="ssn" class="col-sm-offset-1 col-sm-3 control-label"></label>
+		    <label for="address" class="col-sm-offset-1 col-sm-3 control-label"></label>
 		    <div class="col-sm-5">
 				<input type="text" id="extraAddress" name="extraAddress" placeholder="상세주소" class="form-control">
 		    </div>
@@ -261,7 +262,7 @@
 		 </div>
 		  
 		  <div class="form-group">
-		    <label for="ssn" class="col-sm-offset-1 col-sm-3 control-label">휴대전화번호</label>
+		    <label for="phone" class="col-sm-offset-1 col-sm-3 control-label">휴대전화번호</label>
 		     <div class="col-sm-2">
 		      <select class="form-control" name="phone1" id="phone1">
 				  	<option value="010" >010</option>
@@ -277,11 +278,11 @@
 		    <div class="col-sm-2">
 		      <input type="text" class="form-control" id="phone3" name="phone3" placeholder="번호">
 		    </div>
-		    <input type="hidden" name="phone">
+		 	
 		  </div>
 		  
 		  <div class="form-group">
-		  	<label for="ssn"  class="col-sm-offset-1  col-sm-3 text-center control-label">해시태그</label>
+		  	<label for="hashtag"  class="col-sm-offset-1  col-sm-3 text-center control-label">해시태그</label>
 		     <div class="col-sm-2">
 		       <label><input type="checkbox" value="horror" id="horror" >공포</label>
 		       <label><input type="checkbox" value="romance" id="romance">연애</label>

@@ -99,8 +99,13 @@
     			border: black 1px solid;
 			}
 			.rightform {
-				position: relative;
 				float: right;
+				position: -webkit-sticky; /* Safari */
+				position: sticky;
+				top: 0;
+				min-height: 100%;
+				height: 100%;
+				background-color: red;
 			}
 			.detail {
 				height: auto;
@@ -173,7 +178,7 @@
 				<input type="hidden" name="prodType" value="paper">
 				<div class="form-group col-lg-4 rightform">
 					<div class="row justify-content-right">
-						<label class="tableLabel col" for="publishDetail">상세정보</label>
+						<div class="tableLabel">상세정보</div>
 					</div>
 					<div class="row detail text-left">
 						<table>
@@ -210,7 +215,7 @@
 						</table>
 					</div>	
 					<div class="row justify-content-right">
-						<label class="tableLabel col" for="getfactoryList">인쇄소 선택</label>
+						<div class="tableLabel col">인쇄소 선택</div>
 					</div>
 					<div class="row detail text-left">
 						<table>
