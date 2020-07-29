@@ -37,6 +37,8 @@ public class Publish implements Serializable {
 	private String imgType;
 	private String imgSelect;
 	
+	private int salesCount;
+	
 	public Publish() {
 		
 	}

@@ -140,19 +140,21 @@ INSERT INTO `product` (`prod_no`, `prod_type`, `prod_name`, `prod_detail`, `reta
 /*!40000 ALTER TABLE `product` ENABLE KEYS */;
 
 -- 테이블 liblibero.buy 구조 내보내기
-DROP TABLE IF EXISTS `buy`;
 CREATE TABLE IF NOT EXISTS `buy` (
   `buy_no` int(11) NOT NULL AUTO_INCREMENT,
   `prod_no` int(11) NOT NULL,
   `user_id` varchar(30) NOT NULL,
   `buy_amount` int(11) NOT NULL DEFAULT '1',
   `buy_code` smallint(6) NOT NULL DEFAULT '0',
+  `pay_no` int(11) NOT NULL,
   PRIMARY KEY (`buy_no`),
   KEY `FK_buy_product` (`prod_no`),
   KEY `FK_buy_user` (`user_id`),
+  KEY `FK_buy_pay` (`pay_no`),
+  CONSTRAINT `FK_buy_pay` FOREIGN KEY (`pay_no`) REFERENCES `pay` (`pay_no`),
   CONSTRAINT `FK_buy_product` FOREIGN KEY (`prod_no`) REFERENCES `product` (`prod_no`),
   CONSTRAINT `FK_buy_user` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=10005 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- 테이블 데이터 liblibero.buy:~5 rows (대략적) 내보내기
 DELETE FROM `buy`;
@@ -329,28 +331,30 @@ CREATE TABLE IF NOT EXISTS `post` (
   `post_content` text NOT NULL,
   `reg_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `blind_code` char(1) NOT NULL DEFAULT 'o',
+  `report_count` int(11) NOT NULL DEFAULT '0',
   `view_count` int(11) NOT NULL DEFAULT '0',
   `comment_count` int(11) DEFAULT '0',
   `qna_reg_type` char(1) DEFAULT NULL,
   `qna_code` char(1) DEFAULT NULL,
-  `report_count` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`post_no`),
   KEY `FK_post_user` (`user_id`),
   CONSTRAINT `FK_post_user` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=10008 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=10031 DEFAULT CHARSET=utf8;
 
--- 테이블 데이터 liblibero.post:~8 rows (대략적) 내보내기
+-- 테이블 데이터 liblibero.post:~10 rows (대략적) 내보내기
 DELETE FROM `post`;
 /*!40000 ALTER TABLE `post` DISABLE KEYS */;
-INSERT INTO `post` (`post_no`, `post_type`, `user_id`, `post_name`, `post_content`, `reg_date`, `blind_code`, `view_count`, `comment_count`, `qna_reg_type`, `qna_code`, `post_image`, `report_count`) VALUES
-	(10000, 'N', 'admin3', '공지1', '첫번째 공지입니다', '2020-07-15 17:37:11', 'o', 0, 0, NULL, NULL, NULL, 0),
-	(10001, 'N', 'admin3', '서버 증설 안내', '리브리베로 서버점검 및 서버 증설 안내\r\n\r\n\r\n\r\n안녕하세요, 자가출판 플랫폼 리브리베로 개발팀입니다.\r\n\r\n\r\n\r\n리브리베로 웹사이트의 서버 점검이 이루어집니다. \r\n\r\n하기 내용을 양지하시어 이용에 불편이 없도록 유의하시기 바랍니다.\r\n\r\n\r\n\r\n\r\n작업내용\r\n\r\n\r\n\r\n  리브리베로 서버 증설 및 안정화 작업\r\n\r\n\r\n\r\n일정안내\r\n\r\n\r\n\r\n  작업시작 : 2020년 06월 27일 오전 1시부터 (AM 01:00)\r\n\r\n  작업종료 : 2020년 06월 27일 오전 2시까지 (AM 02:00)\r\n\r\n\r\n\r\n보다 쾌적한 환경과 서비스를 제공하기 위해서 노력하겠습니다. \r\n\r\n항상 감사합니다.\r\n', '2020-07-15 17:38:25', 'o', 0, 0, NULL, NULL, NULL, 0),
-	(10002, 'N', 'admin3', '7월 공지', '7월 15일 구현 시작', '2020-07-15 17:40:48', 'o', 0, 0, NULL, NULL, NULL, 0),
-	(10003, 'F', 'factory02@hanmail.net', '저희 인쇄소 가격 인상했습니다', '그렇다구요', '2020-07-15 17:42:21', 'o', 0, 0, NULL, NULL, NULL, 0),
-	(10004, 'F', 'user01', '6시 어떻게 생각하세요', '전 좋게 생각해요', '2020-07-15 17:42:54', 'o', 0, 0, NULL, NULL, NULL, 0),
-	(10005, 'F', 'user01', '제가 쓴 글 좀 보세요', '제가 쓴 댓글을 보세요', '2020-07-15 17:43:31', 'o', 0, 0, NULL, NULL, NULL, 0),
-	(10006, 'Q', 'user02', '저자 수익을 0으로 하고 책값을 낮추고 싶습니다.', '현재 최대로 낮추어도 1500원 정도의 수익이 나고 있는데, 아예 0으로 낮추고 책값을 낮추는 방법이 있을까요?\r\n\r\n(계좌로 입금되는 금액 없도록)\r\n\r\n\r\n\r\n정부연구비로 출판을 하게되어 수익이 발생할 경우 문제 소지가 있어 질문드립니다.', '2020-07-15 17:46:04', 'o', 0, 0, 'P', 'O', NULL, 0),
-	(10007, 'Q', 'user01', 'A5 사이즈 컬러내지 책 최소 페이지', '문의드립니다.\r\n\r\n\r\n\r\nA5 판형 컬러내지 책의 최소 페이지는 어느 정도인지 알고 싶습니다.\r\n\r\n제본에 무리가 없으려면 어느 정도 페이지여야 할까요?\r\n\r\n\r\n\r\n수고에 감사드립니다.', '2020-07-15 17:49:08', 'o', 0, 0, 'P', 'X', NULL, 0);
+INSERT INTO `post` (`post_no`, `post_type`, `user_id`, `post_name`, `post_content`, `reg_date`, `blind_code`, `report_count`, `view_count`, `comment_count`, `qna_reg_type`, `qna_code`) VALUES
+	(10000, 'N', 'admin3', '공지1', '첫번째 공지입니다', '2020-07-15 17:37:11', 'o', 0, 0, 0, NULL, NULL),
+	(10001, 'N', 'admin3', '서버 증설 안내', '리브리베로 서버점검 및 서버 증설 안내\r\n\r\n\r\n\r\n안녕하세요, 자가출판 플랫폼 리브리베로 개발팀입니다.\r\n\r\n\r\n\r\n리브리베로 웹사이트의 서버 점검이 이루어집니다. \r\n\r\n하기 내용을 양지하시어 이용에 불편이 없도록 유의하시기 바랍니다.\r\n\r\n\r\n\r\n\r\n작업내용\r\n\r\n\r\n\r\n  리브리베로 서버 증설 및 안정화 작업\r\n\r\n\r\n\r\n일정안내\r\n\r\n\r\n\r\n  작업시작 : 2020년 06월 27일 오전 1시부터 (AM 01:00)\r\n\r\n  작업종료 : 2020년 06월 27일 오전 2시까지 (AM 02:00)\r\n\r\n\r\n\r\n보다 쾌적한 환경과 서비스를 제공하기 위해서 노력하겠습니다. \r\n\r\n항상 감사합니다.\r\n', '2020-07-15 17:38:25', 'o', 0, 0, 0, NULL, NULL),
+	(10002, 'N', 'admin3', '7월 공지', '7월 15일 구현 시작', '2020-07-15 17:40:48', 'o', 0, 0, 0, NULL, NULL),
+	(10003, 'F', 'factory02@hanmail.net', '저희 인쇄소 가격 인상했습니다', '그렇다구요', '2020-07-15 17:42:21', 'o', 0, 0, 0, NULL, NULL),
+	(10004, 'F', 'user01', '6시 어떻게 생각하세요', '전 좋게 생각해요', '2020-07-15 17:42:54', 'o', 0, 0, 0, NULL, NULL),
+	(10005, 'F', 'user01', '제가 쓴 글 좀 보세요', '제가 쓴 댓글을 보세요', '2020-07-15 17:43:31', 'o', 0, 0, 0, NULL, NULL),
+	(10006, 'Q', 'user02', '저자 수익을 0으로 하고 책값을 낮추고 싶습니다.', '현재 최대로 낮추어도 1500원 정도의 수익이 나고 있는데, 아예 0으로 낮추고 책값을 낮추는 방법이 있을까요?\r\n\r\n(계좌로 입금되는 금액 없도록)\r\n\r\n\r\n\r\n정부연구비로 출판을 하게되어 수익이 발생할 경우 문제 소지가 있어 질문드립니다.', '2020-07-15 17:46:04', 'o', 0, 0, 0, 'P', 'O'),
+	(10007, 'Q', 'user01', 'A5 사이즈 컬러내지 책 최소 페이지', '문의드립니다.\r\n\r\n\r\n\r\nA5 판형 컬러내지 책의 최소 페이지는 어느 정도인지 알고 싶습니다.\r\n\r\n제본에 무리가 없으려면 어느 정도 페이지여야 할까요?\r\n\r\n\r\n\r\n수고에 감사드립니다.', '2020-07-15 17:49:08', 'o', 0, 0, 0, 'P', 'X'),
+	(10025, '0', 'admin1', '얘는 쿼카에요', '<p>&nbsp;<img src="/libero/resources/images/community/fileUpload/d2afcd45-ada2-4312-98d0-d685adf38297.jpg" style="width: 400px;"></p><p>ㅎㅎ 웃어</p>', '2020-07-27 15:03:09', 'o', 0, 0, 0, NULL, NULL),
+	(10026, '0', 'admin1', '얘는 부엉이', '<p>올빼미? 부엉이</p><p><img src="/libero/resources/images/community/fileUpload/0dc24b96-4ffb-4ca6-8142-832042faf250.jpeg" style="width: 1088px;"><br></p>', '2020-07-27 15:08:45', 'o', 0, 0, 0, NULL, NULL);
 /*!40000 ALTER TABLE `post` ENABLE KEYS */;
 
 
@@ -461,13 +465,6 @@ INSERT INTO `wish` (`wish_no`, `prod_no`, `user_id`) VALUES
 	(10002, 10002, 'admin2'),
 	(10004, 10004, 'admin2'),
 	(10006, 10006, 'admin2'),
-	(10101, 10005, 'admin2'),
-	(10121, 10007, 'admin2'),
-	(10122, 10008, 'admin2'),
-	(10123, 10009, 'admin2'),
-	(10124, 10010, 'admin2'),
-	(10136, 10001, 'admin2'),
-	(10142, 10002, 'admin3');
 /*!40000 ALTER TABLE `wish` ENABLE KEYS */;
 
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;

@@ -21,13 +21,13 @@ public interface BuyService {
 	
 	public Pay addBuy(Pay pay);
 	
-	public Pay getUserBuy(String userId, String payNo);
+	public Map<String,Object> getUserBuy(String userId, String payNo);
 	
-	public Map<String,Object> getUserBuyList(String userId);
+	public Map<String,Object> getUserBuyList(String userId,String payNo);
 	
-	public void getFactoryBuy();
+	public Map<String,Object> getFactoryBuy(String payNo);
 	
-	public Map<String,Object> getFactoryBuyList();
+	public Map<String,Object> getFactoryBuyList(String payNo);
 	
 	//public void getPayStatus();
 	
