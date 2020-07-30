@@ -228,13 +228,13 @@ public class ProductController{
 				
 				//장바구니 리스트
 				@RequestMapping(value="cartTest", method = {RequestMethod.POST, RequestMethod.GET})
-				public void getCartTest(@RequestParam("actualPrice") int actualPrice, @RequestParam("cartList") List cartList ) throws Exception {
+				public void getCartTest(@RequestParam("actualPrice") int actualPrice, @RequestParam("buyNoList") List buyNoList ) throws Exception {
 					
 						System.out.println("/product/getCartTest : POST");
 						System.out.println("실제가격 :" + actualPrice);
-						System.out.println("카트리스트 :" + cartList );
-						System.out.println("buyNo"+cartList.indexOf(1));
-						System.out.println("buyNo"+cartList.get(1));
+						System.out.println("카트리스트 :" + buyNoList );
+						System.out.println("buyNo"+buyNoList.indexOf(1));
+						System.out.println("buyNo"+buyNoList.get(1));
 						
 						
 

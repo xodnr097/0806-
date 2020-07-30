@@ -45,7 +45,7 @@
           </form>
 					<h1 id="totalPrice">총액 : ${totalPrice} </h1>
 					<form>
-					<input type="hidden" name="cartList" value="${buyNoList}">
+					<input type="hidden" name="buyNoList" value="${buyNoList}">
 					<input type="hidden" id="actualPrice" name="actualPrice" value="${totalPrice}">
 					</form>
       
@@ -143,7 +143,7 @@
 		$(function(){
 			
 			$("#button").on("click", function(){
-				$("form").attr("method", "POST").attr("action", "/libero/buy/beforePay").submit();
+				$("form").attr("method", "POST").attr("action", "/libero/product/cartTest").submit();
 			})
 		});
 		
