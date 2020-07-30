@@ -48,7 +48,7 @@ public class ProductRestController {
 				System.out.println(this.getClass());
 			}
 			
-			@Value("#{commonProperties['path2']}")
+			@Value("#{commonProperties['path']}")
 			String path;
 			
 			//method 좋아요 등록
