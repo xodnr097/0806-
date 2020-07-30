@@ -99,11 +99,17 @@
 	</select>
 	
 	
-	<update id="updateDeliveryStatus" parameterType="pay">
+	<update id="updateDeliveryStatus" parameterType="Map">
 		UPDATE pay
 		 SET delivery_code=#{deliveryStatus}
 		 WHERE pay_no=#{payNo}
 	</update>
+	
+	<select id="getAllBuy" parameterType="string" resultMap="paySelectMapper">
+		SELECT * from pay 
+		WHERE pay_no = #{value}
+	</select>
+	
 <!-- 	<select id="getUserProdNo" parameterType="Map" resultType="String"> -->
 <!-- 	SELECT buy.prod_no  -->
 <!-- 	 FROM buy ,pay  -->

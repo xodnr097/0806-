@@ -15,7 +15,7 @@ public interface BuyService {
 	
 	public void getDeliveryStatus();
 	
-	public int updateDeliveryStatus(Pay pay);
+	public int updateDeliveryStatus(String payNo, int deliveryStatus);
 	
 	public void addCancelation();
 	

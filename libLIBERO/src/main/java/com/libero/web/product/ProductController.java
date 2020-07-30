@@ -137,12 +137,12 @@ public class ProductController{
 						hashMap.put("prodNo", prodNo);
 						hashMap.put("userId", userId);
 						if(wishService.checkWish(hashMap) == true) {
-							modelAndView.addObject("wish", "../../resources/images/product/wish/diswish.png");
+							modelAndView.addObject("wish", "../../resources/images/product/wish/notsmile.png");
 						}else {
-							modelAndView.addObject("wish", "../../resources/images/product/wish/wish.png");
+							modelAndView.addObject("wish", "../../resources/images/product/wish/smile.png");
 						}
 					}else{
-						   modelAndView.addObject("wish", "../../resources/images/product/wish/diswish.png");
+						   modelAndView.addObject("wish", "../../resources/images/product/wish/notsmile.png");
 					}
 						
 						//상품타입에 따른 출력페이지

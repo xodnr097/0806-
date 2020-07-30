@@ -6,6 +6,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -44,16 +45,28 @@ public class BuyRestController {
 	}	
 	
 	
-	@RequestMapping(value="json/updateDeliveryStatus",method=RequestMethod.POST)
-	public boolean updateDeliveryStatus(@RequestBody Pay pay) throws Exception{
+	@RequestMapping(value="json/updateDeliveryStatus/{payNo}/{deliveryStatus}",method=RequestMethod.GET)
+	public Map updateDeliveryStatus(@PathVariable("payNo") String payNo, 
+										@PathVariable("deliveryStatus") int deliveryStatus) throws Exception{
 		System.out.println("------------------------");
-		System.out.println("\n\n\n [RESTController :  updateDeliveryStatus]\n\n\n");
+		System.out.println(" [RESTController :  updateDeliveryStatus]");
 		System.out.println("------------------------");
+		int result = 0;
 		
-		buyService.updateDeliveryStatus(pay);
-		
-		
-		return false;
+		if(deliveryStatus == 1) {
+			result = buyService.updateDeliveryStatus(payNo,2);	
+		}else if(deliveryStatus ==2) {
+			result = buyService.updateDeliveryStatus(payNo, 3);
+		}else if(deliveryStatus ==3) {
+			result = buyService.updateDeliveryStatus(payNo, 4);
+		}else if(deliveryStatus ==4) {
+			result = buyService.updateDeliveryStatus(payNo, 5);
+		}else if(deliveryStatus==5) {
+			result = buyService.updateDeliveryStatus(payNo, 6);
+		}
+		Map map = new HashMap();
+		map.put("result", result);
+		return map;
 	}
 	
 	

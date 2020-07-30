@@ -55,4 +55,9 @@ public class ProductDAOImpl implements ProductDAO{
 	public void addReview(HashMap<String, Object> hashMap) {
 		sqlSession.insert("ProductMapper.addReview", hashMap);
 	}
+	
+	@Override
+	public void addReviewImage(HashMap<String, Object> hashMap) {
+		sqlSession.update("ProductMapper.addReviewImage", hashMap);
+	}
 }//end class

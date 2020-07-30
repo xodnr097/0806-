@@ -47,7 +47,7 @@
 					작성자 ${product.creator}	<br/>
 					
 	
-		<img src="${wish}" id='wish_img' width="70px" height="70px"/>
+		<img src="${wish}" id='wish_img' width="70px" height="70px"/><h6>designed by freepik</h6>
 		<input type="number" name="buyAmount" id="buyAmount" onblur="buyAmount()" value="0">개</td>
 		<div class="form-group" align="center">
 			<button type="button" id="button" class="btn btn-info btn-block" 

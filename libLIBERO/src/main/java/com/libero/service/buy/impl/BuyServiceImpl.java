@@ -67,10 +67,12 @@ public class BuyServiceImpl implements BuyService{
 	}
 
 	@Override
-	public int updateDeliveryStatus(Pay pay) {
+	public int updateDeliveryStatus(String payNo, int deliveryStatus) {
 		// TODO Auto-generated method stub
-		buyDao.updateDeliveryStatus(pay);
-	return 0;	
+		buyDao.updateDeliveryStatus(payNo,deliveryStatus);
+		Pay afterPayNo = buyDao.getAllBuy(payNo);
+		
+	return afterPayNo.getDeliveryStatus();
 	}
 
 	@Override
