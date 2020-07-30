@@ -201,7 +201,7 @@
 				   			<div class="col-lg-5">
 					   			<figure class="size">
 					   				<img src="../resources/images/publish/cover.png" width="60px" height="60px" >
-					   				<figcaption>아트</figcaption>
+					   				<figcaption>갱지</figcaption>
 					   			</figure>
 				   			</div>
 				   			<div class="md-form form-group col-lg-5">

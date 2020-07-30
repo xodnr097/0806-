@@ -56,7 +56,7 @@
 				<!-- 표지디자인 입력폼 끝 -->
 				<!-- 교정교열 타입 입력폼 -->
 				<c:if test="${param.prodType=='correct'}">
-					<input type="hidden" value="${param.prodType}">
+					<input type="hidden" name="prodType" value="${param.prodType}">
 				</c:if>
 				<!-- 교정교열 타입 입력폼 끝 -->
 				<!-- 썸네일 입력폼 -->
@@ -112,8 +112,8 @@
 				<!-- 상품 설명 입력폼(SummerNote) 끝 -->
 				<div class="form-group">
 			    	<div align="right">
-			      		<button type="button" class="btn btn-primary" onclick="addProd()">등&nbsp;록</button>
-				  		<a class="btn btn-default btn" href="javascript:history.back();" role="button">취&nbsp;소</a>
+			      		<button type="button" class="btn btn-default" onclick="addProd()">등&nbsp;록</button>
+				  		<a class="btn btn-light btn" href="javascript:history.back();" role="button">취&nbsp;소</a>
 			    	</div>
 			  	</div>
 			</form>
@@ -213,6 +213,31 @@
     });
     
     function addProd() {
+    	
+    	if ($("input[id='prodThumbnail']").val()==null) {
+    		Swal.fire({
+				  icon: 'error',
+				  text: '상품 썸네일을 등록해주세요.'
+				});
+    		return;
+		}
+    	
+    	if ($("input[name='prodName']").val()==null) {
+    		Swal.fire({
+				  icon: 'error',
+				  text: '상품명을 입력해주세요.'
+				});
+    		return;
+		}
+    	
+    	if ($("input[name='retailPrice']").val()==null) {
+    		Swal.fire({
+				  icon: 'error',
+				  text: '가격을 입력해주세요.'
+				});
+		}
+    	
+    	
     	$('textarea[name="prodDetail"]').val($('#summernote').summernote('code'));
 		$("form").attr("method" , "POST").attr("action" , "/libero/publish/addProduct").attr("enctype","multipart/form-data").submit();
 	}

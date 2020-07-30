@@ -1,7 +1,9 @@
 
 package com.libero.service.buy.impl;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,7 +12,10 @@ import org.springframework.stereotype.Service;
 
 import com.libero.service.buy.BuyDAO;
 import com.libero.service.buy.BuyService;
+import com.libero.service.domain.Buy;
 import com.libero.service.domain.Pay;
+import com.libero.service.domain.Product;
+import com.libero.service.product.ProductDAO;
 
 @Service("buyServiceImpl")
 public class BuyServiceImpl implements BuyService{
@@ -19,6 +24,14 @@ public class BuyServiceImpl implements BuyService{
 	@Autowired
 	@Qualifier("buyDAOImpl")
 	private BuyDAO buyDao;
+	@Autowired
+	@Qualifier("productDAOImpl")
+	private ProductDAO productDao;
+	
+	public void setProductDao(ProductDAO prodDao) {
+		
+		this.productDao = productDao;
+	}
 	
 	public void setBuyDao(BuyDAO buyDao) {
 		this.buyDao=buyDao;
@@ -54,9 +67,12 @@ public class BuyServiceImpl implements BuyService{
 	}
 
 	@Override
-	public void updateDeliveryStatus() {
+	public int updateDeliveryStatus(String payNo, int deliveryStatus) {
 		// TODO Auto-generated method stub
+		buyDao.updateDeliveryStatus(payNo,deliveryStatus);
+		Pay afterPayNo = buyDao.getAllBuy(payNo);
 		
+	return afterPayNo.getDeliveryStatus();
 	}
 
 	@Override
@@ -70,45 +86,81 @@ public class BuyServiceImpl implements BuyService{
 		return	buyDao.addBuy(pay);
 	}
 
+	@Override
+	public Map<String,Object> getUserBuy(String userId, String payNo) {
+		
+		Map<String,Object> map = new HashMap();
+		Map<String,Object> userPayMap = new HashMap();
+		
+		userPayMap.put("payNo",payNo);
+		userPayMap.put("userId",userId);
+		List payList = buyDao.getUserBuy(userPayMap);
+		List prodList = new ArrayList();
+		for(int i=0;i<payList.size();i++) {
+			Buy buy = new Buy();
+			buy = (Buy)payList.get(i);
+			buy.getProdNo();
+			prodList.add(productDao.getProduct(buy.getProdNo()));
+		}
+		
+		map.put("userProduct",prodList);
+		
+		map.put("payList",payList);
 	
+		 return map;
+	}
+
 
 	@Override
 	public Map<String, Object> getUserBuyList(String userId) {
 		// TODO Auto-generated method stub
 		Map map = new HashMap();
+//		Map forProdNo = new HashMap();
+//		buyDao.getUserProdNo(userId,payNo)
+		System.out.println("\n\n\n****"+userId+"***\n\n\n");
 		
-		System.out.println("\n\n\n****"+buyDao.getProdNo(userId)+"***\n\n\n");
+//		forProdNo.put("userId", userId);
+//		forProdNo.put("payNo",payNo);
 		
-		
-		map.put("prodNo",buyDao.getProdNo(userId));//null -> getProdNo으로 교체 아마 prodNo 도 list로 받을듯
+//		map.put("prodNo",buyDao.getUserProdNo(forProdNo));//null -> getProdNo으로 교체 아마 prodNo 도 list로 받을듯
 		map.put("list",buyDao.getUserBuyList(userId));
 		
 		return map;
 	}
 
 	@Override
-	public void getFactoryBuy() {
-		// TODO Auto-generated method stub
+	public Map<String, Object> getFactoryBuy(String payNo) {
+		System.out.println("BUYSERVICEIMPL!!");System.out.println("BUYSERVICEIMPL!!");System.out.println("BUYSERVICEIMPL!!");
+		List buyList = new ArrayList();
+		List prodList = new ArrayList();
+		Map map= new HashMap();
+		
+		buyList = buyDao.getFactoryBuy(payNo);
+		
+
+			for(int i=0;i<buyList.size();i++) {
+				Buy buy = new Buy();
+				buy = (Buy)buyList.get(i);
+				buy.getProdNo();
+				prodList.add(productDao.getProduct(buy.getProdNo()));
+			}
+			System.out.println("prodList\n\n\n"+prodList+"\n\n\n");
+			map.put("product",prodList);
+			
+			return map;
 		
 	}
 
 	@Override
-	public Map<String, Object> getFactoryBuyList() {
+	public Map<String, Object> getFactoryBuyList(String payNo) {
 		// TODO Auto-generated method stub
 		Map map = new HashMap();
-		
+
 		map.put("factorylist", buyDao.getFactoryBuyList());
+//		map.put("factoryProdNo", buyDao.getFactoryProdNo(payNo));
 		
 		return map;
-		
 	}
 
-	@Override
-	public Pay getUserBuy(String userId, String payNo) {
-		Pay pay = new Pay();
-		pay.setBuyerId(userId);
-		pay.setPayNo(payNo);
-		return buyDao.getUserBuy(pay);
-	}
 
 }

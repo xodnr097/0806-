@@ -12,8 +12,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.libero.service.cart.CartService;
 import com.libero.service.domain.Product;
 import com.libero.service.domain.User;
 import com.libero.service.product.ProductService;
@@ -31,6 +33,10 @@ public class ProductController{
 	@Autowired
 	@Qualifier("wishServiceImpl")
 	private WishService wishService;
+	
+	@Autowired
+	@Qualifier("cartServiceImpl")
+	private CartService cartService;
 
 	
 	//Constructor
@@ -131,12 +137,12 @@ public class ProductController{
 						hashMap.put("prodNo", prodNo);
 						hashMap.put("userId", userId);
 						if(wishService.checkWish(hashMap) == true) {
-							modelAndView.addObject("wish", "../../resources/images/product/wish/diswish.png");
+							modelAndView.addObject("wish", "../../resources/images/product/wish/notsmile.png");
 						}else {
-							modelAndView.addObject("wish", "../../resources/images/product/wish/wish.png");
+							modelAndView.addObject("wish", "../../resources/images/product/wish/smile.png");
 						}
 					}else{
-						   modelAndView.addObject("wish", "../../resources/images/product/wish/diswish.png");
+						   modelAndView.addObject("wish", "../../resources/images/product/wish/notsmile.png");
 					}
 						
 						//상품타입에 따른 출력페이지
@@ -150,10 +156,13 @@ public class ProductController{
 				}
 				
 				//method 서비스상품화면 출력
-				@RequestMapping(value="getWishList/{userId}", method = RequestMethod.GET)
-				public ModelAndView getWishList(@PathVariable String userId) throws Exception {
+				@RequestMapping(value="getWishList", method = RequestMethod.GET)
+				public ModelAndView getWishList(HttpSession session) throws Exception {
 					
-						System.out.println("/product/getProduct : GET");
+						System.out.println("/product/getWishList : GET");
+						
+						User user = (User)session.getAttribute("user");
+						String userId = user.getUserId();
 						
 						HashMap <String, Object> hashMap = new HashMap<String, Object>();
 						hashMap.put("userId", userId);
@@ -169,6 +178,30 @@ public class ProductController{
 						return modelAndView;
 				}
 				
+				//장바구니 리스트
+				@RequestMapping(value="getCartList", method = RequestMethod.GET)
+				public ModelAndView getCartList(HttpSession session) throws Exception {
+					
+						System.out.println("/product/getCartList : GET");
+						
+						User user = (User)session.getAttribute("user");
+						String userId = user.getUserId();
+						
+						//HashMap <String, Object> hashMap = new HashMap<String, Object>();
+						//hashMap.put("userId", userId);
+						
+						//BusinessLogic
+						List<Product> cartList =cartService.getCartList(userId);
+							
+						ModelAndView modelAndView = new ModelAndView();
+						modelAndView.addObject("cartList", cartList);
+						modelAndView.addObject("userId", userId);
+						
+						modelAndView.setViewName("forward:/view/product/getCartList.jsp");
+						
+						return modelAndView;
+				}
+				
 			/*	
 				@RequestMapping(value="getReviewList/{prodNo}", method = RequestMethod.GET)
 				public ModelAndView getReviewList(@PathVariable int prodNo) throws Exception {
@@ -176,7 +209,15 @@ public class ProductController{
 				}
 			*/	
 				
+				//"/libero/product/CartTest"
 				
-				
+				//장바구니 리스트
+				@RequestMapping(value="cartTest", method = {RequestMethod.POST, RequestMethod.GET})
+				public void getCartTest(@RequestParam("actualPrice") int actualPrice) throws Exception {
 					
-}
+						System.out.println("/product/getCartTest : POST");
+						System.out.println("실제가격 :" + actualPrice);
+				
+				}
+	
+}//end class

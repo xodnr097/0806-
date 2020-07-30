@@ -1,5 +1,6 @@
 package com.libero.service.product;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import com.libero.service.domain.Product;
@@ -18,6 +19,10 @@ public interface ProductService {
 	//public Product getBook(int prodNo);
 
 	public Product getProduct(int prodNo);
+
+	public void addReview(HashMap<String, Object> hashMap) ;
+
+	public void addReviewImage(HashMap<String, Object> hashMap);
 
 	
 }

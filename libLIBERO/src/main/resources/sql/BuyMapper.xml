@@ -10,11 +10,11 @@
 	<resultMap id="buySelectMapper" type="buy">
 		<result property="buyNo" column="buy_no" jdbcType="INTEGER"/>
 		<result property="buyAmount" column="buy_amount" jdbcType="INTEGER"/>
-		<result property="buyerId" column="user_id" jdbcType="VARCHAR"/>
-		<result property="prodNo" column="prod_no" jdbcType="INTEGER"/>
-		<result property="buyStatus" column="buy_code" jdbcType="SMALLINT"/>
-<!--   		<association property="buyer" column="userId" javaType="com.model2.mvc.service.domain.User" select="getUserId"/> -->
-<!--   		<association property="PurchaseProd" column="prodNo" javaType="com.model2.mvc.service.domain.Product" select="getProdNo"/> -->
+		<result property="buyerId" column="user_id" jdbcType="VARCHAR"/>		
+		<result property="buyStatus" column="buy_code" jdbcType="VARCHAR"/>
+		<result property="prodNo" column ="prod_no" jdbcType="INTEGER"/>
+		<result property="payNo" column="pay_no" jdbcType="VARCHAR"/>
+		<result property="prodType" column="prod_type" jdbcType="VARCHAR"/>
 	</resultMap>
 	
 	
@@ -31,26 +31,10 @@
 		<result property="payStatus" column="pay_code" jdbcType="VARCHAR"/>
 		<result property="payDate" column="pay_date" jdbcType="DATE"/>
 		<result property="buyerId" column="user_id" jdbcType="VARCHAR"/>
-	</resultMap>
-	
-	<select id ="getUserBuy" parameterType="String" resultMap="paySelectMapper">
-		SELECT
-		pay_no,
-		delivery_req,
-		payment_type,
-		delivery_code,
-		receiver_name,
-		receiver_addr,
-		receiver_phone,
-		actual_price,
-		pay_date,
-		user_id
-		from pay
-		where user_id = #{buyerId}
-		AND pay_no = #{payNo}
 		
-	</select>
+	</resultMap> 
 	
+
 	<insert id="addBuy" parameterType="pay">
 		INSERT 
 		INTO pay (pay_no,
@@ -80,7 +64,21 @@
 			   #{cancelReason}
 				)
 	</insert>
+	
 
+	<select id ="getUserBuy" parameterType="String" resultMap="buySelectMapper">
+	SELECT 
+			DISTINCT
+			buy.prod_no,
+			buy.pay_no,
+			buy.prod_type
+			FROM pay , buy
+		WHERE pay.pay_no=#{payNo}
+			AND pay.pay_no = buy.pay_no
+			AND buy.user_id = pay.user_id
+			AND buy.buy_code='paid'
+			AND pay.user_id= #{userId}
+	</select>	
 	
 	<select id="getUserBuyList" parameterType="String" resultMap="paySelectMapper">
 		SELECT pay_no,
@@ -90,45 +88,84 @@
 			   receiver_addr,
 			   receiver_phone,
 			   actual_price,
+			   delivery_req,
+			   delivery_code,
 			   pay_date
 			  
 			   FROM pay
 		WHERE user_id = #{value}
-		AND pay_code = 1
+		AND pay_code = 'paid'
 				
 	</select>
 	
-	<select id="getUserProdNo" parameterType="String" resultType="String">
-		SELECT DISTINCT prod_no
-			 FROM pay INNER JOIN buy 
-			 ON buy.user_id = #{value}
-			 GROUP BY pay_no
+	
+	<update id="updateDeliveryStatus" parameterType="Map">
+		UPDATE pay
+		 SET delivery_code=#{deliveryStatus}
+		 WHERE pay_no=#{payNo}
+	</update>
+	
+	<select id="getAllBuy" parameterType="string" resultMap="paySelectMapper">
+		SELECT * from pay 
+		WHERE pay_no = #{value}
 	</select>
 	
-	<select id="getFactoryProdNo" parameterType="String" resultMap="buySelectMapper">
-		SELECT 
-			prod_no,
-			buy_amount
-			
-		FROM pay INNER JOIN buy
-		ON pay.pay_no = #{value}
-		WHERE pay_code ='1' 
-		 AND buy.user_id = pay.user_id
-	</select>
+<!-- 	<select id="getUserProdNo" parameterType="Map" resultType="String"> -->
+<!-- 	SELECT buy.prod_no  -->
+<!-- 	 FROM buy ,pay  -->
+<!-- 	 WHERE buy_code = 1  -->
+<!-- 	 AND pay.pay_no = buy.pay_no  -->
+<!-- 	 AND buy.user_id=#{userId} -->
+<!-- 	 AND pay.pay_no=#{payNo} -->
+<!-- 	 AND pay_code= '1'  -->
+<!-- 	</select> -->
+	
+	
+
+	
+<!-- 	<select id="getFactoryProdNo" parameterType="String" resultType ="String"> -->
+<!-- 		SELECT  -->
+<!-- 		DISTINCT -->
+<!-- 		buy.prod_no -->
+		
+		
+<!-- 		FROM pay  , buy -->
+<!-- 		WHERE pay.pay_no=#{payNo} -->
+<!-- 		AND pay.pay_no = buy.pay_no -->
+<!-- 		AND buy.user_id = pay.user_id -->
+<!-- 		AND buy.buy_code=1 -->
+		
+<!-- 	</select> -->
 	
 	<select id="getFactoryBuyList" parameterType="String" resultMap="paySelectMapper">
-		SELECT 
-			pay_no ,
+	SELECT 
+			buy.pay_no ,
 			receiver_addr,
 			receiver_phone,
-			pay_date
+			pay_date,
+			pay.user_id
 			
-		FROM pay
-		WHERE pay_code = 1
-		 AND delivery_code = 1
+		FROM pay,buy
+		WHERE  buy.buy_code= 1
+		 AND pay.pay_no = buy.pay_no
+		 AND buy.prod_type ='paper'
+		 GROUP BY pay.pay_no
 	</select>
 	
-	 
+	<select id="getFactoryBuy" parameterType="String" resultMap="buySelectMapper">
+		SELECT 
+		DISTINCT
+		buy.prod_no,
+		buy.pay_no
+		
+		FROM pay  , buy
+		WHERE pay.pay_no=#{payNo}
+		AND pay.pay_no = buy.pay_no
+		AND buy.user_id = pay.user_id
+		AND buy.buy_code=1
+		AND buy.prod_type="paper"
+			 
+	</select>
 	 
 	 
 </mapper>

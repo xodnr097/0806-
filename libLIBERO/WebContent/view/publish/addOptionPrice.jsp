@@ -188,7 +188,7 @@
 				   			<div class="col-lg-5">
 					   			<figure class="size">
 					   				<img src="../resources/images/publish/cover.png" width="60px" height="60px" >
-					   				<figcaption>아트</figcaption>
+					   				<figcaption>갱지</figcaption>
 					   			</figure>
 				   			</div>
 				   			<div class="md-form form-group col-lg-5">
@@ -224,7 +224,10 @@
 			
 			for (var i = 0; i < tableArray.length; i++) {
 				if (tableArray[i]=="") {
-					alert("모든 가격을 등록해주세요.");
+					Swal.fire({
+						  icon: 'error',
+						  text: '모든 가격을 등록 해주세요.'
+					});
 				}
 			}
 

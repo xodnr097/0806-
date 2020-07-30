@@ -7,7 +7,6 @@ import java.awt.font.FontRenderContext;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
@@ -28,6 +27,7 @@ import org.springframework.web.multipart.commons.CommonsMultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.libero.service.domain.Publish;
+import com.libero.service.domain.Statistics;
 import com.libero.service.domain.User;
 import com.libero.service.publish.PublishService;
 import com.libero.service.user.UserService;
@@ -189,19 +189,19 @@ public class PublishController {
 				g.drawString(publish.getProdName(), (width/2)-(int)((r.getWidth())/2), 130);
 				g.setFont(nameFont); 
 				g.drawString(publish.getAuthor(), (width/2)-(int)((r2.getWidth())/2)+160, 170); 
-				g.drawImage(logo, (width/2)-(int)(r2.getWidth())+150, 555, 130, 40, null);
+				g.drawImage(logo, 300, 555, 130, 40, null);
 			}else if (publish.getImgType().contentEquals("icon")) {
 				g.setFont(titleFont); 
 				g.drawString(publish.getProdName(), (width/2)-(int)((r.getWidth())/2), 330);
 				g.setFont(nameFont); 
-				g.drawString(publish.getAuthor(), (width/2)-(int)((r2.getWidth())/2)+20, 350); 
-				g.drawImage(logo, (width/2)-(int)(r2.getWidth())+155, 590, 130, 40, null);
+				g.drawString(publish.getAuthor(), (width/2)-(int)((r2.getWidth())/2)+35, 350); 
+				g.drawImage(logo, 300, 580, 130, 40, null);
 			}else if (publish.getImgType().contentEquals("img")) {
 				g.setFont(titleFont); 
 				g.drawString(publish.getProdName(), (width/2)-180, 530);
 				g.setFont(nameFont); 
 				g.drawString(publish.getAuthor(), (width/2)-(int)(r2.getWidth())+210, 550); 
-				g.drawImage(logo, (width/2)-(int)(r2.getWidth())+135, 565, 130, 40, null);
+				g.drawImage(logo, 290, 570, 130, 40, null);
 			}
 			g.dispose(); 
 			
@@ -274,9 +274,8 @@ public class PublishController {
 		System.out.println("/publish/addProduct : POST");
 		
 		User user = (User)session.getAttribute("user");
-		
+		System.out.println(publish);
 		publish.setCreator(user.getUserId());
-		
 		//File Upload Start
 		if (files!=null) {
 			
@@ -298,22 +297,25 @@ public class PublishController {
 					publish.setProdThumbnail(f.getName());
 					
 				}
+				
+				if (publish.getProdType().contentEquals("target")||publish.getProdType().contentEquals("correct")) {
+					break;
+				}
+				
 				if(i==2) {
 					publish.setCoverFile(f.getName());
 				}
 				System.out.println("파일 업로드 성공 : "+f.getName());
 				//맞춤형표지, 교정교열은 2일시 for문 빠져나옴
-				if (publish.getProdType().contentEquals("target")||publish.getProdType().contentEquals("correct")) {
-					break;
-				}
 			}
 		}
 		//File Upload End
+		
 		System.out.println(publish);
 		publishService.addProduct(publish);
 		
 		ModelAndView modelAndView = new ModelAndView();
-		modelAndView.setViewName("redirect:/product/getProductList.jsp");
+		modelAndView.setViewName("redirect:/product/getProductList/"+publish.getProdType());
 		
 		return modelAndView;
 	}
@@ -384,6 +386,8 @@ public class PublishController {
 	@RequestMapping(value = "addOptionPrice", method = RequestMethod.GET)
 	public ModelAndView addOptionPrice(HttpSession session) throws Exception {
 		
+		System.out.println("/publish/addOptionPrice : GET");
+		
 		User user = (User) session.getAttribute("user");
 		
 		ModelAndView modelAndView = new ModelAndView();
@@ -398,6 +402,8 @@ public class PublishController {
 	
 	@RequestMapping(value = "getOptionPrice", method = RequestMethod.GET)
 	public ModelAndView getOptionPrice(HttpSession session) throws Exception {
+		
+		System.out.println("/publish/getOptionPrice : GET");
 		
 		User user = (User) session.getAttribute("user");
 		
@@ -418,6 +424,8 @@ public class PublishController {
 	@RequestMapping(value = "updateOptionPrice", method = RequestMethod.POST)
 	public ModelAndView updateOptionPrice(User user, HttpSession session) throws Exception {
 		
+		System.out.println("/publish/updateOptionPrice : POST");
+		
 		publishService.updateOptionPrice(user);
 		
 		user=userService.getUser(user.getUserId());
@@ -430,18 +438,17 @@ public class PublishController {
 		return modelAndView;
 	}
 	
-	@RequestMapping(value = "getUserPublishList", method = RequestMethod.GET)
-	public ModelAndView getUserPublishList(HttpSession session, @RequestParam("prodType") String prodType, Publish publish) throws Exception {
+	@RequestMapping(value = "getStatistics", method = RequestMethod.GET)
+	public ModelAndView getStatistics(@RequestParam("prodNo") int prodNo, Statistics statistics) throws Exception {
 		
-		publish.setProdType(prodType);
-		publish.setCreator(((User)session.getAttribute("user")).getUserId());
+		System.out.println("/publish/getStatistics : GET");
 		
-		Map<String , Object> map=publishService.getUserPublishList(publish);
+		statistics.setProdNo(prodNo);
+		Map<String, Object> map = publishService.getStatistics(statistics);
 		
 		ModelAndView modelAndView = new ModelAndView();
-		modelAndView.addObject("list", map.get("list"));
-		modelAndView.addObject("totalCount", map.get("totalCount"));
-		modelAndView.setViewName("forward:/view/publish/getUserPublishList.jsp");
+		modelAndView.addObject("day", map.get("day"));
+		modelAndView.setViewName("forward:/view/publish/getStatistics.jsp");
 		
 		return modelAndView;
 	}

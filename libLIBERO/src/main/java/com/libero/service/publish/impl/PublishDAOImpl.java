@@ -7,7 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
 
+import com.libero.service.domain.Cash;
 import com.libero.service.domain.Publish;
+import com.libero.service.domain.Statistics;
 import com.libero.service.domain.User;
 import com.libero.service.publish.PublishDAO;
 
@@ -48,7 +50,8 @@ public class PublishDAOImpl implements PublishDAO {
 	
 	public void updatePublishInfo(Publish publish) throws Exception {
 		sqlSession.update("PublishMapper.updateProductInfo", publish);
-		if (publish.getHashtagName()!="") {
+		
+		if (!publish.getHashtagName().contentEquals("")) {
 			sqlSession.insert("PublishMapper.addHashtag", publish);
 		}
 	}
@@ -85,8 +88,23 @@ public class PublishDAOImpl implements PublishDAO {
 		return sqlSession.selectList("PublishMapper.getUserPublishList", publish);
 	}
 	
+	public void removeTempPublish(Publish publish) throws Exception {
+		if (publish.getHashtagName()!=null || !publish.getHashtagName().contentEquals("")) {
+			sqlSession.delete("PublishMapper.removeHashtag", publish);
+		}
+		sqlSession.delete("PublishMapper.removeTempPublish", publish);
+	}
+	
 	public int getTotalCount(Publish publish) throws Exception {
 		return sqlSession.selectOne("PublishMapper.getTotalCount", publish);
+	}
+	
+	public List<Statistics> getStatistics(Statistics statistics) throws Exception {
+		return sqlSession.selectList("StatisticsMapper.getDateStatistics", statistics);
+	}
+	
+	public Cash getUserCash(String userId) throws Exception {
+		return sqlSession.selectOne("UserMapper.getUserCash", userId);
 	}
 
 }

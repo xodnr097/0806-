@@ -15,19 +15,21 @@ public interface BuyService {
 	
 	public void getDeliveryStatus();
 	
-	public void updateDeliveryStatus();
+	public int updateDeliveryStatus(String payNo, int deliveryStatus);
 	
 	public void addCancelation();
 	
 	public Pay addBuy(Pay pay);
 	
-	public Pay getUserBuy(String userId, String payNo);
+	public Map<String,Object> getUserBuy(String userId, String payNo);
 	
 	public Map<String,Object> getUserBuyList(String userId);
 	
-	public void getFactoryBuy();
+	public Map<String,Object> getFactoryBuy(String payNo);
 	
-	public Map<String,Object> getFactoryBuyList();
+	public Map<String,Object> getFactoryBuyList(String payNo);
+	
+	
 	
 	//public void getPayStatus();
 	

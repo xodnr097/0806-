@@ -282,13 +282,13 @@
 					</div>
 	   			</div>
 	   			<div class="form-group md-form">
-	   				<div class="formLabel">표지 등록</div>
+	   				<div class="formLabel">제작 목적</div>
 	   				<div class="row">
 		   				<div class="col-lg-2">
-		   					<input type="radio" name="purpose" value="sale">일반 판매용
+		   					<input type="radio" name="purposeCode" value="sale" checked>일반 판매용
 		   				</div>
 		   				<div class="col-lg-2">
-		   					<input type="radio" name="purpose" value="have">소장용
+		   					<input type="radio" name="purposeCode" value="have">소장용
 		   				</div>
 	   				</div>
 	   			</div>
@@ -523,6 +523,53 @@
 		});
 		
 	    function addInfo() {
+	    	var hash = $("input[name=hashtagName]").val();
+			var title = $("input[name='prodName']").val();
+			var author = $("input[name='author']").val();
+			var imgSelect = $("input[name='imgSelect']:checked").val();
+			
+			if (title==null) {
+				Swal.fire({
+					  icon: 'error',
+					  text: '제목을 입력해주세요.'
+					});
+				return;
+			}
+			
+			if (author==null) {
+				Swal.fire({
+					  icon: 'error',
+					  text: '저자를 입력해주세요.'
+					});
+				return;
+			}
+			
+			if ($("input[name='coverSelect']:checked").val()=="freeTemplate") {
+				if (imgSelect==null) {
+					Swal.fire({
+						  icon: 'error',
+						  text: '표지를 선택해주세요.'
+						});
+					return;
+				}
+			}else {
+				if ($("input[name='file']").val()==null) {
+					Swal.fire({
+						  icon: 'error',
+						  text: '표지를 업로드해주세요.'
+						});
+					return;
+				}
+			}
+			
+			if ($("input[name='purposeCode']:checked").val()==null) {
+				Swal.fire({
+					  icon: 'error',
+					  text: '제작목적을 선택해주세요.'
+					});
+				return;
+			}
+			
 	    	$('textarea[name="prodDetail"]').val($('#summernote').summernote('code'));
 			$("form").attr("method" , "POST").attr("action" , "/libero/publish/addProductInfo").attr("enctype","multipart/form-data").submit();
 		}

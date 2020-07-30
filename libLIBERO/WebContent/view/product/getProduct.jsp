@@ -5,6 +5,7 @@
 <head>
 <meta charset="EUC-KR">
 <title>Insert title here</title>
+	<jsp:include page="/common/cdn.jsp"></jsp:include>
 </head>
 <body>
 		<!-- ToolBar Start /////////////////////////////////////-->

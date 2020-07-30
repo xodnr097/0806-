@@ -24,21 +24,14 @@
 	   	
 	   	<!-- //////////// Bootstrap Container Start////////////////// -->
 	   	<div class="container">
-	   		<div class="row justify-content-center" style="margin-bottom: 100px">
-	   			<button class="btn btn-default">내정보</button>
-	   			<button class="btn btn-default">임시 저장 도서 조회</button>
-	   			<button class="btn btn-default">주문내역 조회</button>
-	   			<a href="/libero/publish/getUserPublishList?prodType=book" 
-		   				class="btn btn-default" role="button" 
-		   				aria-pressed="true" style="margin-bottom: 10px">판매 도서 및 상품 조회</a>
-	   		</div>
+	   		<jsp:include page="topButton.jsp"></jsp:include>
 	   		<div class="row">
 		   		<div class="col-lg-2">
-		   			<a href="/libero/publish/getUserPublishList?prodType=book" 
+		   			<a href="/libero/user/getUserPublishList?prodType=book" 
 		   				class="btn btn-outline-default waves-effect btn-block" role="button" 
 		   				aria-pressed="true" style="margin-bottom: 10px">도서</a>
 		   				
-		   			<a href="/libero/publish/getUserPublishList?prodType=prod" 
+		   			<a href="/libero/user/getUserPublishList?prodType=prod" 
 		   				class="btn btn-outline-default waves-effect btn-block" role="button" 
 		   				aria-pressed="true">서비스상품</a>
 		   		</div>
@@ -49,7 +42,7 @@
 						<div class="card border-light mb-3" style="margin-bottom: 20px">
 							<div class="card-body">
 								<div class="row">
-								
+									
 							  		<div class="col-lg-2">
 							  			<c:if test="${prod.prodThumbnail!=null}">
 							  				<img class="prodThumbnail" src="../resources/images/publish/fileUpload/${prod.prodThumbnail}">
@@ -63,7 +56,8 @@
 							  			<table>
 							  				<tbody>
 							  					<tr>
-							  						<th>도서 제목</th>
+							  						<th>
+							  							${param.prodType=='book' ? '도서' : '상품' } 제목</th>
 							  						<td>: ${prod.prodName}</td>
 							  					</tr>
 							  					<c:if test="${param.prodType=='book'}">
@@ -78,18 +72,33 @@
 							  					</tr>
 							  					<tr>
 							  						<th>판매량</th>
-							  						<td>: ㅇㅇ</td>
+							  						<td>: ${prod.salesCount}</td>
 							  					</tr>
 							  				</tbody>
 							  			</table>
 							  		</div>
 							  		
 							  		<div class="col-lg-3">
-							  			<button class="btn btn-default btn-block" style="margin-bottom: 10px">판매 통계 조회</button>
-							  			<button class="btn btn-default btn-block">판매 중지</button>
+							  			<a href="javascript:popup(${prod.prodNo})" 
+							   				class="btn btn-default btn-block" role="button" 
+							   				aria-pressed="true" style="margin-bottom: 10px">판매 통계 조회</a>
+							   			<c:if test="${prod.blindCode=='show'}">
+							  				<button class="btn btn-outline-default waves-effect btn-block">판매 중지</button>
+							  			</c:if>
+							  			<c:if test="${prod.blindCode=='hide'}">
+							  				<button class="btn btn-default btn-block">판매 재개</button>
+							  			</c:if>
+							  			<c:if test="${prod.blindCode=='report'}">
+							  				<button class="btn btn-default btn-block">수정 요청</button>
+							  			</c:if>
 							  		</div>
 						  		</div>
 						  		<!-- row End -->
+						  		<div class="row col-lg-12">
+									<c:if test="${prod.blindCode=='report'}">
+										<p style="margin: 0">신고로 숨김 처리 당한 상품입니다.<br/>신고사유 : ${prod.reportType}</p>
+									</c:if>
+								</div>
 						  	</div>
 						  	<!-- Card Body End -->
 						</div>
@@ -99,4 +108,15 @@
 	   	</div>
 	   	<!-- //////////// Bootstrap Container End////////////////// -->
 	</body>
+	
+	<script type="text/javascript">
+	
+	//==============판매 통계 팝업 ====================
+		function popup(prodNo){
+	        var url = "/libero/publish/getStatistics?prodNo="+prodNo;
+	        var name = "판매 통계 조회";
+	        var option = "width = 700, height = 400, top = 100, left = 200, location = no"
+	        window.open(url, name, option);
+	    }
+	</script>
 </html>
