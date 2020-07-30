@@ -1,0 +1,238 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+		PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="PublishMapper">
+
+	<resultMap id="publishSelectMap" type="publish">
+		<result property="prodNo" 			column="prod_no" 			jdbcType="INTEGER"/>
+		<result property="prodType"			column="prod_type" 			jdbcType="VARCHAR" />
+		<result property="prodName"	 		column="prod_name" 			jdbcType="VARCHAR" />
+		<result property="prodDetail"	 	column="prod_detail" 		jdbcType="LONGVARCHAR" />
+		<result property="retailPrice" 		column="retail_price" 		jdbcType="INTEGER" />
+		<result property="printPrice"		column="print_price"		jdbcType="INTEGER"/>
+		<result property="blindCode"		column="blind_code" 		jdbcType="VARCHAR" />
+		<result property="prodThumbnail" 	column="prod_thumbnail"		jdbcType="VARCHAR" />
+		<result property="coverFile" 		column="cover_file" 		jdbcType="VARCHAR"  />
+		<result property="discountCode"		column="discount_code"		jdbcType="VARCHAR" />
+		<result property="creator"			column="creator"			jdbcType="VARCHAR"/>
+		<result property="author"			column="author"				jdbcType="VARCHAR"/>
+		<result property="purposeCode"		column="purpose_code"		jdbcType="VARCHAR"/>
+		<result property="bookCategory"		column="book_category"		jdbcType="VARCHAR"/>
+		<result property="hashtagName"		column="hashtag_name"		jdbcType="VARCHAR"/>
+		<result property="manuFile"			column="manu_file"			jdbcType="VARCHAR"/>
+		<result property="bookPage"			column="book_page"			jdbcType="INTEGER"/>
+		<result property="colorType"		column="color_type"			jdbcType="VARCHAR"/>
+		<result property="sizeType"			column="size_type"			jdbcType="VARCHAR"/>
+		<result property="coverType"		column="cover_type"			jdbcType="VARCHAR"/>
+		<result property="innerType"		column="inner_type"			jdbcType="VARCHAR"/>
+		<result property="factoryId" 		column="factory_id"			jdbcType="VARCHAR"/>
+		<result property="regDate"			column="reg_date"			jdbcType="TIMESTAMP"/>
+		<result property="salesCount"		column="sales_count"		jdbcType="INTEGER"/>
+		<result property="reportType"		column="report_type"		jdbcType="SMALLINT"/>
+	</resultMap>
+	
+	<resultMap id="optionSelectMap" type="user">
+		<result property="userId" 		column="user_id" 			jdbcType="VARCHAR"/>
+		<result property="nickname"		column="nickname"			jdbcType="VARCHAR"/>
+		<result property="role" 		column="role" 				jdbcType="CHAR" />
+		<result property="a5Price"		column="a5_price"			jdbcType="INTEGER"/>
+		<result property="a4Price"		column="a4_price"			jdbcType="INTEGER"/>
+		<result property="b5Price"		column="b5_price"			jdbcType="INTEGER"/>
+		<result property="colorPrice"	column="color_price"		jdbcType="INTEGER"/>
+		<result property="blackPrice"	column="black_price"		jdbcType="INTEGER"/>
+		<result property="snowPrice"	column="snow_price"			jdbcType="INTEGER"/>
+		<result property="montPrice"	column="mont_price"			jdbcType="INTEGER"/>
+		<result property="artePrice"	column="arte_price"			jdbcType="INTEGER"/>
+		<result property="whitePrice"	column="white_price"		jdbcType="INTEGER"/>
+		<result property="ivoryPrice"	column="ivory_price"		jdbcType="INTEGER"/>
+		<result property="roughPrice"	column="rough_price"		jdbcType="INTEGER"/>
+	</resultMap>
+	
+	<select 	id="getPrintOptinList" resultMap="optionSelectMap">
+		SELECT
+			user_id, nickname, a5_price, b5_price, a4_price, color_price, black_price, snow_price, 
+			mont_price, arte_price, white_price, ivory_price, rough_price
+		FROM user
+		WHERE role IN('f')
+		AND user_code IN(1)
+		AND color_price  IS NOT NULL
+	</select>
+	
+	<!-- SQL : INSERT -->
+	<insert		id="addPaper"	parameterType="publish" >
+	 	INSERT 
+	 	INTO 
+	 	product(blind_code, prod_type, creator, color_type, size_type, cover_type, inner_type, factory_id, book_page, print_price) 
+	 	SELECT "temp",#{prodType},#{creator},#{colorType},#{sizeType},#{coverType},#{innerType},#{factoryId},#{bookPage},
+				${colorType}_price+${coverType}_price+((${sizeType}_price+${innerType}_price)*${bookPage})
+		FROM user
+		WHERE user_id IN(#{factoryId})
+	</insert>
+	
+	<insert		id="addEbook"	parameterType="publish" >
+	 	INSERT 
+	 	INTO 
+	 	product(blind_code, prod_type,creator,book_page) 
+	 	VALUES ("temp",#{prodType},#{creator},#{bookPage})
+	</insert>
+	
+	<select		id="getPublishNo"	parameterType="publish" 	resultType="int">
+	 	SELECT prod_no 
+	 	FROM product 
+	 	WHERE creator IN(#{creator})
+	 	ORDER BY reg_date DESC LIMIT 1
+	</select>
+	
+	<update	id="updateManu"	parameterType="publish">
+	   	UPDATE product
+	   	SET
+	   		manu_file = #{manuFile}
+	   	WHERE prod_no = #{prodNo}
+	</update>
+	
+	<update id="updateProductInfo" parameterType="publish">
+		UPDATE product
+		SET
+			prod_name 		= #{prodName},
+			prod_detail 	= #{prodDetail:LONGVARCHAR},
+			prod_thumbnail 	= #{prodThumbnail},
+			cover_file 		= #{coverFile:VARCHAR},
+			author 			= #{author},
+			purpose_code 	= #{purposeCode},
+			book_category 	= #{bookCategory}
+		WHERE prod_no = #{prodNo}
+	</update>
+	
+	<insert id="addHashtag" parameterType="publish">
+		INSERT 
+	 	INTO 
+	 	hashtag (prod_no, hashtag_name)
+	 	VALUES (#{prodNo},#{hashtagName:VARCHAR} )
+	</insert>
+	
+	<update	id="updateRetailPrice"	parameterType="publish">
+	   	UPDATE product
+	   	SET
+	   		retail_price = #{retailPrice},
+	   		<if test="discountCode!=null">
+	   			discount_code = #{discountCode},
+	   		</if>
+	   		blind_code = "show"
+	   	WHERE prod_no = #{prodNo}
+	</update>
+	
+	<select		id="getProduct"	parameterType="int" 	resultMap="publishSelectMap">
+	 	SELECT * 
+		FROM product p
+		LEFT JOIN hashtag h 
+		ON p.prod_no = h.prod_no 
+		where p.prod_no IN(#{value}) 
+	</select>
+	
+	<insert		id="addProduct"		parameterType="publish">
+		INSERT
+		INTO
+		product(prod_type, prod_name, prod_thumbnail, cover_file, prod_detail, retail_price, creator, discount_code)
+		VALUES (#{prodType}, #{prodName}, #{prodThumbnail}, #{coverFile:VARCHAR}, #{prodDetail}, #{retailPrice}, #{creator}, "x")
+	</insert>
+	
+	<update	id="updateProduct"	parameterType="publish">
+	   	UPDATE product
+	   	SET
+	   		prod_name 			= #{prodName},
+	   		<if test="prodThumbnail != null">
+	   			prod_thumbnail		= #{prodThumbnail:VARCHAR},
+	   		</if>
+	   		<if test="coverFile != null">
+	   			cover_file			= #{coverFile:VARCHAR},
+	   		</if>
+			prod_detail			= #{prodDetail:LONGVARCHAR},
+			retail_price		= #{retailPrice}
+	   	WHERE prod_no = #{prodNo}
+	</update>
+	
+	<select id="getOptionPrice"		parameterType="String" resultMap="optionSelectMap">
+		SELECT 
+			user_id, nickname, a5_price, b5_price, a4_price, color_price, black_price, snow_price, 
+			mont_price, arte_price, white_price, ivory_price, rough_price
+		FROM user
+		WHERE user_id IN(#{value})
+	</select>
+	
+	<update id="updateOptionPrice"		parameterType="user">
+		UPDATE user
+		SET 
+			a5_price = #{a5Price} ,
+			b5_price = #{b5Price} ,
+			a4_price = #{a4Price} , 
+			color_price = #{colorPrice} , 
+			black_price = #{blackPrice} , 
+			snow_price = #{snowPrice} , 
+			mont_price = #{montPrice} , 
+			arte_price = #{artePrice} , 
+			white_price = #{whitePrice} , 
+			ivory_price = #{ivoryPrice} , 
+			rough_price = #{roughPrice}
+		WHERE user_id IN(#{userId})
+	</update>
+	
+	<select id="getUserPublishList" parameterType="publish" resultMap="publishSelectMap">
+		SELECT 
+			s.sales_count, p.*, h.hashtag_no, h.hashtag_name, r.report_type
+		FROM (SELECT 
+					prod_no, sum(buy_amount) sales_count
+				FROM buy 
+				WHERE buy_code = 'paid'
+				GROUP BY prod_no) s
+		RIGHT OUTER JOIN product p
+		ON p.prod_no = s.prod_no
+		LEFT JOIN hashtag h
+		ON p.prod_no = h.prod_no
+		LEFT JOIN report r
+		ON p.prod_no = r.prod_no
+		WHERE creator IN(#{creator})
+		<if test='blindCode=="temp"'>
+			AND blind_code IN(#{blindCode})
+		</if>
+		<if test="blindCode==null">
+			AND blind_code IN("show","hide","report","request")
+		</if>
+		<if test='prodType=="book"'>
+			AND p.prod_type IN("paper","ebook")
+		</if> 
+		<if test='prodType=="prod"'>
+			AND p.prod_type IN("design","target","correct")
+		</if>
+		GROUP BY p.prod_no
+		ORDER BY reg_date DESC
+	</select>
+	
+	<delete id="removeTempPublish" parameterType="publish">
+		DELETE FROM product
+		WHERE prod_no IN(#{prodNo})
+	</delete>
+	
+	<delete id="removeHashtag" parameterType="publish">
+		DELETE FROM hashtag
+		WHERE prod_no IN(#{prodNo})
+	</delete>
+	
+	<select id="getTotalCount" parameterType="publish" resultType="int">
+		SELECT COUNT(*) 
+		FROM product p
+		LEFT JOIN hashtag h 
+		on p.prod_no = h.prod_no 
+		where creator IN(#{creator})
+		<if test='prodType=="book"'>
+			AND p.prod_type IN("paper","ebook")
+		</if> 
+		<if test='prodType=="prod"'>
+			AND p.prod_type IN("design","target","correct")
+		</if>
+	</select>
+
+</mapper>
+ 	
