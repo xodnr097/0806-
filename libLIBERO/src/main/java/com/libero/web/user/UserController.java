@@ -126,7 +126,7 @@ public class UserController {
 		System.out.println("/user/getTempPublishList : GET");
 		
 		publish.setCreator(((User)session.getAttribute("user")).getUserId());
-		publish.setTempCode((short) 1);
+		publish.setBlindCode("temp");
 		
 		Map<String , Object> map=publishService.getUserPublishList(publish);
 		
@@ -165,6 +165,24 @@ public class UserController {
 		ModelAndView modelAndView = new ModelAndView();
 		modelAndView.addObject("cash", cash);
 		modelAndView.setViewName("forward:/view/user/getUserCash.jsp");
+		
+		return modelAndView;
+	}
+	
+	@RequestMapping(value = "getAdminCashList", method = RequestMethod.GET)
+	public ModelAndView getAdminCashList(HttpSession session, String role) throws Exception{
+		
+		role = ((User)session.getAttribute("user")).getRole();
+		
+		ModelAndView modelAndView = new ModelAndView();
+		
+		if (role.contentEquals("a")) {
+			List<User> list = userService.getAdminCashList();
+			modelAndView.addObject("list", list);
+			modelAndView.setViewName("forward:/view/user/getAdminCashList.jsp");
+		}else {
+			modelAndView.setViewName("redirect:/index.jsp");
+		}
 		
 		return modelAndView;
 	}

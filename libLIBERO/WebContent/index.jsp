@@ -52,6 +52,17 @@
         		padding: 60px;
         		font-family: 'Noto Sans KR', sans-serif;
         	}
+        	.button{
+        		border: 1px black solid; 
+        		padding: 5px; 
+        		cursor: pointer;
+        	}
+        	.button:hover{
+        		border: 1px white solid; 
+        		padding: 5px; 
+        		cursor: pointer;
+        		color: white;
+        	}
 		</style>
 	</head>
 	<body>
@@ -77,7 +88,14 @@
 	    		</tbody>
 	    	</table>
 	    </div>
-	    <div class="box" style="background-image: url(resources/images/common/index2.png);"></div>
+	    <div class="box" style="background-image: url(resources/images/common/index2.png);display: flex; justify-content: center; align-items: center;">
+	    	<div align="center">
+	    		<h5><b>출판이 가장 쉬운 리브리베로</b></h5>
+	    		리브리베로는 출판과정을 4단계로 나누어<br/>저자가 직접 출판하는 과정을 쉽게 만들었습니다.<br/>
+	    		간단한 출판방식으로 16,098종의 도서가 출판중인<br/>리브리베로의 가장 쉬운 출판서비스를 만나보세요!<br/><br/>
+	    		<span class="button">책만들기</span>
+	    	</div>
+	    </div>
 	    <div class="box" style="background-image: url(resources/images/common/index4.jpg);"></div>
 	</body>
 	<script type="text/javascript">

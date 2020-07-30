@@ -42,7 +42,7 @@
 						<div class="card border-light mb-3" style="margin-bottom: 20px">
 							<div class="card-body">
 								<div class="row">
-								
+									
 							  		<div class="col-lg-2">
 							  			<c:if test="${prod.prodThumbnail!=null}">
 							  				<img class="prodThumbnail" src="../resources/images/publish/fileUpload/${prod.prodThumbnail}">
@@ -82,15 +82,23 @@
 							  			<a href="javascript:popup(${prod.prodNo})" 
 							   				class="btn btn-default btn-block" role="button" 
 							   				aria-pressed="true" style="margin-bottom: 10px">판매 통계 조회</a>
-							   			<c:if test="${prod.blindCode=='o'}">
+							   			<c:if test="${prod.blindCode=='show'}">
 							  				<button class="btn btn-outline-default waves-effect btn-block">판매 중지</button>
 							  			</c:if>
-							  			<c:if test="${prod.blindCode=='x'}">
+							  			<c:if test="${prod.blindCode=='hide'}">
 							  				<button class="btn btn-default btn-block">판매 재개</button>
+							  			</c:if>
+							  			<c:if test="${prod.blindCode=='report'}">
+							  				<button class="btn btn-default btn-block">수정 요청</button>
 							  			</c:if>
 							  		</div>
 						  		</div>
 						  		<!-- row End -->
+						  		<div class="row col-lg-12">
+									<c:if test="${prod.blindCode=='report'}">
+										<p style="margin: 0">신고로 숨김 처리 당한 상품입니다.<br/>신고사유 : ${prod.reportType}</p>
+									</c:if>
+								</div>
 						  	</div>
 						  	<!-- Card Body End -->
 						</div>
