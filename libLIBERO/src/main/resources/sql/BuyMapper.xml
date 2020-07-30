@@ -59,8 +59,8 @@
 			   #{receiverPhone},
 			   #{deliveryRequest},
 			   CURRENT_TIMESTAMP,
-			   #{deliveryStatus},
-			   #{payStatus},
+			   1,
+			   paid,
 			   #{cancelReason}
 				)
 	</insert>
@@ -139,14 +139,15 @@
 	
 	<select id="getFactoryBuyList" parameterType="String" resultMap="paySelectMapper">
 	SELECT 
-			buy.pay_no ,
+			pay.pay_no ,
 			receiver_addr,
 			receiver_phone,
+			delivery_code,
 			pay_date,
 			pay.user_id
 			
 		FROM pay,buy
-		WHERE  buy.buy_code= 1
+		WHERE  buy.buy_code= 'paid'
 		 AND pay.pay_no = buy.pay_no
 		 AND buy.prod_type ='paper'
 		 GROUP BY pay.pay_no
@@ -155,15 +156,15 @@
 	<select id="getFactoryBuy" parameterType="String" resultMap="buySelectMapper">
 		SELECT 
 		DISTINCT
-		buy.prod_no,
+		buy.prod_no, 
 		buy.pay_no
 		
 		FROM pay  , buy
 		WHERE pay.pay_no=#{payNo}
 		AND pay.pay_no = buy.pay_no
 		AND buy.user_id = pay.user_id
-		AND buy.buy_code=1
-		AND buy.prod_type="paper"
+		AND buy.buy_code='paid'
+		AND buy.prod_type="paper" 
 			 
 	</select>
 	 
