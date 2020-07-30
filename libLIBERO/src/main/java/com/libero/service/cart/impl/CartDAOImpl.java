@@ -23,9 +23,11 @@ import com.libero.service.domain.Product;
 		
 		@Override
 		public void addCart(HashMap<String, Object> hashMap){
+			System.out.println("1");
 			if(hashMap.get("from").equals("cart")) {
-				
+			System.out.println("2");
 				int updatedAmount = (int) hashMap.get("buyAmount");
+				System.out.println("3");
 				hashMap.put("updatedAmount", updatedAmount);
 				sqlSession.update("ProductMapper.updateAmount", hashMap);
 			}else {

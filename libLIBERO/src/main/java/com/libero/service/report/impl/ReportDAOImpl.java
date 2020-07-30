@@ -28,35 +28,39 @@ public class ReportDAOImpl implements ReportDAO {
 	}
 
 
-	
+	/*
 	public Report getReportByNo(int reportNo) throws Exception{
 		return sqlSession.selectOne("ReportMapper.getReport", reportNo);
 	}
 	
-	//public List<Report> getReportById(String userId) throws Exception{
-	//	return sqlSession.selectList("ReportMapper.getReportById", userId);
-	//}
-	
-	public List<Report> getReportList(Search search) throws Exception{
-		return sqlSession.selectList("ReportMapper.getReportList", search);
+	public List<Report> getReportById(String userId) throws Exception{
+		return sqlSession.selectList("ReportMapper.getReportById", userId);
 	}
 	
 	public void addProdReport(Product product) throws Exception{
 		sqlSession.insert("ReportMapper.addProdReport", product);
 	}
 	
-	public void addPostReport(Post post) throws Exception{
-		sqlSession.insert("ReportMapper.addPostReport", post);
+	public void updatePostReport(Report report) throws Exception{
+		sqlSession.update("ReportMapper.updatePostReport", report);
 	}
 	
-	public void updateReport(Report report) throws Exception{
-		sqlSession.update("ReportMapper.updateReport", report);
+	*/
+	public List<Report> getPostReportList(Search search) throws Exception{
+		return sqlSession.selectList("ReportMapper.getPostReportList", search);
 	}
+	
+	
+	public void addPostReport(Report report) throws Exception{
+		sqlSession.insert("ReportMapper.addPostReport", report);
+	}
+	
+	
 	
 	
 	// DAO에만 있음
-	public int getReportTotalCount(Search search) throws Exception{
-		return sqlSession.selectOne("ReportMapper.getReportTotalCount", search);
+	public int getPostReportTotalCount(Search search) throws Exception{
+		return sqlSession.selectOne("ReportMapper.getPostReportTotalCount", search);
 	}
 	
 	

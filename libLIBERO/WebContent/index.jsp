@@ -93,7 +93,9 @@
 	    		<h5><b>출판이 가장 쉬운 리브리베로</b></h5>
 	    		리브리베로는 출판과정을 4단계로 나누어<br/>저자가 직접 출판하는 과정을 쉽게 만들었습니다.<br/>
 	    		간단한 출판방식으로 16,098종의 도서가 출판중인<br/>리브리베로의 가장 쉬운 출판서비스를 만나보세요!<br/><br/>
-	    		<span class="button">책만들기</span>
+	    		<div class="container">
+	    			<button type="button" class="btn btn-outline-black waves-effect z-depth-0">책만들기</button>
+	    		</div>
 	    	</div>
 	    </div>
 	    <div class="box" style="background-image: url(resources/images/common/index4.jpg);"></div>
@@ -104,6 +106,7 @@
             $(elm).each(function (index) {
                 // 개별적으로 Wheel 이벤트 적용
                 $(this).on("mousewheel DOMMouseScroll", function (e) {
+                	$("nav").attr("class","mb-1 navbar navbar-expand-lg navbar-dark rgba-blue-grey-light fixed-top z-depth-1");
                     e.preventDefault();
                     var delta = 0;
                     if (!event) event = window.event;

@@ -1,5 +1,6 @@
 package com.libero.web.product;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -192,10 +193,24 @@ public class ProductController{
 						
 						//BusinessLogic
 						List<Product> cartList =cartService.getCartList(userId);
+						System.out.println(cartList);
+						System.out.println(cartList.size());
+						List<Integer> buyNoList = new ArrayList<Integer>();
+						System.out.println(buyNoList);
+						
+						
+						for(int i=0 ; i<cartList.size() ; i++) {
+							Product product = cartList.get(i);
+							int buyNo = product.getBuyNo();
+							buyNoList.add(buyNo);
+							System.out.println(buyNoList);	
+						}
+					
 							
 						ModelAndView modelAndView = new ModelAndView();
 						modelAndView.addObject("cartList", cartList);
 						modelAndView.addObject("userId", userId);
+						modelAndView.addObject("buyNoList", buyNoList);
 						
 						modelAndView.setViewName("forward:/view/product/getCartList.jsp");
 						
@@ -213,10 +228,17 @@ public class ProductController{
 				
 				//장바구니 리스트
 				@RequestMapping(value="cartTest", method = {RequestMethod.POST, RequestMethod.GET})
-				public void getCartTest(@RequestParam("actualPrice") int actualPrice) throws Exception {
+				public void getCartTest(@RequestParam("actualPrice") int actualPrice, @RequestParam("buyNoList") List buyNoList ) throws Exception {
 					
 						System.out.println("/product/getCartTest : POST");
 						System.out.println("실제가격 :" + actualPrice);
+						System.out.println("카트리스트 :" + buyNoList );
+						System.out.println("buyNo"+buyNoList.indexOf(1));
+						System.out.println("buyNo"+buyNoList.get(1));
+						
+						
+
+						
 				
 				}
 	

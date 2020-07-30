@@ -24,7 +24,11 @@
            <div class="tit_board">
                <h4>${post.postName}</h4> <h3>${post.user.nickname}</h3>
                <span> ${post.regDate}</span>
+               <button id="popOpenBtn" style="float:right;">신고</button> 
            </div>
+           
+
+			
            <div class="txt_board">
            	<%--<p><img src="../images/uploadFiles/${post.postImage}"></p>  --%>
               
@@ -38,10 +42,9 @@
 		</article>
 
 <div class="container">
-
 	<jsp:include page="comment.jsp"></jsp:include>
-	<div class="border-bottom mt-2 mb-4 py-4" id="hh"></div> 
-	 
+	<jsp:include page="addReport.jsp"></jsp:include>
+	<div class="border-bottom mt-2 mb-4 py-4" id="hh"></div>  
 </div>
 </body>
 <script type="text/javascript">
@@ -57,6 +60,7 @@
 			
 			$("button:contains('목록')").on("click", function(){
 				self.location = "/libero/community/getPostList"
+				<%-- self.location = "javascript:history.go(-1)"; --%>
 			})
 			
 		});

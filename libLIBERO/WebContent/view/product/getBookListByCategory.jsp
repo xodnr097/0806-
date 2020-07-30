@@ -14,25 +14,13 @@
 		<!-- ToolBar Start /////////////////////////////////////-->
 		<jsp:include page="../toolbar.jsp" />
 	   	<!-- ToolBar End /////////////////////////////////////-->
+<br/>
+<br/>
+<br/>
+<br/>
 
-<tbody>
-		  			
-		  <c:set var="i" value="0" />
-		  <c:forEach var="book" items="${book}">
-			<c:set var="i" value="${ i+1 }" />
-			<tr>
-				<td align="center">${ i }</td>
-				<td align="left"  title="Click : 주문정보 확인">
-				
-					${book.prodName}
-					${book.bookCategory}
-					${book.prodNo}
-				</td>
-          </c:forEach>
         
-        </tbody>
-        
-        
+     
         <tbody>
 		
 		  <c:set var="i" value="0" />
@@ -58,23 +46,6 @@
         </tbody>
         
         <h6>확인확인확인</h6>
-        <tbody>
-		  			
-		  <c:set var="i" value="0" />
-		  <c:forEach var="book" items="${book}">
-			<c:set var="i" value="${ i+1 }" />
-			<tr>
-				<td align="center">${ i }</td>
-				<td align="left"  title="Click : 주문정보 확인">
-				
-					${book.prodName}
-					${book.bookCategory}
-					${book.prodNo}
-				</td>
-          </c:forEach>
-        
-        </tbody>
-
-
+       
 </body>
 </html>

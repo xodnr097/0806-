@@ -7,6 +7,7 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -14,10 +15,14 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.libero.common.Page;
+import com.libero.common.Search;
 import com.libero.service.domain.Cash;
 import com.libero.service.domain.Publish;
+import com.libero.service.domain.Report;
 import com.libero.service.domain.User;
 import com.libero.service.publish.PublishService;
+import com.libero.service.report.ReportService;
 import com.libero.service.user.UserService;
 
 @Controller
@@ -30,10 +35,23 @@ public class UserController {
 	private UserService userService;
 	@Autowired
 	private PublishService publishService;
+	@Autowired
+	private ReportService reportService;
 
 	public UserController(){
 		System.out.println(this.getClass());
 	}
+	
+	@Value("#{commonProperties['path3']}")
+	String path;
+	
+	@Value("#{commonProperties['pageUnit']}")
+	//@Value("#{commonProperties['pageUnit'] ?: 3}")
+	int pageUnit;
+	
+	@Value("#{commonProperties['pageSize']}")
+	//@Value("#{commonProperties['pageSize'] ?: 2}")
+	int pageSize;
 	
 	@RequestMapping( value="login", method=RequestMethod.POST )
 	public ModelAndView login(User user , HttpSession session ) throws Exception{
@@ -120,6 +138,39 @@ public class UserController {
 		return modelAndView;
 	}
 	
+	@RequestMapping(value = "getAdminReportList", method = RequestMethod.GET)
+	public ModelAndView getAdminReportList(HttpSession session, String role, Report report, Search search) throws Exception{
+		System.out.println("/user/getAdminReportList : GET");
+		
+		if(search.getCurrentPage() == 0) {
+			search.setCurrentPage(1);
+		}
+		search.setPageSize(pageSize);
+		ModelAndView modelAndView = new ModelAndView();
+		role = ((User)session.getAttribute("user")).getRole();
+		
+		
+		
+		if (role.contentEquals("a")) {
+			Map<String,Object> map = reportService.getPostReportList(search);
+			Page resultPage = new Page(search.getCurrentPage(),
+					((Integer)map.get("totalCount")).intValue(), pageUnit, pageSize);
+
+			System.out.println(resultPage);
+			
+			modelAndView.addObject("list", map.get("list"));
+			modelAndView.addObject("resultPage", resultPage);
+			modelAndView.addObject("search", search);
+			modelAndView.addObject("totalCount", map.get("totalCount"));
+					
+			modelAndView.setViewName("forward:/view/user/getAdminReportList.jsp");
+		}else {
+			modelAndView.setViewName("forward:/view/user/getUserReportList.jsp");
+		}
+		
+		return modelAndView;
+	}
+	
 	@RequestMapping(value = "getTempPublishList", method = RequestMethod.GET)
 	public ModelAndView getStatistics(HttpSession session, Publish publish) throws Exception {
 		
@@ -137,6 +188,8 @@ public class UserController {
 		
 		return modelAndView;
 	}
+	
+
 	
 	@RequestMapping(value = "removeTempPublish", method = RequestMethod.GET)
 	public ModelAndView removeTempPublish(@RequestParam("prodNo")int prodNo, Publish publish) throws Exception {
@@ -186,4 +239,6 @@ public class UserController {
 		
 		return modelAndView;
 	}
+	
+
 }

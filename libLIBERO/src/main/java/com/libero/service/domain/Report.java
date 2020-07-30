@@ -9,7 +9,7 @@ import lombok.Data;
 public class Report implements Serializable{
 	/// Field
 	private int reportNo;
-	private String reportType;
+	private int reportType;
 	private Timestamp  regDate; 
 	
 	private User user;

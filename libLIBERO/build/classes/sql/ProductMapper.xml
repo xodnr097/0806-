@@ -13,27 +13,26 @@
 		<result property="prodName"		column="prod_name" 			jdbcType="VARCHAR" />
 		<result property="prodDetail" 	column="prod_detail" 		jdbcType="LONGVARCHAR" />
 		<result property="retailPrice" 	column="retail_price" 		jdbcType="INTEGER" />
-		<result property="blindCode" 	column="blind_code" 		jdbcType="CHAR" />
+		<result property="blindCode" 	column="blind_code" 		jdbcType="VARCHAR" />
 		<result property="prodThumbnail" column="prod_thumbnail" 	jdbcType="VARCHAR" />
 		<result property="coverFile" 	column="cover_file" 		jdbcType="VARCHAR" />
-		<result property="purposeCode" 	column="purpose_Code" 		jdbcType="CHAR" />
-		<result property="manuFile"		column="manu_File"			jdbcType="CHAR" />
-		<result property="regDate"		column="reg_Date"			jdbcType="TIMESTAMP" />
-		<result property="discountCode"	 column="discount_code"		jdbcType="CHAR" />
-		<result property="bookPage"			column="manu_File"		jdbcType="CHAR" />
+		<result property="purposeCode" 	column="purpose_code" 		jdbcType="VARCHAR" />
+		<result property="manuFile"		column="manu_file"			jdbcType="VARCHAR" />
+		<result property="regDate"		column="reg_date"			jdbcType="TIMESTAMP" />
+		<result property="discountCode"	 column="discount_code"		jdbcType="VARCHAR" />
+		<result property="bookPage"		 column="book_page"			jdbcType="INTEGER" />
 		<result property="printPrice"	 column="print_price"		jdbcType="INTEGER" />
 		<result property="creator"		 column="creator"			jdbcType="VARCHAR" />
-		<result property="purposeCode"	 column="purpose_code"		jdbcType="CHAR" />
-		<result property="colorType"	 column="color_type"		jdbcType="CHAR" />
-		<result property="sizeType"		 column="size_type"			jdbcType="CHAR" />
-		<result property="coverType"	 column="cover_type"		jdbcType="CHAR" />
-		<result property="innerType"	 column="inner_type"		jdbcType="CHAR" />
-		<result property="tempCode"		 column="temp_code"			jdbcType="SMALLINT" />
+		<result property="colorType"	 column="color_type"		jdbcType="VARCHAR" />
+		<result property="sizeType"		 column="size_type"			jdbcType="VARCHAR" />
+		<result property="coverType"	 column="cover_type"		jdbcType="VARCHAR" />
+		<result property="innerType"	 column="inner_type"		jdbcType="VARCHAR" />
 		<result property="bookCategory"	 column="book_category"		jdbcType="VARCHAR" />
 		<result property="likeCount"	 column="like_count"		jdbcType="INTEGER" />
 		<result property="wishNo"		 column="wish_no"			jdbcType="INTEGER" />
 		<result property="cartNo"		 column="cart_no"			jdbcType="INTEGER" />
 		<result property="buyAmount"	 column="buy_amount"		jdbcType="INTEGER" />
+		<result property="buyNo" 	 	 column="buy_no" 			jdbcType="INTEGER" />
 			
 	</resultMap>
 	
@@ -118,28 +117,28 @@
 	
 					INSERT
 					INTO
-					buy(prod_no, user_id, buy_amount)
-					VALUES (#{prodNo}, #{userId}, #{buyCount})
+					buy(prod_no, user_id, buy_amount, prod_type)
+					VALUES (#{prodNo}, #{userId}, #{buyAmount}, #{prodType})
 	</insert>
 	
 	<select id="checkCart"	parameterType="hashMap"	resultMap="productSelectMap">
 					SELECT buy_amount
 					FROM buy
-					WHERE prod_no = #{prodNo} AND user_id = #{userId}
+					WHERE prod_no = #{prodNo} AND user_id = #{userId} AND buy_code = 'ready'
 	
 	</select>
 	
 	<update id="updateAmount" parameterType="hashMap">
 					UPDATE buy
 					SET buy_amount = #{updatedAmount}			
-					WHERE prod_no = #{prodNo} AND user_id = #{userId}
+					WHERE prod_no = #{prodNo} AND user_id = #{userId} AND buy_code = 'ready'
 	</update>
 	
 	<select id="getCartList"  parameterType="string" resultMap="productSelectMap">
 					SELECT *
 					FROM buy, product
 					WHERE buy.user_id = #{value}
-					AND buy.buy_code = 0
+					AND buy.buy_code = 'ready'
 					AND buy.prod_no = product.prod_no
 	
 	</select>
@@ -148,7 +147,7 @@
 	
 					DELETE
 					FROM buy
-					WHERE prod_no = #{prodNo} AND user_id = #{userId} AND buy_code = 0
+					WHERE prod_no = #{prodNo} AND user_id = #{userId} AND buy_code = 'ready'
 	
 	
 	
