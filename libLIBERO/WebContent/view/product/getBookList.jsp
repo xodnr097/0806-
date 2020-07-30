@@ -17,7 +17,7 @@
   color: #0d47a1 !important;
 }
 
-    div.row{
+    #getBook{
       width: 150px;
       height: 150px;
       margin: 50px;
@@ -29,7 +29,7 @@
       display: inline-block;
     }
 
-    div.row{
+    #getBook{
 
       /* 일렬로 나열 */
       white-space: nowrap;
@@ -79,7 +79,7 @@
 				<td align="center">${ i }</td>
 				
 				 <!--Grid row-->
-      <div class="row">
+      <div class="row" id="getBook">
 
         <!--Grid column-->
         <div class="col-lg-4 col-md-8 mb-4">
@@ -121,12 +121,12 @@
 				      <p class="card-text collapse" id="collapseContent">
 									<h6 class="card-title font-weight-bold mb-2"><a href="/libero/product/getProduct/${book.prodNo}">상품명:${book.prodName}</h6></a>
 									<h6 class="card-title font-weight-bold mb-2">상품종류:${book.prodType}</h6>
-									<h6 class="card-title font-weight-bold mb-2">작가:${book.creator}</h6>
+									<h6 class="card-title font-weight-bold mb-2">작가:${book.author}</h6>
 				      </p>
 				      <!-- Button -->
 				      <a class="btn btn-flat red-text p-1 my-1 mr-0 mml-1 collapsed" data-toggle="collapse" href="#collapseContent" aria-expanded="false" aria-controls="collapseContent"></a>
-				      <i class="fas fa-share-alt text-muted float-right p-1 my-1" data-toggle="tooltip" data-placement="top" title="Share this post"></i>
-				      <i class="fas fa-heart text-muted float-right p-1 my-1 mr-3" data-toggle="tooltip" data-placement="top" title="I like it"></i>
+				      <i class="fas fa-share-alt text-muted float-right p-1 my-1" 	 data-toggle="tooltip" data-placement="top" title="Share this post"></i>
+				      <i class="fas fa-heart text-muted float-right p-1 my-1 mr-3" 	 data-toggle="tooltip" data-placement="top" title="I like it"></i>
 				
 				    </div>
 				

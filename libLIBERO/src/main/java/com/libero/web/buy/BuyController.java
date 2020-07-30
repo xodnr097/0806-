@@ -78,7 +78,7 @@ public class BuyController {
 		return "forward:/view/buy/getUserBuy.jsp";
 	}
 	
-	
+	//getCartList 로 대신 할  거.
 	@RequestMapping(value="beforePay",method=RequestMethod.GET)
 	public String beforePay() throws Exception{
 		System.out.println(" ---------------------------------------");
@@ -98,6 +98,8 @@ public class BuyController {
 		System.out.println(" ---------------------------------------");		
 
 		System.out.println("[[][]"+pay);
+		
+		
 		model.addAttribute("addBuy", pay);
 		
 		return "redirect:/view/buy/addPay.jsp";//
@@ -132,15 +134,14 @@ public class BuyController {
 	}
 	//인쇄소 메인
 	@RequestMapping(value="getFactoryBuyList",method=RequestMethod.GET)
-	public String getFactoryBuyList(@Param("factoryId") String factoryId, 
-									@Param("payNo") String payNo,
+	public String getFactoryBuyList(
 									Model model) throws Exception{
 		//factoryId session 으로 받아오기
 		System.out.println(" ---------------------------------------");
 		System.out.println("/buy/getFactoryBuyList : GET");
 		System.out.println(" ---------------------------------------");	
 		
-		Map<String,Object> map = buyService.getFactoryBuyList(payNo);
+		Map<String,Object> map = buyService.getFactoryBuyList();
 		
 		model.addAttribute("factorylist",map.get("factorylist"));
 		

@@ -5,20 +5,18 @@
 <html>
 <head>
 <meta charset="EUC-KR">
-
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css">
-
+	
+	
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	<jsp:include page="/common/cdn.jsp"></jsp:include>
 	
 	
 	
 	
 	
 	
-	
-<title>Insert title here</title>
-		<jsp:include page="/common/cdn.jsp"></jsp:include>
+<title>도서  상세</title>
+		
 </head>
 
 
@@ -55,6 +53,56 @@
 				장바구니
 			</button>
 		</div>
+		
+		
+		<!-- Classic tabs -->
+		<div class="classic-tabs">
+		
+		  <ul class="nav tabs-cyan" id="myClassicTab" role="tablist">
+		    <li class="nav-item">
+		      <a class="nav-link  waves-light active show" id="profile-tab-classic" data-toggle="tab" href="#profile-classic"
+		        role="tab" aria-controls="profile-classic" aria-selected="true">Profile</a>
+		    </li>
+		    <li class="nav-item">
+		      <a class="nav-link waves-light" id="follow-tab-classic" data-toggle="tab" href="#follow-classic" role="tab"
+		        aria-controls="follow-classic" aria-selected="false">Follow</a>
+		    </li>
+		    <li class="nav-item">
+		      <a class="nav-link waves-light" id="contact-tab-classic" data-toggle="tab" href="#contact-classic" role="tab"
+		        aria-controls="contact-classic" aria-selected="false">Contact</a>
+		    </li>
+		    <li class="nav-item">
+		      <a class="nav-link waves-light" id="awesome-tab-classic" data-toggle="tab" href="#awesome-classic" role="tab"
+		        aria-controls="awesome-classic" aria-selected="false">Be awesome</a>
+		    </li>
+		  </ul>
+		  <div class="tab-content border-right border-bottom border-left rounded-bottom" id="myClassicTabContent">
+		    <div class="tab-pane fade active show" id="profile-classic" role="tabpanel" aria-labelledby="profile-tab-classic">
+		      
+		    </div>
+		    <div class="tab-pane fade" id="follow-classic" role="tabpanel" aria-labelledby="follow-tab-classic">
+
+					
+		    </div>
+		    <div class="tab-pane fade" id="contact-classic" role="tabpanel" aria-labelledby="contact-tab-classic">
+		      <p>At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum
+		        deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non
+		        provident, similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga.
+		        Et harum quidem rerum facilis est et expedita distinctio. Nam libero tempore, cum soluta nobis est
+		        eligendi optio cumque nihil impedit quo minus id quod maxime placeat facere possimus, omnis voluptas
+		        assumenda est, omnis dolor repellendus. </p>
+		    </div>
+		    <div class="tab-pane fade" id="awesome-classic" role="tabpanel" aria-labelledby="awesome-tab-classic">
+		      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
+		        dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
+		        ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore
+		        eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia
+		        deserunt mollit anim id est laborum.</p>
+		    </div>
+		  </div>
+		
+		</div>
+		<!-- Classic tabs -->
 		
 		 	
 
@@ -123,7 +171,7 @@
 					"Accept" : "application/json",
 					"Content-Type" : "application/json"
 			},
-			data: {"prodNo": ${product.prodNo}, "userId": "${sessionScope.user.userId}", "buyAmount": buyAmount, "from": "product"},
+			data: {"prodNo": ${product.prodNo}, "prodType": "${product.prodType}", "userId": "${sessionScope.user.userId}", "buyAmount": buyAmount, "from": "product"},
 			success : function(data){
 						var message = data.result
 						alert(message);

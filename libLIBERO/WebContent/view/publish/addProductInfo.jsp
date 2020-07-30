@@ -387,6 +387,8 @@
 				$("div .imgSelect").hide();
 				$("#fileUpload").show();
 				$("div .imgPreview").show();
+				$("#titlePreview").hide();
+				$("#authorPreview").hide();
 			}
 		}
 		

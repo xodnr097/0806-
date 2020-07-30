@@ -81,22 +81,22 @@ public class ProductRestController {
 			
 			//장바구니 등록
 			@RequestMapping(value="json/addCart", method = RequestMethod.POST)
-			public String addCart(int prodNo, String userId, int buyAmount, String from) throws Exception {
+			public String addCart(int prodNo, String userId, int buyAmount, String from, String prodType) throws Exception {
 				
 					System.out.println("/product/addWish : POST");
 					System.out.println("전달된 prodNo : "+prodNo);
 					System.out.println("전달된 아이디 : "+userId );
 					System.out.println("전달된 구매수량"+buyAmount);
-					System.out.println("어디서 왔는가"+from);
+					System.out.println("어디서 왔는가"+from); //장바구니 페이지에서 온 경우 수량을 업데이트함
 					JSONObject obj = new JSONObject();
 					//BusinessLogic
-					
-					
 					
 					HashMap <String, Object> hashMap = new HashMap<String, Object>();
 					hashMap.put("prodNo", prodNo);
 					hashMap.put("userId", userId);
 					hashMap.put("buyAmount", buyAmount);
+					hashMap.put("from", from);
+					hashMap.put("prodType", prodType);
 					
 					if(from.equals("cart")) {
 						hashMap.put("from", from);
