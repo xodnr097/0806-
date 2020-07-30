@@ -3,10 +3,11 @@
 <!DOCTYPE html>
 <html>
 <head>
+	
 <meta charset="UTF-8">
 <title>회원가입</title>
-
-	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<jsp:include page="/common/cdn.jsp"></jsp:include>
+	
 	
 	<!--  ///////////////////////// Bootstrap, jQuery CDN ////////////////////////// -->
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" >
@@ -15,7 +16,7 @@
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" ></script>
 <script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-	
+
 	<!--  ///////////////////////// CSS ////////////////////////// -->
 	<style>
        body > div.container{
@@ -23,9 +24,8 @@
             margin-top: 10px;
         }
     </style>
-    
+   
 <script type="text/javascript">
-
 //카카오 주소 API 사용
     function daumjuso() {
         new daum.Postcode({
@@ -75,43 +75,33 @@
         }).open();
     }
 
-
-//////// 아이디 중복 체크 //////////////////////////////////////////////   
-//     $(function(){
-// 		$("input[name=userId]").on("keyup", function(){
-// 			var userId = $("input[name=userId]").val();
-// 			if(userId == ""){
-// 				$("img[name=CheckDuplicationImg]").attr("src", "");
-// 				$("input[name=CheckDuplication]").val("false");
-// 			}else{
-// 				$.ajax(
-// 						{
-// 							url : "/user/json/duplicationUser/"+userId,
-// 							method : "GET",
-// 							dataType : "json",
-// 							headers : {
-// 								"Accept" : "application/json",
-// 								"Content-Type" : "application/json"
-// 							},
-// 						success : function(JSONData , status){
-// 							var check = JSONData;
-							
-// 							if(check){
-// 								$("img[name=CheckDuplicationImg]").attr("src", "/images/uploadFiles/duplication_o.png");
-// 								$("input[name=CheckDuplication]").val("true");
-// 							}else{
-// 								$("img[name=CheckDuplicationImg]").attr("src", "/images/uploadFiles/duplication_x.png");
-// 								$("input[name=CheckDuplication]").val("false");
-// 							}
-// 						}
-// 					});
-// 			}
-// 		});
-// 	});
-	//예비 코드
-	
-	
 	$(function (){
+		$("#userId").focus();
+		$("input[name=userId]").on("keyup", function(){
+			var userId = $("input[name=userId]").val();
+			alert(userId);
+			
+			
+				$.ajax({	url :'/libero/user/json/duplicationCheck?userId='+userId,
+							method : 'GET',
+							dataType : 'text',
+							headers : {
+								"Accept" : "application/json",
+								"Content-Type" : "application/json"
+									  },
+						    success : function(result , status){
+							console.log(result);
+							var check = result;
+							alert(check);
+							if(check){
+								$("#userId").attr("class","form-control-invalid")
+							}else{
+								$("#userId").attr("class","form-control-valid")
+							}
+						}
+					});
+		});
+		
 		$("#emailcheck").on("click",function(){
 			$.ajax(
 					{	url : "/libero/user/json/emailSend?userId="+$("#userId").val(),
@@ -130,49 +120,28 @@
 						swal("메일이 발송 되었습니다!", "작성하신 이메일을 확인해 주세요", "success");
 						//Debug...
 						}
-					})//$.ajax 끝
+					});//$.ajax 끝
 					
-					})//$("#emailcheck").on끝
 					
-		})//$(function)끝
+					
+					
+					});//$("#emailcheck").on끝
+					
+		});
+		//$(function)끝
 	//////////////////////////////////인증 번호 확인
-	$(function(){
-		$("#verifBtn").on("click",function(){
-			alert( $("inputVerification").val())
-			alert($("#verification").val())
-			if( $("#inputVerification").val() != $("#verification").val()){
-				swal("인증번호가 다릅니다 다시 확인해 주세요!","헤헤 바보 :p","error")
-			}else{
-				swal("인증 되었습니다!","\\YAY/","success")
-			}
-		})
-	})	
-		
-	 //////////////////////////////////가입 버튼
-	 $(function() {
-			//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
-			
-			$("#addUserbtn").on("click" , function() {	
-				
-				if( $("#password").val() != $("#password2").val() ){
-						swal("비밀번호가 다릅니다.","error");
-						$("#password").val('')
-						$("#password2").val('')
-						//return;
+			$("#verifBtn").on("click",function(){
+				alert( $("inputVerification").val())
+				alert($("#verification").val())
+				if( $("#inputVerification").val() != $("#verification").val()){
+					swal("인증번호가 다릅니다 다시 확인해 주세요!","헤헤 바보 :p","error")
+				}else{
+					swal("인증 되었습니다!","\\YAY/","success")
 				}
-				
-			
-			$("form").attr("method" , "POST").attr("action" , "/libero/user/addUser").submit();
-		
-	})		
-				
-				
-				//
-			
-		});	
+			})
+	 //////////////////////////////////가입 버튼
+	</script>
 
-
-    </script>
     
 </head>
 <body>
@@ -184,25 +153,43 @@
    	<!-- ToolBar End /////////////////////////////////////-->
 
 	<!--  화면구성 div Start /////////////////////////////////////-->
+	<form class="form-horizontal" enctype="multifile">
 	<div class="container">
 	
 		<h1 class="bg-primary text-center">회 원 가 입</h1>
 		
 		<!-- form Start /////////////////////////////////////-->
-		<form class="form-horizontal" enctype="multifile">
+		
 		
 		<input 	type="hidden" name="type" >
 		
-		  <div class="form-group">
-		    <label for="userId" class="col-sm-offset-1 col-sm-3 control-label">*아 이 디</label>
-		    <div class="col-sm-4">
-		      	<input type="text" class="form-control" 
-		      		id="userId" name="userId" placeholder="아이디(이메일)" required="required">
-		    </div>
-		    <div class="col-sm-3" style="padding-top:5px;">
-				<input type="button" id="emailcheck"  class="col" value="이메일 확인">
-		    </div>
-		  </div>
+		
+<!-- 		    <label for="userId" class="col-sm-offset-1 col-sm-3 control-label">*아 이 디</label> -->
+<!-- 		    <div class="col-sm-4"> -->
+<!-- 		      	<input type="text" class="form-control"  -->
+<!-- 		      		id="userId" name="userId" placeholder="아이디(이메일)" required="required"><span></span> -->
+<!-- 		    </div> -->
+<!-- 		    <div class="col-sm-3" style="padding-top:5px;"> -->
+<!-- 				<input type="button" id="emailcheck"  class="col" value="이메일 확인"> -->
+<!-- 		    </div> -->
+	<div class="col-md-4 mb-3">
+      <label for="validationServerUsername33">Username</label>
+      <div class="input-group">
+        <div class="input-group-prepend">
+        </div>
+        <input type="text" class="form-control" id="userId" name="userId" placeholder="이메일(아이디)" aria-describedby="inputGroupPrepend33">
+      		<button id="emailcheck"  class="btn btn-primary btn-sm btn-rounded" type="submit" >이메일 확인</button>
+      </div>
+    </div>
+  
+  
+<!-- <i class="far fa-thumbs-up"></i> -->
+<!-- <i class="far fa-times-circle"></i> -->
+<!-- <i class="far fa-check-circle"></i> -->
+		
+		  
+		  
+		  
 		  <input type="text" id="inputVerification" name ="inputVerification" hidden>
 		  <div class="form-group" hidden id="verifDiv">
 		  
@@ -306,10 +293,11 @@
 			  <a class="btn btn-primary btn" href="#" role="button">취&nbsp;소</a>
 		    </div>
 		  </div>
+		 </div>
 		</form>
 		<!-- form Start /////////////////////////////////////-->
 		
- 	</div>
+ 	
 	<!--  화면구성 div end /////////////////////////////////////-->
 	
 

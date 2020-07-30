@@ -81,7 +81,7 @@
 	 
 	 </insert>
 	 
-	 <select id="getUserCash" parameterType="String"	resultMap="cashSelectMap">
+	 <select id="getUserCash" parameterType="string"	resultMap="cashSelectMap">
 	 	SELECT 
 			SUM(cash_amount) current_cash, 
 			SUM(if(cash_amount&gt;0,cash_amount,0)) total_cash, 
@@ -95,4 +95,11 @@
 	 	*
 	 	FROM user
 	 </select>
+	 
+	 <select id="duplicationCheck" parameterType="string" resultType="string">
+	 	SELECT user_id
+	 	FROM user
+	 	WHERE user_id = #{value}
+	 </select>
+	 
 </mapper>

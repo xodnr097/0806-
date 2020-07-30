@@ -13,4 +13,5 @@ public interface UserDAO {
 	
 	public List<User> getAdminCashList() throws Exception;
 
+	public boolean duplicationCheck(String userId) throws Exception;
 }

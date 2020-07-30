@@ -50,4 +50,12 @@ public class UserServiceImpl implements UserService{
 		return userDAO.getAdminCashList();
 	}
 
+	@Override
+	public boolean duplicationCheck(String userId) throws Exception {
+		// TODO Auto-generated method stub
+		
+		
+		return userDAO.duplicationCheck(userId);
+	}
+
 }
