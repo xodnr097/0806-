@@ -43,7 +43,7 @@ public class CommunityController {
 		System.out.println(this.getClass());
 	}
 	
-	@Value("#{commonProperties['path3']}")
+	@Value("#{commonProperties['path']}")
 	String path;
 	
 	@Value("#{commonProperties['pageUnit']}")

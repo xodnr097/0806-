@@ -142,7 +142,7 @@
 		$(function() {
 			var path = window.location.pathname;
 			
-			if (path=="/libero/index.jsp") {
+			if (path=="/libero/index.jsp" ||path=="/libero/") {
 				$("nav").attr("class","mb-1 navbar navbar-expand-lg navbar-dark link-color fixed-top z-depth-0");
 				$("#logoImg").attr("src","http://192.168.0.64:8080/libero/resources/images/common/logo_white.png");
 			}
