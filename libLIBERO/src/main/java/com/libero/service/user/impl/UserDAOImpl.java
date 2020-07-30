@@ -41,6 +41,21 @@ public class UserDAOImpl implements UserDAO {
 		// TODO Auto-generated method stub
 		return sqlSession.selectList("UserMapper.getAdminCashList");
 	}
+
+	@Override
+	public boolean duplicationCheck(String userId)  throws Exception{
+		
+		String result = sqlSession.selectOne("UserMapper.duplicationCheck", userId);
+		System.out.println("서연희____result = " + result);
+		if(result!=null) {
+			System.out.println("dksdls vws");
+			return false;
+		}else {
+			System.out.println("널입니다...\n\n\n\n\n");
+			return true;
+		}
+			
+	}
 	
 	
 	

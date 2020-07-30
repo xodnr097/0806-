@@ -18,6 +18,7 @@ import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -65,7 +66,7 @@ public class UserRestController {
 		System.out.println(" ---------------------------------------");
 		
 		////email보내는 함수 작성
-		System.out.println("\n\n"+userId+"\n\n"); 
+		
 		String verCode = mailSender(userId);
 		
 		System.out.println("\n\n[ "+verCode+" ]\n\n");
@@ -121,6 +122,19 @@ public class UserRestController {
 	}
 	
 	
+	@RequestMapping(value="json/duplicationCheck",method=RequestMethod.GET)
+	public boolean duplicationCheck(@Param("userId") String userId) throws Exception{
+		System.out.println(" ---------------------------------------");
+		System.out.println("[ /user/json/duplicationCheck/"+userId+" : GET]");
+		System.out.println(" ---------------------------------------");
+		
+		if(userId == "#") {
+			System.out.println("\n\n\n\n잡았다 요녀석\n\n\n\n");
+		}
+		boolean	result = userService.duplicationCheck(userId);
+	System.out.println("\n\n\n\n"+result+"\n\n\n");
+		return result;
+	}
 ///////////////////////////////////////////랜덤 코드 생성기
 	static String getAlphaNumericString() { 
 		
