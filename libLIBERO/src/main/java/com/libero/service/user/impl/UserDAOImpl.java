@@ -1,5 +1,7 @@
 package com.libero.service.user.impl;
 
+import java.util.List;
+
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -33,6 +35,13 @@ public class UserDAOImpl implements UserDAO {
 		sqlSession.insert("UserMapper.addNewUser",user);
 		
 	}
+
+	@Override
+	public List<User> getAdminCashList() throws Exception {
+		// TODO Auto-generated method stub
+		return sqlSession.selectList("UserMapper.getAdminCashList");
+	}
+	
 	
 	
 	
