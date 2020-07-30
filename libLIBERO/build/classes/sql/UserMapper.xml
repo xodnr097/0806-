@@ -89,4 +89,10 @@
 		FROM cash
 		WHERE user_id IN(#{value})
 	 </select>
+	 
+	 <select id="getAdminCashList" resultMap="userSelectMap">
+	 	SELECT 
+	 	*
+	 	FROM user
+	 </select>
 </mapper>

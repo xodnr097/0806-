@@ -90,7 +90,6 @@ public class PublishDAOImpl implements PublishDAO {
 	
 	public void removeTempPublish(Publish publish) throws Exception {
 		if (publish.getHashtagName()!=null || !publish.getHashtagName().contentEquals("")) {
-			System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
 			sqlSession.delete("PublishMapper.removeHashtag", publish);
 		}
 		sqlSession.delete("PublishMapper.removeTempPublish", publish);

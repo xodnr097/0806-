@@ -29,7 +29,6 @@ public class Publish implements Serializable {
 	private String sizeType;
 	private String coverType;
 	private String innerType;
-	private short tempCode;
 	private String factoryId;
 	private Date regDate;
 	
@@ -38,6 +37,8 @@ public class Publish implements Serializable {
 	private String imgSelect;
 	
 	private int salesCount;
+	
+	private short reportType;
 	
 	public Publish() {
 		

@@ -27,7 +27,7 @@ public interface BuyService {
 	
 	public Map<String,Object> getFactoryBuy(String payNo);
 	
-	public Map<String,Object> getFactoryBuyList(String payNo);
+	public Map<String,Object> getFactoryBuyList();
 	
 	
 	

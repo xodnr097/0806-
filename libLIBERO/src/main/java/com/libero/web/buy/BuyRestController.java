@@ -61,9 +61,8 @@ public class BuyRestController {
 			result = buyService.updateDeliveryStatus(payNo, 4);
 		}else if(deliveryStatus ==4) {
 			result = buyService.updateDeliveryStatus(payNo, 5);
-		}else if(deliveryStatus==5) {
-			result = buyService.updateDeliveryStatus(payNo, 6);
 		}
+		
 		Map map = new HashMap();
 		map.put("result", result);
 		return map;

@@ -152,7 +152,7 @@ public class BuyServiceImpl implements BuyService{
 	}
 
 	@Override
-	public Map<String, Object> getFactoryBuyList(String payNo) {
+	public Map<String, Object> getFactoryBuyList() {
 		// TODO Auto-generated method stub
 		Map map = new HashMap();
 
