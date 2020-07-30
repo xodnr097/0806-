@@ -11,7 +11,6 @@ public class Comment implements Serializable{
 	
 	private int commentNo;
 	private String commentContent;
-	private String commentImage;
 	private Timestamp regDate;
 	private Integer parentCommentNo;
 	

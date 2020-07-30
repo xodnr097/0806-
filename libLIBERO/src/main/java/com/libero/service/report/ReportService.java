@@ -11,17 +11,17 @@ import com.libero.service.domain.Comment;
 
 public interface ReportService {
 	
-	public Report getReportByNo(int reportNo) throws Exception;
+	//public Report getReportByNo(int reportNo) throws Exception;
 	
 	//public List<Report> getReportById(String userId) throws Exception;
 	
-	public Map<String, Object> getReportList(Search search) throws Exception;
+	public Map<String, Object> getPostReportList(Search search) throws Exception;
 	
-	public void addProdReport(Product product) throws Exception;
+	//public void addProdReport(Product product) throws Exception;
 	
-	public void addPostReport(Post post) throws Exception;
+	public void addPostReport(Report report) throws Exception;
 	
-	public void updateReport(Report report) throws Exception;
+	//public void updatePostReport(Report report) throws Exception;
 	
 
 	}

@@ -54,7 +54,7 @@
 	
 		<result property="commentNo"		column="comment_no"			jdbcType="INTEGER"/>
 		<result property="commentContent"	column="comment_content"	jdbcType="VARCHAR"	/>
-		<result property="regDate"			column="regDate"			jdbcType="TIMESTAMP"		/>	
+		<result property="regDate"			column="reg_date"			jdbcType="TIMESTAMP"		/>	
 		<result property="parentCommentNo"	column="parent_comment_no"	jdbcType="INTEGER"/>
 		<result property="postNo"			column="post_no"			jdbcType="INTEGER"/>
 	
@@ -184,10 +184,9 @@
 							
 	<update id="updatePost" parameterType="post" >
 		UPDATE post
-		<set>
+		SET
 			post_name=#{postName},
 			post_content=#{postContent}
-		</set> 
 		WHERE post_no = #{postNo}
 	</update>
 	

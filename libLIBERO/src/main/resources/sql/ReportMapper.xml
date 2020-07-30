@@ -85,9 +85,8 @@
 		
 	<insert id="addPostReport" parameterType="report">	
  		INSERT
- 		INTO report(
- 			report_type, post_no, user_id)
- 		VALUES(#{reportType:SMALLINT}, #{post_no:INTEGER}, #{user_id:VARCHAR})
+ 		INTO report(report_type, post_no, reporter_id)
+ 		VALUES(#{reportType:SMALLINT}, #{post.postNo:INTEGER}, #{user.userId:VARCHAR})
  	</insert>
 
 

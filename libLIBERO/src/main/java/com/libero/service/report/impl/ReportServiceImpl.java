@@ -34,34 +34,41 @@ public class ReportServiceImpl implements ReportService{
 	public ReportServiceImpl() {
 		System.out.println(this.getClass());
 	}
-	
+	/*
 	public Report getReportByNo(int reportNo) throws Exception{
 		return reportDAO.getReportByNo(reportNo);
 	}
 	
-	//public List<Report> getReportById(String userId) throws Exception {
-	//	return reportDAO.getReportById(userId);
-	//}
-
+	public List<Report> getReportById(String userId) throws Exception {
+		return reportDAO.getReportById(userId);
+	}
+	
 	public void addProdReport(Product product) throws Exception {
 		reportDAO.addProdReport(product);
-	}
+	} 
+	  
+	public void updatePostReport(Report report) throws Exception {
+		reportDAO.updateReport(report);
+	}  
+	*/
 	
-	public void addPostReport(Post post) throws Exception {
-		reportDAO.addPostReport(post);
+	
+	public void addPostReport(Report report) throws Exception {
+		reportDAO.addPostReport(report);
 	}
 
-	public void updateReport(Report report) throws Exception {
-		reportDAO.updateReport(report);
-	}
 	
-	public Map<String, Object> getReportList(Search search) throws Exception {
-		List<Report> list = reportDAO.getReportList(search);
-		int totalCount = reportDAO.getReportTotalCount(search);
+	
+	public Map<String, Object> getPostReportList(Search search) throws Exception {
+		List<Report> list = reportDAO.getPostReportList(search);
+		int totalCount = reportDAO.getPostReportTotalCount(search);
 		
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("list", list);
 		map.put("totalCount", totalCount);
+		
+		System.out.println("신고list^^^^"+list);
+		
 		return map;		
 	}
 	
