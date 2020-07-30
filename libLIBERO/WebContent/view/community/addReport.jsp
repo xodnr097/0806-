@@ -12,7 +12,7 @@
     
     
     #popupDiv {  /* 팝업창 css */
-    padding: 70px 30px 40px 30px;
+    padding: 70px 30px 20px 30px;
     border-radius: 10px;
     position: absolute;
     background: #F9F9F9;
@@ -104,7 +104,9 @@
 					<hr style='border: solid 1px gray;'>
 					
 					<input type="hidden" id="postNo" name="postNo" value="${post.postNo}" >
-					
+					<p style='float:left; font-weight: 600; padding: 0px 30px 0px 0px;'>제 &nbsp;&nbsp;목 : </p><p>${post.postName}</p>
+					<p style='float:left; font-weight: 600; padding: 0px 30px 0px 0px;'>작성자 :	</p><p>	${post.user.nickname} (${post.user.userId})</p>
+					<hr>
 					<select class="custom-select d-block w-100" id="reportSelect" >
 					  <option value="1">성인본 정책 위반</option>
 					  <option value="2">허위 및 과장 상품</option>
@@ -113,7 +115,7 @@
 					  <option value="5">타인의 명예인격권 침해</option>
 					  <option value="6">기타</option>
 					</select>
-					<br><br><br><br><br><br><br><br><br><br><br>
+					<br><br><br><br><br><br><br><br>
 					<button style='float:right;' class="btn btn-info" id="addPostReport" name="addPostReport">신고</button>
 				</form>
 			</div>
