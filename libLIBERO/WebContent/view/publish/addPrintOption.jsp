@@ -24,7 +24,6 @@
 			}
 			.tableLabel {
 				font-size: 15px;
-				background-color: rgb(141, 204, 191);
 				color: rgb(62, 121, 108);
 				width: 100%;
 				padding-top: 10px;
@@ -34,7 +33,7 @@
 				font-family: 'Nanum Gothic', sans-serif;
 			}
 			.hrColor {
-				border-color: #8DCCBF;
+				border-color: #80cbc4;
 			}
 			.typeSelector {
 				font-size: 12px;
@@ -110,7 +109,7 @@
 			.detail {
 				height: auto;
 				background-color: #FFFFFF;
-				border: rgb(141, 204, 191) 1px solid;
+				border: #80cbc4 1px solid;
 				padding: 20px;
 				font-size: 15px;
 			}
@@ -178,7 +177,7 @@
 				<input type="hidden" name="prodType" value="paper">
 				<div class="form-group col-lg-4 rightform">
 					<div class="row justify-content-right">
-						<div class="tableLabel">상세정보</div>
+						<div class="tableLabel teal lighten-3">상세정보</div>
 					</div>
 					<div class="row detail text-left">
 						<table>
@@ -207,15 +206,15 @@
 									<th>페이지 수</th>
 									<td>: <input type="number" name="bookPage" id="bookPage" onblur="pageCount()">pages</td>
 								</tr>
-								<tr>
+								<!-- <tr>
 									<th>책 등 두께</th>
 									<td id="thickness">: </td>
-								</tr>
+								</tr>  -->
 							</tbody>
 						</table>
 					</div>	
 					<div class="row justify-content-right">
-						<div class="tableLabel col">인쇄소 선택</div>
+						<div class="tableLabel teal lighten-3 col">인쇄소 선택</div>
 					</div>
 					<div class="row detail text-left">
 						<table>
@@ -407,6 +406,16 @@
 					});
 				return;
 			}
+			if (prodType=="paper") {
+				if ($("input[name='factoryId']:checked").val()==null) {
+					Swal.fire({
+						  icon: 'error',
+						  text: '인쇄소를 선택해주세요.'
+						});
+					return;
+				}
+			}
+			
 			
 			$("form").attr("method" , "POST").attr("action" , "/libero/publish/addPrintOption").submit();
 		}

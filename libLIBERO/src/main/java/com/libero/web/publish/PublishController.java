@@ -251,7 +251,7 @@ public class PublishController {
 		
 		ModelAndView modelAndView = new ModelAndView();
 		modelAndView.addObject("prod",publish);
-		modelAndView.setViewName("redirect:/view/product/getProductList.jsp");
+		modelAndView.setViewName("redirect:/view/product/getBookList");
 		
 		return modelAndView;
 	}
