@@ -13,6 +13,7 @@
 	</head>
 	<body>
 		<canvas id="lineChart"></canvas>
+		<button type="button" class="btn px-3 btn-primary" onclick="shareSNS()"><i class="fab fa-twitter"></i></button>
 	</body>
 	<script type="text/javascript">
 	//line
@@ -40,5 +41,15 @@
 		}
 	});
 	</c:forEach>
+	
+	function shareSNS() {
+			var path = window.location.href;
+            var url = "https://twitter.com/intent/tweet?text=내책"+${param.prodNo}+"&url="+path;
+            var name = "공유하기";
+            var option = "width = 500, height = 500, top = 100, left = 200, location = no"
+            
+            window.open(url, name, option);
+		
+	}
 	</script>
 </html>

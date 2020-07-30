@@ -214,7 +214,7 @@
     
     function addProd() {
     	
-    	if ($("input[id='prodThumbnail']:checked").val()==null) {
+    	if ($("input[id='prodThumbnail']").val()==null) {
     		Swal.fire({
 				  icon: 'error',
 				  text: '상품 썸네일을 등록해주세요.'
@@ -222,12 +222,19 @@
     		return;
 		}
     	
-    	if ($("input[name='prodName']:checked").val()==null) {
+    	if ($("input[name='prodName']").val()==null) {
     		Swal.fire({
 				  icon: 'error',
 				  text: '상품명을 입력해주세요.'
 				});
     		return;
+		}
+    	
+    	if ($("input[name='retailPrice']").val()==null) {
+    		Swal.fire({
+				  icon: 'error',
+				  text: '가격을 입력해주세요.'
+				});
 		}
     	
     	
