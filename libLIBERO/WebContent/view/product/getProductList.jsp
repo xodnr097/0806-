@@ -125,6 +125,8 @@
 				    </div>
 				
 				  </div>
+				  
+				  
 				
 				</div>
 				</div>
@@ -135,8 +137,24 @@
           </c:forEach>
         
 </tbody>
+        <br/>
+        <br/>
         
         
+        <c:set var="i" value="0" />
+		  <c:forEach var="product" items="${product}">
+			<c:set var="i" value="${ i+1 }" />
+				<c:if test="i % 6 equal 0">
+					<ul><h6>안녕하세요</h6>
+				</c:if>
+				<li>
+					상품명:${product.prodName}
+				</li>
+				<c:if test="i % 6 equal 5">
+					</ul><h6>안녕히가세요</h6></h6><br/><br/>
+				</c:if>
+			
+        </c:forEach>
         
 
 </body>
