@@ -8,9 +8,6 @@
 <title>Insert title here</title>
 	<jsp:include page="/common/cdn.jsp"></jsp:include>
 
-
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
-
 <style>
 
 .collapse-content .fa.fa-heart:hover {
@@ -20,7 +17,7 @@
   color: #0d47a1 !important;
 }
 
-    div.row{
+    #product{
       width: 150px;
       height: 150px;
       margin: 35px;
@@ -32,7 +29,7 @@
       display: inline-block;
     }
 
-    div.row{
+    #product{
 
       /* 일렬로 나열 */
       white-space: nowrap;
@@ -76,7 +73,7 @@
 				<td align="center">${ i }</td>
 				
 				 <!--Grid row-->
-      <div class="row">
+      <div class="row" id="product">
 
         <!--Grid column-->
         <div class="col-lg-4 col-md-8 mb-4">

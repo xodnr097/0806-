@@ -19,7 +19,7 @@
 <br/>
 <tbody>
 		<h2>${sessionScope.user.userId}의 장바구니</h2>
-		
+		<form group>
 		  <c:set var="totalPrice" value="0"/>
 		  <c:set var="i" value="0" />
 		  <c:forEach var="cartList" items="${cartList}">
@@ -30,6 +30,7 @@
 				<form id="form${i}" value="${i}">
 		<!--  	 <input type="checkbox" id="checkbox${i}" name="price" value="#"> -->
 				 	<input type="hidden" class="eachPrice" id="eachPrice${i}" name="eachPrice${i}"  value="${cartList.buyAmount * cartList.retailPrice}">
+				 	구매번호 : ${buyNoList[i-1]}</br> 
 					상품번호 : ${cartList.prodNo }	 <br/>	<input type="hidden" class="prodNo" id="prodNo${i}" name="prodNo${i}"  value="${cartList.prodNo}">
 					상품타입 : ${cartList.prodType} <br/>
 					상품명 : ${cartList.prodName} <br/>
@@ -41,8 +42,10 @@
 					
 				</form></tr>
           </c:forEach>
+          </form>
 					<h1 id="totalPrice">총액 : ${totalPrice} </h1>
 					<form>
+					<input type="hidden" name="cartList" value="${buyNoList}">
 					<input type="hidden" id="actualPrice" name="actualPrice" value="${totalPrice}">
 					</form>
       
@@ -97,8 +100,8 @@
 				alert(each);
 				var k = $(".buyAmount:Last").attr("id"); //상품 리스트 갯수 추출
 				var kk = parseInt(k)+1;
-				alert(k);
-				alert(kk);
+				//alert(k);
+				//alert(kk);
 				
 				
 // 				var eachPrice1 = $("#eachPrice1").val();
@@ -131,13 +134,14 @@
 					data: {"prodNo": prodNo, "userId": "${sessionScope.user.userId}", "buyAmount": buyAmount, "from": "cart"},
 					success : function(data){
 								var message = data.result
-								alert(message);
+								//alert(message);
 					}
 				});//end ajax
 			})
 		})
 		
 		$(function(){
+			
 			$("#button").on("click", function(){
 				$("form").attr("method", "POST").attr("action", "/libero/buy/beforePay").submit();
 			})
