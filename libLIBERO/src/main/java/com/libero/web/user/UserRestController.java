@@ -128,9 +128,7 @@ public class UserRestController {
 		System.out.println("[ /user/json/duplicationCheck/"+userId+" : GET]");
 		System.out.println(" ---------------------------------------");
 		
-		if(userId == "#") {
-			System.out.println("\n\n\n\n잡았다 요녀석\n\n\n\n");
-		}
+		
 		boolean	result = userService.duplicationCheck(userId);
 	System.out.println("\n\n\n\n"+result+"\n\n\n");
 		return result;
