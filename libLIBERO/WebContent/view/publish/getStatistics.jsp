@@ -13,8 +13,8 @@
 	</head>
 	<body>
 		<canvas id="lineChart"></canvas>
-		<button type="button" class="btn px-3 btn-primary" onclick="shareSNS()"><i class="fab fa-twitter"></i></button>
-	</body>
+		<!-- <button type="button" class="btn px-3 btn-primary" onclick="shareSNS()"><i class="fab fa-twitter"></i></button>
+ -->	</body>
 	<script type="text/javascript">
 	//line
 	var ctxL = document.getElementById("lineChart").getContext('2d');

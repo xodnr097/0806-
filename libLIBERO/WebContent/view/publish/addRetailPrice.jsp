@@ -190,7 +190,7 @@
 				      	<div class="modal-body">
 				      		<div class="row">
 				      			<div class="col-lg-6 text-center justify-content-center align-self-center">
-				      				<img src="../resources/images/publish/fileUpload/${prod.prodThumbnail}" width="230px" height="280px">
+				      				<img src="../resources/images/publish/fileUpload/${prod.prodThumbnail}" id="modalImg" width="230px" height="280px">
 				      			</div>
 				      			<div class="col-lg-6 justify-content-right">
 				      				<table class="modalTable">
@@ -355,6 +355,8 @@
 			}else {
 				$("#modalDiscount").html(": 할인포함");
 			}
+			
+			$("#modalImg").attr("src","../resources/images/publish/fileUpload/${prod.prodThumbnail}");
 		}
 		
 		function addRetailPrice() {
