@@ -10,7 +10,7 @@
 	<!--Navbar -->
 	<nav class="mb-1 navbar navbar-expand-lg navbar-dark teal lighten-3 fixed-top z-depth-1">
 		<a href="/libero/index.jsp" class="navbar-brand">
-	  		<img src="http://192.168.0.64:8080/libero/resources/images/common/logo_white.png" width="80" height="23" alt="" loading="lazy" id="logoImg">
+	  		<img src="http://192.168.0.17:8080/libero/resources/images/common/logo_white.png" width="80" height="23" alt="" loading="lazy" id="logoImg">
 	  	</a>
 	  	<!-- 모바일 navbar -->
 	  	<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent-333" aria-controls="navbarSupportedContent-333" aria-expanded="false" aria-label="Toggle navigation">

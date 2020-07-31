@@ -1,6 +1,5 @@
 
-body,
-div,
+
 dl,
 dt,
 dd,
@@ -11,7 +10,7 @@ h1,
 h2,
 h3,
 h4,
-h5,
+
 h6,
 pre,
 code,
@@ -29,8 +28,8 @@ button {
     padding: 0
 }
 
-fieldset,
-img {
+fieldset
+{
     border: 0 none
 }
 
@@ -62,9 +61,7 @@ table {
     border-spacing: 0
 }
 
-body {
-    -webkit-text-size-adjust: none
-}
+
 
 
 input[type='text'],
@@ -74,11 +71,9 @@ input[type='submit'] {
 }
 
 
-body {
-    background: #fff
-}
 
-body,
+
+
 th,
 td,
 input,
@@ -88,20 +83,12 @@ button {
     font-size: 14px;
     letter-spacing: -0.25px;
     line-height: 1.5;
-    font-family: notosans, 'Apple SD Gothic Neo', 'Malgun Gothic', '筌��꼷彛у뜝�럩源ｅ뜝���깂�뜝�럡�뀬 筌��э옙占쎌깓筌��꼻�삕占쎈퉩�뜝�룞�삕', '筌��꼹�궓�뜝�럥占썩뱮占썲뜝�럥�뇣亦낉옙', dotum, sans-serif;
+    font-family: notosans, 'Apple SD Gothic Neo', 'Malgun Gothic', '嶺뚳옙占쎄섭壤쎪껊쐻占쎈윪繹먲퐛�쐻占쏙옙占쎄퉪占쎈쐻占쎈윞占쎈�� 嶺뚳옙占싼띿삕�뜝�럩源볡춯占쏙옙瑗삼옙�굲�뜝�럥�돥占쎈쐻占쎈짗占쎌굲', '嶺뚳옙占쎄섰占쎄텚占쎈쐻占쎈윥�뜝�뜦諭��뜝�뜴�쐻占쎈윥占쎈눂雅��굢�삕', dotum, sans-serif;
     color: #333;
     word-break: keep-all
 }
 
-a {
-    color: #333;
-    text-decoration: none
-}
 
-a:active,
-a:hover {
-    text-decoration: none
-}
 
 address,
 caption,
@@ -114,6 +101,8 @@ var {
     font-weight: normal
 }
 
+
+
 select {
     -webkit-appearance: none;
     -moz-appearance: none;
@@ -125,10 +114,7 @@ select::-ms-expand {
     display: none
 }
 
-body {
-    min-width: 1280px;
-    height: 100%
-}
+
 
 .thumb_img {
     display: block;
@@ -141,6 +127,7 @@ body {
 .content-board {
     width: 840px;
     margin: 70px auto 160px
+    
 }
 
 
@@ -252,7 +239,6 @@ body {
     line-height: 2.5;
     color: #666
 }
-
 
 .content-board .txt_board {
     margin-top: 31px;
