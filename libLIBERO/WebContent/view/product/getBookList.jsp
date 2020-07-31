@@ -139,8 +139,78 @@
 					
 				</td>
           </c:forEach>
+          
+          
         
 </tbody>
+
+<h6 class="font-weight-bold text-center grey-text text-uppercase small mb-4">portfolio</h6>
+    <h3 class="font-weight-bold text-center dark-grey-text pb-2">Product Designs</h3>
+    <hr class="w-header my-4">
+    <p class="lead text-center text-muted pt-2 mb-5">You can find several product design by our professional team in
+      this section.</p>
+		
+    <!--First row-->
+    <div class="row">
+
+      <!--First column-->
+      <div class="col-12">
+
+        <!-- Nav tabs -->
+        <ul class="nav md-pills flex-center flex-wrap mx-0" role="tablist">
+          <li class="nav-item">
+            <a class="nav-link active font-weight-bold text-uppercase" data-toggle="tab" href="#panel31" role="tab">ALL</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link font-weight-bold text-uppercase" data-toggle="tab" href="#panel32" role="tab">Design</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link font-weight-bold text-uppercase" data-toggle="tab" href="#panel33" role="tab">Mockup</a>
+          </li>
+        </ul>
+
+      </div>
+      <!--First column-->
+
+    </div>
+    <!--First row-->
+
+    <!--Tab panels-->
+    <div class="tab-content mb-5">
+
+      <!--Panel 1-->
+      <div class="tab-pane fade show in active" id="panel31" role="tabpanel">
+
+        <!-- Grid row -->
+        <div class="row">
+
+          <!-- Grid column -->
+          
+			
+			 	<c:set var="i" value="0" />
+		  		<c:forEach var="book" items="${book}">
+				<c:set var="i" value="${ i+1 }" />
+				<div class="col-sm-3">
+            <!-- Card -->
+            <a class="card hoverable mb-4 z-depth-0" id="productcard" data-toggle="modal" data-target="#basicExampleModal">
+
+              <!-- Card image -->
+              <img class="card-img-top" src="libero/resources/images/publish/fileUpload/${book.prodThumbnail}" alt="Card image cap">
+              <br/>${book.prodThumbnail}
+
+              <!-- Card content -->
+              <div class="card-body" id="card-body">
+
+                <h5 class="my-3">${book.prodName}</h5>
+                <p class="card-text text-uppercase mb-3">Bag, Box</p>
+
+              </div>
+
+            </a></div>
+         
+            <!-- Card -->
+            </c:forEach>
+            </div></div></div>
 
 
 </body>

@@ -17,23 +17,18 @@
   color: #0d47a1 !important;
 }
 
-    #product{
-      width: 150px;
-      height: 150px;
-      margin: 35px;
+    /* #product{
+     
 
       /* list 앞에 점마크 지우기*/
-      list-style: none;
+      /* list-style: none; */
 
       /* inline 배치로 바꾸기 */
-      display: inline-block;
-    }
+      /* display: inline-block; */
+   /* } */
 
-    #product{
+    
 
-      /* 일렬로 나열 */
-      white-space: nowrap;
-    }
 
 </style>
 
@@ -64,88 +59,148 @@
 <br/>
 <br/>
 
-<tbody>
+ <h6 class="font-weight-bold text-center grey-text text-uppercase small mb-4">portfolio</h6>
+    <h3 class="font-weight-bold text-center dark-grey-text pb-2">Product Designs</h3>
+    <hr class="w-header my-4">
+    <p class="lead text-center text-muted pt-2 mb-5">You can find several product design by our professional team in
+      this section.</p>
 		
+    <!--First row-->
+    <div class="row">
+
+      <!--First column-->
+      <div class="col-12">
+
+        <!-- Nav tabs -->
+        <ul class="nav md-pills flex-center flex-wrap mx-0" role="tablist">
+          <li class="nav-item">
+            <a class="nav-link active font-weight-bold text-uppercase" data-toggle="tab" href="#panel31" role="tab">ALL</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link font-weight-bold text-uppercase" data-toggle="tab" href="#panel32" role="tab">Design</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link font-weight-bold text-uppercase" data-toggle="tab" href="#panel33" role="tab">Mockup</a>
+          </li>
+        </ul>
+
+      </div>
+      <!--First column-->
+
+    </div>
+    <!--First row-->
+
+    <!--Tab panels-->
+    <div class="tab-content mb-5">
+
+      <!--Panel 1-->
+      <div class="tab-pane fade show in active" id="panel31" role="tabpanel">
+
+        <!-- Grid row -->
+        <div class="row">
+
+          <!-- Grid column -->
+          
+			
+			 	<c:set var="i" value="0" />
+		  		<c:forEach var="product" items="${product}">
+				<c:set var="i" value="${ i+1 }" />
+				<div class="col-sm-3">
+            <!-- Card -->
+            <a class="card hoverable mb-4 z-depth-0" id="productcard" data-toggle="modal" data-target="#basicExampleModal">
+
+              <!-- Card image -->
+              <img class="card-img-top" src="../../resources/images/publish/fileUpload/${product.prodThumbnail}" alt="Card image cap">
+              <br/>${product.prodThumbnail}
+
+              <!-- Card content -->
+              <div class="card-body" id="card-body">
+
+                <h5 class="my-3">${product.prodName}</h5>
+                <p class="card-text text-uppercase mb-3">Bag, Box</p>
+
+              </div>
+
+            </a></div>
+         
+            <!-- Card -->
+            </c:forEach>
+            </div></div></div>
+
+<!-- <tbody> -->
+		<div class="container">
+		<div class="row">
 		  <c:set var="i" value="0" />
 		  <c:forEach var="product" items="${product}">
 			<c:set var="i" value="${ i+1 }" />
-			<tr>
-				<td align="center">${ i }</td>
+			
+	<!--<tr> <td align="center">${ i }</td> -->			
 				
-				 <!--Grid row-->
-      <div class="row" id="product">
 
-        <!--Grid column-->
-        <div class="col-lg-4 col-md-8 mb-4">
-        <!-- Card -->
-				<span class="card promoting-card" style="height: 200px; width:200px">
+	
+		<div class="col-3">
+		 <!-- Card -->
+			<div class="card booking-card">
+			
+			  <!-- Card image -->
+			  <div class="view overlay">
+			    <img class="card-img-top" src="https://mdbootstrap.com/img/Photos/Horizontal/Food/8-col/img (5).jpg" alt="Card image cap">
+			    <a href="#!">
+			      <div class="mask rgba-white-slight"></div>
+			    </a>
+			  </div>
+			
+			  <!-- Card content -->
+			  <div class="card-body">
+			
+			    <!-- Title -->
+			    <h4 class="card-title font-weight-bold"><a>La Sirena restaurant</a></h4>
+			    <!-- Data -->
+			    <ul class="list-unstyled list-inline rating mb-0">
+			      <li class="list-inline-item mr-0"><i class="fas fa-star amber-text"> </i></li>
+			      <li class="list-inline-item mr-0"><i class="fas fa-star amber-text"></i></li>
+			      <li class="list-inline-item mr-0"><i class="fas fa-star amber-text"></i></li>
+			      <li class="list-inline-item mr-0"><i class="fas fa-star amber-text"></i></li>
+			      <li class="list-inline-item"><i class="fas fa-star-half-alt amber-text"></i></li>
+			      <li class="list-inline-item"><p class="text-muted">3.5 (413)</p></li>
+			    </ul>
+			    <p class="mb-2">$ • American, Restaurant</p>
+			    <!-- Text -->
+			    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+			    <hr class="my-4">
+			    <p class="lead"><strong>Tonight's availability</strong></p>
+			    
+			    <!-- Button -->
+			    <a href="#" class="btn btn-flat deep-purple-text p-1 mx-0 mb-0">Button</a>
 				
-				  <!-- Card content -->
-				  <div class="card-body d-flex flex-row">
-				
-				    <!-- Avatar -->
-				    <img src="https://mdbootstrap.com/img/Photos/Avatars/avatar-8.jpg" class="rounded-circle mr-3" alt="avatar">
-				
-				    <!-- Content -->
-				    <div>
-				
-				      <!-- Title -->
-				      <h4 class="card-title font-weight-bold mb-2">#</h4>
-				      <!-- Subtitle -->
-				      <p class="card-text"><i class="far fa-clock pr-2"></i>07/24/2018</p>
-				
-				    </div>
-				
-				  </div>
-				
-				  <!-- Card image -->
-				  <div class="view overlay">
-				    <img class="card-img-top rounded-0" src="https://mdbootstrap.com/img/Photos/Horizontal/Food/full page/2.jpg" alt="Card image cap" style="height: 10px; width:10px">
-				    <a href="#!">
-				      <div class="mask rgba-white-slight"></div>
-				    </a>
-				  </div>
-				
-				  <!-- Card content -->
-				  <div class="card-body">
-				
-				    <div class="collapse-content">
-				
-				      <!-- Text -->
-				      <p class="card-text collapse" id="collapseContent">
-									<h6 class="card-title font-weight-bold mb-2">상품명:${product.prodName}</h6>
-									<h6 class="card-title font-weight-bold mb-2">상품종류:${product.prodType}</h6>
-									<h6 class="card-title font-weight-bold mb-2">작가:${product.creator}</h6>
-				      </p>
-				      <!-- Button -->
-				      <a class="btn btn-flat red-text p-1 my-1 mr-0 mml-1 collapsed" data-toggle="collapse" href="#collapseContent" aria-expanded="false" aria-controls="collapseContent"></a>
-				      <i class="fas fa-share-alt text-muted float-right p-1 my-1" data-toggle="tooltip" data-placement="top" title="Share this post"></i>
-				      <i class="fas fa-heart text-muted float-right p-1 my-1 mr-3" data-toggle="tooltip" data-placement="top" title="I like it"></i>
-				
-				    </div>
-				
-				  </div>
-				  
-				  
-				
-				</div>
-				</div>
-				</div>
+			  </div>
+			
+			</div>
 <!-- Card -->
+		</div>
+	
+     
 					
-				</td>
+				<!--</td>  -->
+				
           </c:forEach>
+          </div>
+			</div>
         
-</tbody>
+<!-- </tbody> -->
         <br/>
         <br/>
-        
-        
+
         <c:set var="i" value="0" />
 		  <c:forEach var="product" items="${product}">
 			<c:set var="i" value="${ i+1 }" />
 				<c:if test="i % 6 equal 0">
 					<ul><h6>안녕하세요</h6>
+					         <c:if test="[i % 6] eq 0">안녕하세요!</c:if>
+       						 <c:if test="[i mod 6] eq 0">안녕하세요1</c:if>
+     					     <c:if test="${i mod 6} eq 0">안녕하세요2</c:if>
+     					     <c:if test="[${i mod 6} % 6] eq 0">안녕하세요3</c:if>
+        
 				</c:if>
 				<li>
 					상품명:${product.prodName}
