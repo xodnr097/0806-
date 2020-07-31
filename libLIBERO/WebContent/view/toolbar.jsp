@@ -5,12 +5,15 @@
 <head>
 <!--  ///////////////////////// CSS ////////////////////////// -->
 <style type="text/css">
+	nav {
+		font-family: 'Noto Sans KR', sans-serif;
+	}
 </style>
 </head>
 	<!--Navbar -->
-	<nav class="mb-1 navbar navbar-expand-lg navbar-dark teal lighten-3 fixed-top z-depth-1">
+	<nav class="mb-1 navbar navbar-expand-lg navbar-dark brown lighten-1 fixed-top z-depth-1">
 		<a href="/libero/index.jsp" class="navbar-brand">
-	  		<img src="http://192.168.0.17:8080/libero/resources/images/common/logo_white.png" width="80" height="23" alt="" loading="lazy" id="logoImg">
+	  		<img src="http://192.168.0.64:8080/libero/resources/images/common/logo_white.png" width="80" height="23" alt="" loading="lazy" id="logoImg">
 	  	</a>
 	  	<!-- 모바일 navbar -->
 	  	<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent-333" aria-controls="navbarSupportedContent-333" aria-expanded="false" aria-label="Toggle navigation">
@@ -107,7 +110,7 @@
 	<!--/.Navbar -->
 	<!-- Modal -->
 	<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-		<div class="modal-dialog">
+		<div class="modal-dialog modal-dialog-centered">
 	    	<div class="modal-content">
 	      		<div class="modal-header">
 	        		<h5 class="modal-title" id="exampleModalLabel">libLIBERO 로그인</h5>
