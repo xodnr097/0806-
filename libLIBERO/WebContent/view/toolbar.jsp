@@ -5,10 +5,13 @@
 <head>
 <!--  ///////////////////////// CSS ////////////////////////// -->
 <style type="text/css">
+	nav {
+		font-family: 'Noto Sans KR', sans-serif;
+	}
 </style>
 </head>
 	<!--Navbar -->
-	<nav class="mb-1 navbar navbar-expand-lg navbar-dark teal lighten-3 fixed-top z-depth-1">
+	<nav class="mb-1 navbar navbar-expand-lg navbar-dark brown lighten-1 fixed-top z-depth-1">
 		<a href="/libero/index.jsp" class="navbar-brand">
 	  		<img src="http://192.168.0.64:8080/libero/resources/images/common/logo_white.png" width="80" height="23" alt="" loading="lazy" id="logoImg">
 	  	</a>
@@ -107,30 +110,30 @@
 	<!--/.Navbar -->
 	<!-- Modal -->
 	<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-		<div class="modal-dialog">
+		<div class="modal-dialog modal-dialog-centered">
 	    	<div class="modal-content">
-	      		<div class="modal-header">
-	        		<h5 class="modal-title" id="exampleModalLabel">libLIBERO 로그인</h5>
+	      		<div class="modal-header brown lighten-1">
+	        		<h5 class="modal-title" id="exampleModalLabel"><b>libLIBERO 로그인</b></h5>
 	        		<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 	          			<span aria-hidden="true">&times;</span>
 	        		</button>
 	      		</div>
 	      		<div class="modal-body">
 	        		<form name="loginForm">
-	          			<div class="form-group">
+	          			<div class="md-form">
 	            			<label for="recipient-name" class="col-form-label">아이디</label>
 	            			<input type="text" class="form-control" id="userId" name="userId">
 	          			</div>
-	          			<div class="form-group">
+	          			<div class="md-form">
 	            			<label for="message-text" class="col-form-label">비밀번호</label>
 	            			<input type="password" class="form-control" id="password" name="password">
 	          			</div>
 	        		</form>
 	      		</div>
 	      		<div class="modal-footer">
-	      			<button type="button" class="btn btn-cyan" id="loginButton">로그인</button>
-	        		<button type="button" class="btn btn-outline-info waves-effect" data-dismiss="modal">취소</button>
-	        		<a href="#"><button type="button" class="btn btn-info" id="addUser">회원가입</button></a>
+	      			<button type="button" class="btn btn-cyan brown lighten-1" id="loginButton">로그인</button>
+	        		<button type="button" class="btn btn-outline-brown lighten-1 waves-effect" data-dismiss="modal">취소</button>
+	        		<a href="#"><button type="button" class="btn btn-info brown lighten-1" id="addUser">회원가입</button></a>
 	      		</div>
 	    	</div>
 	  	</div>

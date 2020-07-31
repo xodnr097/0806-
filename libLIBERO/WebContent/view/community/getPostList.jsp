@@ -64,15 +64,32 @@
 							<c:forEach var="post" items="${list}"> 
                             <c:set var="i" value="${ i+1 }" />
                             
-                            <li>
+                            <li style="max-height: 183px;  overflow: hidden; ">
                                 <a href="/libero/community/getPost?postNo=${post.postNo}" class="link_news before_thumb">
                 				<strong class="tit_news">${ i }&nbsp;&nbsp;${post.postName}</strong>
              					</a>
              					 <a class="link_thumb">
-             					 <%-- <img src="/images/uploadFiles/${post.postImage}" alt="글사진" class="thumb_img"--%>
+             					 <c:if test="${ fn:contains(post.postContent, '<img') }">
+             					 	<c:set var="imgAfter" value="${ fn:substringAfter(post.postContent, '<img src=\"') }" />
+             					 	<c:set var="imgBefore" value="${ fn:substringBefore(imgAfter, '\" style') }" />
+									
+									<img src='<c:out value="${imgBefore}" />' alt='글사진' class='thumb_img' >
+
+									<%-- 
+									비포 : <c:out value="${imgAfter}" />
+									애프터 : <c:out value="${imgBefore}" />
+									<c:out value="${imgName}" escapeXml="true"/>
+									 --%>
+             					 </c:if>
+             					
              					
                                 </a>
-                                <a href="/libero/community/getPost?postNo=${post.postNo}" class="txt_news">${post.postContent}</a>
+                                <div class="txt_news" onclick="location.href='/libero/community/getPost?postNo=${post.postNo}' ">
+                                ${post.postContent}
+                                </div>
+                                
+                                
+                                
                                 
                                 <span class="txt_date">${post.regDate}</span>
                             </li>

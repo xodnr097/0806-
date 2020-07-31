@@ -70,7 +70,7 @@
 		<jsp:include page="/view/toolbar.jsp" />
 		<!-- Toolbar End -->
 		
-		<div class="box" style="background-image: url(resources/images/common/index.png);">
+		<div class="box" style="background-image: url(resources/images/common/index1.jpg);">
 			<div class="title" align="right">자가 출판 플랫폼<br/>리브리베로</div>
 		</div>
 	    <div class="box" style="background-image: url(resources/images/common/index3.jpg);display: flex; justify-content: center; align-items: center;">
