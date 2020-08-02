@@ -14,8 +14,7 @@
 		<style type="text/css">
 			.formLabel {
 				font-size: 15px;
-				background-color: #FFFFFF;
-				color: rgb(62, 121, 108);
+				color: #795548;
 				width: 100%;
 				padding-top: 10px;
 				padding-bottom: 10px;
@@ -303,7 +302,7 @@
 				</div>
 				<!-- 도서 설명 입력폼(SummerNote) 끝 -->
 				<div class="form-group" align="center">
-		      		<button type="button" class="btn btn-info btn-block" 
+		      		<button type="button" class="btn btn-brown lighten-1 btn-block" 
 		      			onclick="addInfo()">
 		      			가격 책정
 		      		</button>
@@ -332,6 +331,10 @@
 			$("#titlePreview").hide();
 			$("#fileUpload").hide();
 			$("#uploadPreview").hide();
+			var thumbnail = "${prod.prodThumbnail}";
+			if (thumbnail!=null) {
+				$("#preview").css("background-image", "url(../resources/images/publish/fileUpload/"+thumbnail+")");
+			}
 			
 			$("input[name='imgType']").on("click", function(){
 				var type = $("input[name='imgType']:checked").val();
@@ -527,8 +530,10 @@
 	    function addInfo() {
 	    	var hash = $("input[name=hashtagName]").val();
 			var title = $("input[name='prodName']").val();
+			console.log(title);
 			var author = $("input[name='author']").val();
 			var imgSelect = $("input[name='imgSelect']:checked").val();
+			var thumbnail = "${prod.prodThumbnail}";
 			
 			if (title==null) {
 				Swal.fire({
@@ -545,25 +550,25 @@
 					});
 				return;
 			}
-			
-			if ($("input[name='coverSelect']:checked").val()=="freeTemplate") {
-				if (imgSelect==null) {
-					Swal.fire({
-						  icon: 'error',
-						  text: '표지를 선택해주세요.'
-						});
-					return;
-				}
-			}else {
-				if ($("input[name='file']").val()==null) {
-					Swal.fire({
-						  icon: 'error',
-						  text: '표지를 업로드해주세요.'
-						});
-					return;
+			if (thumbnail==null) {
+				if ($("input[name='coverSelect']:checked").val()=="freeTemplate") {
+					if (imgSelect==null) {
+						Swal.fire({
+							  icon: 'error',
+							  text: '표지를 선택해주세요.'
+							});
+						return;
+					}
+				}else {
+					if ($("input[name='file']").val()==null) {
+						Swal.fire({
+							  icon: 'error',
+							  text: '표지를 업로드해주세요.'
+							});
+						return;
+					}
 				}
 			}
-			
 			if ($("input[name='purposeCode']:checked").val()==null) {
 				Swal.fire({
 					  icon: 'error',

@@ -30,6 +30,11 @@ public class Statistics implements Serializable{
 	private int thirty;
 	private int forty;
 	
+	private int prodCount;
+	private int creatorCount;
+	private int salesCount;
+	private int nowCount;
+	
 	public Statistics() {
 		
 	}

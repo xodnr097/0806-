@@ -4,15 +4,14 @@
 <html>
 	<head>
 		<meta charset="UTF-8">
-		<title>libLIBERO : 인쇄옵션 가격 조회</title>
+		<title>libLIBERO : 인쇄옵션 가격 등록</title>
 		<jsp:include page="/common/cdn.jsp"></jsp:include>
 		<!--  ///////////////////////// CSS ////////////////////////// -->
 		<link rel="stylesheet" href="../resources/css/common.css">
 		<style type="text/css">
 			.formLabel {
-				font-size: 20px;
-				background-color: #FFFFFF;
-				color: rgb(62, 121, 108);
+				font-size: 15px;
+				color: #795548;
 				width: 100%;
 				padding-top: 10px;
 				padding-bottom: 10px;
@@ -35,7 +34,7 @@
 	   	
 	   		<div class="row">
 		   		<div class="col-lg-12">
-		   			<div class="formLabel">인쇄옵션 가격 조회</div>
+		   			<div class="formLabel">인쇄옵션 가격 등록</div>
 		   			<hr class="hrColor">
 		   		</div>
 	   		</div>
@@ -200,7 +199,7 @@
 	   			</div>
 	   		</form>
 	   		<div class="row justify-content-center">
-	   			<button class="btn btn-cyan" onclick="submit()" name="updatePost">등록</button>
+	   			<button class="btn btn-brown lighten-1 btn-block" onclick="submit()" name="updatePost">등록</button>
 	   		</div>
 	   	</div>
 	   	<!-- ///////////// Bootstrap Container End ////////////////// -->

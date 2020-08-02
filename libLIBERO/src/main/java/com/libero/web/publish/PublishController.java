@@ -30,6 +30,7 @@ import com.libero.service.domain.Publish;
 import com.libero.service.domain.Statistics;
 import com.libero.service.domain.User;
 import com.libero.service.publish.PublishService;
+import com.libero.service.statistics.StatisticsService;
 import com.libero.service.user.UserService;
 
 @Controller
@@ -42,6 +43,8 @@ public class PublishController {
 	private PublishService publishService;
 	@Autowired
 	private UserService userService;
+	@Autowired
+	private StatisticsService statisticsService;
 	
 	//Constructor
 	public PublishController(){
@@ -170,12 +173,15 @@ public class PublishController {
 				publish.setProdThumbnail(fileName);
 			}
 			
-		}else if (publish.getCoverSelect().contentEquals("freeTemplate")) {
+		}else if (publish.getCoverSelect().contentEquals("freeTemplate") && publish.getImgType()!=null && publish.getImgSelect()!=null) {
 			
 			BufferedImage thumbnail = ImageIO.read(new File(path+"publish/freeTemplate/"+publish.getImgType()+"/"+publish.getImgSelect()+".png"));
 			BufferedImage logo = ImageIO.read(new File(path+"common/logo.png"));
+			BufferedImage cover = ImageIO.read(new File(path+"publish/freeTemplate/"+publish.getImgType()+"/"+publish.getImgSelect()+"_preview.png"));
 			Graphics g = thumbnail.getGraphics();
+			Graphics g2 = cover.getGraphics();
 			int width = thumbnail.getWidth();
+			int cWidth = cover.getWidth();
 			Font titleFont = new Font("Serif", Font.PLAIN, 30);
 			Font nameFont = new Font("Serif", Font.PLAIN, 15);
 			FontRenderContext frc = new FontRenderContext(null,true,true);
@@ -204,12 +210,34 @@ public class PublishController {
 				g.drawImage(logo, 290, 570, 130, 40, null);
 			}
 			g.dispose(); 
-			
 			UUID savedFileName = UUID.randomUUID();	
-			
 			ImageIO.write(thumbnail, "png", new File(path+"publish/fileUpload/"+savedFileName+".png")); 
 			
-			publish.setProdThumbnail(savedFileName+".png");
+			//커버 합성
+			g2.setColor(Color.black);
+			if (publish.getImgType().contentEquals("picture")) {
+				g2.setFont(titleFont); 
+				g2.drawString(publish.getProdName(), (cWidth/2)-(int)((r.getWidth())/2), 130);
+				g2.setFont(nameFont); 
+				g2.drawString(publish.getAuthor(), (cWidth/2)-(int)((r2.getWidth())/2)+160, 170); 
+				g2.drawImage(logo, 300, 555, 130, 40, null);
+			}else if (publish.getImgType().contentEquals("icon")) {
+				g2.setFont(titleFont); 
+				g2.drawString(publish.getProdName(), (cWidth/2)-(int)((r.getWidth())/2), 330);
+				g2.setFont(nameFont); 
+				g2.drawString(publish.getAuthor(), (cWidth/2)-(int)((r2.getWidth())/2)+35, 350); 
+				g2.drawImage(logo, 300, 580, 130, 40, null);
+			}else if (publish.getImgType().contentEquals("img")) {
+				g2.setFont(titleFont); 
+				g2.drawString(publish.getProdName(), (cWidth/2)-180, 530);
+				g2.setFont(nameFont); 
+				g2.drawString(publish.getAuthor(), (cWidth/2)-(int)(r2.getWidth())+210, 550); 
+				g2.drawImage(logo, 290, 570, 130, 40, null);
+			}
+			g2.dispose(); 
+			savedFileName = UUID.randomUUID();	
+			ImageIO.write(cover, "png", new File(path+"publish/fileUpload/"+savedFileName+".png")); 
+			publish.setCoverFile(savedFileName+".png");
 		}
 		
 		publishService.updatePublishInfo(publish);
@@ -251,7 +279,7 @@ public class PublishController {
 		
 		ModelAndView modelAndView = new ModelAndView();
 		modelAndView.addObject("prod",publish);
-		modelAndView.setViewName("redirect:/view/product/getBookList");
+		modelAndView.setViewName("redirect:/product/getBookList");
 		
 		return modelAndView;
 	}
@@ -437,17 +465,33 @@ public class PublishController {
 		
 		return modelAndView;
 	}
+	//===================== 임시 도서 삭제====================================
+	@RequestMapping(value = "removeTempPublish", method = RequestMethod.GET)
+	public ModelAndView removeTempPublish(@RequestParam("prodNo") int prodNo, Publish publish) throws Exception {
+		
+		System.out.println("/publish/removeTempPublish : GET");
+		
+		publish = publishService.getProduct(prodNo);
+		
+		publishService.removeTempPublish(publish);
+		
+		ModelAndView modelAndView = new ModelAndView();
+		modelAndView.setViewName("redirect:/user/getTempPublishList");
+		
+		return modelAndView;
+	}
 	
 	@RequestMapping(value = "getStatistics", method = RequestMethod.GET)
 	public ModelAndView getStatistics(@RequestParam("prodNo") int prodNo, Statistics statistics) throws Exception {
 		
 		System.out.println("/publish/getStatistics : GET");
 		
-		statistics.setProdNo(prodNo);
-		Map<String, Object> map = publishService.getStatistics(statistics);
+		Map<String, Object> map = statisticsService.getStatistics(prodNo);
 		
 		ModelAndView modelAndView = new ModelAndView();
 		modelAndView.addObject("day", map.get("day"));
+		modelAndView.addObject("gender", map.get("gender"));
+		modelAndView.addObject("age", map.get("age"));
 		modelAndView.setViewName("forward:/view/publish/getStatistics.jsp");
 		
 		return modelAndView;

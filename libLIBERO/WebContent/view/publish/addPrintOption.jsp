@@ -13,9 +13,10 @@
 		<link rel="stylesheet" href="../resources/css/common.css">
 		
 		<style type="text/css">
+			
 			.formLabel {
 				font-size: 15px;
-				color: rgb(62, 121, 108);
+				color: #795548;
 				width: 100%;
 				padding-top: 10px;
 				padding-bottom: 10px;
@@ -24,7 +25,7 @@
 			}
 			.tableLabel {
 				font-size: 15px;
-				color: rgb(62, 121, 108);
+				color: #795548;
 				width: 100%;
 				padding-top: 10px;
 				padding-bottom: 10px;
@@ -33,7 +34,7 @@
 				font-family: 'Nanum Gothic', sans-serif;
 			}
 			.hrColor {
-				border-color: #80cbc4;
+				border-color: #795548;
 			}
 			.typeSelector {
 				font-size: 12px;
@@ -109,7 +110,7 @@
 			.detail {
 				height: auto;
 				background-color: #FFFFFF;
-				border: #80cbc4 1px solid;
+				border: #a1887f 1px solid;
 				padding: 20px;
 				font-size: 15px;
 			}
@@ -177,7 +178,7 @@
 				<input type="hidden" name="prodType" value="paper">
 				<div class="form-group col-lg-4 rightform">
 					<div class="row justify-content-right">
-						<div class="tableLabel teal lighten-3">상세정보</div>
+						<div class="tableLabel brown lighten-2">상세정보</div>
 					</div>
 					<div class="row detail text-left">
 						<table>
@@ -214,7 +215,7 @@
 						</table>
 					</div>	
 					<div class="row justify-content-right">
-						<div class="tableLabel teal lighten-3 col">인쇄소 선택</div>
+						<div class="tableLabel brown lighten-2 col">인쇄소 선택</div>
 					</div>
 					<div class="row detail text-left">
 						<table>
@@ -305,7 +306,7 @@
 				</div>
 				<!-- 내지 재질 선택 End -->
 				<div class="form-group md-form" align="center">
-		      		<button type="button" class="btn btn-cyan btn-block" 
+		      		<button type="button" class="btn btn-brown lighten-1 btn-block" 
 		      			onclick="addPrintOption()">
 		      			원고 등록
 		      		</button>
@@ -322,7 +323,7 @@
 						<input type="number" name="bookPage" id="bookPage">pages
 			  		</div>
 			  		<div class="form-group md-form" align="center">
-			  			<button type="button" class="btn btn-cyan btn-block" 
+			  			<button type="button" class="btn btn-brown lighten-1 btn-block" 
 			      			onclick="addPrintOption()">
 			      			원고 등록
 			      		</button>

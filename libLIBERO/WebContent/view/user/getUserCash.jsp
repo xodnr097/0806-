@@ -25,7 +25,10 @@
 	   	<div class="container">
 	   		<jsp:include page="topButton.jsp"></jsp:include>
 	   		<div class="row col-lg-12">
-	   			<h1>정산 전입니다.</h1>
+	   			<h1>정산 전입니다.</h1><br/>
+	   		</div>
+	   		<div class="row col-lg-12">
+	   			<h6>정산일은 매월 15일 입니다.</h6>
 	   		</div>
 	   		<div class="row text-center">
 	   			<div class="col-lg-3">
@@ -39,27 +42,36 @@
 	   			</div>
 	   		</div>
 	   		<div class="row d-flex justify-content-center">
-	   		<form class="col-lg-10">
-	   		<div class="input-group mb-3">
-			  <div class="input-group-prepend">
-			    <label class="input-group-text" for="inputGroupSelect01">은행선택</label>
-			  </div>
-			  <select class="browser-default custom-select" id="inputGroupSelect01">
-			    <option selected>Choose...</option>
-			    <option value="1">One</option>
-			    <option value="2">Two</option>
-			    <option value="3">Three</option>
-			  </select>
-			</div>
-	   			<div class="md-form input-group mb-3">
-				  <div class="input-group-prepend">
-				    <span class="input-group-text md-addon" id="inputGroupMaterial-sizing-default">계좌번호</span>
-				  </div>
-				  <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroupMaterial-sizing-default">
-				</div>
-	   		</form>
+	   			<canvas id="dayChart" class="row col-lg-12"></canvas>
 	   		</div>
 	   	</div>
 	   	<!-- //////////// Bootstrap Container End////////////////// -->
 	</body>
+	<script type="text/javascript">
+	//monthly
+	var ctxL = document.getElementById("dayChart").getContext('2d');
+	<c:set var="i" value="0" />
+  	<c:forEach var="st" items="${day}" >
+	<c:set var="i" value="${ i+1 }" />
+	
+	var myLineChart = new Chart(ctxL, {
+		type: 'line',
+		data: {
+			labels: ["1월", "2월", "3월", "4월", "5월", "6월", "7월","8월","9월","10월","11월","12월"],
+			datasets: [
+				{
+					label: "판매량",
+					data: ["${st.jan}", "${st.feb}", "${st.mar}", "${st.apr}", "${st.may}", "${st.jun}", "${st.jul}","${st.aug}","${st.sep}","${st.oct}","${st.nov}","${st.dec}"],
+					backgroundColor: ['rgba(165, 222, 159, .4)',],
+					borderColor: ['rgba(47, 157, 39, .7)',],
+					borderWidth: 2
+				}
+			]
+		},
+		options: {
+			responsive: true
+		}
+	});
+	</c:forEach>
+	</script>
 </html>

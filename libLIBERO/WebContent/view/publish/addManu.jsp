@@ -11,14 +11,13 @@
 		<!--  ///////////////////////// CSS ////////////////////////// -->
 		<link rel="stylesheet" href="../resources/css/common.css">
 		<style type="text/css">
+			
 			.formLabel {
 				font-size: 15px;
-				background-color: rgb(141, 204, 191);
-				color: rgb(62, 121, 108);
+				color: #795548;
 				width: 100%;
 				padding-top: 10px;
 				padding-bottom: 10px;
-				padding-left: 5px;
 				margin-bottom: 0;
 				font-family: 'Nanum Gothic', sans-serif;
 			}

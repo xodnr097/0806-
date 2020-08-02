@@ -97,15 +97,6 @@ public class PublishServiceImpl implements PublishService{
 		publishDAO.removeTempPublish(publish);
 	}
 	
-	public Map<String, Object> getStatistics(Statistics statistics) throws Exception {
-		
-		Map<String, Object> map = new HashMap<String, Object>();
-		List<Statistics> day = publishDAO.getStatistics(statistics);
-		map.put("day", day);
-		
-		return map;
-	}
-	
 	public Cash getUserCash(String userId) throws Exception {
 		return publishDAO.getUserCash(userId);
 	}

@@ -28,11 +28,11 @@
 	   		<div class="row">
 		   		<div class="col-lg-2">
 		   			<a href="/libero/user/getUserPublishList?prodType=book" 
-		   				class="btn btn-outline-default waves-effect btn-block" role="button" 
+		   				class="btn btn-outline-brown waves-effect btn-block" role="button" 
 		   				aria-pressed="true" style="margin-bottom: 10px">도서</a>
 		   				
 		   			<a href="/libero/user/getUserPublishList?prodType=prod" 
-		   				class="btn btn-outline-default waves-effect btn-block" role="button" 
+		   				class="btn btn-outline-brown waves-effect btn-block" role="button" 
 		   				aria-pressed="true">서비스상품</a>
 		   		</div>
 		   		<div class="col-lg-9">
@@ -80,16 +80,16 @@
 							  		
 							  		<div class="col-lg-3">
 							  			<a href="javascript:popup(${prod.prodNo})" 
-							   				class="btn btn-default btn-block" role="button" 
+							   				class="btn btn-brown btn-block" role="button" 
 							   				aria-pressed="true" style="margin-bottom: 10px">판매 통계 조회</a>
 							   			<c:if test="${prod.blindCode=='show'}">
-							  				<button class="btn btn-outline-default waves-effect btn-block">판매 중지</button>
+							  				<button class="btn btn-outline-brown waves-effect btn-block">판매 중지</button>
 							  			</c:if>
 							  			<c:if test="${prod.blindCode=='hide'}">
-							  				<button class="btn btn-default btn-block">판매 재개</button>
+							  				<button class="btn btn-brown btn-block">판매 재개</button>
 							  			</c:if>
 							  			<c:if test="${prod.blindCode=='report'}">
-							  				<button class="btn btn-default btn-block">수정 요청</button>
+							  				<button class="btn btn-brown btn-block">수정 요청</button>
 							  			</c:if>
 							  		</div>
 						  		</div>
@@ -115,7 +115,7 @@
 		function popup(prodNo){
 	        var url = "/libero/publish/getStatistics?prodNo="+prodNo;
 	        var name = "판매 통계 조회";
-	        var option = "width = 700, height = 400, top = 100, left = 200, location = no"
+	        var option = "width = 1000, height = 500, top = 50, left = 50, location = no"
 	        window.open(url, name, option);
 	    }
 	</script>
