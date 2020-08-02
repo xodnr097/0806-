@@ -9,15 +9,22 @@
 		<title>판매 통계 조회</title>
 		<jsp:include page="/common/cdn.jsp"></jsp:include>
 		<style type="text/css">
+			
 		</style>
 	</head>
 	<body>
-		<canvas id="lineChart"></canvas>
+		<div class="container-fluid">
+			<canvas id="dayChart" class="row col-lg-12"></canvas>
+			<div class="row">
+				<canvas id="genderChart" class="col-lg-6"></canvas>
+				<canvas id="ageChart" class="col-lg-6"></canvas>
+			</div>
+		</div>
 		<!-- <button type="button" class="btn px-3 btn-primary" onclick="shareSNS()"><i class="fab fa-twitter"></i></button>
  -->	</body>
 	<script type="text/javascript">
-	//line
-	var ctxL = document.getElementById("lineChart").getContext('2d');
+	//monthly
+	var ctxL = document.getElementById("dayChart").getContext('2d');
 	<c:set var="i" value="0" />
   	<c:forEach var="st" items="${day}" >
 	<c:set var="i" value="${ i+1 }" />
@@ -42,6 +49,48 @@
 	});
 	</c:forEach>
 	
+	//gender
+	var ctxP = document.getElementById("genderChart").getContext('2d');
+	<c:set var="i" value="0" />
+  	<c:forEach var="st" items="${gender}" >
+	<c:set var="i" value="${ i+1 }" />
+		var myPieChart = new Chart(ctxP, {
+			type: 'pie',
+			data: {
+				labels: ["여성", "남성"],
+				datasets: [{
+					data: ["${st.female}", "${st.male}"],
+					backgroundColor: ["#F7464A", "#46BFBD"],
+					hoverBackgroundColor: ["#FF5A5E", "#5AD3D1"]
+				}]
+			},
+			options: {
+				responsive: true
+			}
+		});
+	</c:forEach>
+	
+	//age
+	var ctxP = document.getElementById("ageChart").getContext('2d');
+	<c:set var="i" value="0" />
+  	<c:forEach var="st" items="${age}" >
+	<c:set var="i" value="${ i+1 }" />
+		var myPieChart = new Chart(ctxP, {
+			type: 'pie',
+			data: {
+				labels: ["10대", "20대","30대","40대"],
+				datasets: [{
+					data: ["${st.teenager}", "${st.twenty}","${st.thirty}","${st.forty}"],
+					backgroundColor: ["#F7464A", "#46BFBD","#FDB45C", "#949FB1"],
+					hoverBackgroundColor: ["#FF5A5E", "#5AD3D1", "#FFC870", "#A8B3C5"]
+				}]
+			},
+			options: {
+				responsive: true
+			}
+		});
+	</c:forEach>
+		
 	function shareSNS() {
 			var path = window.location.href;
             var url = "https://twitter.com/intent/tweet?text=내책"+${param.prodNo}+"&url="+path;

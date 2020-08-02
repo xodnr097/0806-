@@ -11,33 +11,14 @@
 /*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 
---테이블 삭제 
-DROP TABLE IF EXISTS `buy`;
-DROP TABLE IF EXISTS `cash`;
-DROP TABLE IF EXISTS `chat_message`;
-DROP TABLE IF EXISTS `chat_room`;
-DROP TABLE IF EXISTS `comment`;
-DROP TABLE IF EXISTS `hashtag`;
-DROP TABLE IF EXISTS `upload_file`;
-DROP TABLE IF EXISTS `pay`;
-DROP TABLE IF EXISTS `post`;
-DROP TABLE IF EXISTS `report`;
-DROP TABLE IF EXISTS `review`;
-DROP TABLE IF EXISTS `wish`;
-DROP TABLE IF EXISTS `product`;
-DROP TABLE IF EXISTS `user`;
--- 삭제 끝
-
-
 -- 테이블 liblibero.user 구조 내보내기
-DROP TABLE IF EXISTS `user`;
 CREATE TABLE IF NOT EXISTS `user` (
   `user_id` varchar(30) NOT NULL,
   `password` varchar(20) NOT NULL,
   `nickname` varchar(20) NOT NULL,
-  `gender_code` char(1) DEFAULT NULL,
-  `name` varchar(20) DEFAULT NULL,
   `profile` varchar(50) DEFAULT NULL,
+  `gender_code` char(1) NOT NULL,
+  `name` varchar(20) NOT NULL,
   `address` varchar(100) DEFAULT NULL,
   `phone` varchar(14) NOT NULL,
   `phone_code` smallint(6) NOT NULL DEFAULT '0',
@@ -64,29 +45,9 @@ CREATE TABLE IF NOT EXISTS `user` (
   UNIQUE KEY `factory_no` (`factory_no`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
--- 테이블 데이터 liblibero.user:~11 rows (대략적) 내보내기
-DELETE FROM `user`;
-/*!40000 ALTER TABLE `user` DISABLE KEYS */;
--- 테이블 데이터 liblibero.user:~11 rows (대략적) 내보내기
-/*!40000 ALTER TABLE `user` DISABLE KEYS */;
-INSERT INTO `user` (`user_id`, `password`, `nickname`, `profile`, `gender_code`, `name`, `address`, `phone`, `phone_code`, `user_code`, `role`, `birth_date`, `reg_date`, `factory_no`, `cash_code`, `a5_price`, `b5_price`, `a4_price`, `color_price`, `black_price`, `snow_price`, `mont_price`, `arte_price`, `white_price`, `ivory_price`, `rough_price`) VALUES
-	('admin1', '1234', '관리자1', NULL, 'm', '관리자', '서울시 강남구', '000-0000-1111', 1, 1, 'a', '2020-07-28', '2020-07-15 12:28:59', NULL, 'bf', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-	('admin2', '1234', '관리자2', NULL, 'm', '관리자', NULL, '000-1111-2222', 1, 1, 'a', '2020-07-28', '2020-07-15 12:41:54', NULL, 'bf', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-	('admin3', '1234', '관리자3', NULL, 'f', '관리자', NULL, '000-2222-3333', 1, 1, 'a', '2020-07-28', '2020-07-15 12:43:09', NULL, 'bf', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-	('admin4', '1234', '관리자4', NULL, 'f', '관리자', NULL, '000-3333-2222', 1, 1, 'a', '1994-10-31', '2020-07-15 12:43:09', NULL, 'bf', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-	('choije9410@gmail.com', '1111', '유저유저', NULL, 'f', '최지은', '경기도 수원시', '010-0000-3555', 0, 1, 'u', '1994-10-31', '2020-07-15 16:58:30', NULL, 'bf', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-	('factory01@naver.com', '0101', '인쇄소01', NULL, 'f', '인쇄소', '경기도', '000-1234-2222', 0, 1, 'f', '2000-07-28', '2020-07-15 12:45:24', '1234', 'bf', 10, 20, 40, 100, 40, 3000, 4000, 4300, 10, 20, 10),
-	('factory02@hanmail.net', '0202', '인쇄소02', NULL, 'f', '인쇄소', '경기도', '000-1313-2222', 0, 1, 'f', '1970-07-28', '2020-07-15 12:45:24', '1424132', 'bf', 20, 30, 40, 100, 100, 2000, 3000, 3500, 10, 5, 5),
-	('factory03', '3333', '인쇄03', NULL, 'f', '인쇄소', '서울', '010-1313-3333', 0, 1, 'f', '2020-07-28', '2020-07-24 16:08:31', '12312311', 'bf', 0, 10, 40, 100, 40, 3000, 5000, 4000, 10, 10, 5),
-	('factory04', '4444', '인쇄0404', NULL, 'm', '인쇄04', NULL, '010-1414-1414', 0, 1, 'f', '2020-07-28', '2020-07-28 09:41:35', '1231232', 'bf', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-	('user01', '0101', '유저01', NULL, 'f', '유저01', NULL, '010-0101-0101', 0, 1, 'u', '2020-07-28', '2020-07-15 16:55:56', NULL, 'bf', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-	('user02', '0202', '유저02', NULL, 'f', '유저02', NULL, '010-0202-0202', 0, 1, 'u', '2020-07-28', '2020-07-15 16:55:56', NULL, 'bf', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-	('wjddbstp95@gmail.com', '1111', '윤세', NULL, 'm', '정윤세', NULL, '010-0011-1100', 0, 1, 'u', '2020-07-16', '2020-07-29 10:27:24', NULL, 'bf', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-	('xodnr097@naver.com', '1111', '유저유저1', NULL, 'f', '김태욱', '충정도', '010-9430-3757', 0, 1, 'u', '2020-07-16', '2020-07-29 10:27:28', NULL, 'bf', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
-/*!40000 ALTER TABLE `user` ENABLE KEYS */;
+-- 내보낼 데이터가 선택되어 있지 않습니다.
 
 -- 테이블 liblibero.product 구조 내보내기
-DROP TABLE IF EXISTS `product`;
 CREATE TABLE IF NOT EXISTS `product` (
   `prod_no` int(11) NOT NULL AUTO_INCREMENT,
   `prod_type` varchar(10) NOT NULL,
@@ -117,139 +78,85 @@ CREATE TABLE IF NOT EXISTS `product` (
   KEY `prod_type` (`prod_type`),
   CONSTRAINT `FK_product_user` FOREIGN KEY (`factory_id`) REFERENCES `user` (`user_id`),
   CONSTRAINT `FK_product_user_2` FOREIGN KEY (`creator`) REFERENCES `user` (`user_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=10029 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=10000 DEFAULT CHARSET=utf8;
 
--- 테이블 데이터 liblibero.product:~65 rows (대략적) 내보내기
-DELETE FROM `product`;
-/*!40000 ALTER TABLE `product` DISABLE KEYS */;
-INSERT INTO `product` (`prod_no`, `prod_type`, `prod_name`, `prod_detail`, `author`, `retail_price`, `print_price`, `blind_code`, `prod_thumbnail`, `cover_file`, `purpose_code`, `manu_file`, `reg_date`, `discount_code`, `book_page`, `size_type`, `color_type`, `cover_type`, `inner_type`, `factory_id`, `creator`, `like_count`, `book_category`) VALUES
-	(10000, 'paper', '정윤세 연대기', NULL, '김태욱', 10000, 5000, 'show', 't1.png', NULL, 'have', NULL, '2020-07-15 16:50:59', 'x', 100, 'a5', 'color', 'snow', 'rough', 'factory01@naver.com', 'admin2', 0, NULL),
-	(10001, 'paper', '이윤경간첩1', NULL, '이윤경', 13000, 3000, 'show', 'no', NULL, 'sale', NULL, '2020-07-15 00:00:00', 'o', 300, 'a4', 'color', 'snow', 'white', 'factory02@hanmail.net', 'admin2', 0, NULL),
-	(10002, 'paper', '이윤경간첩2', NULL, '이윤경', 13000, 3000, 'show', 'no', NULL, 'sale', NULL, '2020-07-15 00:00:00', 'o', 300, 'a4', 'black', 'snow', 'ivory', 'factory01@naver.com', 'admin2', 0, NULL),
-	(10003, 'paper', '이윤경간첩3', NULL, '이윤경', 13000, 3000, 'show', 'no', NULL, 'sale', NULL, '2020-07-15 00:00:00', 'o', 300, 'a4', 'color', 'arte', 'rough', 'factory02@hanmail.net', 'admin2', 0, NULL),
-	(10004, 'paper', '이윤경간첩4', NULL, '이윤경', 13000, 3000, 'show', 'no', NULL, 'sale', NULL, '2020-07-15 00:00:00', 'o', 300, 'a5', 'black', 'arte', 'white', 'factory01@naver.com', 'admin2', 0, NULL),
-	(10005, 'paper', '이윤경간첩5', NULL, '이윤경', 13000, 3000, 'show', 'no', NULL, 'sale', NULL, '2020-07-15 00:00:00', 'o', 400, 'a5', 'color', 'mont', 'ivory', 'factory02@hanmail.net', 'admin2', 0, NULL),
-	(10006, 'paper', '이윤경간첩6', NULL, '이윤경', 13000, 3000, 'show', 'no', NULL, 'sale', NULL, '2020-07-15 00:00:00', 'o', 400, 'b5', 'black', 'mont', 'rough', 'factory01@naver.com', 'admin2', 0, NULL),
-	(10007, 'paper', '이윤경간첩7', NULL, '이윤경', 13000, 3000, 'show', 'no', NULL, 'sale', NULL, '2020-07-15 00:00:00', 'o', 400, 'b5', 'color', 'arte', 'white', 'factory01@naver.com', 'admin2', 0, NULL),
-	(10008, 'paper', '이윤경간첩8', NULL, '이윤경', 13000, 3000, 'show', 'no', NULL, 'sale', NULL, '2020-07-15 00:00:00', 'o', 400, 'b5', 'black', 'snow', 'rough', 'factory02@hanmail.net', 'admin2', 0, NULL),
-	(10009, 'ebook', '전자책1', NULL, 'ktw', 7000, NULL, 'show', 'no', NULL, 'sale', NULL, '2020-07-15 00:00:00', 'o', 500, NULL, NULL, NULL, NULL, NULL, 'admin2', 0, NULL),
-	(10010, 'ebook', '전자책2', NULL, 'ktw', 7000, NULL, 'show', 'no', NULL, 'sale', NULL, '2020-07-15 00:00:00', 'o', 250, NULL, NULL, NULL, NULL, NULL, 'admin2', 0, NULL),
-	(10011, 'ebook', '전자책3', NULL, 'ktw', 7000, NULL, 'show', 'no', NULL, 'sale', NULL, '2020-07-15 00:00:00', 'o', 300, NULL, NULL, NULL, NULL, NULL, 'admin2', 0, NULL),
-	(10012, 'ebook', '전자책4', NULL, 'ktw', 7000, NULL, 'show', 'no', NULL, 'sale', NULL, '2020-07-15 00:00:00', 'o', 400, NULL, NULL, NULL, NULL, NULL, 'admin2', 0, NULL),
-	(10013, 'ebook', '전자책5', NULL, 'ktw', 7000, NULL, 'show', 'no', NULL, 'sale', NULL, '2020-07-15 00:00:00', 'o', 350, NULL, NULL, NULL, NULL, NULL, 'admin2', 0, NULL),
-	(10014, 'design', '표지디자인1', NULL, 'cje', 40000, NULL, 'show', 'no', NULL, 'sale', NULL, '2020-07-15 00:00:00', 'o', NULL, NULL, NULL, NULL, NULL, NULL, 'admin2', 0, NULL),
-	(10015, 'design', '표지디자인2', NULL, 'cje', 40000, NULL, 'show', 'no', NULL, 'sale', NULL, '2020-07-15 00:00:00', 'o', NULL, NULL, NULL, NULL, NULL, NULL, 'admin2', 0, NULL),
-	(10016, 'design', '표지디자인3', NULL, 'cje', 40000, NULL, 'show', 'no', NULL, 'sale', NULL, '2020-07-15 00:00:00', 'o', NULL, NULL, NULL, NULL, NULL, NULL, 'admin2', 0, NULL),
-	(10017, 'design', '표지디자인4', NULL, 'cje', 40000, NULL, 'show', 'no', NULL, 'sale', NULL, '2020-07-15 00:00:00', 'o', NULL, NULL, NULL, NULL, NULL, NULL, 'admin2', 0, NULL),
-	(10018, 'design', '표지디자인5', NULL, 'cje', 40000, NULL, 'show', 'no', NULL, 'sale', NULL, '2020-07-15 00:00:00', 'o', NULL, NULL, NULL, NULL, NULL, NULL, 'admin2', 0, NULL),
-	(10019, 'target', '맞춤형표지1', NULL, 'jys', 80000, NULL, 'show', 'no', NULL, 'sale', NULL, '2020-07-15 00:00:00', 'o', NULL, NULL, NULL, NULL, NULL, NULL, 'admin2', 0, NULL),
-	(10020, 'target', '맞춤형표지2', NULL, 'jys', 80000, NULL, 'show', 'no', NULL, 'sale', NULL, '2020-07-15 00:00:00', 'o', NULL, NULL, NULL, NULL, NULL, NULL, 'admin2', 0, NULL),
-	(10021, 'target', '맞춤형표지3', NULL, 'jys', 80000, NULL, 'show', 'no', NULL, 'sale', NULL, '2020-07-15 00:00:00', 'o', NULL, NULL, NULL, NULL, NULL, NULL, 'admin2', 0, NULL),
-	(10022, 'target', '맞춤형표지4', NULL, 'jys', 80000, NULL, 'show', 'no', NULL, 'sale', NULL, '2020-07-15 00:00:00', 'o', NULL, NULL, NULL, NULL, NULL, NULL, 'admin2', 0, NULL),
-	(10023, 'target', '맞춤형표지5', '<p>test</p>', 'jys', 80000, NULL, 'show', 'no', NULL, 'sale', NULL, '2020-07-15 00:00:00', 'o', NULL, NULL, NULL, NULL, NULL, NULL, 'admin2', 0, NULL),
-	(10024, 'paper', NULL, NULL, NULL, NULL, NULL, 'show', NULL, NULL, NULL, NULL, '2020-07-16 17:46:28', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'choije9410@gmail.com', 0, NULL),
-	(10025, 'paper', NULL, NULL, NULL, NULL, NULL, 'show', NULL, NULL, NULL, NULL, '2020-07-16 17:50:15', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'choije9410@gmail.com', 0, NULL),
-	(10026, 'design', 'ddd', '디자인', NULL, 10000, NULL, 'show', NULL, NULL, NULL, NULL, '2020-07-18 18:41:47', 'x', NULL, NULL, NULL, NULL, NULL, NULL, 'choije9410@gmail.com', 0, NULL),
-	(10027, 'design', 'test', 'test', NULL, 10000, NULL, 'show', 'titi', NULL, NULL, NULL, '2020-07-18 21:19:16', 'x', NULL, NULL, NULL, NULL, NULL, NULL, 'admin1', 0, NULL),
-	(10028, 'design', 'test', 'test', NULL, 10000, NULL, 'show', 'titi', NULL, NULL, NULL, '2020-07-18 21:40:15', 'x', NULL, NULL, NULL, NULL, NULL, NULL, 'admin1', 0, NULL);
-/*!40000 ALTER TABLE `product` ENABLE KEYS */;
+-- 내보낼 데이터가 선택되어 있지 않습니다.
 
 -- 테이블 liblibero.buy 구조 내보내기
-DROP TABLE IF EXISTS `buy`;
-CREATE TABLE `buy` (
-	`buy_no` INT(11) NOT NULL AUTO_INCREMENT,
-	`prod_no` INT(11) NOT NULL,
-	`user_id` VARCHAR(30) NOT NULL COLLATE 'utf8_general_ci',
-	`buy_amount` INT(11) NOT NULL DEFAULT '1',
-	`buy_code` VARCHAR(50) NOT NULL DEFAULT 'ready' COLLATE 'utf8_general_ci',
-	`pay_no` VARCHAR(50) NULL DEFAULT NULL COLLATE 'utf8_general_ci',
-	`prod_type` VARCHAR(10) NOT NULL COLLATE 'utf8_general_ci',
-	PRIMARY KEY (`buy_no`) USING BTREE,
-	INDEX `FK_buy_product` (`prod_no`) USING BTREE,
-	INDEX `FK_buy_user` (`user_id`) USING BTREE,
-	INDEX `FK_buy_pay` (`pay_no`) USING BTREE,
-	INDEX `FK_buy_product2` (`prod_type`) USING BTREE,
-	CONSTRAINT `FK_buy_pay` FOREIGN KEY (`pay_no`) REFERENCES `liblibero`.`pay` (`pay_no`) ON UPDATE RESTRICT ON DELETE RESTRICT,
-	CONSTRAINT `FK_buy_product` FOREIGN KEY (`prod_no`) REFERENCES `liblibero`.`product` (`prod_no`) ON UPDATE RESTRICT ON DELETE RESTRICT,
-	CONSTRAINT `FK_buy_product2` FOREIGN KEY (`prod_type`) REFERENCES `liblibero`.`product` (`prod_type`) ON UPDATE RESTRICT ON DELETE RESTRICT,
-	CONSTRAINT `FK_buy_user` FOREIGN KEY (`user_id`) REFERENCES `liblibero`.`user` (`user_id`) ON UPDATE RESTRICT ON DELETE RESTRICT
-	)
-	COLLATE='utf8_general_ci'
-	ENGINE=InnoDB
-	AUTO_INCREMENT=10005
+CREATE TABLE IF NOT EXISTS `buy` (
+  `buy_no` int(11) NOT NULL AUTO_INCREMENT,
+  `prod_no` int(11) NOT NULL,
+  `user_id` varchar(30) NOT NULL,
+  `buy_amount` int(11) NOT NULL DEFAULT '1',
+  `buy_code` varchar(50) NOT NULL DEFAULT 'ready',
+  `pay_no` varchar(50) DEFAULT NULL,
+  `prod_type` varchar(10) NOT NULL,
+  PRIMARY KEY (`buy_no`) USING BTREE,
+  KEY `FK_buy_product` (`prod_no`) USING BTREE,
+  KEY `FK_buy_user` (`user_id`) USING BTREE,
+  KEY `FK_buy_pay` (`pay_no`) USING BTREE,
+  KEY `FK_buy_product2` (`prod_type`) USING BTREE,
+  CONSTRAINT `FK_buy_pay` FOREIGN KEY (`pay_no`) REFERENCES `pay` (`pay_no`),
+  CONSTRAINT `FK_buy_product` FOREIGN KEY (`prod_no`) REFERENCES `product` (`prod_no`),
+  CONSTRAINT `FK_buy_product_2` FOREIGN KEY (`prod_type`) REFERENCES `product` (`prod_type`),
+  CONSTRAINT `FK_buy_user` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=10000 DEFAULT CHARSET=utf8;
 
--- 테이블 데이터 liblibero.buy:~5 rows (대략적) 내보내기
-DELETE FROM `buy`;
-/*!40000 ALTER TABLE `buy` DISABLE KEYS */;
-INSERT INTO `buy` (`buy_no`, `prod_no`, `user_id`, `buy_amount`, `buy_code`, `pay_no`, `prod_type`) VALUES 
-(10000, 10000, 'user01', 1, 'paid', '10000', 'paper'),
-(10001, 10001, 'user01', 2, 'paid', '10003', 'paper'),
-(10002, 10000, 'user01', 3, 'paid', '10003', 'paper'),
-(10003, 10000, 'user02', 10, 'ready', '10001', 'paper'),
-(10004, 10005, 'wjddbstp95@gmail.com', 1000, 'ready', '10002', 'paper');
-/*!40000 ALTER TABLE `buy` ENABLE KEYS */;
-
+-- 내보낼 데이터가 선택되어 있지 않습니다.
 
 -- 테이블 liblibero.pay 구조 내보내기
-DROP TABLE IF EXISTS `pay`;
-CREATE TABLE `pay` (
-	`pay_no` VARCHAR(50) NOT NULL COLLATE 'utf8_general_ci',
-	`user_id` VARCHAR(30) NOT NULL COLLATE 'utf8_general_ci',
-	`payment_type` VARCHAR(10) NOT NULL COLLATE 'utf8_general_ci',
-	`actual_price` INT(11) NOT NULL,
-	`receiver_name` VARCHAR(20) NOT NULL COLLATE 'utf8_general_ci',
-	`receiver_addr` VARCHAR(100) NOT NULL COLLATE 'utf8_general_ci',
-	`receiver_phone` VARCHAR(14) NOT NULL COLLATE 'utf8_general_ci',
-	`delivery_req` VARCHAR(50) NULL DEFAULT NULL COLLATE 'utf8_general_ci',
-	`pay_date` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-	`delivery_code` SMALLINT(6) NOT NULL DEFAULT '1',
-	`pay_code` VARCHAR(50) NULL DEFAULT NULL COLLATE 'utf8_general_ci',
-	`cancel_type` INT(1) NULL DEFAULT NULL,
-	PRIMARY KEY (`pay_no`) USING BTREE,
-	INDEX `FK_pay_user` (`user_id`) USING BTREE,
-	CONSTRAINT `FK_pay_user` FOREIGN KEY (`user_id`) REFERENCES `liblibero`.`user` (`user_id`) ON UPDATE RESTRICT ON DELETE RESTRICT
-)
-COLLATE='utf8_general_ci'
-ENGINE=InnoDB
-;
+CREATE TABLE IF NOT EXISTS `pay` (
+  `pay_no` varchar(50) NOT NULL,
+  `user_id` varchar(30) NOT NULL,
+  `payment_type` varchar(10) NOT NULL,
+  `actual_price` int(11) NOT NULL,
+  `receiver_name` varchar(20) NOT NULL,
+  `receiver_addr` varchar(100) NOT NULL,
+  `receiver_phone` varchar(14) NOT NULL,
+  `delivery_req` varchar(50) DEFAULT NULL,
+  `pay_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `delivery_code` smallint(6) NOT NULL DEFAULT '1',
+  `pay_code` varchar(50) DEFAULT NULL,
+  `cancel_type` int(1) DEFAULT NULL,
+  PRIMARY KEY (`pay_no`) USING BTREE,
+  KEY `FK_pay_user` (`user_id`) USING BTREE,
+  CONSTRAINT `FK_pay_user` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-
--- 테이블 데이터 liblibero.pay:~4 rows (대략적) 내보내기
-/*!40000 ALTER TABLE `pay` DISABLE KEYS */;
-INSERT INTO `pay` (`pay_no`, `user_id`, `payment_type`, `actual_price`, `receiver_name`, `receiver_addr`, `receiver_phone`, `delivery_req`, `pay_date`, `delivery_code`, `pay_code`, `cancel_type`) VALUES 
-('10000', 'user01', 'c', 10000, '정윤세', '경기도 용인시 수지구 풍덕 고등 학교', '010-0000-1100', '으', '2020-07-16 17:12:47', 2, 'paid', NULL),
-('10001', 'user02', 'c', 100000, '유저01', '집', '123-1234-1234', '힘들다', '2020-07-16 17:12:47', 1, 'paid', NULL),
-('10002', 'wjddbstp95@gmail.com', 'c', 13000000, '수령자이름', '문앞', '123-1234-1234', 'ㅇㅇ', '2020-07-16 17:12:47', 1, 'paid', NULL),
-('10003', 'user01', 'c', 56000, '정윤세', '경기도 용인시', '010-0000-0011', '빠른 배송', '2020-07-16 17:16:24', 1, 'paid', NULL);
-/*!40000 ALTER TABLE `pay` ENABLE KEYS */;
-
-
+-- 내보낼 데이터가 선택되어 있지 않습니다.
 
 -- 테이블 liblibero.cash 구조 내보내기
-DROP TABLE IF EXISTS `cash`;
 CREATE TABLE IF NOT EXISTS `cash` (
   `cash_no` int(11) NOT NULL AUTO_INCREMENT,
   `user_id` varchar(30) NOT NULL,
   `cash_amount` int(11) NOT NULL,
   `reg_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `buy_no` int(11) DEFAULT NULL,
   PRIMARY KEY (`cash_no`),
   KEY `FK_cash_user` (`user_id`),
+  KEY `buy_no` (`buy_no`),
+  CONSTRAINT `FK_cash_buy` FOREIGN KEY (`buy_no`) REFERENCES `buy` (`buy_no`),
   CONSTRAINT `FK_cash_user` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=10005 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=10000 DEFAULT CHARSET=utf8;
 
--- 테이블 데이터 liblibero.cash:~5 rows (대략적) 내보내기
-DELETE FROM `cash`;
-/*!40000 ALTER TABLE `cash` DISABLE KEYS */;
-INSERT INTO `cash` (`cash_no`, `user_id`, `cash_amount`, `reg_date`) VALUES
-	(10000, 'choije9410@gmail.com', 3000, '2020-07-15 17:33:10'),
-	(10001, 'choije9410@gmail.com', 20000, '2020-07-15 17:33:33'),
-	(10002, 'choije9410@gmail.com', 10000, '2020-07-15 17:33:45'),
-	(10003, 'choije9410@gmail.com', 15000, '2020-07-15 17:33:45'),
-	(10004, 'choije9410@gmail.com', -10000, '2020-07-15 17:33:45');
-/*!40000 ALTER TABLE `cash` ENABLE KEYS */;
+-- 내보낼 데이터가 선택되어 있지 않습니다.
+
+-- 테이블 liblibero.chat_room 구조 내보내기
+CREATE TABLE IF NOT EXISTS `chat_room` (
+  `room_no` int(11) NOT NULL AUTO_INCREMENT,
+  `host` varchar(30) NOT NULL,
+  `guest` varchar(30) NOT NULL,
+  `reg_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`room_no`),
+  KEY `FK_chat_room_user` (`host`),
+  KEY `FK_chat_room_user_2` (`guest`),
+  CONSTRAINT `FK_chat_room_user` FOREIGN KEY (`host`) REFERENCES `user` (`user_id`),
+  CONSTRAINT `FK_chat_room_user_2` FOREIGN KEY (`guest`) REFERENCES `user` (`user_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- 내보낼 데이터가 선택되어 있지 않습니다.
 
 -- 테이블 liblibero.chat_message 구조 내보내기
-DROP TABLE IF EXISTS `chat_message`;
 CREATE TABLE IF NOT EXISTS `chat_message` (
   `message_no` int(11) NOT NULL AUTO_INCREMENT,
   `room_no` int(11) NOT NULL,
@@ -262,34 +169,11 @@ CREATE TABLE IF NOT EXISTS `chat_message` (
   KEY `FK_chat_message_user` (`sender_id`),
   CONSTRAINT `FK_chat_message_chat_room` FOREIGN KEY (`room_no`) REFERENCES `chat_room` (`room_no`),
   CONSTRAINT `FK_chat_message_user` FOREIGN KEY (`sender_id`) REFERENCES `user` (`user_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=10000 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
--- 테이블 데이터 liblibero.chat_message:~0 rows (대략적) 내보내기
-DELETE FROM `chat_message`;
-/*!40000 ALTER TABLE `chat_message` DISABLE KEYS */;
-/*!40000 ALTER TABLE `chat_message` ENABLE KEYS */;
-
--- 테이블 liblibero.chat_room 구조 내보내기
-DROP TABLE IF EXISTS `chat_room`;
-CREATE TABLE IF NOT EXISTS `chat_room` (
-  `room_no` int(11) NOT NULL AUTO_INCREMENT,
-  `host` varchar(30) NOT NULL,
-  `guest` varchar(30) NOT NULL,
-  `reg_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  PRIMARY KEY (`room_no`),
-  KEY `FK_chat_room_user` (`host`),
-  KEY `FK_chat_room_user_2` (`guest`),
-  CONSTRAINT `FK_chat_room_user` FOREIGN KEY (`host`) REFERENCES `user` (`user_id`),
-  CONSTRAINT `FK_chat_room_user_2` FOREIGN KEY (`guest`) REFERENCES `user` (`user_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=10000 DEFAULT CHARSET=utf8;
-
--- 테이블 데이터 liblibero.chat_room:~0 rows (대략적) 내보내기
-DELETE FROM `chat_room`;
-/*!40000 ALTER TABLE `chat_room` DISABLE KEYS */;
-/*!40000 ALTER TABLE `chat_room` ENABLE KEYS */;
+-- 내보낼 데이터가 선택되어 있지 않습니다.
 
 -- 테이블 liblibero.comment 구조 내보내기
-DROP TABLE IF EXISTS `comment`;
 CREATE TABLE IF NOT EXISTS `comment` (
   `comment_no` int(11) NOT NULL AUTO_INCREMENT,
   `post_no` int(11) NOT NULL,
@@ -304,22 +188,11 @@ CREATE TABLE IF NOT EXISTS `comment` (
   CONSTRAINT `FK_comment_comment` FOREIGN KEY (`parent_comment_no`) REFERENCES `comment` (`comment_no`),
   CONSTRAINT `FK_comment_post` FOREIGN KEY (`post_no`) REFERENCES `post` (`post_no`),
   CONSTRAINT `FK_comment_user` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=10006 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=10000 DEFAULT CHARSET=utf8;
 
--- 테이블 데이터 liblibero.comment:~6 rows (대략적) 내보내기
-DELETE FROM `comment`;
-/*!40000 ALTER TABLE `comment` DISABLE KEYS */;
-INSERT INTO `comment` (`comment_no`, `post_no`, `user_id`, `comment_content`, `reg_date`, `parent_comment_no`) VALUES
-	(10000, 10003, 'user01', '이해합니다', '2020-07-15 17:53:01', NULL),
-	(10001, 10003, 'user02', '앞으로 factory01 이용하겠습니다.', '2020-07-15 17:52:54', NULL),
-	(10002, 10004, 'user02', '헐 6시 좋아하세요? 저도요', '2020-07-15 17:53:53', NULL),
-	(10003, 10006, 'admin3', '안녕하세요 user02님, 리브리베로입니다.\r\n\r\n현재 당사 시스템상으로는 저자 수익금이 0원이 되도록 변경하는 설정은 존재하지 않습니다.\r\n일반판매용으로 등록시 수익금이 발생하므로,\r\n "소장용"으로 제출하여 필요하신만큼 구매하여 제작만 진행해주시면 좋을 것 같습니다.', '2020-07-15 17:58:27', NULL),
-	(10004, 10005, 'user01', '안녕', '2020-07-15 17:59:10', NULL),
-	(10005, 10005, 'user02', 'ㅎ2', '2020-07-15 18:00:02', 10004);
-/*!40000 ALTER TABLE `comment` ENABLE KEYS */;
+-- 내보낼 데이터가 선택되어 있지 않습니다.
 
 -- 테이블 liblibero.hashtag 구조 내보내기
-DROP TABLE IF EXISTS `hashtag`;
 CREATE TABLE IF NOT EXISTS `hashtag` (
   `hashtag_no` int(11) NOT NULL AUTO_INCREMENT,
   `prod_no` int(11) DEFAULT NULL,
@@ -330,27 +203,12 @@ CREATE TABLE IF NOT EXISTS `hashtag` (
   KEY `FK_hashtag_product` (`prod_no`),
   CONSTRAINT `FK_hashtag_product` FOREIGN KEY (`prod_no`) REFERENCES `product` (`prod_no`),
   CONSTRAINT `FK_hashtag_user` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=10011 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=10000 DEFAULT CHARSET=utf8;
 
--- 테이블 데이터 liblibero.hashtag:~11 rows (대략적) 내보내기
-DELETE FROM `hashtag`;
-/*!40000 ALTER TABLE `hashtag` DISABLE KEYS */;
-INSERT INTO `hashtag` (`hashtag_no`, `prod_no`, `hashtag_name`, `user_id`) VALUES
-	(10000, 10000, '판타지', NULL),
-	(10001, NULL, '로맨스', NULL),
-	(10002, NULL, '무협', 'choije9410@gmail.com'),
-	(10003, NULL, '경제', NULL),
-	(10004, NULL, '추리', NULL),
-	(10005, NULL, 'sf', 'choije9410@gmail.com'),
-	(10006, NULL, '인문학', NULL),
-	(10007, NULL, '종교', NULL),
-	(10008, NULL, '교육', NULL),
-	(10009, NULL, '연애', NULL),
-	(10010, NULL, '판타지', 'choije9410@gmail.com');
-/*!40000 ALTER TABLE `hashtag` ENABLE KEYS */;
+-- 내보낼 데이터가 선택되어 있지 않습니다.
+
 
 -- 테이블 liblibero.post 구조 내보내기
-DROP TABLE IF EXISTS `post`;
 CREATE TABLE IF NOT EXISTS `post` (
   `post_no` int(11) NOT NULL AUTO_INCREMENT,
   `post_type` char(1) NOT NULL,
@@ -358,16 +216,16 @@ CREATE TABLE IF NOT EXISTS `post` (
   `post_name` varchar(50) NOT NULL,
   `post_content` text NOT NULL,
   `reg_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `blind_code` char(1) NOT NULL DEFAULT 'o',
-  `report_count` int(11) NOT NULL DEFAULT '0',
+  `blind_code` varchar(50) NOT NULL DEFAULT 'show',
   `view_count` int(11) NOT NULL DEFAULT '0',
   `comment_count` int(11) DEFAULT '0',
   `qna_reg_type` char(1) DEFAULT NULL,
   `qna_code` char(1) DEFAULT NULL,
+  `report_count` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`post_no`),
   KEY `FK_post_user` (`user_id`),
   CONSTRAINT `FK_post_user` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=10031 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=10010 DEFAULT CHARSET=utf8;
 
 -- 테이블 데이터 liblibero.post:~10 rows (대략적) 내보내기
 DELETE FROM `post`;
@@ -381,13 +239,12 @@ INSERT INTO `post` (`post_no`, `post_type`, `user_id`, `post_name`, `post_conten
 	(10005, 'F', 'user01', '제가 쓴 글 좀 보세요', '제가 쓴 댓글을 보세요', '2020-07-15 17:43:31', 'o', 0, 0, 0, NULL, NULL),
 	(10006, 'Q', 'user02', '저자 수익을 0으로 하고 책값을 낮추고 싶습니다.', '현재 최대로 낮추어도 1500원 정도의 수익이 나고 있는데, 아예 0으로 낮추고 책값을 낮추는 방법이 있을까요?\r\n\r\n(계좌로 입금되는 금액 없도록)\r\n\r\n\r\n\r\n정부연구비로 출판을 하게되어 수익이 발생할 경우 문제 소지가 있어 질문드립니다.', '2020-07-15 17:46:04', 'o', 0, 0, 0, 'P', 'O'),
 	(10007, 'Q', 'user01', 'A5 사이즈 컬러내지 책 최소 페이지', '문의드립니다.\r\n\r\n\r\n\r\nA5 판형 컬러내지 책의 최소 페이지는 어느 정도인지 알고 싶습니다.\r\n\r\n제본에 무리가 없으려면 어느 정도 페이지여야 할까요?\r\n\r\n\r\n\r\n수고에 감사드립니다.', '2020-07-15 17:49:08', 'o', 0, 0, 0, 'P', 'X'),
-	(10025, '0', 'admin1', '얘는 쿼카에요', '<p>&nbsp;<img src="/libero/resources/images/community/fileUpload/d2afcd45-ada2-4312-98d0-d685adf38297.jpg" style="width: 400px;"></p><p>ㅎㅎ 웃어</p>', '2020-07-27 15:03:09', 'o', 0, 0, 0, NULL, NULL),
-	(10026, '0', 'admin1', '얘는 부엉이', '<p>올빼미? 부엉이</p><p><img src="/libero/resources/images/community/fileUpload/0dc24b96-4ffb-4ca6-8142-832042faf250.jpeg" style="width: 1088px;"><br></p>', '2020-07-27 15:08:45', 'o', 0, 0, 0, NULL, NULL);
+	(10008, '0', 'admin1', '얘는 쿼카에요', '<p>&nbsp;<img src="/libero/resources/images/community/fileUpload/d2afcd45-ada2-4312-98d0-d685adf38297.jpg" style="width: 400px;"></p><p>ㅎㅎ 웃어</p>', '2020-07-27 15:03:09', 'o', 0, 0, 0, NULL, NULL),
+	(10009, '0', 'admin1', '얘는 부엉이', '<p>올빼미? 부엉이</p><p><img src="/libero/resources/images/community/fileUpload/0dc24b96-4ffb-4ca6-8142-832042faf250.jpeg" style="width: 1088px;"><br></p>', '2020-07-27 15:08:45', 'o', 0, 0, 0, NULL, NULL);
 /*!40000 ALTER TABLE `post` ENABLE KEYS */;
 
 
 -- 테이블 liblibero.report 구조 내보내기
-DROP TABLE IF EXISTS `report`;
 CREATE TABLE IF NOT EXISTS `report` (
   `report_no` int(11) NOT NULL AUTO_INCREMENT,
   `prod_no` int(11) DEFAULT NULL,
@@ -402,41 +259,33 @@ CREATE TABLE IF NOT EXISTS `report` (
   CONSTRAINT `FK_report_post` FOREIGN KEY (`post_no`) REFERENCES `post` (`post_no`),
   CONSTRAINT `FK_report_product` FOREIGN KEY (`prod_no`) REFERENCES `product` (`prod_no`),
   CONSTRAINT `FK_report_user` FOREIGN KEY (`reporter_id`) REFERENCES `user` (`user_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=10002 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=10000 DEFAULT CHARSET=utf8;
 
--- 테이블 데이터 liblibero.report:~2 rows (대략적) 내보내기
-DELETE FROM `report`;
-/*!40000 ALTER TABLE `report` DISABLE KEYS */;
-INSERT INTO `report` (`report_no`, `prod_no`, `post_no`, `report_type`, `reporter_id`, `reg_date`) VALUES
-	(10000, 10000, NULL, 3, 'user02', '2020-07-15 18:01:54'),
-	(10001, NULL, 10005, 6, 'factory02@hanmail.net', '2020-07-15 18:03:45');
-/*!40000 ALTER TABLE `report` ENABLE KEYS */;
+-- 내보낼 데이터가 선택되어 있지 않습니다.
 
 -- 테이블 liblibero.review 구조 내보내기
-DROP TABLE IF EXISTS `review`;
 CREATE TABLE IF NOT EXISTS `review` (
   `review_no` int(11) NOT NULL AUTO_INCREMENT,
   `user_id` varchar(30) NOT NULL,
   `buy_no` int(11) NOT NULL,
-  `review_name` varchar(40) NOT NULL,
+  `review_name` varchar(40) DEFAULT NULL,
   `review_content` text NOT NULL,
-  `review_image` varchar(50) DEFAULT NULL,
+  `review_image` varchar(200) DEFAULT NULL,
   `star_rate` int(11) NOT NULL,
   `reg_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `prod_no` int(11) DEFAULT NULL,
   PRIMARY KEY (`review_no`),
   KEY `FK__user` (`user_id`),
   KEY `FK_review_order` (`buy_no`) USING BTREE,
+  KEY `prod_no` (`prod_no`),
   CONSTRAINT `FK__user` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`),
-  CONSTRAINT `FK_review_buy` FOREIGN KEY (`buy_no`) REFERENCES `buy` (`buy_no`)
-) ENGINE=InnoDB AUTO_INCREMENT=10000 DEFAULT CHARSET=utf8;
+  CONSTRAINT `FK_review_buy` FOREIGN KEY (`buy_no`) REFERENCES `buy` (`buy_no`),
+  CONSTRAINT `FK_review_product` FOREIGN KEY (`prod_no`) REFERENCES `product` (`prod_no`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
--- 테이블 데이터 liblibero.review:~0 rows (대략적) 내보내기
-DELETE FROM `review`;
-/*!40000 ALTER TABLE `review` DISABLE KEYS */;
-/*!40000 ALTER TABLE `review` ENABLE KEYS */;
+-- 내보낼 데이터가 선택되어 있지 않습니다.
 
 -- 테이블 liblibero.upload_file 구조 내보내기
-DROP TABLE IF EXISTS `upload_file`;
 CREATE TABLE IF NOT EXISTS `upload_file` (
   `file_no` int(11) NOT NULL AUTO_INCREMENT,
   `review_no` int(11) DEFAULT NULL,
@@ -451,49 +300,23 @@ CREATE TABLE IF NOT EXISTS `upload_file` (
   CONSTRAINT `FK__post` FOREIGN KEY (`post_no`) REFERENCES `post` (`post_no`),
   CONSTRAINT `FK__product` FOREIGN KEY (`prod_no`) REFERENCES `product` (`prod_no`),
   CONSTRAINT `FK_upload_file_review` FOREIGN KEY (`review_no`) REFERENCES `review` (`review_no`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- 내보낼 데이터가 선택되어 있지 않습니다.
+
+-- 테이블 liblibero.wish 구조 내보내기
+CREATE TABLE IF NOT EXISTS `wish` (
+  `wish_no` int(11) NOT NULL AUTO_INCREMENT,
+  `prod_no` int(11) NOT NULL,
+  `user_id` varchar(30) NOT NULL,
+  PRIMARY KEY (`wish_no`) USING BTREE,
+  KEY `FK_like_product` (`prod_no`),
+  KEY `FK_like_user` (`user_id`),
+  CONSTRAINT `FK_like_product` FOREIGN KEY (`prod_no`) REFERENCES `product` (`prod_no`),
+  CONSTRAINT `FK_like_user` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=10000 DEFAULT CHARSET=utf8;
 
--- 테이블 데이터 liblibero.upload_file:~0 rows (대략적) 내보내기
-DELETE FROM `upload_file`;
-/*!40000 ALTER TABLE `upload_file` DISABLE KEYS */;
-/*!40000 ALTER TABLE `upload_file` ENABLE KEYS */;
-
-
--- 테이블 liblibero.wish 구조 내보내기
-DROP TABLE IF EXISTS `wish`;
-CREATE TABLE IF NOT EXISTS `wish` (
-  `wish_no` int(11) NOT NULL AUTO_INCREMENT,
-  `prod_no` int(11) NOT NULL,
-  `user_id` varchar(30) NOT NULL,
-  PRIMARY KEY (`wish_no`) USING BTREE,
-  KEY `FK_like_product` (`prod_no`),
-  KEY `FK_like_user` (`user_id`),
-  CONSTRAINT `FK_like_product` FOREIGN KEY (`prod_no`) REFERENCES `product` (`prod_no`),
-  CONSTRAINT `FK_like_user` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=10001 DEFAULT CHARSET=utf8;
-
--- 테이블 liblibero.wish 구조 내보내기
-DROP TABLE IF EXISTS `wish`;
-CREATE TABLE IF NOT EXISTS `wish` (
-  `wish_no` int(11) NOT NULL AUTO_INCREMENT,
-  `prod_no` int(11) NOT NULL,
-  `user_id` varchar(30) NOT NULL,
-  PRIMARY KEY (`wish_no`) USING BTREE,
-  KEY `FK_like_product` (`prod_no`),
-  KEY `FK_like_user` (`user_id`),
-  CONSTRAINT `FK_like_product` FOREIGN KEY (`prod_no`) REFERENCES `product` (`prod_no`),
-  CONSTRAINT `FK_like_user` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=10143 DEFAULT CHARSET=utf8;
-
--- 테이블 데이터 liblibero.wish:~11 rows (대략적) 내보내기
-DELETE FROM `wish`;
-/*!40000 ALTER TABLE `wish` DISABLE KEYS */;
-INSERT INTO `wish` (`wish_no`, `prod_no`, `user_id`) VALUES
-	(10000, 10001, 'choije9410@gmail.com'),
-	(10002, 10002, 'admin2'),
-	(10004, 10004, 'admin2'),
-	(10006, 10006, 'admin2'),
-/*!40000 ALTER TABLE `wish` ENABLE KEYS */;
+-- 내보낼 데이터가 선택되어 있지 않습니다.
 
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
 /*!40014 SET FOREIGN_KEY_CHECKS=IF(@OLD_FOREIGN_KEY_CHECKS IS NULL, 1, @OLD_FOREIGN_KEY_CHECKS) */;
