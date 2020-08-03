@@ -1,5 +1,6 @@
 package com.libero.web.user;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -17,7 +18,10 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.libero.common.Page;
 import com.libero.common.Search;
+import com.libero.service.community.CommunityService;
 import com.libero.service.domain.Cash;
+import com.libero.service.domain.Comment;
+import com.libero.service.domain.Post;
 import com.libero.service.domain.Publish;
 import com.libero.service.domain.Report;
 import com.libero.service.domain.User;
@@ -35,6 +39,8 @@ public class UserController {
 	private UserService userService;
 	@Autowired
 	private PublishService publishService;
+	@Autowired
+	private CommunityService communityService;
 	@Autowired
 	private ReportService reportService;
 
@@ -138,38 +144,7 @@ public class UserController {
 		return modelAndView;
 	}
 	
-	@RequestMapping(value = "getAdminReportList", method = RequestMethod.GET)
-	public ModelAndView getAdminReportList(HttpSession session, String role, Report report, Search search) throws Exception{
-		System.out.println("/user/getAdminReportList : GET");
-		
-		if(search.getCurrentPage() == 0) {
-			search.setCurrentPage(1);
-		}
-		search.setPageSize(pageSize);
-		ModelAndView modelAndView = new ModelAndView();
-		role = ((User)session.getAttribute("user")).getRole();
-		
-		
-		
-		if (role.contentEquals("a")) {
-			Map<String,Object> map = reportService.getPostReportList(search);
-			Page resultPage = new Page(search.getCurrentPage(),
-					((Integer)map.get("totalCount")).intValue(), pageUnit, pageSize);
-
-			System.out.println(resultPage);
-			
-			modelAndView.addObject("list", map.get("list"));
-			modelAndView.addObject("resultPage", resultPage);
-			modelAndView.addObject("search", search);
-			modelAndView.addObject("totalCount", map.get("totalCount"));
-					
-			modelAndView.setViewName("forward:/view/user/getAdminReportList.jsp");
-		}else {
-			modelAndView.setViewName("forward:/view/user/getUserReportList.jsp");
-		}
-		
-		return modelAndView;
-	}
+	
 	
 	@RequestMapping(value = "getTempPublishList", method = RequestMethod.GET)
 	public ModelAndView getStatistics(HttpSession session, Publish publish) throws Exception {
@@ -240,5 +215,79 @@ public class UserController {
 		return modelAndView;
 	}
 	
+	@RequestMapping(value = "getAdminReportList", method = RequestMethod.GET)
+	public ModelAndView getAdminReportList(HttpSession session, String role, Report report, Search search) throws Exception{
+		System.out.println("/user/getAdminReportList : GET");
+		
+		if(search.getCurrentPage() == 0) {
+			search.setCurrentPage(1);
+		}
+		search.setPageSize(pageSize);
+		ModelAndView modelAndView = new ModelAndView();
+		role = ((User)session.getAttribute("user")).getRole();
+		
+		
+		
+		if (role.contentEquals("a")) {
+			Map<String,Object> map = reportService.getPostReportList(search);
+			Page resultPage = new Page(search.getCurrentPage(),
+					((Integer)map.get("totalCount")).intValue(), pageUnit, pageSize);
 
+			System.out.println(resultPage);
+			
+			modelAndView.addObject("list", map.get("list"));
+			modelAndView.addObject("resultPage", resultPage);
+			modelAndView.addObject("search", search);
+			modelAndView.addObject("totalCount", map.get("totalCount"));
+					
+			modelAndView.setViewName("forward:/view/user/getAdminReportList.jsp");
+		}else {
+			modelAndView.setViewName("forward:/view/user/getUserReportList.jsp");
+		}
+		
+		return modelAndView;
+	}
+	
+	@RequestMapping(value = "getUserActivityList", method = RequestMethod.GET)
+	public ModelAndView getUserActivityList( @RequestParam(value="menu", required=false) String menu, @ModelAttribute("search") Search search, HttpSession session, 
+								Comment comment, Post post) throws Exception {
+		
+		if(search.getCurrentPage() == 0) {
+			search.setCurrentPage(1);
+		}
+		search.setPageSize(pageSize);
+		
+		Map<String,Object> map = new HashMap<String,Object>(); 
+		
+		ModelAndView modelAndView = new ModelAndView();
+		String userId = ((User)session.getAttribute("user")).getUserId();
+		
+		System.out.println("menu가 뭔가요"+menu);
+		if(menu.equals(new String("post"))) {
+			map = communityService.getMyPostList(search, userId);
+		} 		
+		
+		if(menu.equals(new String("comment"))) {
+			map = communityService.getMyCommentList(search, userId);
+		} 
+		
+		if(menu.equals(new String("qna"))) {
+			map = communityService.getMyCommentList(search, userId);
+		} 
+		
+		Page resultPage = new Page(search.getCurrentPage(),
+									((Integer)map.get("totalCount")).intValue(), pageUnit, pageSize);
+		
+		System.out.println(resultPage);
+		
+		modelAndView.addObject("list", map.get("list"));
+		modelAndView.addObject("resultPage", resultPage);
+		modelAndView.addObject("search", search);
+		modelAndView.addObject("totalCount", map.get("totalCount"));
+		
+		modelAndView.setViewName("/view/user/getUserActivityList.jsp");
+		
+		return modelAndView;
+	}
+	
 }

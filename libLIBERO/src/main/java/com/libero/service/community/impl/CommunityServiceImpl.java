@@ -46,6 +46,17 @@ public class CommunityServiceImpl implements CommunityService {
 		map.put("totalCount", totalCount);
 		return map;
 	}
+	
+	public Map<String,Object> getMyPostList(Search search , String userId)throws Exception{
+		
+		List<Post> list= communityDAO.getMyPostList(search, userId);
+		int totalCount= communityDAO.getMyPostListTotalCount(userId);
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("list", list );
+		map.put("totalCount",totalCount);
+		return map;
+	}
 
 	public void addPost(Post post) throws Exception {
 		communityDAO.addPost(post);
@@ -70,6 +81,18 @@ public class CommunityServiceImpl implements CommunityService {
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("list", list);
 		map.put("totalCount", totalCount);
+		return map;
+	}
+	
+	public Map<String,Object> getMyCommentList(Search search , String userId) throws Exception{
+		
+		List<Comment> list= communityDAO.getMyCommentList(search, userId);
+		int totalCount = communityDAO.getMyCommentListTotalCount(userId);
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("list", list );
+		map.put("totalCount",totalCount);
+		//System.out.println(list);
 		return map;
 	}
 	

@@ -14,7 +14,7 @@
 		//이거 페이지처리야 ㅁㅊ아..
 		function fncGetUserList(currentPage) {
 			$("#currentPage").val(currentPage);
-			$("form").attr("method", "POST").attr("action", "/libero/user/getAdminReportList").submit();	
+			$("form").attr("method", "POST").attr("action", "/libero/community/getPostList?menu=notice").submit();	
 		}   
 	    
 
@@ -26,7 +26,11 @@
 	<jsp:include page="../toolbar.jsp" />
     <div class="container-doc">
         
-       
+        <main class="doc-main">
+            	
+        
+				
+                <article id="mainContent" class="content-article content-board">
                     
 				    <form class="form-inline text-right">
 				    
@@ -45,65 +49,64 @@
 					  </div>
 					  
 					  <button type="button" class="btn btn-default">검색</button>
-			
+					  <button type="button" class="btn btn-info" onclick="location.href='/libero/community/addPost?postType=n' ">글쓰기</button>
 					  <!-- PageNavigation 선택 페이지 값을 보내는 부분 -->
 					  <input type="hidden" id="currentPage" name="currentPage" value=""/>
+					  <input type="hidden" id="postType" name="postType" value="f"/>
 					  
 					</form>
 					
 	    			<p style="float:left"> 전체  ${resultPage.totalCount } 건수, 현재 ${resultPage.currentPage}  페이지 </p>
 				    
-                    <table class="table table-hover table-striped" >
-      
-			        <thead>
-			          <tr>
-			            <th align="center">No</th>
-			            <th align="left" >신고 대상</th>
-			            <th align="left">사유</th>
-			            <th align="left">신고날짜</th>
-			            <th align="left">현재상태</th>
-			            <th align="left">신고자</th>
-			            <th align="left">피신고자</th>
-			          </tr>
-			        </thead>
-			       
-					<tbody>
+                    <div class="warp_board">
+                        <ul class="list_news">
+                            <!-- 변수 지정하기  -->
 							<c:set var="i" value="0" />
-							<c:forEach var="report" items="${list}"> 
+							<c:forEach var="post" items="${list}"> 
                             <c:set var="i" value="${ i+1 }" />
-                            <tr class="ct_list_pop">
-							  <td align="center" onClick = "location.href='/libero/community/getPost?postNo=${report.post.postNo}'">${ i }</td>
-							  <td align="left">
-							  	${report.post.postName}
-							  </td>	
-							  <td align="left">
-							  	<c:if test="${report.reportType == 1}"><a>성인본 정책 위반</a></c:if>
-             					<c:if test="${report.reportType == 2}"><a>허위 및 과장 상품</a></c:if>
-             					<c:if test="${report.reportType == 3}"><a>근거없는 욕설 및 비방</a></c:if>
-             					<c:if test="${report.reportType == 4}"><a>반복적 광고 및 홍보</a></c:if>
-             					<c:if test="${report.reportType == 5}"><a>타인의 명예인격권 침해</a></c:if>
-             					<c:if test="${report.reportType == 6}"><a>기타</a></c:if>
-							  </td>
-							  <td align="left">${report.regDate}</td>
-							  <td align="left">${report.post.blindCode}</td>
-							  <td align="left">${report.user.nickname}</td>
-							  <td align="left">${report.post.user.userId}</td>
-							  
-							</tr>
+                            
+                            <li style="max-height: 183px;  overflow: hidden;">
+                                <a href="/libero/community/getPost?postNo=${post.postNo}" class="link_news before_thumb">
+                				<strong class="tit_news">${ i }&nbsp;&nbsp;${post.postName}</strong>
+             					</a>
+             					 <a class="link_thumb">
+             					 <c:if test="${ fn:contains(post.postContent, '<img') }">
+             					 	<c:set var="imgAfter" value="${ fn:substringAfter(post.postContent, '<img src=\"') }" />
+             					 	<c:set var="imgBefore" value="${ fn:substringBefore(imgAfter, '\" style') }" />
+									
+									<img src='<c:out value="${imgBefore}" />' alt='글사진' class='thumb_img' >
+
+									<%-- 
+									비포 : <c:out value="${imgAfter}" />
+									애프터 : <c:out value="${imgBefore}" />
+									<c:out value="${imgName}" escapeXml="true"/>
+									 --%>
+             					 </c:if>
+             					
+             					
+                                </a>
+                                <div class="txt_news" onclick="location.href='/libero/community/getPost?postNo=${post.postNo}' ">
+                                ${post.postContent}
+                                </div>
+                                
+                                
+                                
+                                
+                                <span class="txt_date">${post.regDate}</span>
+                            </li>
                             </c:forEach>
-                           </tbody>
-      
-      					</table>
+                           
                           
-                       
+                        </ul>
                     </div>
                     
-                
-           
+                </article>
+            
+        </main>
         
         <div class="dimmed_layer" style="display:none"></div>
         
-
+    </div>
 <jsp:include page="../../common/pageNavigator_new.jsp"/>
 </body>
 

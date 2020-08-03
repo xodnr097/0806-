@@ -14,6 +14,8 @@ public interface CommunityService {
 		
 		public Map<String, Object>getPostList(Search search) throws Exception;
 
+		public Map<String , Object> getMyPostList(Search search, String userId)throws Exception;
+		
 		public void updatePost(Post post) throws Exception;
 		
 		public void deletePost(int postNo) throws Exception;
@@ -24,6 +26,8 @@ public interface CommunityService {
 		public Comment getComment(int commentNo) throws Exception;
 		
 		public Map<String, Object> getCommentList(int postNo) throws Exception;
+		
+		public Map<String , Object> getMyCommentList(Search search , String userId)throws Exception;
 		
 		public void updateComment(Comment comment) throws Exception;
 		

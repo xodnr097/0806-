@@ -26,5 +26,5 @@
 			aria-pressed="true">신고 조회</a>  
 		
     </c:if>
-	
+	<a href="/libero/user/getUserActivityList?menu=post" class="btn btn-brown" role="button" aria-pressed="true">내활동내역</a> 
 </div>
