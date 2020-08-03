@@ -82,7 +82,7 @@ public class UserRestController {
 		
 		String host = "smtp.naver.com"; 
 		final String username = "wjddbstp"; //네이버 아이이디 
-		final String password = "mnbv4845!!"; //네이버 비번 
+		final String password = "mnbv48451"; //네이버 비번 
 		int port=465; 
 		String verCode=UserRestController.getAlphaNumericString();
 		String recipient = userId; //받는 사람 이메일 주소 
