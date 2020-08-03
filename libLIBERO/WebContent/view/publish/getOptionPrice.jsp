@@ -11,8 +11,7 @@
 		<style type="text/css">
 			.formLabel {
 				font-size: 20px;
-				background-color: #FFFFFF;
-				color: rgb(62, 121, 108);
+				color: #795548;
 				width: 100%;
 				padding-top: 10px;
 				padding-bottom: 10px;
@@ -20,7 +19,7 @@
 				font-family: 'Nanum Gothic', sans-serif;
 			}
 			.hrColor {
-				border-color: #8DCCBF;
+				border-color: #795548;
 			}
 			figure figcaption {
 			    text-align: center;
@@ -214,8 +213,8 @@
 	   			</div>
 	   		</form>
 	   		<div class="row justify-content-center">
-	   			<button class="btn btn-cyan" onclick="update()" name="updateGet">수정</button>
-	   			<button class="btn btn-cyan" onclick="submit()" name="updatePost">수정완료</button>
+	   			<button class="btn btn-brown lighten-1 btn-block" onclick="update()" name="updateGet">수정</button>
+	   			<button class="btn btn-brown lighten-1 btn-block" onclick="submit()" name="updatePost">수정완료</button>
 	   		</div>
 	   	</div>
 	   	<!-- ///////////// Bootstrap Container End ////////////////// -->

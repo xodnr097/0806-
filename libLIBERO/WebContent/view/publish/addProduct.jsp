@@ -20,8 +20,7 @@
 		<style>
 			 .formLabel {
 				font-size: 15px;
-				background-color: #FFFFFF;
-				color: rgb(62, 121, 108);
+				color: #795548;
 				width: 100%;
 				padding-top: 10px;
 				padding-bottom: 10px;
@@ -112,8 +111,8 @@
 				<!-- 상품 설명 입력폼(SummerNote) 끝 -->
 				<div class="form-group">
 			    	<div align="right">
-			      		<button type="button" class="btn btn-default" onclick="addProd()">등&nbsp;록</button>
-				  		<a class="btn btn-light btn" href="javascript:history.back();" role="button">취&nbsp;소</a>
+			      		<button type="button" class="btn btn-brown lighten-1" onclick="addProd()">등&nbsp;록</button>
+				  		<a class="btn btn-outline-brown waves-effect" href="javascript:history.back();" role="button">취&nbsp;소</a>
 			    	</div>
 			  	</div>
 			</form>

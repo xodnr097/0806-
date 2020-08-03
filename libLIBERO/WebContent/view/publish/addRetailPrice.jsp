@@ -11,23 +11,23 @@
 		<!--  ///////////////////////// CSS ////////////////////////// -->
 		<link rel="stylesheet" href="../resources/css/common.css">
 		<style type="text/css">
-		.hrColor {
-			border-color: #8DCCBF;
-		}
-		.formLabel {
-			font-size: 20px;
-			background-color: #FFFFFF;
-			color: rgb(62, 121, 108);
-			width: 100%;
-			padding-top: 10px;
-			padding-bottom: 10px;
-			margin-bottom: 0;
-			font-family: 'Nanum Gothic', sans-serif;
-		}
-		
-		.modalTable {
-			margin-bottom: 20px;
-		}
+			.hrColor {
+				border-color: #795548;
+			}
+			
+			.formLabel {
+				font-size: 15px;
+				color: #795548;
+				width: 100%;
+				padding-top: 10px;
+				padding-bottom: 10px;
+				margin-bottom: 0;
+				font-family: 'Nanum Gothic', sans-serif;
+			}
+			
+			.modalTable {
+				margin-bottom: 20px;
+			}
 		</style>
 	</head>
 	
@@ -165,7 +165,7 @@
 			  	<!-- Grid row -->
 			
 			  	<!-- Button trigger modal -->
-				<button type="button"  align="center" class="btn btn-cyan btn-block" data-toggle="modal" data-target="#centralModal" onclick="addModalContent()">
+				<button type="button"  align="center" class="btn btn-brown lighten-1 btn-block" data-toggle="modal" data-target="#centralModal" onclick="addModalContent()">
 				  	최종 확인 및 등록
 				</button>
 				

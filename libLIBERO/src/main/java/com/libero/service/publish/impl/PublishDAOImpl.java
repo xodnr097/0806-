@@ -89,7 +89,10 @@ public class PublishDAOImpl implements PublishDAO {
 	}
 	
 	public void removeTempPublish(Publish publish) throws Exception {
-		if (publish.getHashtagName()!=null || !publish.getHashtagName().contentEquals("")) {
+		if (publish.getHashtagName()!=null) {
+			if (!publish.getHashtagName().contentEquals("")) {
+				sqlSession.delete("PublishMapper.removeHashtag", publish);
+			}
 			sqlSession.delete("PublishMapper.removeHashtag", publish);
 		}
 		sqlSession.delete("PublishMapper.removeTempPublish", publish);
@@ -97,10 +100,6 @@ public class PublishDAOImpl implements PublishDAO {
 	
 	public int getTotalCount(Publish publish) throws Exception {
 		return sqlSession.selectOne("PublishMapper.getTotalCount", publish);
-	}
-	
-	public List<Statistics> getStatistics(Statistics statistics) throws Exception {
-		return sqlSession.selectList("StatisticsMapper.getDateStatistics", statistics);
 	}
 	
 	public Cash getUserCash(String userId) throws Exception {

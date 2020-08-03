@@ -37,8 +37,6 @@ public interface PublishDAO {
 	
 	public int getTotalCount(Publish publish) throws Exception;
 	
-	public List<Statistics> getStatistics(Statistics statistics) throws Exception;
-	
 	public Cash getUserCash(String userId) throws Exception;
 
 }
