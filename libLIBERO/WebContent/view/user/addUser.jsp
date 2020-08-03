@@ -9,11 +9,7 @@
 <jsp:include page="/common/cdn.jsp"></jsp:include>
 	
 	
-	<!--  ///////////////////////// Bootstrap, jQuery CDN ////////////////////////// -->
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" >
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" >
-	<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
-	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" ></script>
+	
 <script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
@@ -145,18 +141,14 @@
     
 </head>
 <body>
-<div class="navbar  navbar-default">
-        <div class="container">
-        	<a class="navbar-brand" href="/index.jsp"></a>
-   		</div>
-   	</div>
+
    	<!-- ToolBar End /////////////////////////////////////-->
 
 	<!--  화면구성 div Start /////////////////////////////////////-->
-	<form class="form-horizontal" enctype="multifile">
+	<form class="text-center border border-light p-5" enctype="multifile">
 	<div class="container">
 	
-		<h1 class="bg-primary text-center">회 원 가 입</h1>
+		<h1 class="h4 mb-4">회 원 가 입</h1>
 		
 		<!-- form Start /////////////////////////////////////-->
 		
@@ -172,15 +164,19 @@
 <!-- 		    <div class="col-sm-3" style="padding-top:5px;"> -->
 <!-- 				<input type="button" id="emailcheck"  class="col" value="이메일 확인"> -->
 <!-- 		    </div> -->
-	<div class="col-md-4 mb-3">
+	<div >
       <label for="validationServerUsername33">Username</label>
-      <div class="input-group">
-        <div class="input-group-prepend">
-        </div>
-        <input type="text" class="form-control" id="userId" name="userId" placeholder="이메일(아이디)" aria-describedby="inputGroupPrepend33">
+      <div>
+        <div class="mb-form">
+            <input type="text" class="form-control" id="userId" name="userId" placeholder="이메일(아이디)" aria-describedby="inputGroupPrepend33">
       		<button id="emailcheck"  class="btn btn-primary btn-sm btn-rounded" type="submit" >이메일 확인</button>
+      	</div>
       </div>
     </div>
+    <div class="md-form mt-0">
+                <input type="email" id="materialRegisterFormEmail" class="form-control">
+                <label for="materialRegisterFormEmail">E-mail</label>
+            </div>
   
   
 <!-- <i class="far fa-thumbs-up"></i> -->
@@ -204,7 +200,7 @@
 		  </div>
 		  
 		  <div class="form-group">
-		    <label for="password" class="col-sm-offset-1 col-sm-3 control-label">*비밀번호</label>
+		    <label for="password" class="col-sm-offset-1 col-sm-3 control-label">비밀번호</label>
 		    <div class="col-sm-4">
 		      	<input type="password" class="form-control" 
 		      		id="password" name="password" placeholder="비밀번호" required="required">

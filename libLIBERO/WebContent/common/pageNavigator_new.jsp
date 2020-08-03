@@ -7,9 +7,9 @@
 <div class="container text-center">
 		 
 		 <nav aria-label="Page navigation example">
-		  <!-- 크기조절 :  pagination-lg pagination-sm-->
-		  <ul class="pagination pg-teal justify-content-center">
-    
+		  <!-- ũ������ :  pagination-lg pagination-sm-->
+		  <ul class="pagination pg-amber justify-content-center">
+		  
 		    <!--  <<== 좌측 nav -->
 		  	<c:if test="${ resultPage.currentPage <= resultPage.pageUnit }">
 		 		<li class="page-item disabled">
