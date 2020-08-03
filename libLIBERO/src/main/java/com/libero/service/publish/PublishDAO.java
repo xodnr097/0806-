@@ -2,9 +2,9 @@ package com.libero.service.publish;
 
 import java.util.List;
 
+import com.libero.common.Search;
 import com.libero.service.domain.Cash;
 import com.libero.service.domain.Publish;
-import com.libero.service.domain.Statistics;
 import com.libero.service.domain.User;
 
 public interface PublishDAO {
@@ -31,7 +31,7 @@ public interface PublishDAO {
 	
 	public void updateOptionPrice(User user) throws Exception;
 	
-	public List<Publish> getUserPublishList(Publish publish) throws Exception;
+	public List<Publish> getUserPublishList(Publish publish, Search search) throws Exception;
 	
 	public void removeTempPublish(Publish publish) throws Exception;
 	

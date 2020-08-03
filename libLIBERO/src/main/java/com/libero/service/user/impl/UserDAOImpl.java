@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
 
+import com.libero.common.Search;
 import com.libero.service.domain.User;
 import com.libero.service.user.UserDAO;
 
@@ -37,9 +38,9 @@ public class UserDAOImpl implements UserDAO {
 	}
 
 	@Override
-	public List<User> getAdminCashList() throws Exception {
+	public List<User> getUserList(Search search) throws Exception {
 		// TODO Auto-generated method stub
-		return sqlSession.selectList("UserMapper.getAdminCashList");
+		return sqlSession.selectList("UserMapper.getUserList",search);
 	}
 
 	@Override
@@ -56,9 +57,11 @@ public class UserDAOImpl implements UserDAO {
 		}
 			
 	}
-	
-	
-	
-	
+
+	@Override
+	public int getUserTotalCount(Search search) throws Exception {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne("UserMapper.getUserTotalCount", search);
+	}
 
 }

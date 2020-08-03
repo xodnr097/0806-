@@ -1,15 +1,17 @@
 package com.libero.service.publish.impl;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
 
+import com.libero.common.Search;
 import com.libero.service.domain.Cash;
 import com.libero.service.domain.Publish;
-import com.libero.service.domain.Statistics;
 import com.libero.service.domain.User;
 import com.libero.service.publish.PublishDAO;
 
@@ -84,8 +86,11 @@ public class PublishDAOImpl implements PublishDAO {
 		sqlSession.update("PublishMapper.updateOptionPrice", user);
 	}
 	
-	public List<Publish> getUserPublishList(Publish publish) throws Exception {
-		return sqlSession.selectList("PublishMapper.getUserPublishList", publish);
+	public List<Publish> getUserPublishList(Publish publish, Search search) throws Exception {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("search", search);
+		map.put("publish", publish);
+		return sqlSession.selectList("PublishMapper.getUserPublishList", map);
 	}
 	
 	public void removeTempPublish(Publish publish) throws Exception {

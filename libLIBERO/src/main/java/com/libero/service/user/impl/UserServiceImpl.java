@@ -1,11 +1,14 @@
 package com.libero.service.user.impl;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
+import com.libero.common.Search;
 import com.libero.service.domain.User;
 import com.libero.service.user.UserDAO;
 import com.libero.service.user.UserService;
@@ -45,9 +48,16 @@ public class UserServiceImpl implements UserService{
 	}
 
 	@Override
-	public List<User> getAdminCashList() throws Exception {
+	public Map<String, Object> getUserList(Search search) throws Exception {
 		// TODO Auto-generated method stub
-		return userDAO.getAdminCashList();
+		List<User> list = userDAO.getUserList(search);
+		int totalCount = userDAO.getUserTotalCount(search);
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("list", list);
+		map.put("totalCount", totalCount);
+		
+		return map;
 	}
 
 	@Override

@@ -121,17 +121,26 @@ public class UserController {
 	}
 	
 	@RequestMapping(value = "getUserPublishList", method = RequestMethod.GET)
-	public ModelAndView getUserPublishList(HttpSession session, @RequestParam("prodType") String prodType, Publish publish) throws Exception {
+	public ModelAndView getUserPublishList(HttpSession session, @RequestParam("prodType") String prodType, Publish publish,Search search) throws Exception {
 		
 		System.out.println("/user/getUserPublishList : GET");
+		
+		if(search.getCurrentPage() ==0 ){
+			search.setCurrentPage(1);
+		}
+		search.setPageSize(pageSize);
 		
 		publish.setProdType(prodType);
 		publish.setCreator(((User)session.getAttribute("user")).getUserId());
 		
-		Map<String , Object> map=publishService.getUserPublishList(publish);
+		Map<String , Object> map=publishService.getUserPublishList(publish, search);
+		Page resultPage = new Page(search.getCurrentPage(),
+				((Integer)map.get("totalCount")).intValue(), pageUnit, pageSize);
 		
 		ModelAndView modelAndView = new ModelAndView();
 		modelAndView.addObject("list", map.get("list"));
+		modelAndView.addObject("resultPage", resultPage);
+		modelAndView.addObject("search", search);
 		modelAndView.addObject("totalCount", map.get("totalCount"));
 		modelAndView.setViewName("forward:/view/user/getUserPublishList.jsp");
 		
@@ -172,17 +181,26 @@ public class UserController {
 	}
 	
 	@RequestMapping(value = "getTempPublishList", method = RequestMethod.GET)
-	public ModelAndView getStatistics(HttpSession session, Publish publish) throws Exception {
+	public ModelAndView getStatistics(HttpSession session, Publish publish, Search search) throws Exception {
 		
 		System.out.println("/user/getTempPublishList : GET");
+		
+		if(search.getCurrentPage() ==0 ){
+			search.setCurrentPage(1);
+		}
+		search.setPageSize(pageSize);
 		
 		publish.setCreator(((User)session.getAttribute("user")).getUserId());
 		publish.setBlindCode("temp");
 		
-		Map<String , Object> map=publishService.getUserPublishList(publish);
+		Map<String , Object> map=publishService.getUserPublishList(publish,search);
+		Page resultPage = new Page(search.getCurrentPage(),
+				((Integer)map.get("totalCount")).intValue(), pageUnit, pageSize);
 		
 		ModelAndView modelAndView = new ModelAndView();
 		modelAndView.addObject("list", map.get("list"));
+		modelAndView.addObject("resultPage", resultPage);
+		modelAndView.addObject("search", search);
 		modelAndView.addObject("totalCount", map.get("totalCount"));
 		modelAndView.setViewName("forward:/view/user/getTempPublishList.jsp");
 		
@@ -222,19 +240,33 @@ public class UserController {
 		return modelAndView;
 	}
 	
-	@RequestMapping(value = "getAdminCashList", method = RequestMethod.GET)
-	public ModelAndView getAdminCashList(HttpSession session, String role) throws Exception{
+	@RequestMapping(value = "getUserList")
+	public ModelAndView getAdminCashList(HttpSession session, Search search) throws Exception{
 		
-		role = ((User)session.getAttribute("user")).getRole();
+		System.out.println("/user/getUserList : GET, POST"+search.getCurrentPage());
+		
+		String role = ((User)session.getAttribute("user")).getRole();
 		
 		ModelAndView modelAndView = new ModelAndView();
 		
 		if (role.contentEquals("a")) {
-			List<User> list = userService.getAdminCashList();
-			modelAndView.addObject("list", list);
-			modelAndView.setViewName("forward:/view/user/getAdminCashList.jsp");
+			
+			if(search.getCurrentPage() ==0 ){
+				search.setCurrentPage(1);
+			}
+			search.setPageSize(pageSize);
+			
+			Map<String , Object> map = userService.getUserList(search);
+			Page resultPage = new Page(search.getCurrentPage(),
+					((Integer)map.get("totalCount")).intValue(), pageUnit, pageSize);
+
+			modelAndView.addObject("list", map.get("list"));
+			modelAndView.addObject("resultPage", resultPage);
+			modelAndView.addObject("search", search);
+			modelAndView.addObject("totalCount", map.get("totalCount"));
+			modelAndView.setViewName("forward:/view/user/getUserList.jsp");
 		}else {
-			modelAndView.setViewName("redirect:/index.jsp");
+			modelAndView.setViewName("redirect:/");
 		}
 		
 		return modelAndView;

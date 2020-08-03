@@ -90,16 +90,26 @@
 		WHERE user_id IN(#{value})
 	 </select>
 	 
-	 <select id="getAdminCashList" resultMap="userSelectMap">
+	 <select id="getUserList" parameterType="search" resultMap="userSelectMap">
 	 	SELECT 
-	 	*
-	 	FROM user
+	 	* 
+	 	FROM (SELECT 
+				@rownum:=@rownum+1 num, u.*
+				FROM user u, (SELECT @rownum:=0) init2
+				) inner_table
+		WHERE num BETWEEN #{startRowNum} AND #{endRowNum}
 	 </select>
 	 
 	 <select id="duplicationCheck" parameterType="string" resultType="string">
 	 	SELECT user_id
 	 	FROM user
 	 	WHERE user_id = #{value}
+	 </select>
+	 
+	 <select id="getUserTotalCount"	parameterType="search"	resultType="int">
+	 	SELECT
+	 	COUNT(*)
+	 	FROM user
 	 </select>
 	 
 </mapper>

@@ -1,11 +1,10 @@
 package com.libero.service.publish;
 
-import java.util.List;
 import java.util.Map;
 
+import com.libero.common.Search;
 import com.libero.service.domain.Cash;
 import com.libero.service.domain.Publish;
-import com.libero.service.domain.Statistics;
 import com.libero.service.domain.User;
 
 public interface PublishService {
@@ -32,7 +31,7 @@ public interface PublishService {
 	
 	public void updateOptionPrice(User user) throws Exception;
 	
-	public Map<String, Object> getUserPublishList(Publish publish) throws Exception;
+	public Map<String, Object> getUserPublishList(Publish publish, Search search) throws Exception;
 	
 	public void removeTempPublish(Publish publish) throws Exception;
 	
