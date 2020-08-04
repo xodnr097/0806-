@@ -98,7 +98,7 @@
 			    	</div>
 	   			</div>
 	   			<div class="form-group" align="center">
-		      		<button type="button" class="btn btn-info btn-block" 
+		      		<button type="button" class="btn btn-brown btn-block" 
 		      			onclick="addManu()">
 		      			도서 정보 등록
 		      		</button>

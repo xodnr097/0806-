@@ -62,6 +62,24 @@
 	
 	</select>
 	
+	<select id="getBookListBySearch"	parameterType="search" resultMap="productSelectMap">
+			SELECT * FROM(
+							SELECT *	
+							FROM product 
+							WHERE (prod_type = 'paper' OR prod_type = 'ebook') 
+							AND blind_code='show' 
+							AND purpose_code='sale') pp
+								<where>
+										<if test="searchCondition == 'author'">
+												author LIKE '%${searchKeyword}%'
+										</if>
+								
+								</where>
+							
+							
+	
+	</select>
+	
 	<select id="getProductList"	parameterType="string" resultMap="productSelectMap">
 			SELECT * FROM product
 			WHERE prod_type = #{value}

@@ -20,12 +20,12 @@
 		<style>
 			 .formLabel {
 				font-size: 15px;
-				background-color: rgb(141, 204, 191);
-				color: rgb(62, 121, 108);
+				color: #795548;
 				width: 100%;
 				padding-top: 10px;
 				padding-bottom: 10px;
-				padding-left: 5px;
+				margin-bottom: 0;
+				font-family: 'Nanum Gothic', sans-serif;
 			}
 		</style>
 	</head>
@@ -42,7 +42,8 @@
 			<form>
 				<!-- 상품 번호 입력폼  -->
 				<input type="hidden" id="prodNo" name="prodNo" value="${prod.prodNo}">
-				<div class="form-group col-md-12">
+				<input type="hidden" name="prodType" value="${prod.prodType}">
+				<div class="form-group">
 				    <label class="formLabel" for="prodType">상품 종류</label>
 				    <div align="center">
 				    	<c:if test="${prod.prodType=='design'}">
@@ -58,26 +59,29 @@
 				</div>
 				<!-- 상품 번호 입력폼 끝 -->
 				<!-- 썸네일 입력폼 -->
-				<div class="form-group col-md-12">
+				<div class="form-group">
 				    <label class="formLabel" for="prodThumbnail">상품 썸네일</label>
 				    <div align="center">
-				        <input type="file" id="prodThumbnail" name="imgFile" value="${prod.prodThumbnail}">
-				        <img id="imgPreview" src="${prod.prodThumbnail}" width="150px" height="150px" />
+				    	<div style="justify-content: center; margin-bottom: 10px" class="row">
+				        	<input type="file" id="prodThumbnail" name="imgFile">
+				        </div>
+				        <img id="imgPreview" src="../resources/images/publish/fileUpload/thumbnailFile/${prod.prodThumbnail}" width="150px" height="150px" />
 			    	</div>
 				</div>
 				<!-- 썸네일 입력폼 끝 -->
 				<!-- 표지파일 입력폼 -->
-				<c:if test="${prod.prodType=='cover'}">
-					<div class="form-group col-md-12 coverFile">
+				<c:if test="${prod.prodType=='design'}">
+					<div class="form-group">
 					    <label class="formLabel" for="coverFile">표지 파일</label>
 					    <div align="center">
-					        <input type="file" id="coverFile" name="imgFile" value="${prod.coverFile}">
+					        <input type="file" id="coverFile" name="imgFile">
 				    	</div>
 					</div>
 				</c:if>
 				<!-- 표지파일 입력폼 끝 -->
+				<div class="row">
 				<!-- 상품 제목 입력폼  -->
-				<div class="form-group col-md-6">
+				<div class="form-group col-6">
 					<label class="formLabel" for="prodName">상품 제목</label>
 					<div>
 						<input type="text" id="prodName" name="prodName" class="form-control" value="${prod.prodName}">
@@ -85,7 +89,7 @@
 				</div>
 				<!-- 상품 제목 입력폼 끝  -->
 				<!-- 상품 가격 입력폼  -->
-				<div class="form-group col-md-6">
+				<div class="form-group col-6">
 					<c:if test="${prod.prodType=='design'||prod.prodType=='target'}">
 						<label class="formLabel" for="retailPrice">표지 가격</label>
 					</c:if>
@@ -97,8 +101,9 @@
 					</div>
 				</div>
 				<!-- 상품 가격 입력폼 끝  -->
+				</div>
 				<!-- 상품 설명 입력폼(SummerNote) -->
-				<div class="form-group col-md-12">
+				<div class="form-group">
 				    <label class="formLabel" for="prodDetail">상품상세정보</label>
 				    <div>
 						<textarea id="prodDetail" name="prodDetail" class="summernote" style="display: none;"></textarea>
@@ -106,10 +111,10 @@
 				    </div>
 				</div>
 				<!-- 상품 설명 입력폼(SummerNote) 끝 -->
-				<div class="form-group col-md-12">
-			    	<div class="col-md-12" align="right">
-			      		<button type="button" class="btn btn-primary" onclick="updateProduct()">수&nbsp;정</button>
-				  		<a class="btn btn-default btn" href="#" role="button">취&nbsp;소</a>
+				<div class="form-group">
+			    	<div align="right">
+			      		<button type="button" class="btn btn-brown" onclick="updateProduct()">수&nbsp;정</button>
+				  		<a class="btn btn-outline-brown waves-effect" href="javascript:history.back();" role="button">취&nbsp;소</a>
 			    	</div>
 			  	</div>
 			</form>
@@ -193,20 +198,6 @@
 		});
 	}
     
-	//============= radio 처리 =====================
-    $(function() {
-        $(".coverFile").show();
-          
-        $("input[value='design']").on("click", function(){
-        	$(".coverFile").show();
-        });
-    });
-        
-    $(function() {
-        $("input[value='target']").on("click", function(){
-        	$(".coverFile").hide();
-        });
-    });
     
     function updateProduct() {
     	$('textarea[name="prodDetail"]').val($('#summernote').summernote('code'));

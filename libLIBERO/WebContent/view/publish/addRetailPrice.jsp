@@ -311,8 +311,8 @@
 			      	
 				      	<div class="modal-footer">
 				      		<div class="col-lg-12">
-			      			<button type="button" class="btn btn-cyan btn-md btn-block col-lg-5" style="position: relative; float: left;" onclick="addRetailPrice()">등록</button>
-			        		<button type="button" class="btn btn-outline-info waves-effect btn-md btn-block col-lg-5" style="position: relative; float: right;" data-dismiss="modal">취소</button>
+			      			<button type="button" class="btn btn-brown btn-md btn-block col-lg-5" style="position: relative; float: left;" onclick="addRetailPrice()">등록</button>
+			        		<button type="button" class="btn btn-outline-brown waves-effect btn-md btn-block col-lg-5" style="position: relative; float: right;" data-dismiss="modal">취소</button>
 				      		</div>
 				      	</div>
 			    	</div>
@@ -350,13 +350,19 @@
 		
 		function addModalContent() {
 			var discount = $("input[name='discountCode']:checked").val();
+			var thumbnail = "${prod.prodThumbnail}";
 			if (discount=="x") {
 				$("#modalDiscount").html(": 할인제외");
 			}else {
 				$("#modalDiscount").html(": 할인포함");
 			}
 			
-			$("#modalImg").attr("src","../resources/images/publish/fileUpload/${prod.prodThumbnail}");
+			if (thumbnail != "") {
+				$("#modalImg").attr("src","../resources/images/publish/fileUpload/thumbnailFile/${prod.prodThumbnail}");
+			}else {
+				$("#modalImg").attr("src","../resources/images/publish/fileUpload/coverFile/${prod.coverFile}");
+			}
+			
 		}
 		
 		function addRetailPrice() {
