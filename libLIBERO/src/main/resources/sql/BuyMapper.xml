@@ -60,7 +60,7 @@
 			   #{deliveryRequest},
 			   CURRENT_TIMESTAMP,
 			   1,
-			   paid,
+			   'paid',
 			   #{cancelReason}
 				)
 	</insert>
@@ -97,7 +97,11 @@
 		AND pay_code = 'paid'
 				
 	</select>
-	
+	<select id="getProdNo" parameterType="int" resultType="int">
+		SELECT prod_no 
+		FROM buy 
+		WHERE buy_no= ${value}
+	</select>
 	
 	<update id="updateDeliveryStatus" parameterType="Map">
 		UPDATE pay
@@ -109,7 +113,11 @@
 		SELECT * from pay 
 		WHERE pay_no = #{value}
 	</select>
-	
+	<select id="getBuyAmount" parameterType="int" resultType="int">
+		SELECT buy_amount 
+		FROM buy 
+		WHERE buy_no = ${value}
+	</select>
 <!-- 	<select id="getUserProdNo" parameterType="Map" resultType="String"> -->
 <!-- 	SELECT buy.prod_no  -->
 <!-- 	 FROM buy ,pay  -->

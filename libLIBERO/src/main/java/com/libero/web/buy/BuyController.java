@@ -1,5 +1,8 @@
 package com.libero.web.buy;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpSession;
@@ -16,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.portlet.ModelAndView;
 
 import com.libero.service.buy.BuyService;
+import com.libero.service.domain.Buy;
 import com.libero.service.domain.Pay;
 import com.libero.service.domain.Product;
 import com.libero.service.domain.User;
@@ -29,7 +33,7 @@ public class BuyController {
 	@Autowired
 	@Qualifier("buyServiceImpl")
 	private BuyService buyService;
-	
+	@Autowired
 	@Qualifier("productServiceImpl")
 	private ProductService prodService;
 	//Constructor
@@ -39,24 +43,7 @@ public class BuyController {
 		System.out.println(" ---------------------------------------");
 	}
 	
-	//Method
-//	@RequestMapping(value="getUserBuy",method=RequestMethod.GET)
-//	public ModelAndView getUserBuy(ModelAndView modelAndView) throws Exception{
-//		System.out.println(" ---------------------------------------");
-//		System.out.println("/buy/getUserBuy : GET");
-//		System.out.println(" ---------------------------------------");
-//		
-//		Pay buy = buyService.getUserBuy("wjddbstp95@gmail.com");
-//		System.out.println("[[["+buy+"]]]");
-//		
-//		
-//		
-//		
-//		modelAndView.addObject("getBuy", buy);
-//		modelAndView.setViewName("./getUserBuy.jsp");
-//		
-//		return modelAndView;
-//	}
+
 	@RequestMapping(value="getUserBuy", method= RequestMethod.GET)
 	public String getUserBuy(@RequestParam("payNo") String payNo,
 							 HttpSession session,
@@ -91,18 +78,58 @@ public class BuyController {
 	
 	
 	@RequestMapping(value="beforePay",method=RequestMethod.POST)
-	public String beforePay(@ModelAttribute("pay") Pay pay,Model model,
-							@Param("actualPrice") int actualPrice ) throws Exception{
+	public String beforePay(@RequestParam("buyNoList")String buyNoString,
+							@RequestParam("actualPrice") int actualPrice,
+							Model model) throws Exception{
 		System.out.println(" ---------------------------------------");
 		System.out.println("/buy/beforePay : POST");
 		System.out.println(" ---------------------------------------");		
-
-		System.out.println("[[][]"+pay);
+		/////////////
 		
+		/////////////장바구니에서 받아온 buyNo 파싱, 배열에 넣기.
+		System.out.println(buyNoString);
+		buyNoString = buyNoString.replace("[","");
+		buyNoString = buyNoString.replace("]","");
+		buyNoString = buyNoString.replace(" ","");
+		List<Integer> prodNoArray= new ArrayList<Integer>();
+		List<Product> product = new ArrayList<Product>();
 		
-		model.addAttribute("addBuy", pay);
+		String[] buyArr = buyNoString.split(",");
 		
-		return "redirect:/view/buy/addPay.jsp";//
+		/////////////buyNo -> prodNo 으로 바꾸기
+		System.out.println("\n\n--\n"+buyArr+"\n--\n\n");
+		for(int i=0;i<buyArr.length;i++) {
+			int buyNo = Integer.parseInt(buyArr[i]);
+			prodNoArray.add(buyService.getBuyArray(buyNo));
+			int prodNo = prodNoArray.get(i);
+			Product prod = prodService.getProduct(prodNo);
+			prod.setBuyAmount(buyService.getBuyAmount(buyNo));
+			product.add(prod);
+		}
+		
+		System.out.println("\n\n--\n"+prodNoArray+"\n--\n\n");
+		System.out.println("\n\n--\n"+product+"\n--\n\n");
+		/////////////prodNo 으로 product 객체 가져옴.
+//		for(int i=0; i<prodNoArray.size();i++) {
+//			int prodNo = prodNoArray.get(i);
+//			System.out.println(prodNo+">v<");
+//			Product prod = prodService.getProduct(prodNo);
+//			System.out.println(prod);
+//			product.add(prod);
+//			
+//		}
+		/////////////////////////////////product 가져오는 part 끝
+	
+	
+		
+		///////////////////////////////// map에 넣는 부분
+//		map.put("productList",product);
+//		map2.put("user",user);
+		model.addAttribute("productList",product);
+		model.addAttribute("actualPrice",actualPrice);
+		//model.addAttribute("user",map2.get("user"));
+		
+		return "forward:/view/buy/addPay.jsp";//
 	}
 	
 	

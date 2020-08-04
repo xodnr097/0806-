@@ -26,4 +26,8 @@ public interface BuyDAO {
 	
 	public Pay getAllBuy(String payNo);
 	
+	public int getBuyArray(int buyNo);
+	
+	public int getBuyAmount(int buyNo);
+	
 }

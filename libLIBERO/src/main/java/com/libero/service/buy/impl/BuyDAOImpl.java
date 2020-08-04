@@ -97,6 +97,20 @@ public class BuyDAOImpl implements BuyDAO{
 	public Pay getAllBuy(String payNo) {
 		return sqlSession.selectOne("BuyMapper.getAllBuy",payNo);
 	}
+
+	@Override
+	public int getBuyArray(int buyNo) {
+		// TODO Auto-generated method stub
+		
+		
+		return sqlSession.selectOne("BuyMapper.getProdNo", buyNo);
+	}
+
+	@Override
+	public int getBuyAmount(int buyNo) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne("BuyMapper.getBuyAmount",buyNo);
+	}
 	
 //	@Override
 //	public List getFactoryProdNo(String payNo) {

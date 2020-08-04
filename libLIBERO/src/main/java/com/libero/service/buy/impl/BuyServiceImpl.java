@@ -162,5 +162,19 @@ public class BuyServiceImpl implements BuyService{
 		return map;
 	}
 
+	@Override
+	public int getBuyArray(int buyNo) {
+		// TODO Auto-generated method stub
+		
+		
+		return buyDao.getBuyArray(buyNo);
+	}
+
+	@Override
+	public int getBuyAmount(int buyNo) {
+		
+		return buyDao.getBuyAmount(buyNo);
+	}
+
 
 }

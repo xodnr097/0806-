@@ -29,7 +29,9 @@ public interface BuyService {
 	
 	public Map<String,Object> getFactoryBuyList();
 	
+	public int getBuyArray(int buyNo);
 	
+	public int getBuyAmount(int buyNo);
 	
 	//public void getPayStatus();
 	
