@@ -103,7 +103,7 @@
             <a class="card hoverable mb-4 z-depth-0" id="productcard" data-toggle="modal" data-target="#basicExampleModal">
 
               <!-- Card image -->
-              <img class="card-img-top z-depth-1" src="../../resources/images/publish/fileUpload/${book.prodThumbnail}" alt="Card image cap" width="250px" height="400px">
+              <img class="card-img-top z-depth-1" src="../resources/images/publish/fileUpload/${book.prodThumbnail}" alt="Card image cap" width="250px" height="400px">
      
 
               <!-- Card content -->

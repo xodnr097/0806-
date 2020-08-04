@@ -62,7 +62,7 @@
 			  </button>
 			  <div class="dropdown-menu">
 			    <a class="dropdown-item" href="#">제목</a>
-			    <a class="dropdown-item" href="#">작가명</a>
+			    <a class="dropdown-item" >작가명</a>
 			    <a class="dropdown-item" href="#">해쉬태그</a>
 			  </div>
 			</div>
@@ -261,17 +261,18 @@
 					
 					$("#searchCondition").val(searchCondition);
 					var searchKeyword = $("input[name='searchKeyword'").val();
+					
 					alert(searchKeyword);
-					searchKeyword = encodeURIComponent();
+					//searchKeyword = encodeURIComponent(searchKeyword);
 
 				
 
 					
 				
 				
-				//$("form").attr("method", "POST").attr("action", "/libero/product/getBookListBySearch").submit();
+				$("form").attr("method", "GET").attr("action", "/libero/product/getBookListBySearch").submit();
 				
-				self.location="/libero/product/getBookListBySearch?searchCondition="+searchCondition+"&searchKeyword="+searchKeyword;
+				//location="/libero/product/getBookListBySearch?searchCondition="+searchCondition+"&searchKeyword="+searchKeyword;
 				
 			});
 
