@@ -51,10 +51,6 @@ public class PublishServiceImpl implements PublishService{
 	
 	public void updatePublishInfo(Publish publish) throws Exception{
 		publishDAO.updatePublishInfo(publish);
-		
-		if (!publish.getHashtagName().contentEquals("")) {
-				publishDAO.updateHashtag(publish);
-		}
 	}
 	
 	public void updateRetailPrice(Publish publish) throws Exception{
@@ -103,6 +99,17 @@ public class PublishServiceImpl implements PublishService{
 	
 	public Cash getUserCash(String userId) throws Exception {
 		return publishDAO.getUserCash(userId);
+	}
+
+	@Override
+	public void addHashtag(int prodNo, List<String> hashtagName) throws Exception {
+		publishDAO.addHashtag(prodNo, hashtagName);
+	}
+
+	@Override
+	public List<String> getHashtagList(int prodNo) throws Exception {
+		// TODO Auto-generated method stub
+		return publishDAO.getHashtagList(prodNo);
 	}
 
 }

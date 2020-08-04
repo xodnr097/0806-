@@ -35,10 +35,11 @@
 		   				class="btn btn-outline-brown waves-effect btn-block" role="button" 
 		   				aria-pressed="true">서비스상품</a>
 		   		</div>
-		   		<div class="col-lg-9">
-			   		<c:set var="i" value="0" />
+		   		<form>
+		   		<input type="hidden" id="currentPage" name="currentPage" value="${search.currentPage}"/>
+		   		</form>
+		   		<div id="prodList" class="col-lg-9">
 				  	<c:forEach var="prod" items="${list}">
-					<c:set var="i" value="${ i+1 }" />
 						<div class="card border-light mb-3" style="margin-bottom: 20px">
 							<div class="card-body">
 								<div class="row">
@@ -91,6 +92,11 @@
 							  			<c:if test="${prod.blindCode=='report'}">
 							  				<button class="btn btn-brown btn-block">수정 요청</button>
 							  			</c:if>
+							  			<c:if test="${param.prodType=='prod'}">
+							  				<a href="/libero/publish/updateProduct?prodNo=${prod.prodNo}"
+												class="btn btn-brown btn-block" role="button" 
+												aria-pressed="true" style="margin-top: 10px">상품 수정</a>
+							  			</c:if>
 							  		</div>
 						  		</div>
 						  		<!-- row End -->
@@ -104,6 +110,7 @@
 						</div>
 					</c:forEach>
 				</div>
+				
 			</div>
 	   	</div>
 	   	<!-- //////////// Bootstrap Container End////////////////// -->
@@ -111,12 +118,38 @@
 	
 	<script type="text/javascript">
 	
-	//==============판매 통계 팝업 ====================
+		//==============판매 통계 팝업 ====================
 		function popup(prodNo){
 	        var url = "/libero/publish/getStatistics?prodNo="+prodNo;
 	        var name = "판매 통계 조회";
 	        var option = "width = 1000, height = 500, top = 50, left = 50, location = no"
 	        window.open(url, name, option);
 	    }
+	
+		$(function () {
+			var curPage = "${search.currentPage}";
+			
+			$(document).scroll(function() {
+				var maxHeight = $(document).height();
+		    	var currentScroll = $(window).scrollTop() + $(window).height();
+
+		    	if (maxHeight <= currentScroll + 100) {
+		    		
+		     		$.ajax({
+		     			type     	: 'POST',
+		        		url			: '/libero/user/json/getUserPublishList/book',
+		        		data 		: JSON.stringify({"currentPage": parseInt(curPage)+1}) ,
+		        		dataType 	: 'json',
+		                contentType	: "application/json",
+		        		success: function (data, status) {
+		          		// Append next contents
+			          		for (var i = 0; i < data.list.length; i++) {
+			          			console.log(data.prodNo);	
+							}
+		        		}
+		      		})
+		    	}
+		  	})
+		});
 	</script>
 </html>

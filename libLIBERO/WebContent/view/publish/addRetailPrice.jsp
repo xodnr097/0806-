@@ -350,13 +350,19 @@
 		
 		function addModalContent() {
 			var discount = $("input[name='discountCode']:checked").val();
+			var thumbnail = "${prod.prodThumbnail}";
 			if (discount=="x") {
 				$("#modalDiscount").html(": 할인제외");
 			}else {
 				$("#modalDiscount").html(": 할인포함");
 			}
 			
-			$("#modalImg").attr("src","../resources/images/publish/fileUpload/thumbnailFile/${prod.prodThumbnail}");
+			if (thumbnail != "") {
+				$("#modalImg").attr("src","../resources/images/publish/fileUpload/thumbnailFile/${prod.prodThumbnail}");
+			}else {
+				$("#modalImg").attr("src","../resources/images/publish/fileUpload/coverFile/${prod.coverFile}");
+			}
+			
 		}
 		
 		function addRetailPrice() {

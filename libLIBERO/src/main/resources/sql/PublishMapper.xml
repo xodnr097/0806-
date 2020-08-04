@@ -110,19 +110,19 @@
 		WHERE prod_no = #{prodNo}
 	</update>
 	
-	<insert id="addHashtag" parameterType="publish">
+	<insert id="addHashtag" parameterType="hashmap">
 		INSERT 
 	 	INTO 
 	 	hashtag (prod_no, hashtag_name)
 	 	VALUES (#{prodNo},#{hashtagName:VARCHAR} )
 	</insert>
 	
-	<update	id="updateHashtag"	parameterType="publish">
-	   	UPDATE hashtag
-	   	SET
-	   		hashtag_name = #{hashtagName:VARCHAR}
-	   	WHERE prod_no = #{prodNo}
-	</update>
+	<select id="getHashtagList" parameterType="int"	resultType="string">
+		SELECT
+		hashtag_name
+		FROM hashtag
+		WHERE prod_no = #{value}
+	</select>
 	
 	<update	id="updateRetailPrice"	parameterType="publish">
 	   	UPDATE product
@@ -138,8 +138,6 @@
 	<select		id="getProduct"	parameterType="int" 	resultMap="publishSelectMap">
 	 	SELECT * 
 		FROM product p
-		LEFT JOIN hashtag h 
-		ON p.prod_no = h.prod_no 
 		where p.prod_no IN(#{value}) 
 	</select>
 	

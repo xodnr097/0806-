@@ -185,7 +185,7 @@ public class UserRestController {
     } 
 	
 	@RequestMapping(value="json/getUserPublishList/{prodType}")
-	public Map getUserPublishList(HttpSession session, @PathVariable("prodType") String prodType, Publish publish, Search search) throws Exception {
+	public Map getUserPublishList(HttpSession session, @PathVariable("prodType") String prodType, Publish publish,@RequestBody Search search) throws Exception {
 		
 		System.out.println("/user/json/getUserPublishList : GET, POST");
 		
