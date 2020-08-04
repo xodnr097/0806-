@@ -19,7 +19,30 @@
 		<!-- //////////// Bootstrap Container Start////////////////// -->
 	   	<div class="container">
 	   		<jsp:include page="topButton.jsp"></jsp:include>
-	   		<div class="row col-lg-12">
+	   		<div class="row">
+	   			<div class="col-lg-2">
+	   				<a href="/libero/user/getTempPublishList" 
+		   				class="btn btn-outline-brown waves-effect btn-block" role="button" 
+		   				aria-pressed="true" style="margin-bottom: 10px">임시저장 도서</a>
+	   			
+		   			<a href="/libero/user/getUserActivityList?menu=p" 
+		   				class="btn btn-outline-brown waves-effect btn-block" role="button" 
+		   				aria-pressed="true" style="margin-bottom: 10px">작성한 글</a>
+		   				
+		   			<a href="/libero/user/getUserActivityList?menu=c" 
+		   				class="btn btn-outline-brown waves-effect btn-block" role="button" 
+		   				aria-pressed="true" style="margin-bottom: 10px">작성한 댓글</a>
+		   				
+		   			<a href="#" 
+		   				class="btn btn-outline-brown waves-effect btn-block" role="button" 
+		   				aria-pressed="true" style="margin-bottom: 10px">리뷰</a>
+		   				
+		   			<a href="/libero/user/getUserActivityList?menu=q" 
+		   				class="btn btn-outline-brown waves-effect btn-block" role="button" 
+
+		   				aria-pressed="true" style="margin-bottom: 10px">나의 문의</a>
+		   		</div>
+	   			<div class="row col-lg-9">
 		   		<c:set var="i" value="0" />
 			  	<c:forEach var="prod" items="${list}">
 				<c:set var="i" value="${ i+1 }" />
@@ -44,6 +67,8 @@
 				  
 				</c:forEach>
 			</div>
+	   		</div>
+	   		
 	   	</div>
 	   	<!-- //////////// Bootstrap Container End////////////////// -->
 	</body>

@@ -8,13 +8,25 @@
 <head>
     <meta charset="utf-8">
    	<jsp:include page="../../common/cdn.jsp" />
-    <link rel="stylesheet" href="../resources/css/lyk.css" type="text/css">
-
+	<style>
+      .md-pills .nav-link.active {
+        color: #fff;
+        background-color: #616161;
+      }
+      button.close {
+        position: absolute;
+        right: 0;
+        z-index: 2;
+        padding-right: 1rem;
+        padding-top: .6rem;
+      }
+    </style>
+    
     <script type="text/javascript">
 		//이거 페이지처리야 ㅁㅊ아..
 		function fncGetUserList(currentPage) {
 			$("#currentPage").val(currentPage);
-			$("form").attr("method", "POST").attr("action", "/libero/community/getPostList").submit();	
+			$("form").attr("method", "POST").attr("action", "/libero/community/getPostList?menu=notice").submit();	
 		}   
 	    
 
@@ -30,15 +42,15 @@
             	
         
 				
-                <article id="mainContent" class="content-article content-board">
-                    
+                
+                <article id="mainContent" class="content-techn">   
 				    <form class="form-inline text-right">
 				    
 					  <div class="form-group">
 					    <select class="form-control" name="searchCondition" >
-							<option value="0" ${! empty search.searchCondition && search.searchCondition==0 ? "selected" : ""}>글번호</option>
-							<option value="1" ${! empty search.searchCondition && search.searchCondition==1 ? "selected" : ""}>글제목</option>
-							<option value="2" ${! empty search.searchCondition && search.searchCondition==2 ? "selected" : ""}>글내용</option>
+							<option value="0" ${! empty search.searchCondition && search.searchCondition==0 ? "selected" : ""}>제목</option>
+							<option value="1" ${! empty search.searchCondition && search.searchCondition==1 ? "selected" : ""}>내용</option>
+							<option value="2" ${! empty search.searchCondition && search.searchCondition==2 ? "selected" : ""}>닉네임</option>
 						</select>
 					  </div>
 					  
@@ -49,58 +61,72 @@
 					  </div>
 					  
 					  <button type="button" class="btn btn-default">검색</button>
-					  <button type="button" class="btn btn-info" onclick="location.href='/libero/community/addPost' ">글쓰기</button>
+					  <button type="button" class="btn btn-info" onclick="location.href='/libero/community/addPost?postType=n' ">글쓰기</button>
 					  <!-- PageNavigation 선택 페이지 값을 보내는 부분 -->
 					  <input type="hidden" id="currentPage" name="currentPage" value=""/>
-					  
+					  <%-- <input type="hidden" id="postType" name="postType" value="${param.menu}" />--%>
+					  <input type="hidden" id="postType" name="postType" value="n" />
 					</form>
 					
 	    			<p style="float:left"> 전체  ${resultPage.totalCount } 건수, 현재 ${resultPage.currentPage}  페이지 </p>
 				    
-                    <div class="warp_board">
-                        <ul class="list_news">
-                            <!-- 변수 지정하기  -->
-							<c:set var="i" value="0" />
-							<c:forEach var="post" items="${list}"> 
-                            <c:set var="i" value="${ i+1 }" />
-                            
-                            <li style="max-height: 183px;  overflow: hidden; ">
-                                <a href="/libero/community/getPost?postNo=${post.postNo}" class="link_news before_thumb">
-                				<strong class="tit_news">${ i }&nbsp;&nbsp;${post.postName}</strong>
-             					</a>
-             					 <a class="link_thumb">
-             					 <c:if test="${ fn:contains(post.postContent, '<img') }">
-             					 	<c:set var="imgAfter" value="${ fn:substringAfter(post.postContent, '<img src=\"') }" />
-             					 	<c:set var="imgBefore" value="${ fn:substringBefore(imgAfter, '\" style') }" />
-									
-									<img src='<c:out value="${imgBefore}" />' alt='글사진' class='thumb_img' >
+                    <div class="container my-5">
 
-									<%-- 
-									비포 : <c:out value="${imgAfter}" />
-									애프터 : <c:out value="${imgBefore}" />
-									<c:out value="${imgName}" escapeXml="true"/>
-									 --%>
-             					 </c:if>
-             					
-             					
-                                </a>
-                                <div class="txt_news" onclick="location.href='/libero/community/getPost?postNo=${post.postNo}' ">
-                                ${post.postContent}
-                                </div>
-                                
-                                
-                                
-                                
-                                <span class="txt_date">${post.regDate}</span>
-                            </li>
-                            </c:forEach>
+					  <!-- Section -->
+					  <section>
+                       
+                        
+             				
+							<!--Tab panels-->
+						    <div class="tab-content mb-5">
+						
+						      <!--Panel 1-->
+						      <div class="tab-pane fade show in active" id="panel31" role="tabpanel">
+						
+						        <!-- Grid row -->
+						        <div class="row">
+								<c:set var="i" value="0" />
+								<c:forEach var="post" items="${list}"> 
+		                        <c:set var="i" value="${ i+1 }" />	
+						       	  <!-- Grid column -->
+						          <div class="col-md-12 col-lg-4">
+									
+						            <!-- Card -->
+						            <a class="card hoverable mb-4" data-toggle="modal" data-target="#basicExampleModal">
+						
+						              <!-- Card image -->
+						              <c:if test="${ fn:contains(post.postContent, '<img') }">
+	             					 	<c:set var="imgAfter" value="${ fn:substringAfter(post.postContent, '<img src=\"') }" />
+	             					 	<c:set var="imgBefore" value="${ fn:substringBefore(imgAfter, '\" style') }" />
+										<img style='max-height: 200px;' class='card-img-top' src='<c:out value="${imgBefore}" />' alt='글사진' >
+						              </c:if>
+            
+
+						              <!-- Card content -->
+						              <div class="card-body" style="max-weight: 280px; max-height: 186px;  overflow: hidden;" >
+						
+						                <h5 class="my-3">${post.postName}</h5>
+						                <p class="card-text text-uppercase mb-3">${post.postContent}</p>
+						
+						              </div>
+						
+						            </a><!-- Card --> 
+						            <br><br><br><br>
+       							  </div><!-- Grid column -->
+       							  
+       							  </c:forEach>
+       							</div><!-- Grid row -->
+       						  </div><!--Panel 1-->
+       						</div><!--Tab panels-->
+                           
+                            </section>
                            
                           
-                        </ul>
+                       
                     </div>
                     
                 </article>
-            </section>
+            
         </main>
         
         <div class="dimmed_layer" style="display:none"></div>

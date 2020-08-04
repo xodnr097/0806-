@@ -179,35 +179,45 @@
 		WHERE user_id IN(#{userId})
 	</update>
 	
-	<select id="getUserPublishList" parameterType="publish" resultMap="publishSelectMap">
+	<select id="getUserPublishList" parameterType="hashmap" resultMap="publishSelectMap">
 		SELECT 
-			s.sales_count, p.*, h.hashtag_no, h.hashtag_name, r.report_type
-		FROM (SELECT 
-					prod_no, sum(buy_amount) sales_count
-				FROM buy 
-				WHERE buy_code = 'paid'
-				GROUP BY prod_no) s
-		RIGHT OUTER JOIN product p
-		ON p.prod_no = s.prod_no
-		LEFT JOIN hashtag h
-		ON p.prod_no = h.prod_no
-		LEFT JOIN report r
-		ON p.prod_no = r.prod_no
-		WHERE creator IN(#{creator})
-		<if test='blindCode=="temp"'>
-			AND blind_code IN(#{blindCode})
-		</if>
-		<if test="blindCode==null">
-			AND blind_code IN("show","hide","report","request")
-		</if>
-		<if test='prodType=="book"'>
-			AND p.prod_type IN("paper","ebook")
-		</if> 
-		<if test='prodType=="prod"'>
-			AND p.prod_type IN("design","target","correct")
-		</if>
-		GROUP BY p.prod_no
-		ORDER BY reg_date DESC
+		* 
+		FROM 
+			(SELECT 
+		 		@rownum := @rownum + 1 num,b.* 
+		 	FROM
+		 		(SELECT 
+					a.sales_count, p.*, h.hashtag_no, h.hashtag_name, r.report_type
+				FROM (SELECT 
+							prod_no, sum(buy_amount) sales_count
+						FROM buy 
+						JOIN ( SELECT @rownum := 0) R
+						WHERE buy_code = 'paid'
+						GROUP BY prod_no) a
+						
+				RIGHT OUTER JOIN product p
+					ON p.prod_no = a.prod_no
+				LEFT JOIN hashtag h
+					ON p.prod_no = h.prod_no
+				LEFT JOIN report r
+					ON p.prod_no = r.prod_no
+				WHERE creator IN(#{publish.creator})
+				<if test='publish.blindCode=="temp"'>
+					AND blind_code IN(#{publish.blindCode})
+				</if>
+				<if test="publish.blindCode==null">
+					AND blind_code IN("show","hide","report","request")
+				</if>
+				<if test='publish.prodType=="book"'>
+					AND p.prod_type IN("paper","ebook")
+				</if> 
+				<if test='publish.prodType=="prod"'>
+					AND p.prod_type IN("design","target","correct")
+				</if>
+				GROUP BY p.prod_no
+				ORDER BY reg_date DESC) b
+			) c
+		WHERE num BETWEEN #{search.startRowNum} AND #{search.endRowNum}
 	</select>
 	
 	<delete id="removeTempPublish" parameterType="publish">
@@ -231,6 +241,12 @@
 		</if> 
 		<if test='prodType=="prod"'>
 			AND p.prod_type IN("design","target","correct")
+		</if>
+		<if test='blindCode=="temp"'>
+			AND p.blind_code IN("temp")
+		</if>
+		<if test="blindCode==null">
+			AND p.blind_code IN("show","hide","report","request")
 		</if>
 	</select>
 

@@ -113,7 +113,7 @@ public class PublishController {
 			modelAndView.addObject("prod",publish);
 			modelAndView.setViewName("forward:/view/publish/addManu.jsp");
 		}else {
-			modelAndView.setViewName("redirect:/index.jsp");
+			modelAndView.setViewName("redirect:/");
 		}
 		return modelAndView;
 	}
@@ -154,7 +154,7 @@ public class PublishController {
 			modelAndView.addObject("prod",publish);
 			modelAndView.setViewName("forward:/view/publish/addProductInfo.jsp");
 		}else {
-			modelAndView.setViewName("redirect:/index.jsp");
+			modelAndView.setViewName("redirect:/");
 		}
 		return modelAndView;
 	}
@@ -265,7 +265,7 @@ public class PublishController {
 			modelAndView.addObject("prod",publish);
 			modelAndView.setViewName("forward:/view/publish/addRetailPrice.jsp");
 		}else {
-			modelAndView.setViewName("redirect:/index.jsp");
+			modelAndView.setViewName("redirect:/");
 		}
 		return modelAndView;
 	}

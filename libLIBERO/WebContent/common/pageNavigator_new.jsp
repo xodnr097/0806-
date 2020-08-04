@@ -1,5 +1,5 @@
-<%@ page contentType="text/html; charset=EUC-KR" %>
-<%@ page pageEncoding="EUC-KR"%>
+<%@ page contentType="text/html; charset=UTF-8" %>
+<%@ page pageEncoding="UTF-8"%>
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
@@ -7,10 +7,10 @@
 <div class="container text-center">
 		 
 		 <nav aria-label="Page navigation example">
-		  <!-- Å©±âÁ¶Àı :  pagination-lg pagination-sm-->
-		  <ul class="pagination pg-teal justify-content-center">
-    
-		    <!--  <<== ÁÂÃø nav -->
+		  <!-- Å©ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ :  pagination-lg pagination-sm-->
+		  <ul class="pagination pg-amber justify-content-center">
+		  
+		    <!--  <<== ì¢Œì¸¡ nav -->
 		  	<c:if test="${ resultPage.currentPage <= resultPage.pageUnit }">
 		 		<li class="page-item disabled">
 			</c:if>
@@ -22,11 +22,11 @@
 		      </a>
 		    </li>
 		    
-		    <!--  Áß¾Ó  -->
+		    <!--  ì¤‘ì•™  -->
 			<c:forEach var="i"  begin="${resultPage.beginUnitPage}" end="${resultPage.endUnitPage}" step="1">
 				
 				<c:if test="${ resultPage.currentPage == i }">
-					<!--  ÇöÀç page °¡¸£Å³°æ¿ì : active -->
+					<!--  í˜„ì¬ page ê°€ë¥´í‚¬ê²½ìš° : active -->
 				    <li class="page-item active">
 				    	<a class="page-link" href="javascript:fncGetUserList('${ i }');">${ i }<span class="sr-only">(current)</span></a>
 				    </li>
@@ -39,7 +39,7 @@
 				</c:if>
 			</c:forEach>
 		    
-		     <!--  ¿ìÃø nav==>> -->
+		     <!--  ìš°ì¸¡ nav==>> -->
 		     <c:if test="${ resultPage.endUnitPage >= resultPage.maxPage }">
 		  		<li class="disabled">
 			</c:if>

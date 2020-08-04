@@ -20,6 +20,7 @@
 		<result property="userCode"		column="user-_code"			jdbcType="SMALLINT"/>
 		<result property="role" 		column="role" 				jdbcType="CHAR" />
 		<result property="regDate" 		column="reg_date" 			jdbcType="DATE" />
+		<result property="birthDate"	column="birth_date"			jdbcType="DATE"/>
 		<result property="factoryNo"	column="factory_no"			jdbcType="VARCHAR"/>
 		<result	property="cashCode"		column="cash_code"			jdbcType="CHAR"/>
 		<result property="a5Price"		column="a5_price"			jdbcType="INTEGER"/>
@@ -60,7 +61,8 @@
 	 					  phone,
 	 					  user_code,
 	 					  role,
-	 					  reg_date
+	 					  reg_date,
+	 					  birth_date
 							)
 	 	VALUES(	#{userId},
 	 			#{password},
@@ -71,13 +73,18 @@
 	 			#{phone},
 	 			1,
 	 			'u',
-	 			 CURRENT_TIMESTAMP
+	 			CURRENT_TIMESTAMP,
+	 			#{birthDate}
 	 			)
 	 
 	 </insert>
 	 
 	 <insert id="addHashTag" parameterType="string">
 	 
+		INSERT 
+	 	INTO 
+	 	hashtag (user_id, hashtag_name)
+	 	VALUES (#{userId},#{hashtagName:VARCHAR} )
 	 
 	 </insert>
 	 
@@ -90,16 +97,33 @@
 		WHERE user_id IN(#{value})
 	 </select>
 	 
-	 <select id="getAdminCashList" resultMap="userSelectMap">
+	 <select id="getUserList" parameterType="search" resultMap="userSelectMap">
 	 	SELECT 
-	 	*
-	 	FROM user
+	 	* 
+	 	FROM (SELECT 
+				@rownum:=@rownum+1 num, u.*
+				FROM user u, (SELECT @rownum:=0) init2
+				) inner_table
+		WHERE num BETWEEN #{startRowNum} AND #{endRowNum}
 	 </select>
 	 
 	 <select id="duplicationCheck" parameterType="string" resultType="string">
 	 	SELECT user_id
 	 	FROM user
 	 	WHERE user_id = #{value}
+	 </select>
+	 
+	   <select id="duplicationNick" parameterType="string" resultType="string">
+	 	SELECT nickname
+	 	FROM user
+	 	WHERE nickname = #{value}
+	 </select>
+	 
+	 
+	 <select id="getUserTotalCount"	parameterType="search"	resultType="int">
+	 	SELECT
+	 	COUNT(*)
+	 	FROM user
 	 </select>
 	 
 </mapper>

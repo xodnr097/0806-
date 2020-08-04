@@ -22,56 +22,68 @@
 	   	
 	   	<!-- //////////// Bootstrap Container Start////////////////// -->
 	   	<div class="container">
-	   	
-	   	<table id="dtVerticalScrollExample" class="table table-striped table-bordered table-sm" cellspacing="0"  width="100%">
-			  <thead>
-			    <tr>
-			      <th class="th-sm">유저ID
-			      </th>
-			      <th class="th-sm">정산 신청여부
-			      </th>
-			    </tr>
-			  </thead>
-			  <tbody>
-	   		<c:set var="i" value="0" />
-		  	<c:forEach var="user" items="${list}">
-			<c:set var="i" value="${ i+1 }" />
-				
-			    <tr>
-			      <td>${user.userId}</td>
-			      <td>
-			      	<c:if test="${user.cashCode!='bf'}">
-						<button type="button" class="btn btn-default">정산하기</button>
-					</c:if>
-					<c:if test="${user.cashCode=='bf'}">
-						신청 안함
-					</c:if>
-				  </td>
-			    </tr>
-			  
-			</c:forEach>
-			</tbody>
-			
-			  
+	   		<jsp:include page="topButton.jsp"></jsp:include>
+	   		<form>
+	   		<input type="hidden" id="currentPage" name="currentPage" value=""/>
+		   	<table class="table table-hover table-striped" width="100%">
+				<thead>
+					<tr>
+						<th class="text-center">No</th>
+						<th>회원ID</th>
+					    <th>회원 상태</th>
+					    <th>회원 코드</th>
+					    <th>정산 상태</th>
+					    <th>가입 일자</th>
+					</tr>  
+				</thead>
+				<tbody>
+		   		<c:set var="i" value="0" />
+			  	<c:forEach var="user" items="${list}">
+				<c:set var="i" value="${ i+1 }" />
+					<tr>
+						<td align="center">${i}</td>
+						<td><a href="/libero/user/getUser?userId=${user.userId}">${user.userId}</a></td>
+						<td>
+							<c:if test="${user.userCode==0}">
+								정상
+							</c:if>
+							<c:if test="${user.userCode==1}">
+								탈퇴
+							</c:if>
+						</td>
+						<td>
+							<c:if test="${user.role=='a'}">
+								관리자
+							</c:if>
+							<c:if test="${user.role=='f'}">
+								인쇄소
+							</c:if>
+							<c:if test="${user.role=='u'}">
+								유저
+							</c:if>
+						</td>
+						<td>
+							<c:if test="${user.cashCode=='bf'}">
+								정산 전
+							</c:if>
+							<c:if test="${user.cashCode=='af'}">
+								정산 후
+							</c:if>
+						</td>
+						<td>${user.regDate}</td>
+					</tr>
+				</c:forEach>
+				</tbody>
 			</table>
+			</form>
+			<jsp:include page="../../common/pageNavigator_new.jsp"/>
 	   	</div>
 		<!-- //////////// Bootstrap Container End////////////////// -->
 	</body>
 	<script type="text/javascript">
-	
+	function fncGetUserList(currentPage) {
+		$("#currentPage").val(currentPage)
+	   	$("form").attr("method" , "POST").attr("action" , "/libero/user/getUserList").submit();
+	}
 	</script>
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 </html>

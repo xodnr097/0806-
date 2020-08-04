@@ -82,7 +82,7 @@ public class UserRestController {
 		
 		String host = "smtp.naver.com"; 
 		final String username = "wjddbstp"; //네이버 아이이디 
-		final String password = "mnbv4845!!"; //네이버 비번 
+		final String password = "mnbv48451"; //네이버 비번 
 		int port=465; 
 		String verCode=UserRestController.getAlphaNumericString();
 		String recipient = userId; //받는 사람 이메일 주소 
@@ -131,6 +131,16 @@ public class UserRestController {
 		
 		boolean	result = userService.duplicationCheck(userId);
 	System.out.println("\n\n\n\n"+result+"\n\n\n");
+		return result;
+	}
+	
+	@RequestMapping(value="json/duplicationNick",method=RequestMethod.GET)
+	public boolean duplicationNick(@Param("nickname") String nickname) throws Exception{
+		System.out.println(" ---------------------------------------");
+		System.out.println("[ /user/json/duplicationCheck/"+nickname+" : GET]");
+		System.out.println(" ---------------------------------------");
+		
+		boolean result = userService.duplicationNick(nickname);
 		return result;
 	}
 ///////////////////////////////////////////랜덤 코드 생성기

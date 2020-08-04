@@ -1,12 +1,15 @@
 package com.libero.service.user.impl;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
 
+import com.libero.common.Search;
 import com.libero.service.domain.User;
 import com.libero.service.user.UserDAO;
 
@@ -37,9 +40,9 @@ public class UserDAOImpl implements UserDAO {
 	}
 
 	@Override
-	public List<User> getAdminCashList() throws Exception {
+	public List<User> getUserList(Search search) throws Exception {
 		// TODO Auto-generated method stub
-		return sqlSession.selectList("UserMapper.getAdminCashList");
+		return sqlSession.selectList("UserMapper.getUserList",search);
 	}
 
 	@Override
@@ -56,9 +59,38 @@ public class UserDAOImpl implements UserDAO {
 		}
 			
 	}
+
+	@Override
+	public boolean duplicationNick(String nickname) throws Exception {
+		// TODO Auto-generated method stub
+		String result= sqlSession.selectOne("UserMapper.duplicationNick",nickname);
+		if(result!=null) {
+			System.out.println("널이 아닐때 이이이이잉");
+			return false;
+		}else {
+			return true;
+		}
+		
+	}
 	
+	@Override
+	public List<String> addHashtag(String userId, List<String> hashtagName) throws Exception {
+			
+		Map map = new HashMap();
+		map.put("userId",userId);
+		
+		for(int i=0;i<hashtagName.size();i++) {
+			String hashtag = hashtagName.get(i);
+			map.put("hashtagName", hashtag);
+			sqlSession.insert("UserMapper.addHashTag",map);
+		}
+		return null;
+	}
 	
-	
-	
+	@Override
+	public int getUserTotalCount(Search search) throws Exception {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne("UserMapper.getUserTotalCount", search);
+	}
 
 }

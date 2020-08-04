@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>	
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <!DOCTYPE html>
 <html lang="ko">
 
@@ -13,14 +15,38 @@
 
 	<div class="mt-5">&nbsp;</div>
 	<div class="container">
-    <h1>게시글 작성</h1>
+   
         <form class="form-group my-5 py-5">
-            <input type="hidden" name="postType" value="0">
-            <div class="form-row my-3">
-                <div class="input-group col-lg-12">
-                    <input type="text" class="form-control" name="postName" placeholder="제목을 입력해주세요">
-                </div>
-            </div>
+       		<c:if test = "${param.postType == 'n' }" ><input type="hidden" name="postType" value="n"></c:if>
+            <c:if test = "${param.postType == 'f' }" ><input type="hidden" name="postType" value="a"></c:if>
+            <c:if test = "${param.postType == 'q' }" ><input type="hidden" name="postType" value="q"></c:if>
+            <c:if test = "${param.postType != 'q' }" >	
+              <h1>게시글 작성</h1>
+              <div class="form-row my-3">
+                  <div class="input-group col-lg-12">
+                      <input type="text" class="form-control" name="postName" placeholder="제목을 입력해주세요">
+                  </div>
+              </div>
+            </c:if>
+            <c:if test = "${param.postType == 'q' }" >	
+            	<h1>문의하기</h1>
+            	<div class="form-row my-3">
+            		<div class="input-group col-lg-3">
+            			<select name="qnaRegType" class="form-control">
+											<option hidden>문의 종류</option>
+											<option value="p">출판하기</option>
+											<option value="b">구매하기</option>
+											<option value="u">이용문의</option>
+											<option value="e">기타</option>
+						</select>
+	                </div>
+	                <div class="input-group col-lg-9">
+	                    <input type="text" class="form-control" name="postName" placeholder="제목을 입력해주세요">
+	                </div>
+	                <input type="hidden" id="qnaCode" name="qnaCode" value="x" />
+					  
+            	</div>
+            </c:if>	
             <div>
 				<textarea id="postContent" name="postContent" class="summernote" style="display: none;"></textarea>
 				<div id="summernote"></div>
