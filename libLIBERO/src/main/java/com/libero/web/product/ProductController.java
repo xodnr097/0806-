@@ -1,5 +1,6 @@
 package com.libero.web.product;
 
+import java.net.URLDecoder;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.libero.common.Search;
 import com.libero.service.cart.CartService;
 import com.libero.service.domain.Product;
 import com.libero.service.domain.Review;
@@ -99,8 +101,40 @@ public class ProductController{
 		 	return modelAndView;
 		 	
 	 }
-	//*/
-	 
+	//검색결과
+	 @RequestMapping(value="getBookListBySearch", method = RequestMethod.GET)
+	 public ModelAndView getBookListBySearch(@RequestParam("searchCondition") String searchCondition, @RequestParam("searchKeyword") String searchKeyword) throws Exception {
+		 		
+	
+		 System.out.println("검색조건 : "+searchCondition);
+		 System.out.println("검색어 : "+searchKeyword);
+
+		 	//BusinessLogic
+		 	System.out.println("/product/getBookListByCategory : GET, ");
+		 	
+		 	Search search = new Search();
+		 	
+		 	search.setSearchCondition(searchCondition);
+		 	search.setSearchKeyword(searchKeyword);
+		 	
+		 	
+		 	List<Product> book=productService.getBookListBySearch(search);
+		 	System.out.println("컨트롤러 가져온것 :: "+book);
+		 	
+		 	ModelAndView modelAndView = new ModelAndView();
+		 	
+		 	//List<Product> product = (List<Product>) map.get("list");
+		 	//product[0].get()
+		 	//System.out.println(product.get(index).getBookCateogry);
+		 	
+		 	modelAndView.addObject("searchKeyword", searchKeyword);
+		 	modelAndView.addObject("searchCondition", searchCondition);
+		 	modelAndView.addObject("book", book);
+		 	modelAndView.setViewName("forward:/view/product/getBookListBySearch.jsp");
+		 	
+		 	return modelAndView;
+		 	
+	 }
 	 
 	//method 서비스상품화면 출력
 		@RequestMapping(value="getProductList/{prodType}", method = RequestMethod.GET)

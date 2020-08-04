@@ -67,5 +67,19 @@ public class UserServiceImpl implements UserService{
 		
 		return userDAO.duplicationCheck(userId);
 	}
+	
+	@Override
+	public boolean duplicationNick(String nickname) throws Exception {
+		
+		return userDAO.duplicationNick(nickname);
+	}
+	
+	@Override
+	public List<String> addHashtag(String userId, List<String> hashtagName) throws Exception {
+		// TODO Auto-generated method stub
+		
+		userDAO.addHashtag(userId, hashtagName);
+		return null;
+	}
 
 }

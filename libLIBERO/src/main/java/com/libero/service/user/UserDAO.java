@@ -16,5 +16,9 @@ public interface UserDAO {
 
 	public boolean duplicationCheck(String userId) throws Exception;
 	
+	public boolean duplicationNick(String nickname) throws Exception;
+	
 	public int getUserTotalCount(Search search) throws Exception;
+	
+	public List<String> addHashtag(String userId, List<String> hashtagName) throws Exception;
 }

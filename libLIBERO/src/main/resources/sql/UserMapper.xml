@@ -20,6 +20,7 @@
 		<result property="userCode"		column="user-_code"			jdbcType="SMALLINT"/>
 		<result property="role" 		column="role" 				jdbcType="CHAR" />
 		<result property="regDate" 		column="reg_date" 			jdbcType="DATE" />
+		<result property="birthDate"	column="birth_date"			jdbcType="DATE"/>
 		<result property="factoryNo"	column="factory_no"			jdbcType="VARCHAR"/>
 		<result	property="cashCode"		column="cash_code"			jdbcType="CHAR"/>
 		<result property="a5Price"		column="a5_price"			jdbcType="INTEGER"/>
@@ -60,7 +61,8 @@
 	 					  phone,
 	 					  user_code,
 	 					  role,
-	 					  reg_date
+	 					  reg_date,
+	 					  birth_date
 							)
 	 	VALUES(	#{userId},
 	 			#{password},
@@ -71,13 +73,18 @@
 	 			#{phone},
 	 			1,
 	 			'u',
-	 			 CURRENT_TIMESTAMP
+	 			CURRENT_TIMESTAMP,
+	 			#{birthDate}
 	 			)
 	 
 	 </insert>
 	 
 	 <insert id="addHashTag" parameterType="string">
 	 
+		INSERT 
+	 	INTO 
+	 	hashtag (user_id, hashtag_name)
+	 	VALUES (#{userId},#{hashtagName:VARCHAR} )
 	 
 	 </insert>
 	 
@@ -105,6 +112,13 @@
 	 	FROM user
 	 	WHERE user_id = #{value}
 	 </select>
+	 
+	   <select id="duplicationNick" parameterType="string" resultType="string">
+	 	SELECT nickname
+	 	FROM user
+	 	WHERE nickname = #{value}
+	 </select>
+	 
 	 
 	 <select id="getUserTotalCount"	parameterType="search"	resultType="int">
 	 	SELECT

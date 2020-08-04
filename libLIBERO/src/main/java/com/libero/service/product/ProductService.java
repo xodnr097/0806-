@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.libero.common.Search;
 import com.libero.service.domain.Product;
 import com.libero.service.domain.Review;
 
@@ -27,6 +28,10 @@ public interface ProductService {
 	public void addReviewImage(HashMap<String, Object> hashMap);
 
 	public List<Review> getReview(int prodNo);
+
+	public List<Product> getBookListBySearch(Search search);
+
+
 
 	
 }

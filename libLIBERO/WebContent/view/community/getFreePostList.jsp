@@ -14,11 +14,15 @@
 		//이거 페이지처리야 ㅁㅊ아..
 		function fncGetUserList(currentPage) {
 			$("#currentPage").val(currentPage);
-			$("form").attr("method", "POST").attr("action", "/libero/community/getPostList?menu=notice").submit();	
+			$("form").attr("method", "POST").attr("action", "/libero/community/getPostList?menu=f").submit();	
 		}   
 	    
-
-        
+		$(function() {
+			 $( "button.btn.btn-default" ).on("click" , function() {
+					fncGetUserList(1);
+			 });
+			
+		});
     </script>
 </head>
 
@@ -36,9 +40,9 @@
 				    
 					  <div class="form-group">
 					    <select class="form-control" name="searchCondition" >
-							<option value="0" ${! empty search.searchCondition && search.searchCondition==0 ? "selected" : ""}>글번호</option>
-							<option value="1" ${! empty search.searchCondition && search.searchCondition==1 ? "selected" : ""}>글제목</option>
-							<option value="2" ${! empty search.searchCondition && search.searchCondition==2 ? "selected" : ""}>글내용</option>
+							<option value="0" ${! empty search.searchCondition && search.searchCondition==0 ? "selected" : ""}>제목</option>
+							<option value="1" ${! empty search.searchCondition && search.searchCondition==1 ? "selected" : ""}>내용</option>
+							<option value="2" ${! empty search.searchCondition && search.searchCondition==2 ? "selected" : ""}>닉네임</option>
 						</select>
 					  </div>
 					  
@@ -52,10 +56,11 @@
 					  <button type="button" class="btn btn-info" onclick="location.href='/libero/community/addPost?postType=n' ">글쓰기</button>
 					  <!-- PageNavigation 선택 페이지 값을 보내는 부분 -->
 					  <input type="hidden" id="currentPage" name="currentPage" value=""/>
-					  <input type="hidden" id="postType" name="postType" value="f"/>
+					  <%-- <input type="hidden" id="postType" name="postType" value="${param.menu}" /> --%>
+					  <input type="hidden" id="postType" name="postType" value="f" />
 					  
-					</form>
 					
+					</form>
 	    			<p style="float:left"> 전체  ${resultPage.totalCount } 건수, 현재 ${resultPage.currentPage}  페이지 </p>
 				    
                     <div class="warp_board">
@@ -68,7 +73,9 @@
                             <li style="max-height: 183px;  overflow: hidden;">
                                 <a href="/libero/community/getPost?postNo=${post.postNo}" class="link_news before_thumb">
                 				<strong class="tit_news">${ i }&nbsp;&nbsp;${post.postName}</strong>
+                				<i class="far fa-eye">&nbsp;&nbsp;${post.viewCount}</i>
              					</a>
+             					
              					 <a class="link_thumb">
              					 <c:if test="${ fn:contains(post.postContent, '<img') }">
              					 	<c:set var="imgAfter" value="${ fn:substringAfter(post.postContent, '<img src=\"') }" />

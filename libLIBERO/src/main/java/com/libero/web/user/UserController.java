@@ -1,8 +1,10 @@
 package com.libero.web.user;
 
+import java.io.File;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 import javax.servlet.http.HttpSession;
 
@@ -14,6 +16,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.libero.common.Page;
@@ -28,6 +31,7 @@ import com.libero.service.domain.User;
 import com.libero.service.publish.PublishService;
 import com.libero.service.report.ReportService;
 import com.libero.service.user.UserService;
+
 
 @Controller
 @RequestMapping("/user/*")
@@ -99,28 +103,47 @@ public class UserController {
 	}
 	
 	@RequestMapping(value="addUser", method=RequestMethod.POST)
-	public ModelAndView addUser(@ModelAttribute("userId") String userId,
-								@ModelAttribute("password") String password,
-								@ModelAttribute("nickname") String nickname,
-								@ModelAttribute("address") String address,
-								@ModelAttribute("phone1") String phone1,
-								@ModelAttribute("phone2") String phone2,
-								@ModelAttribute("phone3") String phone3,
-								@ModelAttribute("profile") String profile) throws Exception{
-		User user= new User();
-		System.out.println(" ---------------------------------------");
-		System.out.println("/user/addUser : POST");
-		System.out.println(" ---------------------------------------");
-		String phone ="";
-		user.setUserId(userId);
-		user.setPassword(password);
-		user.setNickname(nickname);
-		user.setAddress(address);
-		phone= phone1+"-"+phone2+"-"+phone3;
-		user.setPhone(phone);
-		user.setProfile(profile);
-		ModelAndView mdv = new ModelAndView();
-		userService.addUser(user);
+	public ModelAndView addUser(@ModelAttribute User user,
+								@RequestParam List<String> hashtagName,
+								@RequestParam("file") List<MultipartFile> file
+								) throws Exception{
+			
+			System.out.println(" ---------------------------------------");
+			System.out.println("/user/addUser : POST");
+			System.out.println(" ---------------------------------------");
+			
+			//user.setProfile(profile);
+			ModelAndView mdv = new ModelAndView();
+			for (MultipartFile multipartFile : file) {
+				
+				System.out.println(multipartFile.getOriginalFilename());
+				
+				String originalFileName = multipartFile.getOriginalFilename();	//오리지날 파일명
+				String extension=originalFileName.substring(originalFileName.lastIndexOf("."));	//파일 확장자
+				
+				String fileRoot = "C:/Users/user/git/libLIBERO/libLIBERO/WebContent/resources/images/user/fileUpload/"; // 파일 경로
+				String savedFileName = UUID.randomUUID() + extension;	//저장될 파일 명
+				
+				File f =new File(fileRoot+savedFileName);
+				
+				multipartFile.transferTo(f);
+				System.out.println(" ---------------------------------------");
+				System.out.println(f.getName());
+				System.out.println(" ---------------------------------------");
+			
+				user.setProfile(f.getName());
+			}
+				
+				userService.addUser(user);
+				System.out.println("\n\n\n ---------------------------------------");
+				System.out.println(hashtagName);
+				System.out.println(" ---------------------------------------\n\n\n");
+				System.out.println("");
+				
+				
+				userService.addHashtag(user.getUserId(),hashtagName);
+		//File Upload End
+		
 		
 		mdv.setViewName("redirect:/");
 		return mdv;
@@ -247,6 +270,7 @@ public class UserController {
 		return modelAndView;
 	}
 	
+
 	@RequestMapping(value = "getAdminReportList", method = RequestMethod.GET)
 	public ModelAndView getAdminReportList(HttpSession session, String role, Report report, Search search) throws Exception{
 		System.out.println("/user/getAdminReportList : GET");
@@ -292,19 +316,21 @@ public class UserController {
 		Map<String,Object> map = new HashMap<String,Object>(); 
 		
 		ModelAndView modelAndView = new ModelAndView();
+		
+		User user = (User)session.getAttribute("user");
 		String userId = ((User)session.getAttribute("user")).getUserId();
 		
 		System.out.println("menu가 뭔가요"+menu);
-		if(menu.equals(new String("post"))) {
-			map = communityService.getMyPostList(search, userId);
+		if(menu.equals(new String("p"))) {
+			map = communityService.getMyPostList(search, user, menu);
 		} 		
 		
-		if(menu.equals(new String("comment"))) {
+		if(menu.equals(new String("c"))) {
 			map = communityService.getMyCommentList(search, userId);
 		} 
 		
-		if(menu.equals(new String("qna"))) {
-			map = communityService.getMyCommentList(search, userId);
+		if(menu.equals(new String("q"))) {
+			map = communityService.getMyPostList(search, user, menu);
 		} 
 		
 		Page resultPage = new Page(search.getCurrentPage(),

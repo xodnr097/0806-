@@ -175,20 +175,52 @@
 		WHERE p.user_id = u.user_id AND p.post_no = #{postNo}
 	</select>
 	
-	<select id="getPostList" parameterType="search" resultMap="postSelectMap" >
+	<select id="getPostList" parameterType="map" resultMap="postSelectMap" >
 		SELECT * FROM (SELECT 
 						@rownum:=@rownum+1 num, p.*, u.nickname
 						FROM post p, user u, (SELECT @rownum:=0) init2
 						where p.user_id = u.user_id
+						<if test='post.postType=="n"'>
+						AND p.post_type LIKE "n"
+						</if>
+						<if test='post.postType=="f"'>
+						AND p.post_type LIKE "f"
+						</if>
+						<if test="search.searchCondition==0">
+						AND p.post_name like '%${search.searchKeyword}%'
+						</if>
+						<if test="search.searchCondition==1">
+						AND p.post_content like '%${search.searchKeyword}%'
+						</if>
+						<if test="search.searchCondition==2">
+						AND p.user_id like '%${search.searchKeyword}%'
+						</if>
 						ORDER BY p.post_no DESC) inner_table
-		WHERE num BETWEEN #{startRowNum} AND #{endRowNum}
+		WHERE num BETWEEN #{search.startRowNum} AND #{search.endRowNum}
 	</select>
 	
-	<select  id="getPostTotalCount"  parameterType="search"	 resultType="int">
+	<select  id="getPostTotalCount"  parameterType="map"	 resultType="int">
 		SELECT count(*) FROM (SELECT
 								p.*, u.nickname
 								FROM post p, user u
-								where p.user_id = u.user_id) countable		
+								where p.user_id = u.user_id
+								<if test='post.postType=="n"'>
+								AND p.post_type LIKE "n"
+								</if>
+								<if test='post.postType=="f"'>
+								AND p.post_type LIKE "f"
+								</if>
+								<if test="search.searchCondition==0">
+								AND p.post_content like '%${search.searchKeyword}%'
+								</if>
+								<if test="search.searchCondition==1">
+								AND p.post_name like '%${search.searchKeyword}%'
+								</if>
+								<if test="search.searchCondition==2">
+								AND p.user_id like '%${search.searchKeyword}%'
+								</if>
+								
+								) countable		
 	</select>
 	
 	<select id="getMyPostList" parameterType="map"	resultMap="postSelectMap">
@@ -196,7 +228,16 @@
 						@rownum:=@rownum+1 num, p.*, u.nickname
 						FROM post p, user u, (SELECT @rownum:=0) init2
 						where p.user_id = u.user_id
-						AND p.user_id = #{userId}
+						<if test='user.role != "a"'>
+						AND p.user_id = #{user.userId}
+						</if>
+						<if test='menu != "q"'>
+						AND p.post_type IN("n","f")
+						</if>
+						<if test='menu == "q"'>
+						AND p.post_type IN("q")
+						</if>
+						
 						ORDER BY p.post_no DESC) inner_table
 		WHERE num BETWEEN #{search.startRowNum} AND #{search.endRowNum}
 		
@@ -207,7 +248,16 @@
 								p.*, u.nickname
 								FROM post p, user u
 								where p.user_id = u.user_id
-								AND p.user_id = #{userId}
+								<if test='user.role != "a"'>
+								AND p.user_id = #{user.userId}
+								</if>
+								<if test='menu != "q"'>
+								AND p.post_type IN("n","f")
+								</if>
+								<if test='menu == "q"'>
+								AND p.post_type IN("q")
+								</if>
+								
 							  ) countable	
 	</select>
 	 
@@ -215,10 +265,11 @@
 	 
 	<insert id="addPost"  parameterType="post">
 		INSERT INTO
-		post(post_type, qna_reg_type, user_id, post_name, post_content)
+		post(post_type, qna_reg_type, qna_code, user_id, post_name, post_content)
 		VALUES(  
 				#{postType:CHAR}, 
 				#{qnaRegType:CHAR}, 
+				#{qnaCode:CHAR}, 
 				#{user.userId:VARCHAR},
 				#{postName:VARCHAR}, 
 				#{postContent:VARCHAR}
@@ -239,6 +290,13 @@
 		FROM post
 		WHERE post_no = #{postNo}
 	</delete>
+	
+	<update id="updateViewCount" parameterType="int">
+	 	UPDATE post
+	 	SET
+	 		view_count = view_count + 1
+		WHERE post_no = #{postNo}
+	</update>
 	
 	
 

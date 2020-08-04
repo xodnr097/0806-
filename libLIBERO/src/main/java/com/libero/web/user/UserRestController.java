@@ -146,6 +146,16 @@ public class UserRestController {
 	System.out.println("\n\n\n\n"+result+"\n\n\n");
 		return result;
 	}
+	
+	@RequestMapping(value="json/duplicationNick",method=RequestMethod.GET)
+	public boolean duplicationNick(@Param("nickname") String nickname) throws Exception{
+		System.out.println(" ---------------------------------------");
+		System.out.println("[ /user/json/duplicationCheck/"+nickname+" : GET]");
+		System.out.println(" ---------------------------------------");
+		
+		boolean result = userService.duplicationNick(nickname);
+		return result;
+	}
 ///////////////////////////////////////////랜덤 코드 생성기
 	static String getAlphaNumericString() { 
 		
