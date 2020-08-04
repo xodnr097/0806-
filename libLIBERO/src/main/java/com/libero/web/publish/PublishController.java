@@ -126,7 +126,7 @@ public class PublishController {
 		MultipartFile uploadedFile = request.getFile("file");
 		
 		if (!uploadedFile.isEmpty()) {
-			String fileName = fileUpload(request);
+			String fileName = fileUpload(request, path+"publish/fileUpload/manuFile/");
 			publish.setManuFile(fileName);
 			publishService.updateManu(publish);
 		}
@@ -169,8 +169,10 @@ public class PublishController {
 			MultipartFile uploadedFile = request.getFile("file");
 			
 			if (!uploadedFile.isEmpty()) {
-				String fileName = fileUpload(request);
+				String fileName = fileUpload(request,path+"publish/fileUpload/thumbnailFile/");
 				publish.setProdThumbnail(fileName);
+				fileName = fileUpload(request,path+"publish/fileUpload/coverFile/");
+				publish.setCoverFile(fileName);
 			}
 			
 		}else if (publish.getCoverSelect().contentEquals("freeTemplate") && publish.getImgType()!=null && publish.getImgSelect()!=null) {
@@ -211,32 +213,33 @@ public class PublishController {
 			}
 			g.dispose(); 
 			UUID savedFileName = UUID.randomUUID();	
-			ImageIO.write(thumbnail, "png", new File(path+"publish/fileUpload/"+savedFileName+".png")); 
+			ImageIO.write(thumbnail, "png", new File(path+"publish/fileUpload/thumbnailFile/"+savedFileName+".png")); 
+			publish.setProdThumbnail(savedFileName+".png");
 			
 			//커버 합성
 			g2.setColor(Color.black);
 			if (publish.getImgType().contentEquals("picture")) {
 				g2.setFont(titleFont); 
-				g2.drawString(publish.getProdName(), (cWidth/2)-(int)((r.getWidth())/2), 130);
+				g2.drawString(publish.getProdName(), (cWidth/4)*3-(int)((r.getWidth())/2), 130);
 				g2.setFont(nameFont); 
-				g2.drawString(publish.getAuthor(), (cWidth/2)-(int)((r2.getWidth())/2)+160, 170); 
-				g2.drawImage(logo, 300, 555, 130, 40, null);
+				g2.drawString(publish.getAuthor(), (cWidth/4)*3-(int)((r2.getWidth())/2)+160, 170); 
+				g2.drawImage(logo, 740, 555, 130, 40, null);
 			}else if (publish.getImgType().contentEquals("icon")) {
 				g2.setFont(titleFont); 
-				g2.drawString(publish.getProdName(), (cWidth/2)-(int)((r.getWidth())/2), 330);
+				g2.drawString(publish.getProdName(), (cWidth/4)*3-(int)((r.getWidth())/2), 330);
 				g2.setFont(nameFont); 
-				g2.drawString(publish.getAuthor(), (cWidth/2)-(int)((r2.getWidth())/2)+35, 350); 
-				g2.drawImage(logo, 300, 580, 130, 40, null);
+				g2.drawString(publish.getAuthor(), (cWidth/4)*3-(int)((r2.getWidth())/2)+55, 350); 
+				g2.drawImage(logo, 740, 555, 130, 40, null);
 			}else if (publish.getImgType().contentEquals("img")) {
 				g2.setFont(titleFont); 
-				g2.drawString(publish.getProdName(), (cWidth/2)-180, 530);
+				g2.drawString(publish.getProdName(), (cWidth/4)*3-170, 520);
 				g2.setFont(nameFont); 
-				g2.drawString(publish.getAuthor(), (cWidth/2)-(int)(r2.getWidth())+210, 550); 
-				g2.drawImage(logo, 290, 570, 130, 40, null);
+				g2.drawString(publish.getAuthor(), (cWidth/4)*3-(int)((r2.getWidth())/2)+190, 550); 
+				g2.drawImage(logo, 745, 565, 130, 40, null);
 			}
 			g2.dispose(); 
 			savedFileName = UUID.randomUUID();	
-			ImageIO.write(cover, "png", new File(path+"publish/fileUpload/"+savedFileName+".png")); 
+			ImageIO.write(cover, "png", new File(path+"publish/fileUpload/coverFile/"+savedFileName+".png")); 
 			publish.setCoverFile(savedFileName+".png");
 		}
 		
@@ -497,14 +500,14 @@ public class PublishController {
 		return modelAndView;
 	}
 	
-	public String fileUpload(MultipartHttpServletRequest request) throws Exception {
+	public String fileUpload(MultipartHttpServletRequest request,String path) throws Exception {
 		
 		Map<String, MultipartFile> files = request.getFileMap();
 		CommonsMultipartFile cmf = (CommonsMultipartFile) files.get("file");
 		
 		String originalFileName = cmf.getOriginalFilename();	//오리지날 파일명
 		String extension = originalFileName.substring(originalFileName.lastIndexOf("."));	//파일 확장자
-		String fileRoot = path+"publish/fileUpload/"; // 파일 경로
+		String fileRoot = path; // 파일 경로
 		String savedFileName = UUID.randomUUID() + extension;	//저장될 파일 명
 	    	
     	File f = new File(fileRoot+savedFileName);
