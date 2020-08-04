@@ -17,6 +17,10 @@ public interface PublishDAO {
 	
 	public void updatePublishInfo(Publish publish) throws Exception;
 	
+	public void addHashtag(Publish publish) throws Exception;
+	
+	public void updateHashtag(Publish publish) throws Exception;
+	
 	public void updateRetailPrice(Publish publish) throws Exception;
 	
 	public void addProduct(Publish publish) throws Exception;
@@ -24,8 +28,6 @@ public interface PublishDAO {
 	public Publish getProduct(int prodNo) throws Exception;
 	
 	public void updateProduct(Publish publish) throws Exception;
-	
-	public void addOptionPrice() throws Exception;
 	
 	public User getOptionPrice(String userId) throws Exception;
 	
@@ -38,5 +40,6 @@ public interface PublishDAO {
 	public int getTotalCount(Publish publish) throws Exception;
 	
 	public Cash getUserCash(String userId) throws Exception;
+
 
 }

@@ -331,9 +331,9 @@
 			$("#titlePreview").hide();
 			$("#fileUpload").hide();
 			$("#uploadPreview").hide();
-			var thumbnail = "${prod.prodThumbnail}";
-			if (thumbnail!=null) {
-				$("#preview").css("background-image", "url(../resources/images/publish/fileUpload/"+thumbnail+")");
+			var cover = "${prod.coverFile}";
+			if (cover!=null) {
+				$("#preview").css("background-image", "url(../resources/images/publish/fileUpload/coverFile/"+cover+")");
 			}
 			
 			$("input[name='imgType']").on("click", function(){

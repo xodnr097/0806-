@@ -45,7 +45,7 @@
 									
 							  		<div class="col-lg-2">
 							  			<c:if test="${prod.prodThumbnail!=null}">
-							  				<img class="prodThumbnail" src="../resources/images/publish/fileUpload/${prod.prodThumbnail}">
+							  				<img class="prodThumbnail" src="../resources/images/publish/fileUpload/thumbnailFile/${prod.prodThumbnail}">
 							  			</c:if>
 							  			<c:if test="${prod.prodThumbnail==null}">
 							  				<img class="prodThumbnail" src="../resources/images/publish/fileUpload/null.png">

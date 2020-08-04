@@ -72,7 +72,7 @@ public class UserController {
 		
 		System.out.println(session.getAttribute("user"));
 		ModelAndView modelAndView = new ModelAndView();
-		modelAndView.setViewName("redirect:/index.jsp");
+		modelAndView.setViewName("redirect:/");
 		
 		return modelAndView;
 	}
@@ -84,7 +84,7 @@ public class UserController {
 		
 		session.invalidate();
 		
-		return "redirect:/index.jsp";
+		return "redirect:/";
 	}
 
 	@RequestMapping(value="addUser",method=RequestMethod.GET)
@@ -122,14 +122,14 @@ public class UserController {
 		ModelAndView mdv = new ModelAndView();
 		userService.addUser(user);
 		
-		mdv.setViewName("redirect:/index.jsp");
+		mdv.setViewName("redirect:/");
 		return mdv;
 	}
 	
-	@RequestMapping(value = "getUserPublishList", method = RequestMethod.GET)
+	@RequestMapping(value = "getUserPublishList")
 	public ModelAndView getUserPublishList(HttpSession session, @RequestParam("prodType") String prodType, Publish publish,Search search) throws Exception {
 		
-		System.out.println("/user/getUserPublishList : GET");
+		System.out.println("/user/getUserPublishList : GET, POST");
 		
 		if(search.getCurrentPage() ==0 ){
 			search.setCurrentPage(1);

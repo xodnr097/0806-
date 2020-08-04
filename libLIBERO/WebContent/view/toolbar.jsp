@@ -8,10 +8,11 @@
 	nav {
 		font-family: 'Noto Sans KR', sans-serif;
 	}
+
 </style>
 </head>
 	<!--Navbar -->
-	<nav class="mb-1 navbar navbar-expand-lg navbar-dark brown lighten-1 fixed-top z-depth-1">
+	<nav id="mainToolbar" class="mb-1 navbar navbar-expand-lg navbar-dark brown lighten-1 fixed-top z-depth-1">
 		<a href="/libero/" class="navbar-brand">
 	  		<img src="http://127.0.0.1:8080/libero/resources/images/common/logo_white.png" width="80" height="23" alt="" loading="lazy" id="logoImg">
 	  	</a>
@@ -44,19 +45,9 @@
 	        		</div>
 	      		</li>
 	      		<!-- 작가서비스 End -->
-	      		<li class="nav-item dropdown">
-	        		<a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink-333" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">서점</a>
-	        		<div class="dropdown-menu dropdown-default" aria-labelledby="navbarDropdownMenuLink-333">
-	          			<a class="dropdown-item" href="/libero/product/getBookList">메인</a>
-				        <div class="dropdown-divider"></div>
-				        <a class="dropdown-item" href="/libero/product/getBookListByCategory/poetry">시</a>
-				        <a class="dropdown-item" href="/libero/product/getBookListByCategory/novel">소설</a>
-				        <a class="dropdown-item" href="/libero/product/getBookListByCategory/essay">수필</a>
-				        <div class="dropdown-divider"></div>
-				        <a class="dropdown-item" href="/libero/product/getBookListByCategory/non">비문학</a>
-				        <a class="dropdown-item" href="/libero/product/getBookListByCategory/edu">교육</a>
-	        		</div>
-	      		</li>
+	      		<li class="nav-item">
+		        	<a class="nav-link" href="/libero/product/getBookList">서점</a>
+		        </li>
 	      		<!-- 서점 End -->
 	      		<li class="nav-item dropdown">
 	        		<a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink-333" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">커뮤니티</a>
@@ -106,8 +97,34 @@
 	    	</ul>
 	    	<!-- right Button End -->
 	  	</div>
+	  	
 	</nav>
 	<!--/.Navbar -->
+	<!-- subnav here -->
+	<div id="bookList" class="sticky-top" style="padding-top: 56px; display: none;">
+		<nav class="mb-1 navbar navbar-expand-lg navbar-dark brown darken-1 z-depth-0" style="min-height: 30px">
+		
+		    <div class="collapse navbar-collapse navbar1and2" id="navbarSupportedContent2">
+		        <ul class="navbar-nav mx-auto">
+		            <li class="nav-item">
+		                <a class="nav-link py-0" href="/libero/product/getBookListByCategory/poetry">시</a>
+		            </li>
+		            <li class="nav-item">
+		                <a class="nav-link py-0" href="/libero/product/getBookListByCategory/novel">소설</a>
+		            </li>
+		            <li class="nav-item">
+		                <a class="nav-link py-0" href="/libero/product/getBookListByCategory/essay">수필</a>
+		            </li>
+		            <li class="nav-item">
+		                <a class="nav-link py-0" href="/libero/product/getBookListByCategory/non">비문학</a>
+		            </li>
+		            <li class="nav-item">
+		                <a class="nav-link py-0" href="/libero/product/getBookListByCategory/edu">교육</a>
+		            </li>
+		        </ul>
+		    </div>
+		</nav>
+	</div>
 	<!-- Modal -->
 	<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 		<div class="modal-dialog modal-dialog-centered">
@@ -143,10 +160,16 @@
 	<script>
 	//===================toolbar class change ================
 		$(function() {
+			
 			var path = window.location.pathname;
 			
-			if (path=="/libero/index.jsp" ||path=="/libero/") {
-				$("nav").attr("class","mb-1 navbar navbar-expand-lg navbar-dark link-color fixed-top z-depth-0");
+			if (path=="/libero/home.jsp" ||path=="/libero/") {
+				$("#mainToolbar").attr("class","mb-1 navbar navbar-expand-lg navbar-dark link-color fixed-top z-depth-0");
+			}
+			
+			if (path=="/libero/product/getBookList" || path.includes("/libero/product/getBookListByCategory/")) {
+				$("#mainToolbar").attr("class","mb-1 navbar navbar-expand-lg navbar-dark brown lighten-1 fixed-top z-depth-0");
+				$("#bookList").show();
 			}
 		});
 	//============= 회원가입============

@@ -51,6 +51,10 @@ public class PublishServiceImpl implements PublishService{
 	
 	public void updatePublishInfo(Publish publish) throws Exception{
 		publishDAO.updatePublishInfo(publish);
+		
+		if (!publish.getHashtagName().contentEquals("")) {
+				publishDAO.updateHashtag(publish);
+		}
 	}
 	
 	public void updateRetailPrice(Publish publish) throws Exception{

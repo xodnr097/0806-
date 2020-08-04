@@ -98,8 +98,12 @@
 		SET
 			prod_name 		= #{prodName},
 			prod_detail 	= #{prodDetail:LONGVARCHAR},
-			prod_thumbnail 	= #{prodThumbnail},
-			cover_file 		= #{coverFile:VARCHAR},
+			<if test="prodThumbnail != null">
+				prod_thumbnail 	= #{prodThumbnail},
+			</if>
+			<if test="coverFile != null">
+				cover_file 		= #{coverFile:VARCHAR},
+			</if>
 			author 			= #{author},
 			purpose_code 	= #{purposeCode},
 			book_category 	= #{bookCategory}
@@ -112,6 +116,13 @@
 	 	hashtag (prod_no, hashtag_name)
 	 	VALUES (#{prodNo},#{hashtagName:VARCHAR} )
 	</insert>
+	
+	<update	id="updateHashtag"	parameterType="publish">
+	   	UPDATE hashtag
+	   	SET
+	   		hashtag_name = #{hashtagName:VARCHAR}
+	   	WHERE prod_no = #{prodNo}
+	</update>
 	
 	<update	id="updateRetailPrice"	parameterType="publish">
 	   	UPDATE product

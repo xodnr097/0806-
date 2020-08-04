@@ -6,7 +6,6 @@ import java.util.Properties;
 
 import javax.mail.Message;
 import javax.mail.MessagingException;
-
 import javax.mail.Session;
 import javax.mail.Transport;
 import javax.mail.internet.AddressException;
@@ -17,7 +16,7 @@ import javax.servlet.http.HttpSession;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.ui.Model;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,7 +24,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.libero.common.Page;
+import com.libero.common.Search;
+import com.libero.service.domain.Publish;
 import com.libero.service.domain.User;
+import com.libero.service.publish.PublishService;
 import com.libero.service.user.UserService;
 
 //==> 회원관리 RestController
@@ -37,11 +40,21 @@ public class UserRestController {
 	@Autowired
 	@Qualifier("userServiceImpl")
 	private UserService userService;
+	@Autowired
+	private PublishService publishService;
 	
 	//Constructor
 	public UserRestController(){
 		System.out.println(this.getClass());
 	}
+	
+	@Value("#{commonProperties['pageUnit']}")
+	//@Value("#{commonProperties['pageUnit'] ?: 3}")
+	int pageUnit;
+	
+	@Value("#{commonProperties['pageSize']}")
+	//@Value("#{commonProperties['pageSize'] ?: 2}")
+	int pageSize;
 	
 	//method
 	@RequestMapping( value="json/login", method=RequestMethod.POST )
@@ -161,6 +174,28 @@ public class UserRestController {
         return sb.toString(); 
     } 
 	
-	
+	@RequestMapping(value="json/getUserPublishList/{prodType}")
+	public Map getUserPublishList(HttpSession session, @PathVariable("prodType") String prodType, Publish publish, Search search) throws Exception {
+		
+		System.out.println("/user/json/getUserPublishList : GET, POST");
+		
+		if(search.getCurrentPage() ==0 ){
+			search.setCurrentPage(1);
+		}
+		search.setPageSize(pageSize);
+		
+		publish.setProdType(prodType);
+		publish.setCreator(((User)session.getAttribute("user")).getUserId());
+		
+		Map<String , Object> map=publishService.getUserPublishList(publish, search);
+		Page resultPage = new Page(search.getCurrentPage(),
+				((Integer)map.get("totalCount")).intValue(), pageUnit, pageSize);
+		
+		Map map01 = new HashMap();
+		map01.put("list", map.get("list"));
+		map01.put("resultPage", resultPage);
+		map01.put("search", search);
+		return map01;
+	}
 	
 }

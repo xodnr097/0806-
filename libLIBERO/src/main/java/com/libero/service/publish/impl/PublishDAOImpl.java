@@ -52,10 +52,14 @@ public class PublishDAOImpl implements PublishDAO {
 	
 	public void updatePublishInfo(Publish publish) throws Exception {
 		sqlSession.update("PublishMapper.updateProductInfo", publish);
-		
-		if (!publish.getHashtagName().contentEquals("")) {
-			sqlSession.insert("PublishMapper.addHashtag", publish);
-		}
+	}
+	
+	public void addHashtag(Publish publish) throws Exception {
+		sqlSession.insert("PublishMapper.addHashtag", publish);
+	}
+	
+	public void updateHashtag(Publish publish) throws Exception {
+		sqlSession.update("PublishMapper.updateHashtag", publish);
 	}
 	
 	public void updateRetailPrice(Publish publish) throws Exception {
@@ -72,10 +76,6 @@ public class PublishDAOImpl implements PublishDAO {
 	
 	public void updateProduct(Publish publish) throws Exception{
 		sqlSession.update("PublishMapper.updateProduct", publish);
-	}
-	
-	public void addOptionPrice() throws Exception{
-		
 	}
 	
 	public User getOptionPrice(String userId) throws Exception{
