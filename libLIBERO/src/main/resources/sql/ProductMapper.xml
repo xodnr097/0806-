@@ -73,6 +73,14 @@
 										<if test="searchCondition == 'author'">
 												author LIKE '%${searchKeyword}%'
 										</if>
+										
+										<if test="searchCondition == 'prodName'">
+												prod_name LIKE '%${searchKeyword}%'
+										</if>
+										
+										<if test="searchCondition == 'hashtag'">
+												hashtag LIKE '%${searchKeyword}%'
+										</if>
 								
 								</where>
 							
