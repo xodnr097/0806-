@@ -15,19 +15,21 @@
 
 	<div class="mt-5">&nbsp;</div>
 	<div class="container">
-    <h1>게시글 작성</h1>
+   
         <form class="form-group my-5 py-5">
        		<c:if test = "${param.postType == 'n' }" ><input type="hidden" name="postType" value="n"></c:if>
             <c:if test = "${param.postType == 'f' }" ><input type="hidden" name="postType" value="a"></c:if>
             <c:if test = "${param.postType == 'q' }" ><input type="hidden" name="postType" value="q"></c:if>
             <c:if test = "${param.postType != 'q' }" >	
-            <div class="form-row my-3">
-                <div class="input-group col-lg-12">
-                    <input type="text" class="form-control" name="postName" placeholder="제목을 입력해주세요">
-                </div>
-            </div>
+              <h1>게시글 작성</h1>
+              <div class="form-row my-3">
+                  <div class="input-group col-lg-12">
+                      <input type="text" class="form-control" name="postName" placeholder="제목을 입력해주세요">
+                  </div>
+              </div>
             </c:if>
             <c:if test = "${param.postType == 'q' }" >	
+            	<h1>문의하기</h1>
             	<div class="form-row my-3">
             		<div class="input-group col-lg-3">
             			<select name="qnaRegType" class="form-control">
@@ -41,7 +43,9 @@
 	                <div class="input-group col-lg-9">
 	                    <input type="text" class="form-control" name="postName" placeholder="제목을 입력해주세요">
 	                </div>
-            </div>
+	                <input type="hidden" id="qnaCode" name="qnaCode" value="x" />
+					  
+            	</div>
             </c:if>	
             <div>
 				<textarea id="postContent" name="postContent" class="summernote" style="display: none;"></textarea>

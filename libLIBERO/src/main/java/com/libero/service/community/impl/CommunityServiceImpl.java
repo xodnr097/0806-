@@ -13,6 +13,7 @@ import com.libero.service.community.CommunityDAO;
 import com.libero.service.community.CommunityService;
 import com.libero.service.domain.Comment;
 import com.libero.service.domain.Post;
+import com.libero.service.domain.User;
 
 
 @Service("communityServiceImpl")
@@ -37,9 +38,9 @@ public class CommunityServiceImpl implements CommunityService {
 		return communityDAO.getPost(postNo);
 	}
 	
-	public Map<String, Object> getPostList(Search search) throws Exception {
-		List<Post> list = communityDAO.getPostList(search);
-		int totalCount = communityDAO.getPostTotalCount(search);
+	public Map<String, Object> getPostList(Search search, Post post) throws Exception {
+		List<Post> list = communityDAO.getPostList(search, post);
+		int totalCount = communityDAO.getPostTotalCount(search, post);
 		
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("list", list);
@@ -47,10 +48,10 @@ public class CommunityServiceImpl implements CommunityService {
 		return map;
 	}
 	
-	public Map<String,Object> getMyPostList(Search search , String userId)throws Exception{
+	public Map<String,Object> getMyPostList(Search search , User user, String menu)throws Exception{
 		
-		List<Post> list= communityDAO.getMyPostList(search, userId);
-		int totalCount= communityDAO.getMyPostListTotalCount(userId);
+		List<Post> list= communityDAO.getMyPostList(search, user, menu);
+		int totalCount= communityDAO.getMyPostListTotalCount(search, user, menu);
 		
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("list", list );

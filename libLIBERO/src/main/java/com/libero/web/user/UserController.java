@@ -247,6 +247,7 @@ public class UserController {
 		return modelAndView;
 	}
 	
+
 	@RequestMapping(value = "getAdminReportList", method = RequestMethod.GET)
 	public ModelAndView getAdminReportList(HttpSession session, String role, Report report, Search search) throws Exception{
 		System.out.println("/user/getAdminReportList : GET");
@@ -292,19 +293,21 @@ public class UserController {
 		Map<String,Object> map = new HashMap<String,Object>(); 
 		
 		ModelAndView modelAndView = new ModelAndView();
+		
+		User user = (User)session.getAttribute("user");
 		String userId = ((User)session.getAttribute("user")).getUserId();
 		
 		System.out.println("menu가 뭔가요"+menu);
-		if(menu.equals(new String("post"))) {
-			map = communityService.getMyPostList(search, userId);
+		if(menu.equals(new String("p"))) {
+			map = communityService.getMyPostList(search, user, menu);
 		} 		
 		
-		if(menu.equals(new String("comment"))) {
+		if(menu.equals(new String("c"))) {
 			map = communityService.getMyCommentList(search, userId);
 		} 
 		
-		if(menu.equals(new String("qna"))) {
-			map = communityService.getMyCommentList(search, userId);
+		if(menu.equals(new String("q"))) {
+			map = communityService.getMyPostList(search, user, menu);
 		} 
 		
 		Page resultPage = new Page(search.getCurrentPage(),

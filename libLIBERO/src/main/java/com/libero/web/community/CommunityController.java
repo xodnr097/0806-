@@ -72,7 +72,7 @@ public class CommunityController {
 	}
 	
 	@RequestMapping(value="getPostList")
-	public ModelAndView getPostList(@RequestParam(value="menu", required=false) String menu, @ModelAttribute("search") Search search) throws Exception{
+	public ModelAndView getPostList(@RequestParam(value="menu", required=false) String menu, Search search, Post post) throws Exception{
 		
 		System.out.println("^^^^^^^"+ "/community/getPostList");
 		
@@ -83,7 +83,13 @@ public class CommunityController {
 		
 		ModelAndView modelAndView = new ModelAndView();
 		
-		Map<String, Object> map = communityService.getPostList(search);
+		if(menu.equals(new String("n"))) {
+			post.setPostType("n");
+		} 
+		if(menu.equals(new String("f"))) {
+			post.setPostType("f");
+		} 
+		Map<String, Object> map = communityService.getPostList(search, post);
 		
 		Page resultPage = new Page(search.getCurrentPage(),
 									((Integer)map.get("totalCount")).intValue(), pageUnit, pageSize);
@@ -95,14 +101,12 @@ public class CommunityController {
 		modelAndView.addObject("search", search);
 		modelAndView.addObject("totalCount", map.get("totalCount"));
 		
-		if(menu.equals(new String("notice"))) {
+		if(menu.equals(new String("n"))) {
 			modelAndView.setViewName("/view/community/getPostList.jsp");
-		} 
-		
-		if(menu.equals(new String("free"))) {
+		}
+		if(menu.equals(new String("f"))) {
 			modelAndView.setViewName("/view/community/getFreePostList.jsp");
-		} 
-		
+		}
 		
 		return modelAndView;
 	}

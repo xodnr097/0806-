@@ -25,11 +25,11 @@
 		   				class="btn btn-outline-brown waves-effect btn-block" role="button" 
 		   				aria-pressed="true" style="margin-bottom: 10px">임시저장 도서</a>
 	   			
-		   			<a href="/libero/user/getUserActivityList?menu=post" 
+		   			<a href="/libero/user/getUserActivityList?menu=p" 
 		   				class="btn btn-outline-brown waves-effect btn-block" role="button" 
 		   				aria-pressed="true" style="margin-bottom: 10px">작성한 글</a>
 		   				
-		   			<a href="/libero/user/getUserActivityList?menu=comment" 
+		   			<a href="/libero/user/getUserActivityList?menu=c" 
 		   				class="btn btn-outline-brown waves-effect btn-block" role="button" 
 		   				aria-pressed="true" style="margin-bottom: 10px">작성한 댓글</a>
 		   				
@@ -37,7 +37,7 @@
 		   				class="btn btn-outline-brown waves-effect btn-block" role="button" 
 		   				aria-pressed="true" style="margin-bottom: 10px">리뷰</a>
 		   				
-		   			<a href="/libero/user/getUserActivityList?menu=qna" 
+		   			<a href="/libero/user/getUserActivityList?menu=q" 
 		   				class="btn btn-outline-brown waves-effect btn-block" role="button" 
 
 		   				aria-pressed="true" style="margin-bottom: 10px">나의 문의</a>
