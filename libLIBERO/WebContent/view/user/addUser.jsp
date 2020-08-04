@@ -1,26 +1,21 @@
+
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
+
 <html>
 <head>
-	
 <meta charset="UTF-8">
-<title>회원가입</title>
+<title>회원 가입</title>
 <jsp:include page="/common/cdn.jsp"></jsp:include>
-	
-	
-	
+
 <script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
-	<!--  ///////////////////////// CSS ////////////////////////// -->
-	<style>
-       body > div.container{
-        	border: 3px solid #D6CDB7;
-            margin-top: 10px;
-        }
-    </style>
-   
+
+ 
+
 <script type="text/javascript">
 //카카오 주소 API 사용
     function daumjuso() {
@@ -66,16 +61,99 @@
                 document.getElementById("postCode").value = data.zonecode;
                 document.getElementById("address").value = data.zonecode+addr+extraAddr;
                 // 커서를 상세주소 필드로 이동한다.
-                document.getElementById("phone1").focus();
+                document.getElementById("postCode").focus();
             }
         }).open();
     }
 
+
+/////////////////////////////////////////회원가입 버튼 눌렀을때
+    function addUser() {
+    	var hash = $("input[name=hashtagName]").val();
+		var userId = $("input[name='userId']").val();
+		var password = $("input[name='password']").val();
+		var password2 = $("input[name='password2']").val();
+		var profile = $("input[name='file']").val();
+		var address = $("input[name='address']").val();
+		var birthDate= $("input[name='birthDate']").val();
+		var genderCode = $("input[name='genderCode']:checked").val();
+		alert(profile)
+	
+		
+		if (password==null) {
+			Swal.fire({
+				  icon: 'error',
+				  text: '비밀번호를 입력해 주세요.'
+				});
+			return;
+		}
+		if(password!=password2){
+			Swal.fire({
+					icon:'error',
+					text:'비밀번호를 확인해 주세요'
+			});
+			return;
+		}
+		
+		
+		if (birthDate==null) {
+			Swal.fire({
+				  icon: 'error',
+				  text: '생년월일을 입력해 주세요.'
+				});
+			return;
+		}
+		
+		if ($("input[name='genderCode']:checked").val()==null) {
+			Swal.fire({
+				  icon: 'error',
+				  text: '성별을 선택해 주세요.'
+				});
+				return;
+		}
+		
+    	
+		$("form").attr("method" , "POST").attr("action" , "/libero/user/addUser").submit();
+	}
+    
+
 	$(function (){
+			
+		
+		function readURL(input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader(); //파일을 읽기 위한 FileReader객체 생성
+                reader.onload = function (e) { 
+                    //파일 읽어들이기를 성공했을때 호출되는 이벤트 핸들러
+                    $("#uploadPreview").show();
+                    $('#uploadPreview').attr('src', e.target.result);
+                    //이미지 Tag의 SRC속성에 읽어들인 File내용을 지정
+                    //(아래 코드에서 읽어들인 dataURL형식)
+                }                    
+                reader.readAsDataURL(input.files[0]);
+                //File내용을 읽어 dataURL형식의 문자열로 저장
+            }
+    	}//readURL()--
+
+    	//file 양식으로 이미지를 선택(값이 변경) 되었을때 처리하는 코드
+   		$("#file").change(function(){
+            //alert(this.value); //선택한 이미지 경로 표시
+            readURL(this);
+        });
+		
+		
+		$('#hashtagName').tagsInput({
+			width:'auto',
+			defaultText:''
+		});
+		
+		
 		$("#userId").focus();
+		
+		//////////////////////////아이디 유효체크
 		$("input[name=userId]").on("keyup", function(){
 			var userId = $("input[name=userId]").val();
-			alert(userId);
+			
 			
 			
 				$.ajax({	url :'/libero/user/json/duplicationCheck?userId='+userId,
@@ -87,18 +165,59 @@
 									  },
 						    success : function(result , status){
 							console.log(result);
-							var check = result;
-							alert(check);
-							if(check){
-								$("#userId").attr("class","form-control-invalid")
-							}else{
-								$("#userId").attr("class","form-control-valid")
+							
+// 							alert(check);
+							if(result != 'false'){
+								$("#userId").removeClass("form-control is-invalid")
+								$("#userId").addClass("form-control is-valid");								
 							}
-						}
-					});
-		});
+							if(result != 'true'){
+								$("#userId").addClass("form-control is-invalid");
+						
+							}
+					}
+					});//아이디 중복체크 끝
+					
+					
+		});//onLoad함수
 		
+		$("input[name=nickname]").on("keyup", function(){
+			var nickname = $("input[name=nickname]").val();
+			
+			
+			
+				$.ajax({	url :'/libero/user/json/duplicationNick?nickname='+nickname,
+							method : 'GET',
+							dataType : 'text',
+							headers : {
+								"Accept" : "application/json",
+								"Content-Type" : "application/json"
+									  },
+						    success : function(result , status){
+							console.log(result);
+							
+// 							alert(check);
+							if(result != 'false'){
+								$("input[name=nickname]").removeClass("form-control is-invalid")
+								$("input[name=nickname]").addClass("form-control is-valid");								
+							}
+							if(result != 'true'){
+							
+								$("input[name=nickname]	").addClass("form-control is-invalid");
+						
+							}
+					}
+					});//아이디 중복체크 끝
+					
+					
+		});//onLoad함수
+		
+		
+		//////////////////////////이메일 인증
 		$("#emailcheck").on("click",function(){
+			if( $("#userId").val() == '' ){
+				swal("이메일을 입력해 주세요","헤헤 바보야 :p","error")
+			}else{
 			$.ajax(
 					{	url : "/libero/user/json/emailSend?userId="+$("#userId").val(),
 						method : "GET" ,
@@ -112,193 +231,217 @@
 						//알림 하나 띄우고 인증코드 입력 열기
 						$("#verifDiv").show()
  						$("#inputVerification").val(json);
-						alert("1"+  $("#inputVerification").val(json).val())
+						//alert("1"+  $("#inputVerification").val(json).val())
 						swal("메일이 발송 되었습니다!", "작성하신 이메일을 확인해 주세요", "success");
+						
 						//Debug...
+						},
+						error : function( error ) {
+							swal("유효한 이메일을 입력해 주세요","에이","error")
 						}
+						
+						
 					});//$.ajax 끝
+			}	
+										
+				});//$("#emailcheck").on끝
+				
+				
+				//////////////////////////////////////////////////////////////////////////////////////
+			   
+				
+				///////////////////////////////////////////////////////////////////////////////////////////////////////
 					
-					
-					
-					
-					});//$("#emailcheck").on끝
-					
-		});
-		//$(function)끝
-	//////////////////////////////////인증 번호 확인
-			$("#verifBtn").on("click",function(){
-				alert( $("inputVerification").val())
-				alert($("#verification").val())
-				if( $("#inputVerification").val() != $("#verification").val()){
-					swal("인증번호가 다릅니다 다시 확인해 주세요!","헤헤 바보 :p","error")
-				}else{
-					swal("인증 되었습니다!","\\YAY/","success")
-				}
-			})
-	 //////////////////////////////////가입 버튼
-	</script>
+					$("#verifBtn").on("click",function(){
+						alert( $("inputVerification").val())
+						alert($("#verification").val())
+						if( $("#inputVerification").val() != $("#verification").val()){
+							swal("인증번호가 다릅니다 다시 확인해 주세요!","헤헤 바보 :p","error")
+						}else{
+							swal("인증 되었습니다!","\\YAY/","success")
+						}
+					})
+// 					$("#addBtn").on("click",function(){
+// 						$("form").attr("method","POST").attr("action" , "/libero/user/addUser").attr("enctype","multipart/form-data").submit();
+// 					})
 
-    
+		});	//$(function)끝
+		
+		
+		  
+		    	
+		    
+	</script> 
+
+
 </head>
 <body>
 
-   	<!-- ToolBar End /////////////////////////////////////-->
 
-	<!--  화면구성 div Start /////////////////////////////////////-->
-	<form class="text-center border border-light p-5" enctype="multifile">
-	<div class="container">
-	
-		<h1 class="h4 mb-4">회 원 가 입</h1>
-		
-		<!-- form Start /////////////////////////////////////-->
-		
-		
-		<input 	type="hidden" name="type" >
-		
-		
-<!-- 		    <label for="userId" class="col-sm-offset-1 col-sm-3 control-label">*아 이 디</label> -->
-<!-- 		    <div class="col-sm-4"> -->
-<!-- 		      	<input type="text" class="form-control"  -->
-<!-- 		      		id="userId" name="userId" placeholder="아이디(이메일)" required="required"><span></span> -->
-<!-- 		    </div> -->
-<!-- 		    <div class="col-sm-3" style="padding-top:5px;"> -->
-<!-- 				<input type="button" id="emailcheck"  class="col" value="이메일 확인"> -->
-<!-- 		    </div> -->
-	<div >
-      <label for="validationServerUsername33">Username</label>
-      <div>
-        <div class="mb-form">
-            <input type="text" class="form-control" id="userId" name="userId" placeholder="이메일(아이디)" aria-describedby="inputGroupPrepend33">
-      		<button id="emailcheck"  class="btn btn-primary btn-sm btn-rounded" type="submit" >이메일 확인</button>
-      	</div>
-      </div>
-    </div>
-    <div class="md-form mt-0">
-                <input type="email" id="materialRegisterFormEmail" class="form-control">
-                <label for="materialRegisterFormEmail">E-mail</label>
+<div class="container">
+
+<div class="card">
+
+    <h5 class="card-header brown lighten-1 white-text text-center py-4">
+        <strong>회원가입</strong>
+    </h5>
+
+    <!--Card content-->
+    <div class="card-body px-lg-5 pt-0">
+
+ 
+
+
+
+
+        <!-- Form -->
+        <form class="text-center" style="color: #bcaaa4;" enctype="multipart/form-data" >
+                   
+                   <br><br>
+			<!--  이름 -->
+            <div class="md-form mt-0">
+                <input type="text" id="name" class="form-control" name="name">
+                <label for="name">이름</label>
             </div>
-  
-  
-<!-- <i class="far fa-thumbs-up"></i> -->
-<!-- <i class="far fa-times-circle"></i> -->
-<!-- <i class="far fa-check-circle"></i> -->
-		
-		  
-		  
-		  
-		  <input type="text" id="inputVerification" name ="inputVerification" hidden>
-		  <div class="form-group" hidden id="verifDiv">
-		  
-		  	<label for="verification" class ="col-sm-offset-1 col-sm-3 control-label">인증 코드</label>
-		  		<div class="col-sm-4">
-		  			<input type="text" class="form-control" id="verification" name="verification" placeholder="인증 번호">
-		  			
-		  		</div>
-		  		<div class="col-sm-3" style="padding-top:5px">
-		  			<input type="button" id="verifBtn" class="col" value="확 인">
-		  		</div>
-		  </div>
-		  
-		  <div class="form-group">
-		    <label for="password" class="col-sm-offset-1 col-sm-3 control-label">비밀번호</label>
-		    <div class="col-sm-4">
-		      	<input type="password" class="form-control" 
-		      		id="password" name="password" placeholder="비밀번호" required="required">
-		    </div>
-		  </div>
-		  
-		  <div class="form-group">
-		    <label for="password2" class="col-sm-offset-1 col-sm-3 control-label">*비밀번호 확인</label>
-		    <div class="col-sm-4">
-		      	<input type="password" class="form-control" 
-		      		id="password2" name="password2" placeholder="비밀번호 확인" required="required">
-		    </div>
-		  </div>
-		  
-		  <div class="form-group">
-		    <label for="nickname" class="col-sm-offset-1 col-sm-3 control-label">닉네임</label>
-		    <div class="col-sm-4">
-		      	<input type="text" class="form-control" 
-		      		id="nickname" name="nickname" placeholder="닉네임" >
-		    </div>
-		  </div>
-		  
-		  
-		  <div class="form-group">
-		    <label for="address" class="col-sm-offset-1 col-sm-3 control-label">주소</label>
-		    <div class="col-sm-2">
-				<input type="text" class="form-control" id="postCode" name="postCode" placeholder="우편번호">
-		    </div>
-			<div class="col-sm-3">
-	      		<button type="button" onClick="daumjuso()" class="btn btn-info">우편번호 찾기</button>
-	    	</div>
-		   
-		    <label for="address" class="col-sm-offset-1 col-sm-3 control-label"></label>
-		    <div class="col-sm-5">
-				<input type="text" id="address" name="address" placeholder="주소" size="50" class="form-control">
-		    </div>
-		    <label for="address" class="col-sm-offset-1 col-sm-3 control-label"></label>
-		    <div class="col-sm-5">
-				<input type="text" id="extraAddress" name="extraAddress" placeholder="상세주소" class="form-control">
-		    </div>
-		     <input type="hidden" name="address">
-		 </div>
-		  
-		  <div class="form-group">
-		    <label for="phone" class="col-sm-offset-1 col-sm-3 control-label">휴대전화번호</label>
-		     <div class="col-sm-2">
-		      <select class="form-control" name="phone1" id="phone1">
-				  	<option value="010" >010</option>
-					<option value="011" >011</option>
-					<option value="016" >016</option>
-					<option value="018" >018</option>
-					<option value="019" >019</option>
-				</select>
-		    </div>
-		    <div class="col-sm-2">
-		      <input type="text" class="form-control" id="phone2" name="phone2" placeholder="번호">
-		    </div>
-		    <div class="col-sm-2">
-		      <input type="text" class="form-control" id="phone3" name="phone3" placeholder="번호">
-		    </div>
-		 	
-		  </div>
-		  
-		  <div class="form-group">
-		  	<label for="hashtag"  class="col-sm-offset-1  col-sm-3 text-center control-label">해시태그</label>
-		     <div class="col-sm-2">
-		       <label><input type="checkbox" value="horror" id="horror" >공포</label>
-		       <label><input type="checkbox" value="romance" id="romance">연애</label>
-		       <label><input type="checkbox" value="thriller" id="thriller">스릴</label>
-		       <label><input type="checkbox" value="action" id="action">액션</label>
-		       <label><input type="checkbox" value="fantasy" id="fantasy">판타지</label>
-		     </div>		  	
-		  </div>
-		  
-		 <div class="form-group">
-		    <label for="profile" class="col-sm-offset-1 col-sm-3 control-label">프로필 사진</label>
-		    <div class="col-sm-4">
-				<input type="file" id="profile" name="profile"  class="form-control">
-		    </div>
-		  </div>
-		  
-		  
-		  <div class="form-group">
-		    <div class="col-sm-offset-4  col-sm-4 text-center">
-		      <button type="button" class="btn btn-primary" id="addUserbtn" >가 &nbsp;입</button>
-			  <a class="btn btn-primary btn" href="#" role="button">취&nbsp;소</a>
-		    </div>
-		  </div>
-		 </div>
-		</form>
-		<!-- form Start /////////////////////////////////////-->
-		
- 	
-	<!--  화면구성 div end /////////////////////////////////////-->
-	
+			<!--아이디 -->
+            <div class="md-form mt-0">
+                <input type="email" id="userId" class="form-control" name="userId">
+                <label for="userId">아이디(이메일)</label>
+                <button id="emailcheck" class="btn btn-cyan brown lighten-1" type="button">이메일 인증</button>
+            </div>
+               <input type="hidden" id="inputVerification" name ="inputVerification">
+			<!--인증번호 -->
+            <div class="md-form mt-0"id="verifDiv" style="display : none">
+                <input type="text" class="form-control" id="verification" name="verification">
+                <label for="verification">인증 번호</label>  
+                <button type="button" id="verifBtn" class="btn btn-cyan brown lighten-1">확인</button> 
+            </div>
+			<!-- Nickname -->
+            <div class="md-form mt-0">
+                <input type="text" id="nickname" class="form-control" name="nickname">
+                <label for="nickname">닉네임</label>
+            </div>
+            
+                    <!-- Password -->
+            <div class="md-form mt-0">
+                <input type="password" name="password" id="password" class="form-control" aria-describedby="materialRegisterFormPasswordHelpBlock" >
+                <label for="password">비밀번호</label>
+            </div>
+             <div class="md-form mt-0">
+                <input type="password" name="password2" id="password2" class="form-control" aria-describedby="materialRegisterFormPasswordHelpBlock">
+                <label for="password2">비밀번호 재입력</label>
+            </div>
+         
+            <!-- Phone number  3 줄로 다 못받겠어서 1줄로만 받겠심-->
+           <div class="md-form col-12">         	
+	                <input type="text" id="phone1" name="phone" class="form-control" aria-describedby="materialRegisterFormPhoneHelpBlock" maxlength="14">
+	                <label for="phone1">연락처</label>
+		   </div>
+            <!-- Address -->
+                    	
+	         <div class="md-form mt-0">
+	         <div class="md-form row-8">
+	                <input type="text" id="postCode" name="address" class="form-control" aria-describedby="materialRegisterFormPhoneHelpBlock">
+	                <label for="adress">주소</label>
+	                <small id="adress" class="form-text text-muted mb-4"> 
+	                </small>
+	            </div>
+	          
+	               
+	        </div>
+	            <div class="md-form col">
+	                <input type="text" id="address" name="address" class="form-control" aria-describedby="materialRegisterFormPhoneHelpBlock">
+	            </div>
+	            
+	             <div class="md-form col">
+	                <input type="text" id="extraAddress" name="address" class="form-control" aria-describedby="materialRegisterFormPhoneHelpBlock">
+	             </div>
+	             <input type="hidden" name="address" >
+	           <div class="md-form row-4">
+	             	<button type="button" class="btn btn-cyan brown lighten-1" onClick="daumjuso()">우편번호 찾기</button>
+			</div>   
+				
+			<!-- HashTag -->
+			 <div class="md-form mt">
+				<div class="form-group">
+		   			<div>
+		   				<div class="formLabel">해시태그</div>
+	     				 <input id='hashtagName' name="hashtagName" type='text' class='tags' >
+					</div>
+		   		</div>
+		   	</div>
+	   		
+	   		
+			<!--Profile	 -->
+			
+				 <div class="md-form col">
+					  <div class="file-field">
+					  <label for="profile">프로필 사진</label>
+					    <div class="btn btn-brown lighten-1 btn-sm float-right">
+					    	
+					      <span>Choose file</span>
+					      <input type="file" id="file" name="file" multiple/>
+					     
+					    </div>
+					  </div>
+				</div>
+				
+				<div class="form-group imgPreview">
+	   				<div class="row col-lg-12 justify-content-center">
+	   					<div id="preview">
+		   					<div id="titlePreview"></div>
+		   					<div id="authorPreview"></div>
+		   					<div id="liberoImg"></div>
+		   					<img src="" id="uploadPreview" width="100%" height="100%" style="display:none;">
+	   					</div>
+	   				</div>
+	   			</div>
+				<br><br>
+			
+			  <!-- Birth Date -->
+			  
+			 	<div class="md-form col">
+			 		<input type="date" id="birthDate" name="birthDate" aria-describedby="materialRegisterFormPhoneHelpBlock">
+			 		 <label for="birthDate">생년월일</label>
+	               	
+			 	</div>
+			 	
+			   
+			  <!-- Gender Choose -->
+			  <div class="md-form col">
+			 	 <label for="genderCode">성별</label>
+		           <div class="form-check form-check-inline">
+					  <input type="radio" class="form-check-input" id="genderCode" name="genderCode" value="m">
+					  	<label class="form-check-label" for="men"><i class="fas fa-mars"></i></label>
+					  </div>
+					  <div	class="form-check form-check-inline">
+					  <input type="radio" class="form-check-input" id="genderCode" name="genderCode" value="f">
+					  	<label class="form-check-label" for="women"><i class="fas fa-venus"></i></label>
+					</div>
+			  </div>
+			  
+			  
 
 
+
+		
+           	 	<button class="btn btn-outline-brown lighten-1 btn-rounded btn-block my-4 waves-effect z-depth-0" id="addBtn" onClick="addUser()">Sign in</button>
+
+            
+        </form>
+        <!-- Form -->
+
+    </div>
+
+</div>
+
+</div>
 
 
 </body>
+<!--  해시태그 링크, 스크립트  -->
+<link href="/libero/resources/css/taginput/jquery.tagsinput.min.css" rel="stylesheet">
+	<script src="/libero/resources/javascript/taginput/jquery.tagsinput.min.js"></script>
+<link rel="stylesheet" href="/libero/resources/css/common.css">
+
 </html>

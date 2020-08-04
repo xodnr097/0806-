@@ -1,5 +1,6 @@
 package com.libero.service.domain;
 
+
 import java.sql.Date;
 
 import lombok.Data;
@@ -15,6 +16,7 @@ public class User {
 	private String name;
 	private String address;
 	private String phone;
+	private Date birthDate;
 	private short phoneCode;
 	private short userCode;
 	private String role;
@@ -34,3 +36,5 @@ public class User {
 	private int roughPrice;
 
 }
+
+
