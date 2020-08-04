@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
 
+import com.libero.common.Search;
 import com.libero.service.domain.Buy;
 import com.libero.service.domain.Product;
 import com.libero.service.domain.Review;
@@ -72,5 +73,11 @@ public class ProductDAOImpl implements ProductDAO{
 		// TODO Auto-generated method stub
 		
 		return sqlSession.selectList("ProductMapper.getReview", prodNo);
+	}
+	
+	public List<Product> getBookListBySearch(Search search){
+		
+		return sqlSession.selectList("ProductMapper.getBookListBySearch", search);
+		
 	}
 }//end class

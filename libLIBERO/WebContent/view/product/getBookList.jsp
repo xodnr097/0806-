@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
+<%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
@@ -48,6 +48,34 @@
 <h6 class="font-weight-bold text-center grey-text text-uppercase small mb-4">서점</h6>
     <h3 class="font-weight-bold text-center dark-grey-text pb-2">ALL</h3>
     <hr class="w-header my-4">
+
+	
+	
+	<div class="container">
+	<div class="row">
+	<!-- 검색조건 -->
+			<div class="btn-group dropup">
+			  <button type="button" class="btn btn-brown lighten-1 h-75" id="searchConditionText">검색조건</button>
+			  <button type="button" class="btn btn-brown lighten-1 dropdown-toggle px-2 h-75" data-toggle="dropdown" aria-haspopup="true"
+			    aria-expanded="false">
+			    <span class="sr-only">Toggle Dropdown</span>
+			  </button>
+			  <div class="dropdown-menu">
+			    <a class="dropdown-item" href="#">제목</a>
+			    <a class="dropdown-item" href="#">작가명</a>
+			    <a class="dropdown-item" href="#">해쉬태그</a>
+			  </div>
+			</div>
+
+	
+	<!-- Search form -->
+			<form class="form-inline mr-auto">
+			  <input type="hidden" id="searchCondition" name="searchCondition">
+			  <input class="form-control mr-sm-2" type="text" name="searchKeyword" >
+			  <button class="btn btn-brown btn-rounded btn-sm my-0" id="searchButton" >Search</button>
+			</form>
+	</div>
+	</div>
 
 		
     <!--First row-->
@@ -109,7 +137,7 @@
               <!-- Card content -->
               <div class="card-body" id="card-body">
 
-                <h5 class="my-3">${book.prodName}</h5>
+                <h5 class="my-3" ><a href="/libero/product/getProduct/${book.prodNo}">${book.prodName}</a></h5>
                 <p class="card-text text-uppercase mb-3">${book.author}</p>
 
               </div>
@@ -120,7 +148,8 @@
             </c:forEach>
             </div></div></div>
             
-            <button type="button" class="btn btn-brown" id="button" value="${i}">Brown</button >
+            <button type="button" class="btn btn-brown" id="button" value="${i}">more</button >
+            
             
             
             		<c:set var="k" value="0" />
@@ -129,6 +158,7 @@
 						<input type="hidden" id="thumbnail${k}" value="${book.prodThumbnail}">
 						<input type="hidden" id="author${k}" 	value="${book.author}">
 						<input type="hidden" id="prodName${k}" 	value="${book.prodName}">
+						<input type="hidden" id="prodNo${k}" 	value="${book.prodNo}">
 				</c:forEach>
 
 </body>
@@ -168,24 +198,34 @@
 				
 				
 				for(var k = endUnit ; k<endUnit+4 ; k++ ){
-					var prodThumbnail = $("#thumbnail"+k).val();
-					var prodName = $("#prodName"+k).val();
-					var author = $("#author"+k).val();
-					console.log(prodThumbnail);
-					console.log(prodName);
-					console.log(author);
-						
-					displayValue +=	
-						"<div class='col-sm-3'>"
-					  +"<a class='card hoverable mb-4 z-depth-0' id='productcard' data-toggle='modal' data-target='#basicExampleModal'>"
-		              +"<img class='card-img-top z-depth-1' src='../resources/images/publish/fileUpload/"+prodThumbnail+"' alt='Card image cap' width='250px' height='400px'>"
-		              +"<div class='card-body' id='card-body'>"
-		              +"<h5 class='my-3'>"+prodName+"</h5>"
-		              +"<p class='card-text text-uppercase mb-3'>"+author+"</p>"
-		              +"</div>"
-		              +"</a>"
-		              +"</div>"
-		              
+					
+					
+					var prodNo = $("#prodNo"+k).val();
+					
+					console.log(prodNo);
+					
+					if(prodNo == null){
+						alert("마지막 줄입니다");
+						break;
+					}else{
+							var prodThumbnail = $("#thumbnail"+k).val();
+							var prodName = $("#prodName"+k).val();
+							var author = $("#author"+k).val();
+							console.log(prodThumbnail);
+							console.log(prodName);
+							console.log(author);
+								
+							displayValue +=	
+								"<div class='col-sm-3'>"
+							  +"<a class='card hoverable mb-4 z-depth-0' id='productcard' data-toggle='modal' data-target='#basicExampleModal'>"
+				              +"<img class='card-img-top z-depth-1' src='../resources/images/publish/fileUpload/"+prodThumbnail+"' alt='Card image cap' width='250px' height='400px'>"
+				              +"<div class='card-body' id='card-body'>"
+				              +"<h5 class='my-3'>"+prodName+"</h5>"
+				              +"<p class='card-text text-uppercase mb-3'>"+author+"</p>"
+				              +"</div>"
+				              +"</a>"
+				              +"</div>"
+					}
 				} 
 				    displayValue += "</div>"
 							$("#panel31").append(displayValue);
@@ -196,7 +236,44 @@
 			});
 
 
+			$(".dropdown-item").on("click", function() {
+				var searchCondition = $(this).text();
+				$("#searchConditionText").text(searchCondition);
+				$("#searchCondition").val(searchCondition);
+				
+				
+				
+			});
+			
+			$("#searchButton").on("click", function() {
+				var searchCondition = $("#searchConditionText").text();
+					$("#searchConditionText").val(searchCondition);
+				var searchCondition = $("#searchConditionText").val();
+					alert(searchCondition);
+					if(searchCondition == "작가명"){
+						var searchCondition = "author";
+						
+					}else if(searchCondition == "해쉬태그"){
+						var searchCondition = "hashTag";
+					}else{
+						var searchCondition = "prodName";
+					}
+					
+					$("#searchCondition").val(searchCondition);
+					var searchKeyword = $("input[name='searchKeyword'").val();
+					alert(searchKeyword);
+					searchKeyword = encodeURIComponent();
 
+				
+
+					
+				
+				
+				//$("form").attr("method", "POST").attr("action", "/libero/product/getBookListBySearch").submit();
+				
+				self.location="/libero/product/getBookListBySearch?searchCondition="+searchCondition+"&searchKeyword="+searchKeyword;
+				
+			});
 
 
 

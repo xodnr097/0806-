@@ -164,6 +164,7 @@
 	   		<!-- 도서정보 등록 폼 Start -->
 	   		<form>
 	   			<input type="hidden" name="prodNo" value="${prod.prodNo}">
+	   			<input type="hidden" name="prodType" value="${prod.prodType}">
 	   			<!-- 표지타입 선택 Start -->
 	   			<div class="form-group">
 	   				<label class="formLabel" for="coverSelect">표지 등록</label>
@@ -218,8 +219,15 @@
 	   			<!-- 이미지 선택 End -->
 	   			
 	   			<!-- 직접 올리기 Start -->
-	   			<div class="form-group md-form" align="center" id="fileUpload">
-	   				<input type="file" id="file" name="file" onchange="checkFile(this)"><br/>
+	   			<div id="fileUpload" style="text-align: left">
+		   			<div class="form-group md-form" align="center">
+		   				<div class="formLabel" style="text-align: left">도서 썸네일</div>
+		   				<input type="file" id="file" name="imgFile" onchange="checkFile(this)"><br/>
+		   			</div>
+		   			<div class="form-group md-form" align="center">
+		   				<div class="formLabel" style="text-align: left">도서 표지파일</div>
+		   				<input type="file" id="file" name="imgFile" onchange="checkFile(this)"><br/>
+		   			</div>
 	   			</div>
 	   			<!-- 직접 올리기 End -->
 	   			
@@ -331,9 +339,9 @@
 			$("#titlePreview").hide();
 			$("#fileUpload").hide();
 			$("#uploadPreview").hide();
-			var thumbnail = "${prod.prodThumbnail}";
-			if (thumbnail!=null) {
-				$("#preview").css("background-image", "url(../resources/images/publish/fileUpload/"+thumbnail+")");
+			var cover = "${prod.coverFile}";
+			if (cover!=null) {
+				$("#preview").css("background-image", "url(../resources/images/publish/fileUpload/coverFile/"+cover+")");
 			}
 			
 			$("input[name='imgType']").on("click", function(){

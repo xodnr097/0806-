@@ -141,6 +141,13 @@
 	
 	$(document).ready(function(){
 			$('#wish_img').on("click", function(){
+				var userId = "${sessionScope.user.userId}";
+				if (userId=="") {
+					alert("로그인 해주세요.");
+					return;
+				}
+				
+				
 			
 				$.ajax({
 					url : "/libero/product/json/addWish",

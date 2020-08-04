@@ -101,4 +101,15 @@ public class PublishServiceImpl implements PublishService{
 		return publishDAO.getUserCash(userId);
 	}
 
+	@Override
+	public void addHashtag(int prodNo, List<String> hashtagName) throws Exception {
+		publishDAO.addHashtag(prodNo, hashtagName);
+	}
+
+	@Override
+	public List<String> getHashtagList(int prodNo) throws Exception {
+		// TODO Auto-generated method stub
+		return publishDAO.getHashtagList(prodNo);
+	}
+
 }

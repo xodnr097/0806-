@@ -25,5 +25,7 @@ public interface ProductDAO {
 
 	public List<Review> getReview(int prodNo);
 	
+	public List<Product> getBookListBySearch(Search search);
+	
 	
 }
