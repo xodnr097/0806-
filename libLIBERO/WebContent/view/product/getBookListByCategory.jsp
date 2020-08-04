@@ -120,12 +120,13 @@
             </c:forEach>
             </div></div></div>
             
-            <button type="button" class="btn btn-brown" id="button" value="${i}">Brown</button >
+            <button type="button" class="btn btn-brown" id="button" value="${i}">more</button >
             
             
             		<c:set var="k" value="0" />
 		  		<c:forEach var="book" items="${book}">
 					<c:set var="k" value="${k+1}"/>
+						<input type="hidden" id="prodNo${k}"	value="${book.prodNo}">
 						<input type="hidden" id="thumbnail${k}" value="${book.prodThumbnail}">
 						<input type="hidden" id="author${k}" 	value="${book.author}">
 						<input type="hidden" id="prodName${k}" 	value="${book.prodName}">
@@ -142,6 +143,7 @@
 				alert(endUnit);	
 				var displayValue = "<div class='row'>";
 				endUnit = parseInt(endUnit)+1;
+				
 				
 // 				var tn = $("#thumbnail"+k).val();
 // 				var at = $("#author"+k).val();
@@ -168,23 +170,38 @@
 				
 				
 				for(var k = endUnit ; k<endUnit+4 ; k++ ){
-					var prodThumbnail = $("#thumbnail"+k).val();
-					var prodName = $("#prodName"+k).val();
-					var author = $("#author"+k).val();
-					console.log(prodThumbnail);
-					console.log(prodName);
-					console.log(author);
+						var prodNo = $("#prodNo"+k).val();
+				
+						console.log(prodNo);
 						
-					displayValue +=	
-						"<div class='col-sm-3'>"
-					  +"<a class='card hoverable mb-4 z-depth-0' id='productcard' data-toggle='modal' data-target='#basicExampleModal'>"
-		              +"<img class='card-img-top z-depth-1' src='../resources/images/publish/fileUpload/"+prodThumbnail+"' alt='Card image cap' width='250px' height='400px'>"
-		              +"<div class='card-body' id='card-body'>"
-		              +"<h5 class='my-3'>"+prodName+"</h5>"
-		              +"<p class='card-text text-uppercase mb-3'>"+author+"</p>"
-		              +"</div>"
-		              +"</a>"
-		              +"</div>"
+						if(prodNo == null){
+							alert("목록이 더이상 없습니다");
+							break;
+						}else{
+							
+
+							var prodThumbnail = $("#thumbnail"+k).val();
+							var prodName = $("#prodName"+k).val();
+							var author = $("#author"+k).val();
+							console.log(prodThumbnail);
+							console.log(prodName);
+							console.log(author);
+								
+							displayValue +=	
+								"<div class='col-sm-3'>"
+							  +"<a class='card hoverable mb-4 z-depth-0' id='productcard' data-toggle='modal' data-target='#basicExampleModal'>"
+				              +"<img class='card-img-top z-depth-1' src='../../resources/images/publish/fileUpload/"+prodThumbnail+"' alt='Card image cap' width='250px' height='400px'>"
+				              +"<div class='card-body' id='card-body'>"
+				              +"<h5 class='my-3'>"+prodName+"</h5>"
+				              +"<p class='card-text text-uppercase mb-3'>"+author+"</p>"
+				              +"</div>"
+				              +"</a>"
+				              +"</div>"
+							
+							
+						}
+					
+
 		              
 				} 
 				    displayValue += "</div>"

@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
+import com.libero.common.Search;
 import com.libero.service.domain.Product;
 import com.libero.service.domain.Review;
 import com.libero.service.product.ProductDAO;
@@ -52,6 +53,15 @@ public class ProductServiceImpl implements ProductService{
 	}
 	
 	@Override
+	public List<Product> getBookListBySearch(Search search) {
+		// TODO Auto-generated method stub
+		List<Product> list=productDAO.getBookListBySearch(search);
+
+		return list;
+	}
+	
+	
+	@Override
 	public Map<String, Object> getProductList(String prodType) throws Exception {
 		List<Product> list = productDAO.getProductList(prodType);
 		
@@ -69,7 +79,7 @@ public class ProductServiceImpl implements ProductService{
 		
 		return productDAO.getProduct(prodNo);
 	}
-
+	
 
 
 	@Override
@@ -88,6 +98,7 @@ public class ProductServiceImpl implements ProductService{
 		return productDAO.getReview(prodNo);
 		
 	}
-	
+
+
 
 }
