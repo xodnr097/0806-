@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import com.libero.common.Search;
 import com.libero.service.domain.Cash;
 import com.libero.service.domain.Publish;
+import com.libero.service.domain.Report;
 import com.libero.service.domain.User;
 import com.libero.service.publish.PublishDAO;
 import com.libero.service.publish.PublishService;

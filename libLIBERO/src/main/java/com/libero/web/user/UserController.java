@@ -66,11 +66,11 @@ public class UserController {
 	@Value("#{commonProperties['path3']}")
 	String path;
 	
-	@Value("#{commonProperties['pageUnit']}")
+	@Value("#{userProperties['pageUnit']}")
 	//@Value("#{commonProperties['pageUnit'] ?: 3}")
 	int pageUnit;
 	
-	@Value("#{commonProperties['pageSize']}")
+	@Value("#{userProperties['pageSize']}")
 	//@Value("#{commonProperties['pageSize'] ?: 2}")
 	int pageSize;
 	
