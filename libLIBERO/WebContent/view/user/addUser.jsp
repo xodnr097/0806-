@@ -161,7 +161,7 @@
 							dataType : 'text',
 							headers : {
 								"Accept" : "application/json",
-								"Content-Type" : "application/json"
+								"Content-Type" : "application/json;charset=UTF-8"
 									  },
 						    success : function(result , status){
 							console.log(result);
@@ -191,7 +191,7 @@
 							dataType : 'text',
 							headers : {
 								"Accept" : "application/json",
-								"Content-Type" : "application/json"
+								"Content-Type" : "application/json;charset=UTF-8"
 									  },
 						    success : function(result , status){
 							console.log(result);

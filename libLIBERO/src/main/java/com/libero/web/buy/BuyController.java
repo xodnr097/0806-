@@ -101,13 +101,17 @@ public class BuyController {
 		buyNoString = buyNoString.replace(" ","");
 		List<Integer> prodNoArray= new ArrayList<Integer>();
 		List<Product> product = new ArrayList<Product>();
-		
+		List<Integer> buyNoArray= new ArrayList<Integer>();
 		String[] buyArr = buyNoString.split(",");
 		
 		/////////////buyNo -> prodNo 으로 바꾸기
 		System.out.println("\n\n--\n"+buyArr+"\n--\n\n");
+		
+		
+		
 		for(int i=0;i<buyArr.length;i++) {
 			int buyNo = Integer.parseInt(buyArr[i]);
+			buyNoArray.add(buyNo);
 			prodNoArray.add(buyService.getBuyArray(buyNo));
 			int prodNo = prodNoArray.get(i);
 			Product prod = prodService.getProduct(prodNo);
@@ -117,27 +121,21 @@ public class BuyController {
 		
 		System.out.println("\n\n--\n"+prodNoArray+"\n--\n\n");
 		System.out.println("\n\n--\n"+product+"\n--\n\n");
-		/////////////prodNo 으로 product 객체 가져옴.
-//		for(int i=0; i<prodNoArray.size();i++) {
-//			int prodNo = prodNoArray.get(i);
-//			System.out.println(prodNo+">v<");
-//			Product prod = prodService.getProduct(prodNo);
-//			System.out.println(prod);
-//			product.add(prod);
-//			
-//		}
+
 		/////////////////////////////////product 가져오는 part 끝
+		
+	
 		
 		///////////////////////////////// map에 넣는 부분
 //		map.put("productList",product);
 //		map2.put("user",user);
 		model.addAttribute("productList",product);
 		model.addAttribute("actualPrice",actualPrice);
+		model.addAttribute("buyNoArray",buyNoArray);
 		//model.addAttribute("user",map2.get("user"));
 		
 		return "forward:/view/buy/addPay.jsp";//
 	}
-	
 	
 	@RequestMapping(value="addPay",method=RequestMethod.GET)
 	public String addPay() throws Exception{

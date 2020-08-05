@@ -33,15 +33,28 @@ public class BuyRestController {
 	
 
 	
-	@RequestMapping(value = "json/beforePay", method = RequestMethod.POST)
-	public Pay beforePay(@RequestBody Pay pay) throws Exception {
+	@RequestMapping(value = "json/afterPay", method = RequestMethod.POST)
+	public String afterPay(@RequestBody Pay pay) throws Exception {
 		System.out.println("------------------------");
-		System.out.println("\n\n\n [RESTController :  beforePay]\n\n\n");
+		System.out.println("\n\n\n [RESTController :  afterPay]\n\n\n");
 		System.out.println("------------------------");
-		System.out.println(pay);
+		
+		System.out.println("\n\n\n==========");
+		System.out.println(pay.getBuyNoArray());
+		pay = buyService.addBuy(pay);
+		
+		for(String stringBuyNo : pay.getBuyNoArray()) {
+			int numericBuyNo = Integer.parseInt(stringBuyNo);
+			buyService.updateBuyStatus(numericBuyNo,pay.getPayNo());
+		}
+		
+		System.out.println("==========\n\n\n");
+		
 	
-		System.out.println("\n\n\n");
-		return	 buyService.addBuy(pay);
+		
+		return	 "redirect:/";
+		
+		
 	}	
 	
 	

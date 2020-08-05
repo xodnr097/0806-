@@ -77,7 +77,7 @@
 	        			<c:if test="${sessionScope.user.profile==null}">
 	        				<i class="fas fa-user-circle"></i>
 	        			</c:if>
-	          			<img alt="" src="http://127.0.0.1:8080/libero/resources/images/community/${sessionScope.user.profile}" class="rounded-circle" width="25px" height="25px">
+	          			<img alt="" src="http://127.0.0.1:8080/libero/resources/images/user/fileUpload/${sessionScope.user.profile}" class="rounded-circle" width="25px" height="25px">
 	        		</a>
 	        		<div class="dropdown-menu dropdown-menu-right dropdown-default" aria-labelledby="navbarDropdownMenuLink-333">
 			        	<a class="dropdown-item" href="#">마이페이지</a>
@@ -171,6 +171,7 @@
 				$("#mainToolbar").attr("class","mb-1 navbar navbar-expand-lg navbar-dark brown lighten-1 fixed-top z-depth-0");
 				$("#bookList").show();
 			}
+			
 		});
 	//============= 회원가입============
 		$("#addUser").on("click",function(){
