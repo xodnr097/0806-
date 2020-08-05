@@ -34,6 +34,7 @@ public class User {
 	private int whitePrice;
 	private int ivoryPrice;
 	private int roughPrice;
+	private Cash cash;
 
 }
 

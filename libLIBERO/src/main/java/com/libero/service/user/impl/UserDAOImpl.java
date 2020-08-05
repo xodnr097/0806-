@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
 
 import com.libero.common.Search;
+import com.libero.service.domain.Cash;
 import com.libero.service.domain.User;
 import com.libero.service.user.UserDAO;
 
@@ -91,6 +92,22 @@ public class UserDAOImpl implements UserDAO {
 	public int getUserTotalCount(Search search) throws Exception {
 		// TODO Auto-generated method stub
 		return sqlSession.selectOne("UserMapper.getUserTotalCount", search);
+	}
+	
+	public void requestCash(String userId, String cashCode) {
+		Map<String, String> map = new HashMap<String, String>();
+		map.put("userId", userId);
+		map.put("cashCode", cashCode);
+		
+		sqlSession.update("UserMapper.requestCash", map);
+	}
+	
+	public Cash getCash(String userId) {
+		return sqlSession.selectOne("UserMapper.getCash", userId);
+	}
+	
+	public void updateCash(Cash cash) {
+		sqlSession.insert("UserMapper.updateCash", cash);
 	}
 
 }

@@ -3,6 +3,7 @@ package com.libero.service.user;
 import java.util.List;
 
 import com.libero.common.Search;
+import com.libero.service.domain.Cash;
 import com.libero.service.domain.User;
 
 public interface UserDAO {
@@ -21,4 +22,11 @@ public interface UserDAO {
 	public int getUserTotalCount(Search search) throws Exception;
 	
 	public List<String> addHashtag(String userId, List<String> hashtagName) throws Exception;
+
+	public void requestCash(String userId, String cashCode);
+	
+	public Cash getCash(String userId);
+	
+	public void updateCash(Cash cash);
+
 }

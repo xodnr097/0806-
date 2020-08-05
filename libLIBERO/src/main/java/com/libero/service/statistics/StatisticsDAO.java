@@ -14,4 +14,5 @@ public interface StatisticsDAO {
 	
 	public List<Statistics> getAgeStatistics(int prodNo) throws Exception;
 
+	public List<Statistics> getCashStatistics(String userId) throws Exception; 
 }
