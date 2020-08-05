@@ -30,8 +30,8 @@
 	   		<jsp:include page="topButton.jsp"></jsp:include>
 	   		<div class="row col-lg-12">
 	   		<c:if test="${!empty cashCode && cashCode eq 'bf'}">
-	   			<h1>현재 정산 전</h1><br/>
-	   			<button type="button" id="reqWithdraw" name="reqWithdraw" class="btn btn-outline-brown waves-effect btn-block">정산 신청</button>
+	   			<h1>현재 정산 전</h1> &nbsp;&nbsp;
+	   			<button type="button" class="btn btn-outline-warning waves-effect" id="reqWithdraw" name="reqWithdraw"><i class="fas fa-comments-dollar mr-1"></i> 정산 신청</button>
 	   		</c:if>
 	   		<c:if test="${!empty cashCode && cashCode eq 'af'}">
 	   			<h1>정산 신청 완료</h1><br/>
@@ -42,13 +42,13 @@
 	   		</div>
 	   		<div class="row text-center" style="text-align:center; float:center;">
 	   			<div class="col-lg-3">
-	   				<h6>누적 정산금</h6>${cash.cashAmount}원
+	   				<h6><strong>누적 정산금</strong></h6>${cash.cashAmount}원
 	   			</div>
 	   			<div class="col-lg-3">
-	   				<h6>현재 정산 가능한 가격</h6>${cash.cashCurrent}원
+	   				<h6><strong>현재 정산 가능한 가격</strong></h6>${cash.cashCurrent}원
 	   			</div>
 	   			<div class="col-lg-3">
-	   				<h6>신청한 정산 가격</h6>${cash.cashWithdraw}원
+	   				<h6><strong>신청한 정산 가격</strong></h6>${cash.cashWithdraw}원
 	   				
 	   			</div>
 	   		</div>

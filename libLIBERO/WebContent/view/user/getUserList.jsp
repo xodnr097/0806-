@@ -64,7 +64,7 @@
 						</td>
 						<td>
 							<c:if test="${user.cashCode=='af'}">
-								<button type="button" id="okWithdraw" name="okWithdraw">정산</button>
+							<button type="button" class="btn btn-outline-warning waves-effect" id="okWithdraw" name="okWithdraw"><i class="fas fa-comments-dollar mr-1"></i> 정산</button>
 								<input type="hidden" value="${user.userId}"/>
 							</c:if>
 						</td>
@@ -86,6 +86,9 @@
 	
 	$(function(){
 		$("button[id^='okWithdraw']").on("click", function(){
+			
+			alert("정산 완료");
+				
 			var userId = $(this).next().val();
 			window.location.href = "/libero/user/updateCash/"+userId;
 		});	
