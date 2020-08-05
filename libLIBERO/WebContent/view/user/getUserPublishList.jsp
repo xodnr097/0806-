@@ -36,7 +36,7 @@
 		   				aria-pressed="true">서비스상품</a>
 		   		</div>
 		   		<form>
-		   		<input type="hidden" id="currentPage" name="currentPage" value="${search.currentPage}"/>
+		   			<input type="hidden" id="currentPage" name="currentPage" value="${search.currentPage}"/>
 		   		</form>
 		   		<div id="prodList" class="col-lg-9">
 				  	<c:forEach var="prod" items="${list}">
@@ -127,29 +127,51 @@
 	    }
 	
 		$(function () {
-			var curPage = "${search.currentPage}";
+			var curPage = 1;
+			curPage = parseInt(curPage);
+			var prodType = "${param.prodType}";
 			
-			$(document).scroll(function() {
-				var maxHeight = $(document).height();
-		    	var currentScroll = $(window).scrollTop() + $(window).height();
+			$(window).scroll(function() {
 
-		    	if (maxHeight <= currentScroll + 100) {
-		    		
-		     		$.ajax({
-		     			type     	: 'POST',
-		        		url			: '/libero/user/json/getUserPublishList/book',
-		        		data 		: JSON.stringify({"currentPage": parseInt(curPage)+1}) ,
-		        		dataType 	: 'json',
-		                contentType	: "application/json",
-		        		success: function (data, status) {
-		          		// Append next contents
-			          		for (var i = 0; i < data.list.length; i++) {
-			          			console.log(data.prodNo);	
-							}
-		        		}
-		      		})
+		    	if ($(window).scrollTop() == $(document).height() - $(window).height()) {
+		    		console.log("okok");
+		    		curPage++;
+		    		getProdList(curPage,prodType);
+		     		
 		    	}
-		  	})
+		  	});
 		});
+		
+		function getProdList(curPage,prodType) {
+			
+			$.ajax({
+     			type     	: 'POST',
+        		url			: '/libero/user/json/getUserPublishList/'+prodType,
+        		data 		: JSON.stringify({"currentPage": curPage}) ,
+        		dataType 	: 'json',
+                contentType	: "application/json",
+        		success: function (data, status) {
+          		// Append next contents
+          			if (data.list!="") {
+          				$.each(data.list, function(index,prod){
+              				var displayValue = "<div class='card border-light mb-3' style='margin-bottom: 20px'>"
+              										+"<div class='card-body'>"
+              											+"<div class='row'>"
+              												+"<div class='col-lg-2'>"
+    							  								+"<img class='prodThumbnail' src='../resources/images/publish/fileUpload/thumbnailFile/"+prod.prodThumbnail+"'>"
+    							  							+"</div>"
+    							  						+"<div class='col-lg-7 align-self-center'>"
+    										  				+"<table>"
+    									  						+"<tbody>"
+    									  							+"<tr>"
+    									  								+"<th>${param.prodType=='book' ? '도서' : '상품' } 제목</th>"
+    									  								+"<td>: "+prod.prodName+"</td></tr></tbody></table></div></div>";
+    									  								
+              				$("#prodList:last").append(displayValue);
+              			});
+					}
+        		}
+      		});
+		}
 	</script>
 </html>

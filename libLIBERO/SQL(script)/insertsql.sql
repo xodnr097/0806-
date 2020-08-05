@@ -134,9 +134,7 @@ CREATE TABLE IF NOT EXISTS `pay` (
   `delivery_code` smallint(6) NOT NULL DEFAULT '1',
   `pay_code` varchar(50) DEFAULT NULL,
   `cancel_type` int(1) DEFAULT NULL,
-  PRIMARY KEY (`pay_no`) USING BTREE,
-  KEY `FK_pay_user` (`user_id`) USING BTREE,
-  CONSTRAINT `FK_pay_user` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`)
+  PRIMARY KEY (`pay_no`) USING BTREE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- 내보낼 데이터가 선택되어 있지 않습니다.
@@ -146,6 +144,8 @@ CREATE TABLE IF NOT EXISTS `cash` (
   `cash_no` int(11) NOT NULL AUTO_INCREMENT,
   `user_id` varchar(30) NOT NULL,
   `cash_amount` int(11) NOT NULL,
+  `cash_current` int(11) NOT NULL,
+  `cash_withdraw` int(11) NOT NULL,
   `reg_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `buy_no` int(11) DEFAULT NULL,
   PRIMARY KEY (`cash_no`),
@@ -153,7 +153,7 @@ CREATE TABLE IF NOT EXISTS `cash` (
   KEY `buy_no` (`buy_no`),
   CONSTRAINT `FK_cash_buy` FOREIGN KEY (`buy_no`) REFERENCES `buy` (`buy_no`),
   CONSTRAINT `FK_cash_user` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=10000 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
 -- 내보낼 데이터가 선택되어 있지 않습니다.
 

@@ -1,6 +1,7 @@
 package com.libero.web.main;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -9,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.libero.service.domain.Statistics;
+import com.libero.service.product.ProductService;
 import com.libero.service.statistics.StatisticsService;
 
 
@@ -19,6 +21,8 @@ public class MainController {
 	@Autowired
 	@Qualifier("statisticsServiceImpl")
 	private StatisticsService statisticsService;
+	@Autowired
+	private ProductService productService;
 	
 	//Constructor
 	public MainController(){
@@ -30,9 +34,13 @@ public class MainController {
 	    System.out.println("MainContorller Start");
 	    
 	    List<Statistics> list = statisticsService.getMainStatistics();
-	    
+	    Map<String, Object> book = productService.getBookList();
+	    for (int i = 0; i < book.size(); i++) {
+	    	System.out.println(book.get("list"));
+		}
 	    ModelAndView modelAndView = new ModelAndView();
 	    modelAndView.addObject("list", list);
+	    modelAndView.addObject("book", book.get("list"));
 		modelAndView.setViewName("forward:home.jsp");
 		
 		return modelAndView;
