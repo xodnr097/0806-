@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import com.libero.service.buy.BuyDAO;
 import com.libero.service.buy.BuyService;
 import com.libero.service.domain.Buy;
+import com.libero.service.domain.Cash;
 import com.libero.service.domain.Pay;
 import com.libero.service.domain.Product;
 import com.libero.service.product.ProductDAO;
@@ -174,6 +175,14 @@ public class BuyServiceImpl implements BuyService{
 	public int getBuyAmount(int buyNo) {
 		
 		return buyDao.getBuyAmount(buyNo);
+	}
+	
+	public List<Product> listProdAuthor(String payNo){
+		return buyDao.listProdAuthor(payNo);
+	}
+	
+	public void addCash(Cash cash) {
+		buyDao.addCash(cash);
 	}
 
 

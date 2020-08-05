@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.libero.common.Search;
+import com.libero.service.domain.Cash;
 import com.libero.service.domain.User;
 
 public interface UserService {
@@ -21,4 +22,9 @@ public interface UserService {
 	
 	public List<String> addHashtag(String userId,List<String> hashtagName) throws Exception;
 	
+	public void requestCash(String userId, String cashCode);
+	
+	public Cash getCash(String userId);
+	
+	public void updateCash(Cash cash);
 }

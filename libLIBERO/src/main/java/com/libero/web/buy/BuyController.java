@@ -20,10 +20,12 @@ import org.springframework.web.portlet.ModelAndView;
 
 import com.libero.service.buy.BuyService;
 import com.libero.service.domain.Buy;
+import com.libero.service.domain.Cash;
 import com.libero.service.domain.Pay;
 import com.libero.service.domain.Product;
 import com.libero.service.domain.User;
 import com.libero.service.product.ProductService;
+import com.libero.service.user.UserService;
 
 @Controller
 @RequestMapping("/buy/*")
@@ -33,9 +35,15 @@ public class BuyController {
 	@Autowired
 	@Qualifier("buyServiceImpl")
 	private BuyService buyService;
+	
 	@Autowired
 	@Qualifier("productServiceImpl")
 	private ProductService prodService;
+	
+	@Autowired
+	@Qualifier("userServiceImpl")
+	private UserService userService;
+	
 	//Constructor
 	public BuyController() {
 		System.out.println(" ---------------------------------------");
@@ -119,8 +127,6 @@ public class BuyController {
 //			
 //		}
 		/////////////////////////////////product 가져오는 part 끝
-	
-	
 		
 		///////////////////////////////// map에 넣는 부분
 //		map.put("productList",product);
@@ -139,9 +145,21 @@ public class BuyController {
 		System.out.println("/buy/addPay : GET");
 		System.out.println(" ---------------------------------------");		
 	
+		/* 수린 !
+		 * List<Product>listAuthor = buyService.listProdAuthor(pay.getPayNo());
+		 * 
+		 * for(int i=0; i<listAuthor.size(); i++) { Cash cash = new Cash(); cash =
+		 * userService.getCash(listAuthor.get(i).getCreator());
+		 * 
+		 * if(cash == null) { cash.setUserId(listAuthor.get(i).getCreator());
+		 * cash.setCashCurrent(listAuthor.get(i).getRetailPrice());
+		 * cash.setBuyNo(listAuthor.get(i).getBuyNo()); buyService.addCash(cash); }else
+		 * {
+		 * cash.setCashCurrent(cash.getCashCurrent()+listAuthor.get(i).getRetailPrice())
+		 * ; cash.setBuyNo(listAuthor.get(i).getBuyNo()); buyService.addCash(cash); } }
+		 */
 		
-		
-		return "redirect:/buy/addBuyCheck.jsp";//
+		return "redirect:/buy/addBuyCheck.jsp";
 	}
 	
 	

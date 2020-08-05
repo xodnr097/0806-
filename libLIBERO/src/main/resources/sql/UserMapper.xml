@@ -37,10 +37,12 @@
 	</resultMap>
 	
 	<resultMap id="cashSelectMap" type="cash">
-		<result property="user.userId" 		column="user_id" 			jdbcType="VARCHAR"/>
-		<result property="currentCash"		column="current_cash"		jdbcType="INTEGER"/>
-		<result property="totalCash"		column="total_cash"			jdbcType="INTEGER"/>
-		<result property="withdrawCash"		column="withdraw_cash"		jdbcType="INTEGER"/>
+		<result property="cashNo" column="cash_no" jdbcType="INTEGER"/>
+		<result property="userId" column="user_id" jdbcType="VARCHAR"/>
+		<result property="cashAmount" column="cash_amount" jdbcType="INTEGER"/>
+		<result property="cashCurrent" column="cash_current" jdbcType="INTEGER"/>
+		<result property="cashWithdraw" column="cash_withdraw" jdbcType="INTEGER"/>
+		<result property="buyNo" column="buy_no" jdbcType="INTEGER"/>
 	</resultMap>
 	
 	<!-- SQL : SELECT ONE -->
@@ -125,5 +127,36 @@
 	 	COUNT(*)
 	 	FROM user
 	 </select>
+	 
+	 <select id="listProdAuthor" parameterType="Integer">
+	SELECT product.prod_no, product.creator, product.retail_price, buy.buy_no
+	FROM product, pay, buy
+	WHERE pay.pay_no = #{payNo} AND pay.pay_no = buy.pay_no AND buy.prod_no = product.prod_no
+	</select>
+	
+	<insert id="addCash" parameterType="cash">
+	INSERT INTO cash(user_id, cash_amount, cash_current, cash_withdraw, reg_date, buy_no) values(#{userId}, 0, #{cashCurrent}, 0, CURRENT_TIMESTAMP, #{buyNo})
+	</insert>
+	
+	<select id="getCash" parameterType="String" resultMap="cashSelectMap">
+	SELECT 
+     @ROWNUM:=@ROWNUM+1 AS RNUM
+   ,cash.user_id, cash.cash_amount, cash.cash_current, cash.cash_withdraw, cash.reg_date, cash.buy_no, cash.cash_no
+   FROM cash,
+   (SELECT @ROWNUM := 0) TMP
+   WHERE user_id =  #{userId}
+   AND @ROWNUM = 0
+   ORDER BY cash_no DESC;
+	</select>
+	
+	<insert id="updateCash" parameterType="cash">
+	INSERT INTO cash(user_id, cash_amount, cash_current, cash_withdraw, reg_date, buy_no) values(#{userId}, #{cashAmount}, #{cashCurrent}, #{cashWithdraw}, CURRENT_TIMESTAMP, #{buyNo:INTEGER})
+	</insert> 
+	
+	<update id="requestCash" parameterType="map">
+	UPDATE user
+	SET cash_code = #{cashCode}
+	WHERE user_id = #{userId}
+	</update>
 	 
 </mapper>

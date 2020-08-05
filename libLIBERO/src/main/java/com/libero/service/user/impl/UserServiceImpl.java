@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import com.libero.common.Search;
+import com.libero.service.domain.Cash;
 import com.libero.service.domain.User;
 import com.libero.service.user.UserDAO;
 import com.libero.service.user.UserService;
@@ -80,6 +81,18 @@ public class UserServiceImpl implements UserService{
 		
 		userDAO.addHashtag(userId, hashtagName);
 		return null;
+	}
+	
+	public Cash getCash(String userId) {
+		return userDAO.getCash(userId);
+	}
+	
+	public void updateCash(Cash cash) {
+		userDAO.updateCash(cash);
+	}
+	
+	public void requestCash(String userId, String cashCode) {
+		userDAO.requestCash(userId, cashCode);
 	}
 
 }

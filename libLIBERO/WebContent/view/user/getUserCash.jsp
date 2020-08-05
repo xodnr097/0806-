@@ -17,6 +17,10 @@
 		</style>
 	</head>
 	<body>
+	
+	<input type="hidden" id="cashMessage" name="cashMessage" value="${cashMessage}"/>
+		
+		
 		<!-- ToolBar Start /////////////////////////////////////-->
 		<jsp:include page="../toolbar.jsp" />
 	   	<!-- ToolBar End /////////////////////////////////////-->
@@ -25,29 +29,92 @@
 	   	<div class="container">
 	   		<jsp:include page="topButton.jsp"></jsp:include>
 	   		<div class="row col-lg-12">
-	   			<h1>정산 전입니다.</h1><br/>
+	   		<c:if test="${!empty cashCode && cashCode eq 'bf'}">
+	   			<h1>현재 정산 전</h1> &nbsp;&nbsp;
+	   			<button type="button" class="btn btn-outline-warning waves-effect" id="reqWithdraw" name="reqWithdraw"><i class="fas fa-comments-dollar mr-1"></i> 정산 신청</button>
+	   		</c:if>
+	   		<c:if test="${!empty cashCode && cashCode eq 'af'}">
+	   			<h1>정산 신청 완료</h1><br/>
+	   		</c:if>
 	   		</div>
 	   		<div class="row col-lg-12">
-	   			<h6>정산일은 매월 15일 입니다.</h6>
+	   			<h6>정산일 : <input type='month' id='currentMonth' style="background-color:transparent;border:0 solid black;text-align:right;" readonly>15일</h6>
 	   		</div>
-	   		<div class="row text-center">
+	   		<div class="row text-center" style="text-align:center; float:center;">
 	   			<div class="col-lg-3">
-	   				<h6>누적</h6>${cash.totalCash}원
+	   				<h6><strong>누적 정산금</strong></h6>${cash.cashAmount}원
 	   			</div>
 	   			<div class="col-lg-3">
-	   				<h6>현재</h6>${cash.currentCash}원
+	   				<h6><strong>현재 정산 가능한 가격</strong></h6>${cash.cashCurrent}원
 	   			</div>
 	   			<div class="col-lg-3">
-	   				<h6>출금</h6>${cash.withdrawCash}원
+	   				<h6><strong>신청한 정산 가격</strong></h6>${cash.cashWithdraw}원
+	   				
 	   			</div>
 	   		</div>
 	   		<div class="row d-flex justify-content-center">
-	   			<canvas id="dayChart" class="row col-lg-12"></canvas>
+	   			<canvas id="dayChart" id="dayChart" class="row col-lg-12"></canvas>
 	   		</div>
 	   	</div>
 	   	<!-- //////////// Bootstrap Container End////////////////// -->
+	   	
+	   	<!-- //////////// MORAL START ////////////////// -->
+	   	<div class="modal fade" id="modalreqWithdrawForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">정산 신청</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5" >
+          <i class="fas fa-chevron-down prefix grey-text"></i> &nbsp;
+          <div>
+          <select class="mdb-select md-form">
+		  	<option value="" disabled selected>Choose your Bank</option>
+			<option value="기업">기업은행</option>
+			<option value="농협">농협은행</option>
+			<option value="국민">국민은행</option>
+			<option value="우리">우리은행</option>
+			<option value="SC제일">SC제일은행</option>
+			<option value="한국씨티">한국씨티은행</option>
+			<option value="신한">신한은행</option>
+		</select>
+		</div>
+        </div>
+        
+        
+
+        <div class="md-form mb-4">
+          <i class="fas fa-pen prefix grey-text"></i>
+          <input type="text" id="defaultForm-pass" class="form-control validate">
+          <label data-error="wrong" data-success="right" for="defaultForm-pass">Your Account Number</label>
+        </div>
+        
+         <div class="md-form mb-4">
+          <i class="fas fa-pen prefix grey-text"></i>
+          <input type="text" id="withDraw" name="withDraw" class="form-control validate">
+          <label data-error="wrong" data-success="right" for="defaultForm-pass">정산 금액 입력</label>
+        </div>
+
+      </div>
+      <div class="modal-footer d-flex justify-content-center">
+        <button id="inputWithdraw" class="btn btn-default">신청</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- //////////// MORAL END ////////////////// -->
+
 	</body>
 	<script type="text/javascript">
+	
+	 document.getElementById('currentMonth').value= new Date().toISOString().slice(0, 7);
+	 
+	 
 	//monthly
 	var ctxL = document.getElementById("dayChart").getContext('2d');
 	<c:set var="i" value="0" />
@@ -62,9 +129,9 @@
 				{
 					label: "판매량",
 					data: ["${st.jan}", "${st.feb}", "${st.mar}", "${st.apr}", "${st.may}", "${st.jun}", "${st.jul}","${st.aug}","${st.sep}","${st.oct}","${st.nov}","${st.dec}"],
-					backgroundColor: ['rgba(165, 222, 159, .4)',],
-					borderColor: ['rgba(47, 157, 39, .7)',],
-					borderWidth: 2
+					backgroundColor: ['rgba(255, 204, 102, .4)',],
+					borderColor: ['rgba(255, 204, 102, .7)',],
+					borderwith: 2
 				}
 			]
 		},
@@ -73,5 +140,27 @@
 		}
 	});
 	</c:forEach>
+	
+	$(function(){
+		
+		var cashMessage = $("#cashMessage").val();
+		if(cashMessage ==  '0'){
+			
+			Swal.fire({
+				  icon: 'error',
+				  title: '정산 신청 불가',
+				  text: '정산 가능한 가격을 초과하였습니다.',
+				})
+		}
+		
+		$("#reqWithdraw").on("click", function(){
+			$('#modalreqWithdrawForm').modal('show');
+		})
+		
+		$("#inputWithdraw").on("click", function(){
+			var withDraw = $("#withDraw").val();
+			window.location.href = "/libero/user/requestCash/"+withDraw;
+		})
+	})
 	</script>
 </html>

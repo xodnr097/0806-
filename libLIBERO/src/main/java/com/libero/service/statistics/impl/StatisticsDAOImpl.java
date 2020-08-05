@@ -43,5 +43,8 @@ public class StatisticsDAOImpl implements StatisticsDAO{
 		return sqlSession.selectList("StatisticsMapper.getAgeStatistics", prodNo);
 	}
 	
-
+	public List<Statistics> getCashStatistics(String userId) throws Exception{
+		return sqlSession.selectList("StatisticsMapper.getCashStatistics", userId);
+	}
+	
 }

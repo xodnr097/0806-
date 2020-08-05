@@ -99,7 +99,7 @@
 		WHERE p.prod_type IN('paper','ebook');
 	</select>
 	
-<!--  <select id="getCashStatistics"	parameterType="String" resultMap="stSelectMap">
+	<select id="getCashStatistics"	parameterType="String" resultMap="stSelectMap">
 		SELECT 
 		    SUM(IF(month = 'Jan', total, 0)) AS 'Jan',
 		    SUM(IF(month = 'Feb', total, 0)) AS 'Feb',
@@ -121,5 +121,6 @@
 			AND reg_date &gt;= DATE_ADD(NOW(), INTERVAL - 12 month)
 			AND user_id IN(#{value})
 			GROUP BY DATE_FORMAT(reg_date, "%m-%Y")) AS sub
-	</select>-->	
+	</select>
+	
 </mapper>

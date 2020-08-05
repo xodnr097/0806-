@@ -6,11 +6,13 @@ import lombok.Data;
 
 @Data
 public class Cash implements Serializable {
-	
-	private User user;
-	private int currentCash;
-	private int totalCash;
-	private int withdrawCash;
+		
+	private int cashNo;
+	private String userId;	
+	private int cashAmount;
+	private int cashCurrent;
+	private int cashWithdraw;
+	private int buyNo;
 	
 	public Cash() {
 		

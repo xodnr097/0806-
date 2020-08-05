@@ -47,5 +47,9 @@ public class StatisticsServiceImpl implements StatisticsService{
 		
 		return map;
 	}
+	
+	public List<Statistics> getCashStatistics(String userId) throws Exception{
+		return statisticsDAO.getCashStatistics(userId);
+	}
 
 }

@@ -12,7 +12,9 @@ import org.springframework.stereotype.Repository;
 
 import com.libero.service.buy.BuyDAO;
 import com.libero.service.domain.Buy;
+import com.libero.service.domain.Cash;
 import com.libero.service.domain.Pay;
+import com.libero.service.domain.Product;
 
 @Repository("buyDAOImpl")
 public class BuyDAOImpl implements BuyDAO{
@@ -110,6 +112,14 @@ public class BuyDAOImpl implements BuyDAO{
 	public int getBuyAmount(int buyNo) {
 		// TODO Auto-generated method stub
 		return sqlSession.selectOne("BuyMapper.getBuyAmount",buyNo);
+	}
+	
+	public List<Product> listProdAuthor(String payNo){
+		return sqlSession.selectList("UserMapper.listProdAuthor", payNo);
+	}
+	
+	public void addCash(Cash cash) {
+		sqlSession.insert("UserMapper.addCash", cash);
 	}
 	
 //	@Override
