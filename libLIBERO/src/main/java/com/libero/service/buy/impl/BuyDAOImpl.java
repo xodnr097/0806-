@@ -114,6 +114,16 @@ public class BuyDAOImpl implements BuyDAO{
 		return sqlSession.selectOne("BuyMapper.getBuyAmount",buyNo);
 	}
 	
+	@Override
+	public void updateBuyStatus(int buyNo, String payNo) {
+		// TODO Auto-generated method stub
+		Map map = new HashMap();
+		map.put("buyNo", buyNo);
+		map.put("payNo", payNo);
+		
+		sqlSession.update("BuyMapper.updateBuyStatus",map);
+	}
+	
 	public List<Product> listProdAuthor(String payNo){
 		return sqlSession.selectList("UserMapper.listProdAuthor", payNo);
 	}

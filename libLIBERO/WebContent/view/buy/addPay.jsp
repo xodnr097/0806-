@@ -54,11 +54,14 @@ function daumjuso() {
             }
 
             // 우편번호와 주소 정보를 해당 필드에 넣는다.
-            document.getElementById("postCode").value = data.zonecode;
-            document.getElementById("receiverAddr").value = addr;
+//             document.getElementById("postCode").value = data.zonecode;
+            document.getElementById("receiverAddr").value = data.zonecode +" "+addr+" "+extraAddr;
+            document.getElementById("receiverAddr").focus();
             // 커서를 상세주소 필드로 이동한다.
-            document.getElementById("receiverName").focus();
+           
+            
         }
+   			 
     }).open();
 }
 
@@ -66,6 +69,7 @@ function daumjuso() {
 
 /////////////////////////I'mport
   $(function(){
+	  
     	$("#payment").on("click",function(){
             var IMP = window.IMP; // 생략가능
             IMP.init('imp17527359'); // 'iamport' 대신 부여받은 "가맹점 식별코드"를 사용
@@ -79,7 +83,7 @@ function daumjuso() {
                 buyer_email : $("#userId").val(),
                 buyer_name : $("#receiverName").val(),
                 buyer_tel : $("#receiverPhone").val(),
-                buyer_addr :$("#postCode").val()+" " +$("#receiverAddr").val()+ " "+$('#extraAddress').val()
+                buyer_addr :$("#receiverAddr").val()+ " "+$('#extraAddress').val()
                
                 //m_redirect_url : 'http://www.naver.com'
             }, function(rsp) {
@@ -93,12 +97,15 @@ function daumjuso() {
                         "receiverName" : rsp.buyer_name,
                         "receiverPhone" : rsp.buyer_tel,
                         "receiverAddr" : rsp.buyer_addr,
-                        "buyerId" : rsp.buyer_email
+                        "buyerId" : '${user.userId}',
+                        "deliveryRequest" : $("#deliveryRequest").val(),
+                        "buyNoArray": ${buyNoArray}
+
                 	})
                 	
                     //[1] 서버단에서 결제정보 조회를 위해 jQuery ajax로 imp_uid 전달하기
                     jQuery.ajax({
-                        url: '/libero/buy/json/beforePay', //교체 하기
+                        url: '/libero/buy/json/afterPay', //교체 하기
                         type: 'POST',
                         dataType: 'json',
                         contentType: 'application/json',
@@ -122,7 +129,7 @@ function daumjuso() {
                         }
                     });
                     //성공시 이동할 페이지
-                    <%-- location.href='<%=request.getContextPath()%>/order/paySuccess?msg='+msg; --%>
+                    location.href='/libero';
                 } else {
                     msg = '결제에 실패하였습니다.';
                     msg += '에러내용 : ' + rsp.error_msg;
@@ -136,35 +143,73 @@ function daumjuso() {
     });
     
   $(document).ready(function() {
-	  $('.mdb-select').materialSelect();
+	  
+	  
+	  
+	  $("#ifinfoequals").on("click",function(){
+		  var addr = "${user.address}";
+		  var phone ="${user.phone}";
+		  var name = "${user.name}";
+			$("#receiverAddr").val(addr).focus()
+			$("#receiverName").val(name).focus()
+		  	$("#receiverPhone").val(phone).focus()
+		  	
+	  })
 	  });
+  
+  
+ 
+  
 </script>
+
+<style type="text/css">
+#buyHeader h1{
+	 width:500px;
+    margin: 0 auto;
+    text-align: center;
+}
+</style>
+
 
 </head>
 <body>
-
+<div id="buyHeader" class="sticky-top" style="padding-top: 56px;">
+		<nav class="mb-1 navbar navbar-expand-lg navbar-dark brown darken-1 z-depth-0" style="min-height: 30px">
+		
+		<div class="collapse navbar-collapse navbar1and2" id="navbarSupportedContent2">
+		<h1>결제 정보확인</h1>
+		</div>
+		</nav>
+		</div>
 
 <div class="container">
 <br><br><br>
 
-<div class="sticky-top">결제 정보</div>
+
+<!-- <div class="sticky-top"><hr>결제 정보</div> -->
 
 <!-- 		유저정보 보여주기 -->
 
 <div class="card">
   <div class="card-body">
-    <h4 class="card-title">회원 정보</h4>
+    <h4 class="card-title">구매자 정보</h4>
     <h6 class="card-subtitle mb-2 text-muted">*확인해 주세요</h6>
 <!--     <p class="card-text"> -->
   <div class="md-form row">
 	<div class="col-sm">
-		아이디
+		구매자 아이디
 	</div>
 	<div class="col-sm">${user.userId }</div>
 	<div class="col-sm"></div>
 </div>
-	
-	<div class="md-form row">
+<div class="md-form row">
+	<div class="col-sm">
+		구매자 이름
+	</div>
+	<div class="col-sm">${user.name }</div>
+	<div class="col-sm"></div>
+</div>	
+<div class="md-form row">
 	<div class="col-sm">
 		회원 주소 
 	</div>
@@ -173,7 +218,7 @@ function daumjuso() {
 </div>
 <div class="md-form row">
 	<div class="col-sm">
-		연락처
+		구매자 연락처
 	</div>
 	<div class="col-sm">${user.phone }</div>
 	<div class="col-sm"></div>
@@ -181,20 +226,25 @@ function daumjuso() {
 <!--     </p> -->
    </div>
   </div>
-
+<!--   체크박스 -->
+<br>
+<br>
+<div class="float-right">
+	  <div class="custom-control custom-checkbox">
+	    <input type="checkbox" class="custom-control-input" id="ifinfoequals">
+	    <label class="custom-control-label" for="ifinfoequals"> 구매자와 수령자 정보가 동일</label>
+	</div>
+</div>
 					<!-- 	입력 창 시작 -->
-		<div class="md-form">
-		  <input id="postCode" type="text" length="10" class="form-control">
-		  <label for="postCode">주소 입력</label>
-		</div>
+
 		<div class="md-form">
 		  <input id="receiverAddr" type="text" length="10" class="form-control" >
-		  <label for="receiverAddr"></label>
+		  <label for="receiverAddr">주소입력</label>
 		</div>
 		<div class="md-form">
-		  <input id="extraAddress" type="text" length="10" class="form-control">
-		  <label for="extraAddress"></label>
-		</div>
+		  <input id="extraAddress" type="text" length="10" class="form-control" >
+		  <label for="extraAddress">상세 주소 입력</label>
+		</div>	
 		<input type="button" class="btn btn-brown" onclick="daumjuso()" value="우편번호 찾기"><br>
 		<div class="md-form">
 		  <input id="receiverName" type="text" length="10" class="form-control" >
@@ -205,24 +255,27 @@ function daumjuso() {
 		  <label for="receiverPhone">수령자 연락처</label>
 		</div>
 		<div class="md-form">
-		  <input id="userId" type="text" length="10" class="form-control" >
-		  <label for="userId">아이디</label>
+		  <input id="userId" type="text" length="10" class="form-control" value="${user.userId }" disabled="disabled" >
+		  <label for="userId">아이디(이메일)</label>
 		</div>
 		
 		
-		<div class="dropdown">
+		<div class="md-form dropdown">
 		 <select class="browser-default custom-select custom-select-lg mb-3" id="paymentOption" name="paymentOption">
+		  <option disabled selected >결제 방식</option>
 		  <option value="card">카드</option>
 		  <option value="phone">휴대폰 결제</option>
 		  <option value="trans">실시간 계좌이체</option>
 		 </select>
-		<label class="mdb-main-label">결제 방식</label>
-					
-
-<br><br><br>
-<h1> <b>결제 페이지 테스트중</b></h1>
+		</div>	
+		<div class="form-group">
+		  <label for="deliveryRequest">배송시 요청사항</label>
+		  <textarea class="form-control" id="deliveryRequest" name="deliveryRequest"rows="5"></textarea>
+		</div>		
+		
+<input type="hidden" id="buyNoArray" value="${buyNoArray }">
 					<!-- 결제 상품시작 -->
-<h3>결제할 상품 정보</h3>
+
 
 <c:set var="i" value="0" />
 		  <c:forEach var="prod" items="${productList}">
@@ -248,15 +301,16 @@ function daumjuso() {
 </c:forEach>
 					<!-- 결제 버튼 여기 -->
 <br><br>
+
 <div class="mx-auto" style="width: 200px; background-color: rgba(86,61,124,.15);">
  <button id ="payment" class="btn btn-brown" value="${actualPrice}"> 총 결제 금액 &nbsp : &nbsp ${actualPrice} &nbsp ￦</button>
+ 
+
+
+
+</div>
 </div>
 
-
-
-
-</div>
-</div>
 
 </body>
 </html>

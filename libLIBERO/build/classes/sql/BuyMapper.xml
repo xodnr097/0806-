@@ -60,7 +60,7 @@
 			   #{deliveryRequest},
 			   CURRENT_TIMESTAMP,
 			   1,
-			   'paid',
+			   #{payStatus},
 			   #{cancelReason}
 				)
 	</insert>
@@ -107,6 +107,12 @@
 		UPDATE pay
 		 SET delivery_code=#{deliveryStatus}
 		 WHERE pay_no=#{payNo}
+	</update>
+	
+	<update id="updateBuyStatus" parameterType="Map">
+		UPDATE buy
+		 SET buy_code ='paid', pay_no=#{payNo}
+		 WHERE buy_no= ${buyNo}
 	</update>
 	
 	<select id="getAllBuy" parameterType="string" resultMap="paySelectMapper">

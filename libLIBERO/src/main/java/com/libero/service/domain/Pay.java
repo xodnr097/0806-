@@ -31,6 +31,6 @@ public class Pay implements Serializable{
 	/////////////////추가/////////////////////
 	private String impUid;
 	private String merchantUid;
-	
+	private List<String> buyNoArray;
 	
 }
