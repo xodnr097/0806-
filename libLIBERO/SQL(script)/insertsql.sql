@@ -18,9 +18,9 @@ CREATE TABLE IF NOT EXISTS `user` (
   `nickname` varchar(20) NOT NULL,
   `profile` varchar(50) DEFAULT NULL,
   `gender_code` char(1) NOT NULL,
-  `name` varchar(20) NOT NULL,
+  `name` varchar(20) DEFAULT NULL,
   `address` varchar(100) DEFAULT NULL,
-  `phone` varchar(14) NOT NULL,
+  `phone` varchar(14) DEFAULT NULL,
   `phone_code` smallint(6) NOT NULL DEFAULT '0',
   `user_code` smallint(6) NOT NULL DEFAULT '1',
   `role` char(1) NOT NULL,
@@ -58,7 +58,7 @@ INSERT INTO `user` (`user_id`, `password`, `nickname`, `profile`, `gender_code`,
 	('factory02@hanmail.net', '2222', '인쇄소02', NULL, 'f', '인쇄소', '경기도', '000-1313-2222', 0, 1, 'f', '1970-07-28', '2020-07-15 12:45:24', '1424132', 'bf', 20, 30, 40, 100, 100, 2000, 3000, 3500, 10, 5, 5, NULL),
 	('factory03', '3333', '인쇄03', NULL, 'f', '인쇄소', '서울', '010-1313-3333', 0, 1, 'f', '2020-07-28', '2020-07-24 16:08:31', '12312311', 'bf', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
 	('factory04', '4444', '인쇄0404', NULL, 'm', '인쇄04', NULL, '010-1414-1414', 0, 1, 'f', '2020-07-28', '2020-07-28 09:41:35', '1231232', 'bf', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-	('user01', '0101', '유저01', 'ice1.jpg', 'f', '유저01', NULL, '010-0101-0101', 0, 1, 'u', '2020-07-28', '2020-07-15 16:55:56', NULL, 'bf', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+	('user01', '0101', '유저01', 'ice1.jpg', 'm', '유저01', NULL, '010-0101-0101', 0, 1, 'u', '1980-07-28', '2020-07-15 16:55:56', NULL, 'bf', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
 	('user02', '0202', '유저02', 'ice3.jpg', 'f', '유저02', NULL, '010-0202-0202', 0, 1, 'u', '2020-07-28', '2020-07-15 16:55:56', NULL, 'bf', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
 	('wjddbstp95@gmail.com', '1111', '윤세', NULL, 'm', '정윤세', NULL, '010-0011-1100', 0, 1, 'u', '2020-07-16', '2020-07-29 10:27:24', NULL, 'bf', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
 	('xodnr097@naver.com', '1111', '유저유저1', NULL, 'f', '김태욱', '충정도', '010-9430-3757', 0, 1, 'u', '2020-07-16', '2020-07-29 10:27:28', NULL, 'bf', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
@@ -112,10 +112,8 @@ CREATE TABLE IF NOT EXISTS `buy` (
   KEY `FK_buy_product` (`prod_no`) USING BTREE,
   KEY `FK_buy_user` (`user_id`) USING BTREE,
   KEY `FK_buy_pay` (`pay_no`) USING BTREE,
-  KEY `FK_buy_product2` (`prod_type`) USING BTREE,
   CONSTRAINT `FK_buy_pay` FOREIGN KEY (`pay_no`) REFERENCES `pay` (`pay_no`),
   CONSTRAINT `FK_buy_product` FOREIGN KEY (`prod_no`) REFERENCES `product` (`prod_no`),
-  CONSTRAINT `FK_buy_product_2` FOREIGN KEY (`prod_type`) REFERENCES `product` (`prod_type`),
   CONSTRAINT `FK_buy_user` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=10000 DEFAULT CHARSET=utf8;
 

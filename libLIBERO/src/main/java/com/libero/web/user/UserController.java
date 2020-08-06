@@ -219,13 +219,11 @@ public class UserController {
 
 	
 	@RequestMapping(value = "removeTempPublish", method = RequestMethod.GET)
-	public ModelAndView removeTempPublish(@RequestParam("prodNo")int prodNo, Publish publish) throws Exception {
+	public ModelAndView removeTempPublish(@RequestParam("prodNo")int prodNo) throws Exception {
 		
 		System.out.println("/user/getTempPublishList : GET");
 		
-		publish = publishService.getProduct(prodNo);
-		
-		publishService.removeTempPublish(publish);
+		publishService.removeTempPublish(prodNo);
 		
 		ModelAndView modelAndView = new ModelAndView();
 		modelAndView.setViewName("redirect:/user/getTempPublishList");

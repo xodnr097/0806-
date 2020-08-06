@@ -94,8 +94,13 @@ public class PublishServiceImpl implements PublishService{
 		return map;
 	}
 	
-	public void removeTempPublish(Publish publish) throws Exception {
-		publishDAO.removeTempPublish(publish);
+	public void removeTempPublish(int prodNo) throws Exception {
+		
+		if (publishDAO.getHashtagList(prodNo)!=null) {
+			publishDAO.removeHashtag(prodNo);
+		}
+		
+		publishDAO.removeTempPublish(prodNo);
 	}
 	
 	public Cash getUserCash(String userId) throws Exception {
