@@ -33,6 +33,10 @@ public class UserDAOImpl implements UserDAO {
 	public User getUser(String userId) throws Exception {
 		return sqlSession.selectOne("UserMapper.getUser", userId);
 	}
+	
+	public User getUserByKakao(String userId) throws Exception{
+		return sqlSession.selectOne("UserMapper.getUserByKakao", userId);
+	}
 
 	@Override
 	public void addUser(User user) throws Exception {
@@ -108,6 +112,18 @@ public class UserDAOImpl implements UserDAO {
 	
 	public void updateCash(Cash cash) {
 		sqlSession.insert("UserMapper.updateCash", cash);
+	}
+	
+	public void addKakaoId(String userId, String kakaoId) {
+		Map<String, String> map = new HashMap();
+		map.put("userId", userId);
+		map.put("kakaoId", kakaoId);
+		
+		sqlSession.update("UserMapper.addKakaoId", map);
+	}
+	
+	public void delUser(String userId) {
+		sqlSession.delete("UserMapper.delUser", userId);
 	}
 
 }
