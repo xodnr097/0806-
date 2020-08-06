@@ -35,6 +35,10 @@ public class UserServiceImpl implements UserService{
 	public User getUser(String userId) throws Exception {
 		return userDAO.getUser(userId);
 	}
+	
+	public User getUserByKakao(String userId) throws Exception{
+		return userDAO.getUser(userId);
+	}
 
 	@Override
 	public User addUser(User user) throws Exception {
@@ -93,6 +97,14 @@ public class UserServiceImpl implements UserService{
 	
 	public void requestCash(String userId, String cashCode) {
 		userDAO.requestCash(userId, cashCode);
+	}
+	
+	public void addKakaoId(String userId, String kakaoId) {
+		userDAO.addKakaoId(userId, kakaoId);
+	}
+	
+	public void delUser(String userId) {
+		userDAO.delUser(userId);
 	}
 
 }

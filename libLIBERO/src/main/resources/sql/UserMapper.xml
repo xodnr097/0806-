@@ -53,6 +53,12 @@
 		WHERE user_id = #{value}
 	 </select>
 	 
+	 <select 	id="getUserByKakao"	parameterType="string"	resultMap="userSelectMap">
+		SELECT *		
+		FROM user
+		WHERE kakao_id = #{kakaoId}
+	 </select>
+	 
 	 <insert id="addNewUser" parameterType="user">
 	 	INSERT INTO user (user_id,
 	 					  password,
@@ -64,19 +70,21 @@
 	 					  user_code,
 	 					  role,
 	 					  reg_date,
-	 					  birth_date
+	 					  birth_date,
+	 					  kakao_id
 							)
 	 	VALUES(	#{userId},
 	 			#{password},
 	 			#{nickname},
-	 			#{profile},
+	 			#{profile:VARCHAR},
 	 			#{genderCode},
-	 			#{address},
-	 			#{phone},
+	 			#{address:VARCHAR},
+	 			#{phone:VARCHAR},
 	 			1,
 	 			'u',
 	 			CURRENT_TIMESTAMP,
-	 			#{birthDate}
+	 			#{birthDate:VARCHAR},
+	 			#{kakaoId:VARCHAR}
 	 			)
 	 
 	 </insert>
@@ -158,5 +166,16 @@
 	SET cash_code = #{cashCode}
 	WHERE user_id = #{userId}
 	</update>
+	
+	<update id="addKakaoId" parameterType="string">
+	UPDATE user 
+	SET kakao_id = #{kakaoId} 
+	WHERE user_id = #{userId}
+	</update>
+	
+	<delete id="delUser" parameterType="string">
+	DELETE FROM user 
+	WHERE user_id = #{kakaoId}
+	</delete>
 	 
 </mapper>

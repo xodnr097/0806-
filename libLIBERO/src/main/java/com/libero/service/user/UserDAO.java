@@ -11,6 +11,8 @@ public interface UserDAO {
 	// SELECT ONE
 	public User getUser(String userId) throws Exception ;
 	
+	public User getUserByKakao(String userId) throws Exception;
+	
 	public void addUser(User user) throws Exception;
 	
 	public List<User> getUserList(Search search) throws Exception;
@@ -28,5 +30,9 @@ public interface UserDAO {
 	public Cash getCash(String userId);
 	
 	public void updateCash(Cash cash);
+	
+	public void addKakaoId(String userId, String kakaoId);
+	
+	public void delUser(String userId);
 
 }
