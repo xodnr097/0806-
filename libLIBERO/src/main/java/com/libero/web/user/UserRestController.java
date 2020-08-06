@@ -223,7 +223,7 @@ public class UserRestController {
 		ModelAndView mav = new ModelAndView(); 
 		
 		User user = (User) session.getAttribute("user");	
-		JsonNode node = SNSloginController.getAccessToken(code); // accessToken에 사용자의 로그인한 모든 정보가 들어있음 
+		JsonNode node = SNSloginController.getAccessToken(code); 
 		JsonNode accessToken = node.get("access_token");
 		
 		JsonNode userInfo = SNSloginController.getKakaoUserInfo(accessToken); 
@@ -232,24 +232,25 @@ public class UserRestController {
 		
 		String kId = userInfo.path("id").asText();	
 		String kEmail = kakaoAccount.path("email").asText();
-		String kNickname = properties.path("nickname").asText(); 	
-		//String kBirthday = kakaoAccount.path("birthday").asText() + kakaoAccount.path("birthyear").asText();
+		String kNickname = properties.path("nickname").asText(); 		
 		String kGender = kakaoAccount.path("gender").asText();
-		//String kPhoneNumber = kakaoAccount.path("phone_number").asText();	
+
 		
 		if(user == null) {
 			user = new User();
 			
-			if(userService.getUserByKakao(kId) != null) {		//if(userService.getUserByKakao(kId) != null)
+			if(userService.getUserByKakao(kId) != null) {		
 				user = userService.getUserByKakao(kId);
 			}else if(userService.getUser(kEmail) != null) {
 				user = userService.getUser(kEmail);
 			}else if(userService.getUserByKakao(kId) == null && userService.getUser(kEmail) == null) {			
-				user.setUserId(kEmail);	//user.setUserId(kId);
+				user.setUserId(kEmail);	
 				user.setPassword((UUID.randomUUID().toString().replaceAll("-", "")).substring(0, 14));
 				user.setKakaoId(kId);
 				user.setNickname(kNickname);
-				user.setGenderCode(kGender.substring(0,1));
+				if(kGender != null) {
+					user.setGenderCode(kGender.substring(0,1));
+				}
 				
 				userService.addUser(user);				
 				user = userService.getUser(user.getUserId());
