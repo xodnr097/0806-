@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +14,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -27,9 +29,11 @@ import com.libero.service.domain.Comment;
 import com.libero.service.domain.Post;
 import com.libero.service.domain.Publish;
 import com.libero.service.domain.Report;
+import com.libero.service.domain.Statistics;
 import com.libero.service.domain.User;
 import com.libero.service.publish.PublishService;
 import com.libero.service.report.ReportService;
+import com.libero.service.statistics.StatisticsService;
 import com.libero.service.user.UserService;
 
 
@@ -41,12 +45,19 @@ public class UserController {
 	@Autowired
 	@Qualifier("userServiceImpl")
 	private UserService userService;
+	
 	@Autowired
 	private PublishService publishService;
+	
 	@Autowired
 	private CommunityService communityService;
+	
 	@Autowired
 	private ReportService reportService;
+	
+	@Autowired
+	@Qualifier("statisticsServiceImpl")
+	private StatisticsService statisticsService;
 
 	public UserController(){
 		System.out.println(this.getClass());
@@ -55,11 +66,11 @@ public class UserController {
 	@Value("#{commonProperties['path3']}")
 	String path;
 	
-	@Value("#{commonProperties['pageUnit']}")
+	@Value("#{userProperties['pageUnit']}")
 	//@Value("#{commonProperties['pageUnit'] ?: 3}")
 	int pageUnit;
 	
-	@Value("#{commonProperties['pageSize']}")
+	@Value("#{userProperties['pageSize']}")
 	//@Value("#{commonProperties['pageSize'] ?: 2}")
 	int pageSize;
 	
@@ -208,13 +219,11 @@ public class UserController {
 
 	
 	@RequestMapping(value = "removeTempPublish", method = RequestMethod.GET)
-	public ModelAndView removeTempPublish(@RequestParam("prodNo")int prodNo, Publish publish) throws Exception {
+	public ModelAndView removeTempPublish(@RequestParam("prodNo")int prodNo) throws Exception {
 		
 		System.out.println("/user/getTempPublishList : GET");
 		
-		publish = publishService.getProduct(prodNo);
-		
-		publishService.removeTempPublish(publish);
+		publishService.removeTempPublish(prodNo);
 		
 		ModelAndView modelAndView = new ModelAndView();
 		modelAndView.setViewName("redirect:/user/getTempPublishList");
@@ -222,17 +231,25 @@ public class UserController {
 		return modelAndView;
 	}
 	
-	@RequestMapping(value = "getUserCash", method = RequestMethod.GET)
+	@RequestMapping(value = "getUserCash",  method = { RequestMethod.GET, RequestMethod.POST })
 	public ModelAndView getUserCash(HttpSession session, String userId) throws Exception {
 		
 		System.out.println("/user/getUserCash : GET");
 		
-		userId = ((User)session.getAttribute("user")).getUserId();
+		User user = ((User) session.getAttribute("user"));
+		userId = user.getUserId();
+		user = userService.getUser(userId);
+		String cashCode = user.getCashCode();
 		
-		Cash cash =  publishService.getUserCash(userId);
+		//Cash cash = publishService.getUserCash(userId);
+		Cash cash =  userService.getCash(userId);
+		
+		List<Statistics> day = statisticsService.getCashStatistics(userId);
 		
 		ModelAndView modelAndView = new ModelAndView();
+		modelAndView.addObject("cashCode", cashCode);
 		modelAndView.addObject("cash", cash);
+		modelAndView.addObject("day", day);
 		modelAndView.setViewName("forward:/view/user/getUserCash.jsp");
 		
 		return modelAndView;
@@ -271,42 +288,49 @@ public class UserController {
 	}
 	
 
-	@RequestMapping(value = "getAdminReportList", method = RequestMethod.GET)
-	public ModelAndView getAdminReportList(HttpSession session, String role, Report report, Search search) throws Exception{
+	@RequestMapping(value = "getUserReportList", method = RequestMethod.GET)
+	public ModelAndView getUserReportList( @RequestParam(value="menu", required=false) String menu, @ModelAttribute("search") Search search, HttpSession session) throws Exception {
 		System.out.println("/user/getAdminReportList : GET");
 		
 		if(search.getCurrentPage() == 0) {
 			search.setCurrentPage(1);
 		}
 		search.setPageSize(pageSize);
+		Map<String,Object> map = new HashMap<String,Object>(); 
+		
 		ModelAndView modelAndView = new ModelAndView();
-		role = ((User)session.getAttribute("user")).getRole();
 		
+		User user = (User)session.getAttribute("user");
+		String userId = ((User)session.getAttribute("user")).getUserId();
 		
+		System.out.println("menu가 뭔가요"+menu);
+		if(menu.equals(new String("prod"))) {
+			map = reportService.getUserReportList(search, user, menu);
+		} 		
 		
-		if (role.contentEquals("a")) {
-			Map<String,Object> map = reportService.getPostReportList(search);
-			Page resultPage = new Page(search.getCurrentPage(),
-					((Integer)map.get("totalCount")).intValue(), pageUnit, pageSize);
-
-			System.out.println(resultPage);
-			
-			modelAndView.addObject("list", map.get("list"));
-			modelAndView.addObject("resultPage", resultPage);
-			modelAndView.addObject("search", search);
-			modelAndView.addObject("totalCount", map.get("totalCount"));
-					
-			modelAndView.setViewName("forward:/view/user/getAdminReportList.jsp");
-		}else {
-			modelAndView.setViewName("forward:/view/user/getUserReportList.jsp");
-		}
+		if(menu.equals(new String("post"))) {
+			map = reportService.getUserReportList(search, user, menu);
+		} 
+		
+		Page resultPage = new Page(search.getCurrentPage(),
+									((Integer)map.get("totalCount")).intValue(), pageUnit, pageSize);
+		
+		System.out.println(resultPage);
+		
+		modelAndView.addObject("list", map.get("list"));
+		modelAndView.addObject("resultPage", resultPage);
+		modelAndView.addObject("search", search);
+		modelAndView.addObject("totalCount", map.get("totalCount"));
+		
+		modelAndView.setViewName("/view/user/getUserReportList.jsp");
 		
 		return modelAndView;
 	}
 	
+	
+	
 	@RequestMapping(value = "getUserActivityList", method = RequestMethod.GET)
-	public ModelAndView getUserActivityList( @RequestParam(value="menu", required=false) String menu, @ModelAttribute("search") Search search, HttpSession session, 
-								Comment comment, Post post) throws Exception {
+	public ModelAndView getUserActivityList( @RequestParam(value="menu", required=false) String menu, @ModelAttribute("search") Search search, HttpSession session) throws Exception {
 		
 		if(search.getCurrentPage() == 0) {
 			search.setCurrentPage(1);
@@ -346,6 +370,52 @@ public class UserController {
 		modelAndView.setViewName("/view/user/getUserActivityList.jsp");
 		
 		return modelAndView;
+	}
+
+	
+	@RequestMapping(value = "requestCash/{cashWithdraw}", method = RequestMethod.GET)
+	public ModelAndView requestCash(HttpServletRequest request, @PathVariable("cashWithdraw") int cashWithdraw)
+			throws Exception {
+		System.out.println("/user/requestCash : POST");
+
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("/user/getUserCash");
+
+		HttpSession session = request.getSession(true);
+		User user = (User) session.getAttribute("user");
+		String userId = user.getUserId();
+
+		Cash cash = new Cash();
+		cash = userService.getCash(userId);
+
+		if (cash.getCashCurrent() < cashWithdraw) {
+			mav.addObject("cashMessage", "0");
+			return mav;
+		}
+		cash.setCashCurrent(cash.getCashCurrent() - cashWithdraw);
+		cash.setCashWithdraw(cashWithdraw);
+		userService.updateCash(cash);
+
+		userService.requestCash(userId, "af");
+
+		return mav;
+	}
+
+	@RequestMapping(value = "updateCash/{userId}", method = RequestMethod.GET)
+	public ModelAndView updateCash(@PathVariable("userId") String userId) throws Exception {
+		System.out.println("/user/updateCash : GET");
+
+		Cash cash = userService.getCash(userId);
+		cash.setCashAmount(cash.getCashAmount() + cash.getCashWithdraw());
+		cash.setCashWithdraw(0);
+
+		userService.updateCash(cash);
+		userService.requestCash(userId, "bf");
+
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("redirect:/user/getUserList");
+
+		return mav;
 	}
 	
 }

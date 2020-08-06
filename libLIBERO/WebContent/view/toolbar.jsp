@@ -77,7 +77,7 @@
 	        			<c:if test="${sessionScope.user.profile==null}">
 	        				<i class="fas fa-user-circle"></i>
 	        			</c:if>
-	          			<img alt="" src="http://127.0.0.1:8080/libero/resources/images/community/${sessionScope.user.profile}" class="rounded-circle" width="25px" height="25px">
+	          			<img alt="" src="http://127.0.0.1:8080/libero/resources/images/user/fileUpload/${sessionScope.user.profile}" class="rounded-circle" width="25px" height="25px">
 	        		</a>
 	        		<div class="dropdown-menu dropdown-menu-right dropdown-default" aria-labelledby="navbarDropdownMenuLink-333">
 			        	<a class="dropdown-item" href="#">마이페이지</a>
@@ -91,7 +91,12 @@
 				          	</c:if>
 				        </c:if>
 				        <div class="dropdown-divider"></div>
-				        <a class="dropdown-item" href="/libero/user/logout">로그아웃</a>
+				        <c:if test="${! empty kakao_url}">
+				       	 <a class="dropdown-item" href="${kakao_url}">로그아웃</a>
+				        </c:if>
+				        <c:if test="${empty kakao_url}">
+				       	 <a class="dropdown-item" href="/libero/user/logout">로그아웃</a>
+				       	 </c:if>
 	        		</div>
 	      		</li>
 	    	</ul>
@@ -150,7 +155,10 @@
 	      		<div class="modal-footer">
 	      			<button type="button" class="btn btn-cyan brown lighten-1" id="loginButton">로그인</button>
 	        		<button type="button" class="btn btn-outline-brown lighten-1 waves-effect" data-dismiss="modal">취소</button>
-	        		<a href="#"><button type="button" class="btn btn-info brown lighten-1" id="addUser">회원가입</button></a>
+	      		</div>
+	      		<div class="modal-footer text-center">
+	        		<a href="#"><button type="button" class="btn btn-info brown lighten-1 btn-block" id="addUser">회원가입</button></a><br/>
+	        		<a href="${kakao_url}"><img src="/libero/resources/images/common/kakao_login_medium_narrow.png"></a>
 	      		</div>
 	    	</div>
 	  	</div>
@@ -171,10 +179,11 @@
 				$("#mainToolbar").attr("class","mb-1 navbar navbar-expand-lg navbar-dark brown lighten-1 fixed-top z-depth-0");
 				$("#bookList").show();
 			}
+			
 		});
 	//============= 회원가입============
 		$("#addUser").on("click",function(){
-			self.location="/libero/view/user/addUser.jsp"
+			self.location="/libero/user/addUser"
 		//회원가입 온클릭 함수 
 		})
 	//============= modal 로그인 화면이동 =============

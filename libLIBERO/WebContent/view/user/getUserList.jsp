@@ -63,11 +63,9 @@
 							</c:if>
 						</td>
 						<td>
-							<c:if test="${user.cashCode=='bf'}">
-								정산 전
-							</c:if>
 							<c:if test="${user.cashCode=='af'}">
-								정산 후
+							<button type="button" class="btn btn-outline-warning waves-effect" id="okWithdraw" name="okWithdraw"><i class="fas fa-comments-dollar mr-1"></i> 정산</button>
+								<input type="hidden" value="${user.userId}"/>
 							</c:if>
 						</td>
 						<td>${user.regDate}</td>
@@ -85,5 +83,15 @@
 		$("#currentPage").val(currentPage)
 	   	$("form").attr("method" , "POST").attr("action" , "/libero/user/getUserList").submit();
 	}
+	
+	$(function(){
+		$("button[id^='okWithdraw']").on("click", function(){
+			
+			alert("정산 완료");
+				
+			var userId = $(this).next().val();
+			window.location.href = "/libero/user/updateCash/"+userId;
+		});	
+	})
 	</script>
 </html>

@@ -4,7 +4,9 @@ import java.util.List;
 import java.util.Map;
 
 import com.libero.service.domain.Buy;
+import com.libero.service.domain.Cash;
 import com.libero.service.domain.Pay;
+import com.libero.service.domain.Product;
 
 public interface BuyDAO {
 
@@ -25,5 +27,15 @@ public interface BuyDAO {
 	public boolean updateDeliveryStatus(String payNo, int deliveryStatus);
 	
 	public Pay getAllBuy(String payNo);
+	
+	public int getBuyArray(int buyNo);
+	
+	public int getBuyAmount(int buyNo);
+	
+	public void updateBuyStatus(int buyNo, String payNo);
+	
+	public List<Product> listProdAuthor(String payNo);
+	
+	public void addCash(Cash cash);
 	
 }

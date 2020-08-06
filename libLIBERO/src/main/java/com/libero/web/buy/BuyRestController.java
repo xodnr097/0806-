@@ -1,6 +1,7 @@
 package com.libero.web.buy;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +15,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.libero.service.buy.BuyService;
+import com.libero.service.domain.Cash;
 import com.libero.service.domain.Pay;
+import com.libero.service.domain.Product;
+import com.libero.service.user.UserService;
 
 @RestController
 @RequestMapping("/buy/*")
@@ -24,6 +28,12 @@ public class BuyRestController {
 	@Autowired
 	@Qualifier("buyServiceImpl")
 	private BuyService buyService;
+	
+	@Autowired
+	@Qualifier("userServiceImpl")
+	private UserService userService;
+	
+	
 	public BuyRestController() {
 		
 		System.out.println(" ---------------------------------------");
@@ -33,15 +43,48 @@ public class BuyRestController {
 	
 
 	
-	@RequestMapping(value = "json/beforePay", method = RequestMethod.POST)
-	public Pay beforePay(@RequestBody Pay pay) throws Exception {
+	@RequestMapping(value = "json/afterPay", method = RequestMethod.POST)
+	public String afterPay(@RequestBody Pay pay) throws Exception {
 		System.out.println("------------------------");
-		System.out.println("\n\n\n [RESTController :  beforePay]\n\n\n");
+		System.out.println("\n\n\n [RESTController :  afterPay]\n\n\n");
 		System.out.println("------------------------");
-		System.out.println(pay);
+		
+		System.out.println("\n\n\n==========");
+		System.out.println(pay.getBuyNoArray());
+		pay = buyService.addBuy(pay);
+		
+		for(String stringBuyNo : pay.getBuyNoArray()) {
+			int numericBuyNo = Integer.parseInt(stringBuyNo);
+			buyService.updateBuyStatus(numericBuyNo,pay.getPayNo());
+		}
+		
+		System.out.println("==========\n\n\n");
+		
+		 List<Product>listAuthor = buyService.listProdAuthor(pay.getPayNo());
+		  
+		  for(int i=0; i<listAuthor.size(); i++) {
+			  Cash cash = new Cash();
+			 // System.out.println(userService.getCash(listAuthor.get(i).getCreator()));
+			  cash = userService.getCash(listAuthor.get(i).getCreator());
+		  
+		  if(cash == null) {
+			  cash = new Cash();
+			  
+			  cash.setUserId(listAuthor.get(i).getCreator());
+			  cash.setCashCurrent(listAuthor.get(i).getRetailPrice());
+			  cash.setBuyNo(listAuthor.get(i).getBuyNo());
+			  buyService.addCash(cash);
+		  }else{
+			  cash.setCashCurrent(cash.getCashCurrent()+listAuthor.get(i).getRetailPrice());
+			  cash.setBuyNo(listAuthor.get(i).getBuyNo());
+			  buyService.addCash(cash);
+		  	}
+		  }
 	
-		System.out.println("\n\n\n");
-		return	 buyService.addBuy(pay);
+		
+		return	 "redirect:/";
+		
+		
 	}	
 	
 	

@@ -1,5 +1,6 @@
 package com.libero.service.publish;
 
+import java.util.List;
 import java.util.Map;
 
 import com.libero.common.Search;
@@ -33,8 +34,12 @@ public interface PublishService {
 	
 	public Map<String, Object> getUserPublishList(Publish publish, Search search) throws Exception;
 	
-	public void removeTempPublish(Publish publish) throws Exception;
+	public void removeTempPublish(int prodNo) throws Exception;
 	
 	public Cash getUserCash(String userId) throws Exception;
+	
+	public void addHashtag(int prodNo, List<String> hashtagName) throws Exception;
+	
+	public List<String> getHashtagList(int prodNo) throws Exception;
 
 }

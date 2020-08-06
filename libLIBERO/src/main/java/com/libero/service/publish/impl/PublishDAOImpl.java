@@ -54,8 +54,16 @@ public class PublishDAOImpl implements PublishDAO {
 		sqlSession.update("PublishMapper.updateProductInfo", publish);
 	}
 	
-	public void addHashtag(Publish publish) throws Exception {
-		sqlSession.insert("PublishMapper.addHashtag", publish);
+	@Override
+	public void addHashtag(int prodNo, List<String> hashtagName) throws Exception {
+		Map<String,Object> map = new HashMap();
+		map.put("prodNo",prodNo);
+		
+		for(int i=0;i<hashtagName.size();i++) {
+			map.put("hashtagName", hashtagName.get(i));
+			System.out.println(map.get("hashtagName"));
+			sqlSession.insert("PublishMapper.addHashtag",map);
+		}
 	}
 	
 	public void updateHashtag(Publish publish) throws Exception {
@@ -93,14 +101,8 @@ public class PublishDAOImpl implements PublishDAO {
 		return sqlSession.selectList("PublishMapper.getUserPublishList", map);
 	}
 	
-	public void removeTempPublish(Publish publish) throws Exception {
-		if (publish.getHashtagName()!=null) {
-			if (!publish.getHashtagName().contentEquals("")) {
-				sqlSession.delete("PublishMapper.removeHashtag", publish);
-			}
-			sqlSession.delete("PublishMapper.removeHashtag", publish);
-		}
-		sqlSession.delete("PublishMapper.removeTempPublish", publish);
+	public void removeTempPublish(int prodNo) throws Exception {
+		sqlSession.delete("PublishMapper.removeTempPublish", prodNo);
 	}
 	
 	public int getTotalCount(Publish publish) throws Exception {
@@ -109,6 +111,18 @@ public class PublishDAOImpl implements PublishDAO {
 	
 	public Cash getUserCash(String userId) throws Exception {
 		return sqlSession.selectOne("UserMapper.getUserCash", userId);
+	}
+
+	@Override
+	public List<String> getHashtagList(int prodNo) throws Exception {
+		// TODO Auto-generated method stub
+		return sqlSession.selectList("PublishMapper.getHashtagList", prodNo);
+	}
+
+	@Override
+	public void removeHashtag(int prodNo) throws Exception {
+		// TODO Auto-generated method stub
+		sqlSession.delete("PublishMapper.removeHashtag", prodNo);
 	}
 
 }

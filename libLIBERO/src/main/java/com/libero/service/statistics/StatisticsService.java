@@ -11,4 +11,5 @@ public interface StatisticsService {
 	
 	public Map<String, Object> getStatistics(int prodNo) throws Exception;
 
+	public List<Statistics> getCashStatistics(String userId) throws Exception; 
 }

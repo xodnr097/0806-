@@ -152,6 +152,10 @@
     <option value="기타"></option>
 </select><br/>
   <input type="button" id="payment" value="결제하기"/><br/>
+  
+  
+  
+  
 </body>
 </html>
 

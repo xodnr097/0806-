@@ -102,7 +102,109 @@
 	    		</div>
 	    	</div>
 	    </div>
-	    <div class="box" style="background-image: url(resources/images/common/index4.jpg);"></div>
+	    <div class="box" style="background-image: url(resources/images/common/index4.jpg);">
+	    	<div class="container text-center" style="height: 100%;display: flex; justify-content: center; align-items: center;">
+		    	<div id="myCarousel" class="carousel slide" data-ride="carousel" style="width: 70%">
+					<div class="carousel-inner">
+				    	<div class="carousel-item active" data-interval="10000">
+				      		<!-- Card deck -->
+							<div class="card-deck">
+							<c:forEach var="prod" items="${book}" end="2">
+								<!-- Card -->
+								<div class="card mb-4">
+							
+								    <!--Card image-->
+								    <div class="view overlay">
+								    	<img class="card-img-top" src="/resources/images/publish/fileUpload/thumbnailFile/${prod.prodThumbnail}" alt="Card image cap">
+							      		<a href="#!">
+							      			<div class="mask rgba-white-slight"></div>
+							      		</a>
+								    </div>
+							
+								    <!--Card content-->
+								    <div class="card-body">
+								
+								    	<!--Title-->
+								      	<h4 class="card-title"><a href="/libero/product/getProduct/${prod.prodNo}">${prod.prodName}</a></h4>
+								
+								    </div>
+							
+							  	</div>
+							  	<!-- Card -->
+							</c:forEach>
+							</div>
+							<!-- Card deck -->
+				    </div>
+				    <div class="carousel-item" data-interval="2000">
+			      		<!-- Card deck -->
+						<div class="card-deck">
+						<c:forEach var="prod" items="${book}" begin="3" end="5">
+							<!-- Card -->
+							<div class="card mb-4">
+						
+							    <!--Card image-->
+							    <div class="view overlay">
+							    	<img class="card-img-top" src="/resources/images/publish/fileUpload/thumbnailFile/${prod.prodThumbnail}" alt="Card image cap">
+						      		<a href="#!">
+						      			<div class="mask rgba-white-slight"></div>
+						      		</a>
+							    </div>
+						
+							    <!--Card content-->
+							    <div class="card-body">
+							
+							    	<!--Title-->
+							      	<h4 class="card-title"><a href="/libero/product/getProduct/${prod.prodNo}">${prod.prodName}</a></h4>
+							
+							    </div>
+						
+						  	</div>
+						  	<!-- Card -->
+						</c:forEach>
+						</div>
+						<!-- Card deck -->
+				    </div>
+				    <div class="carousel-item">
+				    	<!-- Card deck -->
+						<div class="card-deck">
+						<c:forEach var="prod" items="${book}" begin="6" end="8">
+							<!-- Card -->
+							<div class="card mb-4">
+						
+							    <!--Card image-->
+							    <div class="view overlay">
+							    	<img class="card-img-top" src="/resources/images/publish/fileUpload/thumbnailFile/${prod.prodThumbnail}" alt="Card image cap">
+						      		<a href="#!">
+						      			<div class="mask rgba-white-slight"></div>
+						      		</a>
+							    </div>
+						
+							    <!--Card content-->
+							    <div class="card-body">
+							
+							    	<!--Title-->
+							      	<h4 class="card-title"><a href="/libero/product/getProduct/${prod.prodNo}">${prod.prodName}</a></h4>
+							
+							    </div>
+						
+						  	</div>
+						  	<!-- Card -->
+						</c:forEach>
+						</div>
+						<!-- Card deck -->
+				    </div>
+				  </div>
+				  <a class="carousel-control-prev" href="#myCarousel" role="button" data-slide="prev">
+				    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+				    <span class="sr-only">Previous</span>
+				  </a>
+				  <a class="carousel-control-next" href="#myCarousel" role="button" data-slide="next">
+				    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+				    <span class="sr-only">Next</span>
+				  </a>
+				</div>
+			</div>
+	    </div>
 	</body>
 	<script type="text/javascript">
         window.onload = function () {
