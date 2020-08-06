@@ -1,10 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+    pageEncoding="EUC-KR"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
+<meta charset="EUC-KR">
 	
 	
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -15,7 +15,7 @@
 	
 	
 	
-<title>도서  상세</title>
+<title>????  ????</title>
 		
 </head>
 
@@ -33,28 +33,28 @@
 	   	<br/>
 	   	<br/>
 
-					책번호 ${product.prodNo} <br/>
-					상품 타입 ${product.prodType} <br/>
-					상품 상세 ${product.prodDetail} <br/>
-					상품명 ${product.prodName} <br/> 
-					소비자가 ${product.retailPrice} <br/>
-					저자 ${product.author} <br/>
-					할인여부 ${product.blindCode} <br/>
-					컬러 ${product.colorType} <br/>
-					표지 ${product.coverType} <br/>
-					내지 ${product.innerType} <br/>
-					작성자 ${product.creator}	<br/>
+					�?�??? ${product.prodNo} <br/>
+					???? ???? ${product.prodType} <br/>
+					???? ???? ${product.prodDetail} <br/>
+					????�? ${product.prodName} <br/> 
+					??�???�? ${product.retailPrice} <br/>
+					???? ${product.author} <br/>
+					???��?��? ${product.blindCode} <br/>
+					컬�?? ${product.colorType} <br/>
+					??�? ${product.coverType} <br/>
+					?��? ${product.innerType} <br/>
+					???��?? ${product.creator}	<br/>
 					
 	
 		<img src="${wish}" id='wish_img' width="70px" height="70px"/><h6>designed by freepik</h6>
-		<input type="number" name="buyAmount" id="buyAmount" onblur="buyAmount()" value="0">개</td>
+		<input type="number" name="buyAmount" id="buyAmount" onblur="buyAmount()" value="0">�?</td>
 		<div class="form-group" align="center">
 			<button type="button" id="button" class="btn btn-info btn-block" 
 				onclick="addCart()">
 				
 			</button>
 		</div>
-		<!-- 신고 추가 -->
+		<!-- ??�? �?�? -->
 		<input type="hidden" id="prodNo" name="prodNo" value="${product.prodNo}"/>
 		<button id="reportBtn" class="btn btn-outline-info">�Ű�</button>
 		<input type="hidden" id="prodPost" name="prodPost" value="prod"/>
@@ -92,7 +92,7 @@
 								<c:set var="i" value="${ i+1 }" />
 								<tr>
 									<td align="center">${ i }</td>
-									<td align="left"  title="Click : 주문정보 확인">
+									<td align="left"  title="Click : 주문??�? ????">
 									
 										${review.starRate} <br/>
 										${review.userId }<br/>
@@ -147,7 +147,7 @@
 			$('#wish_img').on("click", function(){
 				var userId = "${sessionScope.user.userId}";
 				if (userId=="") {
-					alert("로그인 해주세요.");
+					alert("�?그�?? ?�주?��??.");
 					return;
 				}
 				
@@ -179,15 +179,15 @@
 		//alert(buyAmount);
 		
 		if (userId=="") {
-			alert("로그인 해주세요.");
+			alert("�?그�?? ?�주?��??.");
 			return;
 		}
 		if (phoneCode!=1) {
-			alert("휴대폰 본인인증을 완료한 회원만 가능합니다.");
+			alert("?��???? 본�?��?��??? ??�??? ????�? �??��?��????.");
 			return;
 		}
 		if (buyAmount==0) {
-			alert("수량을 선택해주세요.");
+			alert("?????? ?????�주?��??.");
 			return;
 		}
 		
