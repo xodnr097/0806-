@@ -36,6 +36,38 @@
 		<result property="roughPrice"	column="rough_price"		jdbcType="INTEGER"/>
 	</resultMap>
 	
+	
+		
+	<resultMap id="productSelectMap" type="product">
+		<result property="prodNo" 		column="prod_no" 			jdbcType="VARCHAR" />
+		<result property="prodType" 	column="prod_type" 			jdbcType="VARCHAR" />
+		<result property="prodName"		column="prod_name" 			jdbcType="VARCHAR" />
+		<result property="prodDetail" 	column="prod_detail" 		jdbcType="LONGVARCHAR" />
+		<result property="retailPrice" 	column="retail_price" 		jdbcType="INTEGER" />
+		<result property="blindCode" 	column="blind_code" 		jdbcType="VARCHAR" />
+		<result property="prodThumbnail" column="prod_thumbnail" 	jdbcType="VARCHAR" />
+		<result property="coverFile" 	column="cover_file" 		jdbcType="VARCHAR" />
+		<result property="purposeCode" 	column="purpose_code" 		jdbcType="VARCHAR" />
+		<result property="manuFile"		column="manu_file"			jdbcType="VARCHAR" />
+		<result property="regDate"		column="reg_date"			jdbcType="TIMESTAMP" />
+		<result property="discountCode"	 column="discount_code"		jdbcType="VARCHAR" />
+		<result property="bookPage"		 column="book_page"			jdbcType="INTEGER" />
+		<result property="printPrice"	 column="print_price"		jdbcType="INTEGER" />
+		<result property="creator"		 column="creator"			jdbcType="VARCHAR" />
+		<result property="colorType"	 column="color_type"		jdbcType="VARCHAR" />
+		<result property="sizeType"		 column="size_type"			jdbcType="VARCHAR" />
+		<result property="coverType"	 column="cover_type"		jdbcType="VARCHAR" />
+		<result property="innerType"	 column="inner_type"		jdbcType="VARCHAR" />
+		<result property="bookCategory"	 column="book_category"		jdbcType="VARCHAR" />
+		<result property="likeCount"	 column="like_count"		jdbcType="INTEGER" />
+		<result property="wishNo"		 column="wish_no"			jdbcType="INTEGER" />
+		<result property="cartNo"		 column="cart_no"			jdbcType="INTEGER" />
+		<result property="buyAmount"	 column="buy_amount"		jdbcType="INTEGER" />
+		<result property="buyNo" 	 	 column="buy_no" 			jdbcType="INTEGER" />
+			
+	</resultMap>
+	
+	
 	<resultMap id="cashSelectMap" type="cash">
 		<result property="cashNo" column="cash_no" jdbcType="INTEGER"/>
 		<result property="userId" column="user_id" jdbcType="VARCHAR"/>
@@ -136,10 +168,17 @@
 	 	FROM user
 	 </select>
 	 
-	 <select id="listProdAuthor" parameterType="Integer">
-	SELECT product.prod_no, product.creator, product.retail_price, buy.buy_no
+	 <select id="listProdAuthor" parameterType="string" resultMap="productSelectMap">
+	SELECT 
+	product.prod_no,
+	product.creator,
+	product.retail_price,
+	buy.buy_no
 	FROM product, pay, buy
-	WHERE pay.pay_no = #{payNo} AND pay.pay_no = buy.pay_no AND buy.prod_no = product.prod_no
+	WHERE 
+	pay.pay_no = #{payNo} 
+	AND pay.pay_no = buy.pay_no 
+	AND buy.prod_no = product.prod_no
 	</select>
 	
 	<insert id="addCash" parameterType="cash">

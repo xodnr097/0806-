@@ -36,6 +36,8 @@ public interface BuyService {
 	
 	public int getBuyAmount(int buyNo);
 	
+	public void updateBuyStatus(int buyNo,String payNo);
+	
 	public List<Product> listProdAuthor(String payNo);
 	
 	public void addCash(Cash cash);	

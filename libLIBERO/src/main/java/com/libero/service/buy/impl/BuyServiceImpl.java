@@ -184,6 +184,12 @@ public class BuyServiceImpl implements BuyService{
 	public void addCash(Cash cash) {
 		buyDao.addCash(cash);
 	}
+	
+	@Override
+	public void updateBuyStatus(int buyNo , String payNo) {
+		// TODO Auto-generated method stub
+		buyDao.updateBuyStatus(buyNo, payNo);
+	}
 
 
 }
